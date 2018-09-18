@@ -10,29 +10,43 @@ const styles = (theme: Theme) => createStyles({
     padding: theme.spacing.unit * 2,
     textAlign: 'center',
     color: theme.palette.text.secondary,
+    width: '100%'
   },
+  input: {
+    width: '100%',
+    height: '100px'
+  }
 });
 
-function page1 (props: WithStyles<typeof styles>) {
+function page1(props: WithStyles<typeof styles>) {
   const { classes } = props;
 
   return (
     <Grid container spacing={24}>
+      <Grid item xs={12}>
+        <Paper className={classes.paper}>
+          <p>IM Command</p>
+          <textarea className={classes.paper + ' input'}>["convert", "srcFile.png", "-rotate", "90", "-resize", "200%", "out.png"]</textarea>
+          <button className="execute" onClick={execute}>Execute</button>
+
+          <p>Suggestions:</p>
+          <ul>
+            <li>["convert", "srcFile.png",  "-morphology", "Hit-and-Miss" , "2x1:1,0", "out.png"]</li>
+            <li>["convert", "srcFile.png", "-rotate", "90", "-resize", "200%", "out.png"]
+            </li>
+          </ul>
+          <p>Source image: </p>
+          <img id="srcImage" src="rotate.png" />
+
+          <p>Rotated and enlarged image: </p>
+          <img id="rotatedImage" />
+          <br /><br />
+        </Paper>
+      </Grid>
       <Grid item xs={12} sm={6}>
         <Paper className={classes.paper}><h3 className="page-home">home
         </h3>
-
-        
-  <p>IM Command</p>
-  <textarea className="input">["convert", "srcFile.png", "-rotate", "90", "-resize", "200%", "out.png"]</textarea>
-  <button className="execute" onClick={execute}>Execute</button>
-  <p>Source image: </p>
-  <img id="srcImage" src="rotate.png"/>
-
-  <p>Rotated and enlarged image: </p>
-  <img id="rotatedImage"/>
-  <br/><br/>
-    </Paper>
+        </Paper>
       </Grid>
       <Grid item xs={12} sm={6}>
         <Paper className={classes.paper}>xs=12 sm=6</Paper>
@@ -54,9 +68,9 @@ function page1 (props: WithStyles<typeof styles>) {
 }
 
 
-function execute(){
+function execute() {
   doImageMagick()
   console.log('hshs');
-  
+
 }
 export default withStyles(styles)(page1);
