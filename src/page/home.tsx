@@ -31,8 +31,15 @@ function page1(props: WithStyles<typeof styles>) {
 
           <p>Suggestions:</p>
           <ul>
-            <li>["convert", "srcFile.png",  "-morphology", "Hit-and-Miss" , "2x1:1,0", "out.png"]</li>
-            <li>["convert", "srcFile.png", "-rotate", "90", "-resize", "200%", "out.png"]
+            <li>
+              ["convert", "srcFile.png",  "-morphology", "Hit-and-Miss" , "2x1:1,0", "out.png"]
+              </li>
+            <li>
+              ["convert", "logo:", "-rotate", "90", "-resize", "200%", "out.png"]
+
+            </li>
+            <li>
+            ["convert", "logo:", "-morphology", "Convolve" , "3x3: 0.0,0.5,0.0  0.5,1.0,0.5   0.0,0.5,0.0", "out.png"]
             </li>
           </ul>
           <p>Source image: </p>

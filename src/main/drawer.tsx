@@ -39,9 +39,9 @@ const drawer = (props: WithStyles<typeof styles> & { open: boolean, handleDrawer
       </IconButton>
     </div>
     <Divider />
-    <Link className="page-home-link" to="/">Home</Link>
+    <Link className="page-home-link" to="home">Home</Link>
     <Divider />
-    <Link className="page-1-link" to="/page1">Page 1</Link>
+    <Link className="page-1-link" to="page1">Page 1</Link>
   </Drawer>
 );
 

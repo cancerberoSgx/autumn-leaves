@@ -4,7 +4,7 @@ import * as React from 'react';
 import JssProvider from 'react-jss/lib/JssProvider';
 import { CssBaseline } from '@material-ui/core';
 import {AppBar} from './appBar';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
 import theme from './theme';
 
 
@@ -17,9 +17,9 @@ export default function MyApp() {
     <JssProvider jss={jss} generateClassName={generateClassName}>
       <React.Fragment>
         <CssBaseline />
-        <BrowserRouter>
+        <HashRouter>
           <AppBar />
-        </BrowserRouter>
+        </HashRouter>
       </React.Fragment>
     </JssProvider>
     </MuiThemeProvider>
