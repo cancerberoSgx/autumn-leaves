@@ -2,6 +2,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import * as React from 'react';
+import TextFields from '../test/TextFields';
 
 
 const styles = (theme: Theme) => createStyles({
@@ -20,6 +21,8 @@ function page1 (props: WithStyles<typeof styles>) {
 
       <Grid item xs={12} sm={6}>
         <Paper className={classes.paper}><h3 className="page-1">page1</h3>
+
+    <TextFields />
         </Paper>
       </Grid>
       <Grid item xs={12} sm={6}>

@@ -23,7 +23,6 @@ function main (props: WithStyles<typeof styles>) {
       <Route path='/page1' component={page1}/>
     </Switch>
 
-    <TextFields />
     </div>
   );
 }
