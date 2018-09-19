@@ -3,8 +3,9 @@ import { withStyles, Theme, createStyles, WithStyles } from '@material-ui/core/s
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { doImageMagick } from '../../imagemagick';
-import HorizontalNonLinearAlternativeLabelStepper from '../../test/HorizontalNonLinearAlternativeLabelStepper';
+// import HorizontalNonLinearAlternativeLabelStepper from '../../test/HorizontalNonLinearAlternativeLabelStepper';
 import { EmptyComponent } from '../../test/emptyComponent';
+import ImageTransformationStepper from '../components/ImageTransformationStepper';
 
 
 const styles = (theme: Theme) => createStyles({
@@ -20,6 +21,7 @@ const styles = (theme: Theme) => createStyles({
   }
 });
 
+const defaultValue = ["convert", "srcFile.png", "-rotate", "90", "-resize", "200%", "out.png"]
 function page1(props: WithStyles<typeof styles>) {
   const { classes } = props;
 
@@ -28,7 +30,7 @@ function page1(props: WithStyles<typeof styles>) {
       <Grid item xs={12}>
         <Paper className={classes.paper}>
           <p>IM Command</p>
-          <textarea className={classes.paper + ' input'}>["convert", "srcFile.png", "-rotate", "90", "-resize", "200%", "out.png"]</textarea>
+          <textarea defaultValue={JSON.stringify(defaultValue)} className={classes.paper + ' input'}></textarea>
           <button className="execute" onClick={execute}>Execute</button>
 
           <p>Suggestions:</p>
@@ -51,7 +53,7 @@ function page1(props: WithStyles<typeof styles>) {
           <br /><br />
 
 
-        <HorizontalNonLinearAlternativeLabelStepper />
+        <ImageTransformationStepper />
 
         <EmptyComponent />
         
@@ -84,8 +86,11 @@ function page1(props: WithStyles<typeof styles>) {
   );
 }
 
+import { saveAs } from 'file-saver'
 
 function execute() {
+  var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
+  saveAs(blob, "hello world.txt");
   doImageMagick()
   console.log('hshs');
 

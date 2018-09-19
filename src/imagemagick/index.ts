@@ -43,7 +43,7 @@ export async function doImageMagick(url: string = 'rotate.png') {
 
     // response can be multiple files (example split) here we know we just have one
     let firstOutputImage = processedFiles[0]
-    debugger
+    // debugger
     let rotatedImage = document.getElementById('rotatedImage') as HTMLImageElement
 
     rotatedImage.src = URL.createObjectURL(firstOutputImage['blob'])

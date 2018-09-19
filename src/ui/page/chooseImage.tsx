@@ -3,7 +3,7 @@ import { withStyles, Theme, createStyles, WithStyles } from '@material-ui/core/s
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { doImageMagick } from '../../imagemagick';
-import HorizontalNonLinearAlternativeLabelStepper from '../../test/HorizontalNonLinearAlternativeLabelStepper';
+// import HorizontalNonLinearAlternativeLabelStepper from '../../test/HorizontalNonLinearAlternativeLabelStepper';
 
 
 const styles = (theme: Theme) => createStyles({
@@ -36,7 +36,7 @@ function page1(props: WithStyles<typeof styles>) {
     </Grid>
   );
 }
-
+  
 
 function execute() {
   doImageMagick()
