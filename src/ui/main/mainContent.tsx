@@ -3,7 +3,7 @@ import { withStyles, Theme, createStyles, WithStyles } from '@material-ui/core/s
 import { Route, Switch } from 'react-router';
 import page1 from '../page/page1';
 import home from '../page/home';
-import TextFields from '../test/TextFields';
+import TextFields from '../../test/TextFields';
 
 const styles = (theme: Theme) => createStyles({
   root: {

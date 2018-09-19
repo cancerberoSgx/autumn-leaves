@@ -2,9 +2,9 @@ import * as React from 'react';
 import { withStyles, Theme, createStyles, WithStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import { doImageMagick } from '../imagemagick';
-import HorizontalNonLinearAlternativeLabelStepper from '../test/HorizontalNonLinearAlternativeLabelStepper';
-import { EmptyComponent } from '../test/emptyComponent';
+import { doImageMagick } from '../../imagemagick';
+import HorizontalNonLinearAlternativeLabelStepper from '../../test/HorizontalNonLinearAlternativeLabelStepper';
+import { EmptyComponent } from '../../test/emptyComponent';
 
 
 const styles = (theme: Theme) => createStyles({

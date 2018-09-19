@@ -1,5 +1,5 @@
 import * as ReactDOM from 'react-dom';
-import App from './main/app'
+import App from './ui/main/app'
 import { store } from './state/Store';
 
 function install() {

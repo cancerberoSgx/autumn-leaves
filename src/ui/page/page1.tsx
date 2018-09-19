@@ -2,7 +2,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import * as React from 'react';
-import TextFields from '../test/TextFields';
+import TextFields from '../../test/TextFields';
 
 
 const styles = (theme: Theme) => createStyles({
