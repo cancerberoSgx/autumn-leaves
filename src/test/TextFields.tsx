@@ -236,7 +236,6 @@ class TextFields extends React.Component<any, {[k:string]:string}> {
   }
 }
 
-// PropTypes.
 (TextFields as any).propTypes = {
   classes: PropTypes.object.isRequired,
 };

@@ -120,7 +120,7 @@ export class AppBarNaked extends React.Component<AppBarProps, AppBarState> {
                   >
                     <MenuIcon />
                   </IconButton>
-                  <span>Sebastian Gurin home page</span>
+                  <span>Autumn Leaves: ImageMagick utilities 100% in the browser</span>
                 </Grid>
                 <Grid item xs={6} sm={6} style={{flexBasis: '50%'}}>
 

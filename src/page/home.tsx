@@ -4,6 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { doImageMagick } from '../imagemagick';
 import HorizontalNonLinearAlternativeLabelStepper from '../test/HorizontalNonLinearAlternativeLabelStepper';
+import { EmptyComponent } from '../test/emptyComponent';
 
 
 const styles = (theme: Theme) => createStyles({
@@ -48,6 +49,12 @@ function page1(props: WithStyles<typeof styles>) {
           <p>Rotated and enlarged image: </p>
           <img id="rotatedImage" />
           <br /><br />
+
+
+        <HorizontalNonLinearAlternativeLabelStepper />
+
+        <EmptyComponent />
+        
         </Paper>
       </Grid>
       <Grid item xs={12} sm={6}>
@@ -58,7 +65,6 @@ function page1(props: WithStyles<typeof styles>) {
       <Grid item xs={12} sm={6}>
         <Paper className={classes.paper}>xs=12 sm=6
         
-        <HorizontalNonLinearAlternativeLabelStepper />
         
         </Paper>
       </Grid>
