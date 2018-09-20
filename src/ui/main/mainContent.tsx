@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router';
 import page1 from '../page/page1';
 import home from '../page/home';
 import TextFields from '../../test/TextFields';
+import DownloadResult from '../components/DownloadResult';
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -21,6 +22,8 @@ function main (props: WithStyles<typeof styles>) {
     <Switch>
       <Route exact path='/' component={home}/>
       <Route path='/page1' component={page1}/>
+      <Route path='/download' component={DownloadResult}/>
+      
     </Switch>
 
     </div>

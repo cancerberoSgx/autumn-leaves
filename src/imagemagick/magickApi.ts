@@ -1,4 +1,4 @@
-import { InputFile } from '.';
+import { MagickInputFile } from '.';
 
 function CreatePromiseEvent(): Promise<any> {
     let resolver;
@@ -11,7 +11,7 @@ function CreatePromiseEvent(): Promise<any> {
     return emptyPromise;
 }
 // declare const magickWorkerPromisesKey: any
-export function Call(inputFiles: InputFile[], command: string[]): Promise<any> {
+export function Call(inputFiles: MagickInputFile[], command: string[]): Promise<any> {
     let request = {
         'files': inputFiles,
         'args': command,

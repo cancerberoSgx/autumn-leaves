@@ -17,6 +17,7 @@
 
 # TODO / INVESTIGATE
 
+ * idea: image format conversion tool - png, jpg, gif, tiff, svg, pdf, psd, ps, pnm, .ico, tga, webp, xpm, xbm, xcf
  * idea: convert image.jpg -quality 75 output_file.jpg
  * idea: montage image1.jpg image2.jpg image3.jpg image4.jpg -geometry +2+2 output_montage.jpg
  * idea: convert output_montage.jpg output_montage.pdf

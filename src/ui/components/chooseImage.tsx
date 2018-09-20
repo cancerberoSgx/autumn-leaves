@@ -36,11 +36,4 @@ function page1(props: WithStyles<typeof styles>) {
     </Grid>
   );
 }
-  
-
-function execute() {
-  doImageMagick()
-  console.log('hshs');
-
-}
 export default withStyles(styles)(page1);
