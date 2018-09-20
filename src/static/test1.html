@@ -11,14 +11,22 @@
 <body>
 
   <style>
-.input{
+.input {
   width: 100%;
   height: 100px;
 }
 .execute {
   border: 2px solid blue
 }
-.error{margin: 0; padding: 0; font-weight: bold}
+.error{
+  margin: 0; 
+  padding: 0; 
+  font-weight: bold
+  }
+.images td {
+  border: 2px solid #ededed; 
+  padding: 10px; 
+}
 </style>
 
   <p>Try an ImageMagick command on different test images. Check out the suggestions!</p>
@@ -83,7 +91,7 @@
   <table class="images">
     <tr>
       <td>
-        <img id="srcImage1" src="rotate.png">
+        <img id="srcImage1" src="rotate.png"><br/>rotate.png
       </td>
       <td>
           <img class="spinner" src="spinner.gif">
@@ -96,7 +104,7 @@
 
     <tr>
       <td>
-        <img id="srcImage5" src="zelda.gif">
+        <img id="srcImage5" src="zelda.gif"><br/>zelda.gif
       </td>
       <td>
           <img class="spinner" src="spinner.gif">
@@ -108,7 +116,7 @@
     </tr>
     <tr>
       <td>
-        <img id="srcImage3" src="Hermitcrab.gif">
+        <img id="srcImage3" src="Hermitcrab.gif"><br/>Hermitcrab.gif
       </td>
       <td>
           <img class="spinner" src="spinner.gif">
@@ -121,7 +129,7 @@
 
     <tr>
       <td>
-        <img id="srcImage2" src="gnu.jpg">
+        <img id="srcImage2" src="gnu.jpg"><br/>gnu.jpg
       </td>
       <td>
         <img class="spinner" src="spinner.gif">
@@ -132,18 +140,32 @@
       </td>
     </tr>
 
-    <tr>
       <td>
-        <img id="srcImage4_DONTWORK" src="react.svg">
+        <img id="srcImage4_DONTWORK" src="react.svg"><br/>react.svg
       </td>
       <td>
         It doesn't work <br />
-        <!-- <img id="outputImage4" src="spinner.gif"> -->
+        <!-- <img class="spinner" src="spinner.gif">
+        <img id="outputImage4" > -->
       </td>
       <td>
         <p class="took"></p>
       </td>
     </tr>
+
+    <tr>
+        <td>
+          <img id="srcImage6" src="pic.tiff"><br/>pic.tiff
+        </td>
+        <td>
+          <img class="spinner" src="spinner.gif">
+          <img id="outputImage6">
+        </td>
+        <td>
+          <p class="took"></p>
+        </td>
+      </tr>
+    <tr>
 
   </table>
 
