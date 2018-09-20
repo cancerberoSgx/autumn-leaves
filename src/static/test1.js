@@ -14,6 +14,7 @@ async function transformImages() {
   images.forEach(async image => {
     const t0 = performance.now()
     const outputImage = document.getElementById(image.targetId)
+    if(!outputImage){return }
 
     spinner(true, outputImage)
     const imArguments = buildImArguments(document.querySelector('.input').value, image)
@@ -77,5 +78,6 @@ function buildImArguments(s, image) {
 }
 
 function spinner(spinning, el){
-  el.parentElement.parentElement.querySelector('.spinner').display = spinning ? 'block' : 'none'
+  // debugger
+  el.parentElement.parentElement.querySelector('.spinner').style.display = spinning ? 'block' : 'none'
 }
