@@ -6,6 +6,8 @@
  * Both a website and a framework around WASM-ImageMagick library
  * author, store, reuse, share transformations. 
 
+ * [Pure JavaScript+HTML WASM-ImageMagick demo page](https://cancerberosgx.github.io/autumn-leaves/test1.html)
+
 # STATUS / ROADMAP
 
  * WIP

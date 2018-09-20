@@ -10,7 +10,7 @@ const styles = (theme: Theme) => createStyles({
   }
 });
 
-const defaultValue = ["convert", "srcFile.png", "-rotate", "90", "-resize", "200%", "out.png"]
+const defaultValue = ["convert", "rotate.png", "-rotate", "90", "-resize", "200%", "out.png"]
 
 function render(props: WithStyles<typeof styles>) {
   const { classes } = props;
@@ -24,17 +24,17 @@ function render(props: WithStyles<typeof styles>) {
     <p>Suggestions:</p>
     <ul>
       <li>
-        ["convert", "srcFile.png",  "-morphology", "Hit-and-Miss" , "2x1:1,0", "out.png"]
-              </li>
+        ["convert", "rotate.png",  "-morphology", "Hit-and-Miss" , "2x1:1,0", "out.png"]
+      </li>
       <li>
         ["convert", "logo:", "-rotate", "90", "-resize", "200%", "out.png"]
-            </li>
+      </li>
       <li>
         ["convert", "logo:", "-morphology", "Convolve" , "3x3: 0.0,0.5,0.0  0.5,1.0,0.5   0.0,0.5,0.0", "out.png"]
-            </li>
+      </li>
     </ul>
     <p>Source image: </p>
-    <img id="srcImage" src="gnu.jpg" />
+    <img id="srcImage" src="rotate.png" />
 
     <p>Rotated and enlarged image: </p>
     <img id="rotatedImage" />
@@ -46,9 +46,9 @@ function render(props: WithStyles<typeof styles>) {
 
 
 function execute() {
-  doImageMagick()
-  console.log('hshs');
-
+  const input = document.querySelector('.input') as HTMLInputElement
+  const imArguments = JSON.parse(input.value)
+  doImageMagick(imArguments)
 }
 
 export default withStyles(styles)(render);

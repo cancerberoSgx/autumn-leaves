@@ -51,25 +51,98 @@ class ImageTransformationStepper extends React.Component<any, any> {
     completed: new Set(),
   }
 
-  totalSteps = () => getSteps().length
+  render() {
+    const { classes } = this.props
+    const steps = getSteps()
+    const { activeStep } = this.state
 
-  isStepOptional = (step: number) => {
-    return false//step === 1
+    return (
+      <div className={classes.root}>
+        <Stepper alternativeLabel nonLinear activeStep={activeStep}>
+          {steps.map((label, index) => {
+            const props: any = {}
+            const buttonProps: any = {}
+            // if (this.isStepOptional(index)) {
+            //   buttonProps.optional = <Typography variant="caption">Optional</Typography>
+            // }
+            return (
+              <Step key={label} {...props}>
+                <StepButton
+                  onClick={this.handleStep(index)}
+                  completed={this.isStepComplete(index)}
+                  {...buttonProps}
+                >
+                  {label}
+                </StepButton>
+              </Step>
+            )
+          })}
+        </Stepper>
+        <div>
+          {/* {this.allStepsCompleted() ? (
+            <div>
+              <Typography className={classes.instructions}>
+                All steps completed  
+              </Typography>
+              <Button onClick={this.handleReset}>Reset</Button>
+            </div>
+          ) : ( */}
+            <div>
+              <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+              <div>
+                <Button
+                  disabled={activeStep === 0}
+                  onClick={this.handleBack}
+                  className={classes.button}
+                >
+                  Back
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={this.handleNext}
+                  className={classes.button}
+                >
+                  Next
+                </Button>
+                {/* {activeStep !== steps.length &&
+                  (this.state.completed.has(this.state.activeStep) ? (
+                    <Typography variant="caption" className={classes.completed}>
+                      Step {activeStep + 1} already completed
+                    </Typography>
+                  ) : (
+                    <Button variant="contained" color="primary" onClick={this.handleComplete}>
+                      {this.completedSteps() === this.totalSteps() - 1 ? 'Finish' : 'Complete Step'}
+                    </Button>
+                  ))} */}
+              </div>
+            </div>
+          // )
+          }
+        </div>
+      </div>
+    )
   }
 
-  handleNext = () => {
-    let activeStep
+  totalSteps = () => getSteps().length
 
-    if (this.isLastStep() && !this.allStepsCompleted()) {
-      // It's the last step, but not all steps have been completed
-      // find the first step that has been completed
-      const steps = getSteps()
-      activeStep = steps.findIndex((step, i) => !this.state.completed.has(i))
-    } else {
-      activeStep = this.state.activeStep + 1
-    }
+  // isStepOptional = (step: number) => {
+  //   return false//step === 1
+  // }
+
+  handleNext = () => {
+    // let activeStep
+
+    // if (this.isLastStep() && !this.allStepsCompleted()) {
+    //   // It's the last step, but not all steps have been completed
+    //   // find the first step that has been completed
+    //   const steps = getSteps()
+    //   activeStep = steps.findIndex((step, i) => !this.state.completed.has(i))
+    // } else {
+      // activeStep = this.state.activeStep + 1
+    // }
     this.setState({
-      activeStep,
+      activeStep:  this.state.activeStep + 1,
     })
   }
 
@@ -85,23 +158,23 @@ class ImageTransformationStepper extends React.Component<any, any> {
     })
   }
 
-  handleComplete = () => {
-    // eslint-disable-next-line react/no-access-state-in-setstate
-    const completed = new Set(this.state.completed)
-    completed.add(this.state.activeStep)
-    this.setState({
-      completed,
-    })
+  // handleComplete = () => {
+  //   // eslint-disable-next-line react/no-access-state-in-setstate
+  //   const completed = new Set(this.state.completed)
+  //   completed.add(this.state.activeStep)
+  //   this.setState({
+  //     completed,
+  //   })
 
-    /**
-     * Sigh... it would be much nicer to replace the following if conditional with
-     * `if (!this.allStepsComplete())` however state is not set when we do this,
-     * thus we have to resort to not being very DRY.
-     */
-    if (completed.size !== this.totalSteps() ) {
-      this.handleNext()
-    }
-  }
+  //   /**
+  //    * Sigh... it would be much nicer to replace the following if conditional with
+  //    * `if (!this.allStepsComplete())` however state is not set when we do this,
+  //    * thus we have to resort to not being very DRY.
+  //    */
+  //   if (completed.size !== this.totalSteps() ) {
+  //     this.handleNext()
+  //   }
+  // }
 
   handleReset = () => {
     this.setState({
@@ -125,78 +198,6 @@ class ImageTransformationStepper extends React.Component<any, any> {
 
   isLastStep() {
     return this.state.activeStep === this.totalSteps() - 1
-  }
-
-  render() {
-    const { classes } = this.props
-    const steps = getSteps()
-    const { activeStep } = this.state
-
-    return (
-      <div className={classes.root}>
-        <Stepper alternativeLabel nonLinear activeStep={activeStep}>
-          {steps.map((label, index) => {
-            const props: any = {}
-            const buttonProps: any = {}
-            if (this.isStepOptional(index)) {
-              buttonProps.optional = <Typography variant="caption">Optional</Typography>
-            }
-            return (
-              <Step key={label} {...props}>
-                <StepButton
-                  onClick={this.handleStep(index)}
-                  completed={this.isStepComplete(index)}
-                  {...buttonProps}
-                >
-                  {label}
-                </StepButton>
-              </Step>
-            )
-          })}
-        </Stepper>
-        <div>
-          {this.allStepsCompleted() ? (
-            <div>
-              <Typography className={classes.instructions}>
-                All steps completed - you&quotre finished
-              </Typography>
-              <Button onClick={this.handleReset}>Reset</Button>
-            </div>
-          ) : (
-            <div>
-              <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-              <div>
-                <Button
-                  disabled={activeStep === 0}
-                  onClick={this.handleBack}
-                  className={classes.button}
-                >
-                  Back
-                </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={this.handleNext}
-                  className={classes.button}
-                >
-                  Next
-                </Button>
-                {activeStep !== steps.length &&
-                  (this.state.completed.has(this.state.activeStep) ? (
-                    <Typography variant="caption" className={classes.completed}>
-                      Step {activeStep + 1} already completed
-                    </Typography>
-                  ) : (
-                    <Button variant="contained" color="primary" onClick={this.handleComplete}>
-                      {this.completedSteps() === this.totalSteps() - 1 ? 'Finish' : 'Complete Step'}
-                    </Button>
-                  ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    )
   }
 }
 

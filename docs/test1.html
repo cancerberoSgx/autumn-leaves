@@ -11,16 +11,67 @@
 </head>
 
 <body>
+<style>
+.input{
+  width: 100%;
+  height: 40px;
+}
+.execute {
+  border: 2px solid blue
+}
+</style>
+  <p>Try an ImageMagick command on different test images. Check out the suggestions!</p>
 
-  <p>IM Command</p>
-  <textarea class="input"></textarea>
+  <textarea class="input" >["-rotate", "90","-resize","200%"]</textarea>
+
+  <p>Suggestions: </p>
+  <select class="suggestions" >
+    <option>["-rotate", "90","-resize","200%"]</option>
+    <option>["-distort", "barrel", "0.0 -0.019966 0.0"]</option>
+  </select>
+
   <button class="execute">Execute</button>
-  <p>Source image: </p>
-  <img id="srcImage" src="rotate.png">
 
-  <p>Rotated and enlarged image: </p>
-  <img id="rotatedImage">
+  <p>Source images: </p>
 
+  <table class="images">
+<tr>
+  <td>
+    <img id="srcImage1" src="rotate.png">
+  </td>
+  <td>
+    <img id="outputImage1" src="spinner.gif">
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <img id="srcImage3" src="Hermitcrab.gif">
+  </td>
+  <td>
+    <img id="outputImage3" src="spinner.gif">
+  </td>
+</tr>
+
+<!-- <tr>
+  <td>
+    <img id="srcImage2" src="gnu.jpg">
+  </td>
+  <td>
+    <img id="outputImage2" src="spinner.gif">
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <img id="srcImage4" src="react.svg">
+  </td>
+  <td>
+    <img id="outputImage4" src="spinner.gif">
+  </td>
+</tr> -->
+
+  </table>
 
   <script type='module'>
     import {start} from './test1.js'
