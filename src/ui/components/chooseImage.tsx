@@ -1,10 +1,7 @@
-import * as React from 'react';
-import { withStyles, Theme, createStyles, WithStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import { doImageMagick } from '../../imagemagick';
-// import HorizontalNonLinearAlternativeLabelStepper from '../../test/HorizontalNonLinearAlternativeLabelStepper';
-
+import * as React from 'react'
+import { withStyles, Theme, createStyles, WithStyles } from '@material-ui/core/styles'
+import Paper from '@material-ui/core/Paper'
+import Grid from '@material-ui/core/Grid'
 
 const styles = (theme: Theme) => createStyles({
   paper: {
@@ -16,24 +13,24 @@ const styles = (theme: Theme) => createStyles({
     height: '140px',
     backgroundColor: 'green'
   }
-});
+})
 
-function page1(props: WithStyles<typeof styles>) {
-  const { classes } = props;
+function render(props: WithStyles<typeof styles>) {
+  const { classes } = props
 
   return (
     <Grid container spacing={24}>
       <Grid item xs={12}>
         <Paper className={classes.paper}>
-        Please choose an image<br/>
-        <input type="file"></input>
-        <p>Or, </p>
-        <div className="fileDropTarget">
-        drag and drop files & folders from your desktop here
+          Please choose an image<br />
+          <input type="file"></input>
+          <p>Or, </p>
+          <div className="fileDropTarget">
+            drag and drop files & folders from your desktop here
         </div>
         </Paper>
       </Grid>
     </Grid>
-  );
+  )
 }
-export default withStyles(styles)(page1);
+export default withStyles(styles)(render)

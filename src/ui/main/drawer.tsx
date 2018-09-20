@@ -39,11 +39,20 @@ const drawer = (props: WithStyles<typeof styles> & { open: boolean, handleDrawer
       </IconButton>
     </div>
     <Divider />
-    <Link className="page-home-link" to="">Home</Link>
+
+    <Link to="">Home</Link>
     <Divider />
-    <Link className="page-1-link" to="page1">Page 1</Link>
+   
+    <Link  to="page1">Page 1</Link>
     <Divider />
-    <Link className="page-1-link" to="download">Download Results</Link>
+
+    <Link  to="SimpleCLITransformationEditor">Basic CLI transformation tool</Link>
+    <Divider />
+
+    <Link  to="TestImages">See test images</Link>
+    <Divider />
+    
+    <Link  to="download">Download Results</Link>
   </Drawer>
 );
 

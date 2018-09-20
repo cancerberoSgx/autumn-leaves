@@ -7,11 +7,11 @@ const styles = (theme: Theme) => createStyles({
   }
 });
 
-export interface EmptyComponentProps extends WithStyles<typeof styles> { 
+export interface EmptyComponentProps extends WithStyles<typeof styles> {
   initialToggleState: boolean
 }
-export interface EmptyComponentState { 
-  toggle: boolean 
+export interface EmptyComponentState {
+  toggle: boolean
 }
 
 export class EmptyComponentNaked extends React.Component<EmptyComponentProps, EmptyComponentState> {
@@ -20,9 +20,9 @@ export class EmptyComponentNaked extends React.Component<EmptyComponentProps, Em
     toggle: true
   }
 
-  constructor(props: EmptyComponentProps, state: EmptyComponentState){
+  constructor(props: EmptyComponentProps, state: EmptyComponentState) {
     super(props, state)
-    this.setState({toggle: props.initialToggleState || false})
+    this.setState({ toggle: props.initialToggleState || false })
   }
 
   render(): React.ReactNode {
@@ -30,23 +30,12 @@ export class EmptyComponentNaked extends React.Component<EmptyComponentProps, Em
     const { toggle } = this.state
     return (
       <div className={classes.root}>
-      <button onClick={e => this.setState({toggle: !this.state.toggle})}>
-        {this.state.toggle ? 'ON': 'OFF'}
-      </button>
+        <button onClick={e => this.setState({ toggle: !this.state.toggle })}>
+          {this.state.toggle ? 'ON' : 'OFF'}
+        </button>
       </div>
     )
   }
 }
 
-// (EmptyComponentNaked as any).propTypes = {
-//   classes: PropTypes.object.isRequired,
-// };
-
-// export const EmptyComponent = withStyles(styles)(EmptyComponentNaked)
-// export const EmptyComponent: EmptyComponentNaked = (withStyles(styles, { withTheme: true })(EmptyComponentNaked as any) as any) as EmptyComponentNaked;
-
-
 export const EmptyComponent = withStyles(styles, { withTheme: true })(EmptyComponentNaked as any);
-
-// export const EmptyComponent = withStyles(styles)(EmptyComponentNaked as any);
-

@@ -1,9 +1,8 @@
-import * as React from 'react';
-import * as PropTypes from 'prop-types';
-import { withStyles, createStyles, Theme, WithStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
-
+import * as React from 'react'
+import * as PropTypes from 'prop-types'
+import { withStyles, createStyles, Theme, WithStyles } from '@material-ui/core/styles'
+import MenuItem from '@material-ui/core/MenuItem'
+import TextField from '@material-ui/core/TextField'
 
 const styles = (theme: Theme) => createStyles({
   container: {
@@ -18,8 +17,7 @@ const styles = (theme: Theme) => createStyles({
   menu: {
     width: 200,
   },
-});
-
+})
 
 const currencies = [
   {
@@ -38,30 +36,24 @@ const currencies = [
     value: 'JPY',
     label: '¥',
   },
-];
+]
 
-
-// export interface AppBarProps extends WithStyles<typeof styles> { }
-// export interface AppBarState {name: string,
-// age: string,
-// multiline: string,
-// currency: string}
 class TextFields extends React.Component<any, {[k:string]:string}> {
   state = {
     name: 'Cat in the Hat',
     age: '',
     multiline: 'Controlled',
     currency: 'EUR',
-  };
+  }
 
   handleChange = (name:string) => (event: any) => {
     this.setState({
       [name]: event.target.value,
-    });
-  };
+    })
+  }
 
   render() {
-    const { classes } = this.props;
+    const { classes } = this.props
 
     return (
       <form className={classes.container} noValidate autoComplete="off">
@@ -232,12 +224,12 @@ class TextFields extends React.Component<any, {[k:string]:string}> {
           margin="normal"
         />
       </form>
-    );
+    )
   }
 }
 
 (TextFields as any).propTypes = {
   classes: PropTypes.object.isRequired,
-};
+}
 
-export default withStyles(styles)(TextFields);
+export default withStyles(styles)(TextFields)

@@ -17,34 +17,33 @@ function render(props: WithStyles<typeof styles>) {
 
   return (<div>
 
-          <p>IM Command</p>
-          <textarea defaultValue={JSON.stringify(defaultValue)} className={classes.input}></textarea>
-          <Button onClick={execute}>Execute</Button>
-          {/* <button className="execute" onClick={execute}>Execute</button> */}
+    <p>IM Command</p>
+    <textarea defaultValue={JSON.stringify(defaultValue)} className={classes.input + ' input'}></textarea>
+    <Button onClick={execute} variant="contained" color="primary" >Execute</Button>
 
-          <p>Suggestions:</p>
-          <ul>
-            <li>
-              ["convert", "srcFile.png",  "-morphology", "Hit-and-Miss" , "2x1:1,0", "out.png"]
+    <p>Suggestions:</p>
+    <ul>
+      <li>
+        ["convert", "srcFile.png",  "-morphology", "Hit-and-Miss" , "2x1:1,0", "out.png"]
               </li>
-            <li>
-              ["convert", "logo:", "-rotate", "90", "-resize", "200%", "out.png"]
+      <li>
+        ["convert", "logo:", "-rotate", "90", "-resize", "200%", "out.png"]
             </li>
-            <li>
-              ["convert", "logo:", "-morphology", "Convolve" , "3x3: 0.0,0.5,0.0  0.5,1.0,0.5   0.0,0.5,0.0", "out.png"]
+      <li>
+        ["convert", "logo:", "-morphology", "Convolve" , "3x3: 0.0,0.5,0.0  0.5,1.0,0.5   0.0,0.5,0.0", "out.png"]
             </li>
-          </ul>
-          <p>Source image: </p>
-          <img id="srcImage" src="rotate.png" />
+    </ul>
+    <p>Source image: </p>
+    <img id="srcImage" src="gnu.jpg" />
 
-          <p>Rotated and enlarged image: </p>
-          <img id="rotatedImage" />
-          <br /><br />
+    <p>Rotated and enlarged image: </p>
+    <img id="rotatedImage" />
+    <br /><br />
 
   </div>
   );
 }
-  
+
 
 function execute() {
   doImageMagick()
