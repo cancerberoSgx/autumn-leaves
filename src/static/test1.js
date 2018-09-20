@@ -8,25 +8,14 @@ const images = [
 
   { sourceUrl: 'gnu.jpg', targetId: 'outputImage2', outFile: 'gnuOut.jpg' }, // doesn't work see https://github.com/KnicKnic/WASM-ImageMagick/issues/8
   { sourceUrl: 'react.svg', targetId: 'outputImage4', outFile: 'reactOut.png' },// doesn't work
-
 ]
-function buildImArguments(s, image) {
-  try {
-    debugger
-    let result = JSON.parse(s.replace(/\s{2}/g, ' ')).map(a => a === '$INPUT' ? image.sourceUrl : a === '$OUTPUT' ? image.outFile : a)
-    document.querySelector('.error').innerHTML = ''
-    return result
-  } catch (error) {
-    document.querySelector('.error').innerHTML = error + ''
-  }
-}
 
 async function transformImages() {
   images.forEach(async image => {
     const t0 = performance.now()
     const outputImage = document.getElementById(image.targetId)
 
-    // const argValue= document.querySelector('.input').value.replace(/\s{2}/g, ' ')
+    spinner(true, outputImage)
     const imArguments = buildImArguments(document.querySelector('.input').value, image)
 
     const { processedFiles } = await DoMagickCall({ image, imArguments }) // TODO: images []
@@ -34,7 +23,6 @@ async function transformImages() {
     let firstOutputImage = processedFiles[0]
 
     const took = performance.now() - t0
-    // console.log(took, 'ms took on image', firstOutputImage, 'call: ', imArguments)
 
     if (outputImage) {
       outputImage.src = URL.createObjectURL(firstOutputImage['blob'])
@@ -42,26 +30,21 @@ async function transformImages() {
       outputImage.parentElement.parentElement.querySelector('.took').innerHTML = 'Took: ' + Math.round(took) + ' ms'
     }
     document.querySelector('.im-command').innerHTML = arrayToIMCommand(imArguments)
+    spinner(false, outputImage)
   })
 }
 async function DoMagickCall(config) {
-  // let outputImage = 
-
   let fetchedSourceImage = await fetch(config.image.sourceUrl)
   let arrayBuffer = await fetchedSourceImage.arrayBuffer()
-  let sourceBytes = new Uint8Array(arrayBuffer)
+  let content = new Uint8Array(arrayBuffer)
 
-  const files = [{ 'name': config.image.sourceUrl, 'content': sourceBytes }]
+  const name = config.image.sourceUrl
+  const newFiles = [{ name, content }]
+  const files = (config.files||[])
+    .filter(f=>f.name!==name) // remove file if already there
+    .concat(newFiles)
   let processedFiles = await Magick.Call(files, config.imArguments)
   return Promise.resolve({ processedFiles })
-}
-
-function arrayToIMCommand(command) {
-  return command
-    .map(c => c.match(/\s/) ? `'${c}'` : c)
-    .map(c => c.replace(/\(/gm, '\\('))
-    .map(c => c.replace(/\)/gm, '\\)'))
-    .join(' ')
 }
 
 export function start() {
@@ -73,4 +56,26 @@ export function start() {
     transformImages()
   })
   transformImages()
+}
+
+function arrayToIMCommand(command) {
+  return command
+    .map(c => c.match(/\s/) ? `'${c}'` : c)
+    .map(c => c.replace(/\(/gm, '\\('))
+    .map(c => c.replace(/\)/gm, '\\)'))
+    .join(' ')
+}
+
+function buildImArguments(s, image) {
+  try {
+    let result = JSON.parse(s.replace(/\s{2}/g, ' ')).map(a => a === '$INPUT' ? image.sourceUrl : a === '$OUTPUT' ? image.outFile : a)
+    document.querySelector('.error').innerHTML = ''
+    return result
+  } catch (error) {
+    document.querySelector('.error').innerHTML = error + ''
+  }
+}
+
+function spinner(spinning, el){
+  el.parentElement.parentElement.querySelector('.spinner').display = spinning ? 'block' : 'none'
 }
