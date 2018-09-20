@@ -47,8 +47,9 @@
       black 0,%h gray80", "-solarize", "50%", "-level", "50%,0", ")", "-compose", "Blur", "-set",
       "option:compose:args", "10", "-composite", "$OUTPUT"]</option>
 
-
-    <option>...</option>
+      <option>["convert", "$INPUT", "-colorspace", "HSL", "-channel", "Hue", "-separate", "$OUTPUT"]</option>
+     
+     <option>...</option>
     <option>THE FOLLOWING ONES DON'T WORK:</option>
     <option>...</option>
 
