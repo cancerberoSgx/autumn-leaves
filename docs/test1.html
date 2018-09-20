@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 
@@ -11,8 +10,8 @@
 
 <body>
 
-<style>
-.input{
+  <style>
+    .input{
   width: 100%;
   height: 40px;
 }
@@ -23,56 +22,63 @@
 
   <p>Try an ImageMagick command on different test images. Check out the suggestions!</p>
 
-  <textarea class="input">["convert", "$INPUT", "-distort", "barrel", "0.7 -0.009 0.0", "-resize", "200%", "$OUTPUT"]
+  <textarea class="input">["convert", "$INPUT", "-sigmoidal-contrast", "15x30%", "(", "+clone",  "-sparse-color", "Barycentric", "0,0 black 0,%h gray80", "-solarize", "50%", "-level", "50%,0", ")", "-compose", "Blur", "-set", "option:compose:args", "10", "-composite", "$OUTPUT"]
   </textarea>
 
   <p>Suggestions: </p>
-  <select class="suggestions" >
+  <select class="suggestions">
     <option>["convert", "$INPUT", "-distort", "barrel", "0.7 -0.009 0.0", "-resize", "200%", "$OUTPUT"]</option>
     <option>["convert", "$INPUT", "-rotate", "90","-resize","200%", "$OUTPUT"]</option>
     <option>["convert", "$INPUT", "-sigmoidal-contrast", "4,0%", "$OUTPUT"]</option>
-    <option>["convert","$INPUT", "-sparse-color", "Barycentric", "0,0 black 0,%h white", "-function", "polynomial", "4,-4,1", "$OUTPUT"]</option>
+    <option>["convert","$INPUT", "-sparse-color", "Barycentric", "0,0 black 0,%h white", "-function", "polynomial",
+      "4,-4,1", "$OUTPUT"]</option>
+      <option>["convert", "$INPUT", "-sigmoidal-contrast", "15x30%", "(", "+clone",  "-sparse-color", "Barycentric", "0,0 black 0,%h gray80", "-solarize", "50%", "-level", "50%,0", ")", "-compose", "Blur", "-set", "option:compose:args", "10", "-composite", "$OUTPUT"]</option>
 
-    <option>THE FOLLOWING ONES DON'T WORK</option>
+    <option>...</option>
+    <option>THE FOLLOWING ONES DON'T WORK:</option>
+    <option>...</option>
 
-    <option>["convert", "-size", "320x100", "xc:lightblue", "-font", "Candice", "-pointsize", "72", "-tile", "pattern:checkerboard", "-annotate", "+28+68", "Sebastian", "$OUTPUT"]</option> <!-- doesn't work see https://github.com/KnicKnic/WASM-ImageMagick/issues/9 -->
-   ", 
-   <option>["convert", "$INPUT", "-distort", "SRT", "%[fx:aa=$angle*pi/180;(w*abs(sin(aa))+h*abs(cos(aa)))/min(w,h)]", "$angle", "$OUTPUT"]</option> <!-- doesnt work - taken from https://imagemagick.org/Usage//photos/-->
-
+    <option>["convert", "-size", "320x100", "xc:lightblue", "-font", "Candice", "-pointsize", "72", "-tile",
+      "pattern:checkerboard", "-annotate", "+28+68", "Sebastian", "$OUTPUT"]</option>
+    <!-- doesn't work see https://github.com/KnicKnic/WASM-ImageMagick/issues/9 -->
+    ",
+    <option>["convert", "$INPUT", "-distort", "SRT", "%[fx:aa=$angle*pi/180;(w*abs(sin(aa))+h*abs(cos(aa)))/min(w,h)]",
+      "$angle", "$OUTPUT"]</option> <!-- doesnt work - taken from https://imagemagick.org/Usage//photos/-->
 
 
   </select>
 
+  <br/>
   <button class="execute">Execute</button>
 
-  <p>Source images: </p>
+  <p>Images: </p>
 
   <table class="images">
-<tr>
-  <td>
-    <img id="srcImage1" src="rotate.png">
-  </td>
-  <td>
-    <img id="outputImage1" src="spinner.gif">
-  </td>
-  <td>
-    <p class="took"></p>
-  </td>
-</tr>
+    <tr>
+      <td>
+        <img id="srcImage1" src="rotate.png">
+      </td>
+      <td>
+        <img id="outputImage1" src="spinner.gif">
+      </td>
+      <td>
+        <p class="took"></p>
+      </td>
+    </tr>
 
-<tr>
-  <td>
-    <img id="srcImage3" src="Hermitcrab.gif">
-  </td>
-  <td>
-    <img id="outputImage3" src="spinner.gif">
-  </td>
-  <td>
-    <p class="took"></p>
-  </td>
-</tr>
+    <tr>
+      <td>
+        <img id="srcImage3" src="Hermitcrab.gif">
+      </td>
+      <td>
+        <img id="outputImage3" src="spinner.gif">
+      </td>
+      <td>
+        <p class="took"></p>
+      </td>
+    </tr>
 
-<!-- <tr> doesnt work see https://github.com/KnicKnic/WASM-ImageMagick/issues/8
+    <!-- <tr> doesnt work see https://github.com/KnicKnic/WASM-ImageMagick/issues/8
   <td>
     <img id="srcImage2" src="gnu.jpg">
   </td>
@@ -99,11 +105,11 @@
   </table>
 
   <script type='module'>
-    import {start} from './test1.js'
+    import { start } from './test1.js'
     start()
   </script>
 
-<!-- <script type='module' src="test1.js"></script> -->
+  <!-- <script type='module' src="test1.js"></script> -->
 </body>
 
 </html>
