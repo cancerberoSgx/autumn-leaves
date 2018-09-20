@@ -11,23 +11,27 @@
 <body>
 
   <style>
-    .input{
+.input{
   width: 100%;
-  height: 40px;
+  height: 100px;
 }
 .execute {
   border: 2px solid blue
 }
+.error{margin: 0; padding: 0; font-weight: bold}
 </style>
 
   <p>Try an ImageMagick command on different test images. Check out the suggestions!</p>
 
   <textarea class="input">["convert", "$INPUT", "-sigmoidal-contrast", "15x30%", "(", "+clone",  "-sparse-color", "Barycentric", "0,0 black 0,%h gray80", "-solarize", "50%", "-level", "50%,0", ")", "-compose", "Blur", "-set", "option:compose:args", "10", "-composite", "$OUTPUT"]
-  </textarea>
+  </textarea> 
+
+  <p class="error">
+  </p>
 
   <p>
     <strong>ImageMagick Command: </strong>
-    <br/>
+    <br />
     <span class="im-command"></span>
   </p>
 
@@ -47,24 +51,25 @@
       black 0,%h gray80", "-solarize", "50%", "-level", "50%,0", ")", "-compose", "Blur", "-set",
       "option:compose:args", "10", "-composite", "$OUTPUT"]</option>
 
-      <option>["convert", "$INPUT", "-colorspace", "HSL", "-channel", "Hue", "-separate", "$OUTPUT"]</option>
-     
-     <option>...</option>
+    <option>["convert", "$INPUT", "-colorspace", "HSL", "-channel", "Hue", "-separate", "$OUTPUT"]</option>
+
+    <option>...</option>
     <option>THE FOLLOWING ONES DON'T WORK:</option>
     <option>...</option>
 
-    <option>NOT WORKING AS EXPECTED: ["convert", "$INPUT", "(", "+clone", "-scale", "25%", "-scale", "400%", ")", "(" ,"+clone", "-gamma", "0",
-  "-fill", "white", "-draw", "circle 65,53 50,40", "-blur", "10x4", ")", "-composite", "$OUTPUT"]</option>
+    <option>NOT WORKING AS EXPECTED: ["convert", "$INPUT", "(", "+clone", "-scale", "25%", "-scale", "400%", ")", "("
+      ,"+clone", "-gamma", "0",
+      "-fill", "white", "-draw", "circle 65,53 50,40", "-blur", "10x4", ")", "-composite", "$OUTPUT"]</option>
 
-        
+
     <option>NOT WORKING: see https://github.com/KnicKnic/WASM-ImageMagick/issues/9
-  ["convert", "-size", "320x100", "xc:lightblue", "-font", "Candice", "-pointsize", "72", "-tile",
+      ["convert", "-size", "320x100", "xc:lightblue", "-font", "Candice", "-pointsize", "72", "-tile",
       "pattern:checkerboard", "-annotate", "+28+68", "Sebastian", "$OUTPUT"]
     </option>
     <!-- doesn't work  -->
     ",
-    <option>NOT WORKING:  taken from https://imagemagick.org/Usage//photos/
-  ["convert", "$INPUT", "-distort", "SRT", "%[fx:aa=$angle*pi/180;(w*abs(sin(aa))+h*abs(cos(aa)))/min(w,h)]",
+    <option>NOT WORKING: taken from https://imagemagick.org/Usage//photos/
+      ["convert", "$INPUT", "-distort", "SRT", "%[fx:aa=$angle*pi/180;(w*abs(sin(aa))+h*abs(cos(aa)))/min(w,h)]",
       "$angle", "$OUTPUT"]</option> <!-- doesnt work - taken from https://imagemagick.org/Usage//photos/-->
 
 
@@ -89,16 +94,16 @@
     </tr>
 
     <tr>
-        <td>
-          <img id="srcImage5" src="zelda.gif">
-        </td>
-        <td>
-          <img id="outputImage5" src="spinner.gif">
-        </td>
-        <td>
-          <p class="took"></p>
-        </td>
-      </tr>
+      <td>
+        <img id="srcImage5" src="zelda.gif">
+      </td>
+      <td>
+        <img id="outputImage5" src="spinner.gif">
+      </td>
+      <td>
+        <p class="took"></p>
+      </td>
+    </tr>
     <tr>
       <td>
         <img id="srcImage3" src="Hermitcrab.gif">
@@ -112,30 +117,30 @@
     </tr>
 
     <tr>
-  <td>
-    <img id="srcImage2_DONTWORK" src="gnu.jpg">
-  </td>
-  <td> 
-    It doesn't work see https://github.com/KnicKnic/WASM-ImageMagick/issues/8 <br/>
-    <!-- <img id="outputImage2" src="spinner.gif"> -->
-  </td>
-  <td>
-    <p class="took"></p>
-  </td>
-</tr>
+      <td>
+        <img id="srcImage2" src="gnu.jpg">
+      </td>
+      <td>
+        It doesn't work see https://github.com/KnicKnic/WASM-ImageMagick/issues/8 <br />
+        <img id="outputImage2" src="spinner.gif">
+      </td>
+      <td>
+        <p class="took"></p>
+      </td>
+    </tr>
 
-<tr> 
-  <td>
-    <img id="srcImage4_DONTWORK" src="react.svg">
-  </td>
-  <td>
-    It doesn't work <br/>
-    <!-- <img id="outputImage4" src="spinner.gif"> -->
-  </td>
-  <td>
-    <p class="took"></p>
-  </td>
-</tr>
+    <tr>
+      <td>
+        <img id="srcImage4_DONTWORK" src="react.svg">
+      </td>
+      <td>
+        It doesn't work <br />
+        <!-- <img id="outputImage4" src="spinner.gif"> -->
+      </td>
+      <td>
+        <p class="took"></p>
+      </td>
+    </tr>
 
   </table>
 
