@@ -7,10 +7,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Page Title</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
 </head>
 
 <body>
+
 <style>
 .input{
   width: 100%;
@@ -20,14 +20,18 @@
   border: 2px solid blue
 }
 </style>
+
   <p>Try an ImageMagick command on different test images. Check out the suggestions!</p>
 
-  <textarea class="input" >["-distort", "barrel", "0.7 -0.009 0.0", "-resize", "200%"]</textarea>
+  <textarea class="input">["convert", "$INPUT", "-distort", "barrel", "0.7 -0.009 0.0", "-resize", "200%", "$OUTPUT"]
+  </textarea>
 
   <p>Suggestions: </p>
   <select class="suggestions" >
-    <option>["-distort", "barrel", "0.7 -0.009 0.0", "-resize", "200%"]</option>
-    <option>["-rotate", "90","-resize","200%"]</option>
+    <option>["convert", "$INPUT", "-distort", "barrel", "0.7 -0.009 0.0", "-resize", "200%", "$OUTPUT"]</option>
+    <option>["convert", "$INPUT", "-rotate", "90","-resize","200%", "$OUTPUT"]</option>
+    <option>["convert", "$INPUT",  "-sigmoidal-contrast", "4,0%", "$OUTPUT"]</option>
+    <!-- <option>["convert", "-size", "320x100", "xc:lightblue", "-font", "Candice", "-pointsize", "72", "-tile", "pattern:checkerboard", "-annotate", "+28+68", "Sebastian", "$OUTPUT"]</option> doesn't work see https://github.com/KnicKnic/WASM-ImageMagick/issues/9 -->
   </select>
 
   <button class="execute">Execute</button>
@@ -42,6 +46,9 @@
   <td>
     <img id="outputImage1" src="spinner.gif">
   </td>
+  <td>
+    <p class="took"></p>
+  </td>
 </tr>
 
 <tr>
@@ -51,23 +58,32 @@
   <td>
     <img id="outputImage3" src="spinner.gif">
   </td>
+  <td>
+    <p class="took"></p>
+  </td>
 </tr>
 
-<!-- <tr>
+<!-- <tr> doesnt work see https://github.com/KnicKnic/WASM-ImageMagick/issues/8
   <td>
     <img id="srcImage2" src="gnu.jpg">
   </td>
   <td>
     <img id="outputImage2" src="spinner.gif">
   </td>
+  <td>
+    <p class="took"></p>
+  </td>
 </tr>
 
-<tr>
+<tr> doesn't work
   <td>
     <img id="srcImage4" src="react.svg">
   </td>
   <td>
     <img id="outputImage4" src="spinner.gif">
+  </td>
+  <td>
+    <p class="took"></p>
   </td>
 </tr> -->
 
