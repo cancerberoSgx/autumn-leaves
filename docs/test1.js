@@ -1,7 +1,7 @@
 
 import * as Magick from './magickApi.js'
 
-const images = [
+export const images = [
   { sourceUrl: 'rotate.png', targetId: 'outputImage1', outFile: 'rotateOut.png' },
   { sourceUrl: 'Hermitcrab.gif', targetId: 'outputImage3', outFile: 'HermitcrabOut.gif' },
   { sourceUrl: 'zelda.gif', targetId: 'outputImage5', outFile: 'zeldaOut.gif' },
@@ -9,8 +9,6 @@ const images = [
   { sourceUrl: 'react.svg', targetId: 'outputImage4', outFile: 'reactOut.png' },// doesn't work
   { sourceUrl: 'pic.tiff', targetId: 'outputImage6', outFile: 'picOut.png' }, 
    { sourceUrl: 'holocaust.jpg', targetId: 'outputImage7', outFile: 'holocaustOut.png' },
-  
-
 ]
 
 async function transformImages() {
