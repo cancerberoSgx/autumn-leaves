@@ -7,7 +7,7 @@ export const images: ConvertDemoImage[] = [
   { sourceUrl: 'Hermitcrab.gif', targetId: 'outputImage3', outFile: 'HermitcrabOut.gif' },
   { sourceUrl: 'zelda.gif', targetId: 'outputImage5', outFile: 'zeldaOut.gif' },
   { sourceUrl: 'gnu.jpg', targetId: 'outputImage2', outFile: 'gnuOut.jpg' },
-  { sourceUrl: 'react.svg', targetId: 'outputImage4', outFile: 'reactOut.png' },// doesn't work
+  { sourceUrl: 'react.svg', targetId: 'outputImage4', outFile: 'reactOut.png' },
   { sourceUrl: 'pic.tiff', targetId: 'outputImage6', outFile: 'picOut.png' },
   { sourceUrl: 'holocaust.jpg', targetId: 'outputImage7', outFile: 'holocaustOut.png' },
 ]
@@ -143,12 +143,41 @@ export const transformations: ConvertDemoTransformation[] = [
     command: ["convert", "(", "xc:red", "xc:blue", "+append", ")", "(", "xc:yellow", "xc:cyan", "+append", ")", "-append", "-filter", "triangle", "-resize", "100x100!", "$OUTPUT"],
     description: ' '
   },
+  {
+    id: 'gradient2',
+    name: 'gradient 2',
+    command: ["convert", '-size', '100x100', 'xc:', '+size', 'xc:red', 'xc:blue', 'xc:lime', '-colorspace', 'HSB', '-fx', 'ar=1/max(1,  (i-50)*(i-50)+(j-10)*(j-10)  ); br=1/max(1,  (i-10)*(i-10)+(j-70)*(j-70)  );       cr=1/max(1,  (i-90)*(i-90)+(j-90)*(j-90)  );       ( u[1]*ar + u[2]*br + u[3]*cr )/( ar+br+cr )', '-colorspace', 'sRGB', "$OUTPUT"],
+    description: ' '
+  },
+  {
+    id: 'gradient3',
+    name: 'gradient 3',
+    command: ["convert", '-size', '100x100', 'xc:', '-colorspace', 'RGB', '-define', 'shepards:power=1', '-sparse-color', 'Shepards', '30,10 red  10,80 blue  70,60 lime  80,20 yellow', '-colorspace', 'sRGB', '-fill', 'white', '-stroke', 'black', '-draw', 'circle 30,10 30,12  circle 10,80 10,82', '-draw', 'circle 70,60 70,62  circle 80,20 80,22', "$OUTPUT"],
+    description: ' '
+  },
 
+  {
+    id: 'sinusoid1',
+    name: 'sinusoid1',
+    command: ["convert", "$INPUT", "-function", "Sinusoid", "3,3", "$OUTPUT"],
+    description: ' '
+  },
 
+  {
+    id: 'pattern1',
+    name: 'pattern1',
+    command: ["convert", '-size', '80x80', '', 'xc:', '-tile-offset', '+20+20', '+size', '-tile', 'pattern:checkerboard', '-draw', 'color 30,20 reset', "$OUTPUT"],
+    description: ' '
+  },
+  {
+    id: 'tile1',
+    name: 'tile1',
+    command: ["convert", "$INPUT", '-set', 'option:distort:viewport', '100x100-50-50', '-virtual-pixel', 'tile', '-distort', 'Arc', '45 0 50', '+repage', "$OUTPUT"],
+    description: ' '
+  },
 ]
 
 export const suggestionsDontWork = [
-
   {
     id: 'notWorking3',
     name: 'notWorking3',
@@ -168,15 +197,3 @@ export const suggestionsDontWork = [
     description: 'NOT WORKING AS EXPECTED'
   },
 ]
-
-
-// <option>NOT WORKING: taken from https://imagemagick.org/Usage//photos/
-//                                 ["convert", "$INPUT", "-distort", "SRT", "%[fx:aa=$angle*pi/180;(w*abs(sin(aa))+h*abs(cos(aa)))/min(w,h)]",
-// "$angle", "$OUTPUT"]</option>
-//   {/* <!-- doesnt work - taken from https://imagemagick.org/Usage//photos/--> */}
-
-
-// </select>
-
-// </div>
-
