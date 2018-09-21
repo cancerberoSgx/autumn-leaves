@@ -42,20 +42,20 @@ const drawer = (props: WithStyles<typeof styles> & { open: boolean, handleDrawer
 
     <Link to="">Home</Link>
     <Divider />
-   
-    <Link  to="page1">Page 1</Link>
+
+    <Link to="page1">Page 1</Link>
     <Divider />
 
-    <Link  to="SimpleCLITransformationEditor">Basic CLI transformation tool</Link>
+    <Link to="SimpleCLITransformationEditor">Basic CLI transformation tool</Link>
     <Divider />
 
-    <Link  to="TestImages">See test images</Link>
+    <Link to="TestImages">See test images</Link>
     <Divider />
 
-    <Link  to="test1">Convert test page</Link>
+    <Link to="convertDemo">Convert test page</Link>
     <Divider />
-    
-    <Link  to="download">Download Results</Link>
+
+    <Link to="download">Download Results</Link>
   </Drawer>
 );
 

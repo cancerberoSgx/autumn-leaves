@@ -6,7 +6,7 @@ import home from '../page/home'
 import DownloadResult from '../components/DownloadResult'
 import SimpleCLITransformationEditor from '../components/SimpleCLITransformationEditor'
 import TestImages from '../components/TestImages';
-import test1 from '../page/test1';
+import convertDemo from '../page/convertDemo/convertDemo';
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -27,7 +27,7 @@ function main(props: WithStyles<typeof styles>) {
         
         <Route path='/TestImages' component={TestImages} />
         <Route path='/download' component={DownloadResult} />
-        <Route path='/test1' component={test1} /> 
+        <Route path='/convertDemo' component={convertDemo} /> 
       </Switch>
     </div>
   )

@@ -4,7 +4,7 @@
   "description": "online application to define, administer and apply transformations on images, based on ImageMagick, runs 100% in the browser.",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack.prod.js && npm run static && npm run im-cli-convert",
+    "build": "webpack --config webpack.prod.js && npm run static",
     "start": "webpack-dev-server --config webpack.dev.js --open",
     "static": "cp -rf src/static/* docs",
     "test": "jest",
