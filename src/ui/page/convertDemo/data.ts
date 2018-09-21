@@ -65,6 +65,25 @@ export const transformations: ConvertDemoTransformation[] = [
     command: ["convert", "$INPUT", "-segment", "1x1", "+dither", "-colors", "2", "-edge", "1", "-negate", "-normalize", "$OUTPUT"],
     description: 'Convert a simple photo into something children can color in. Shaded complex pictures'
   },
+
+  {
+    id: 'frameVignette1',
+    name: 'frame Vignette',
+    command: ["convert", "$INPUT", "-alpha", "set", "-background", "none", "-vignette", "0x4", "$OUTPUT"],
+    description: 'The Vignette Operator provides a simple means to add a blurry edge around an image.'
+  },
+  {
+    id: 'frameFeathering1',
+    name: 'frame feathering 1',
+    command: ["convert", "$INPUT", "-alpha", "set", "-virtual-pixel", "transparent", "-channel", "A", "-morphology", "Distance", "Euclidean:1,10!", "+channel", "$OUTPUT"],
+    description: 'The Morphology Distance method provides a true transparent \'Feathering\' of an image\'s edges.'
+  },
+  {
+    id: 'frameFeathering2',
+    name: 'frame feathering 2',
+    command: ["convert", "$INPUT", "-alpha", "set", "-virtual-pixel", "transparent", "-channel", "A", "-blur", "0x8", "", "-level", "50%,100%", "+channel", "$OUTPUT"],
+    description: 'You can also Feather Images using Blur, using the same method of adding a transparent Virtual Pixels before bluring just the alpha channel. This generates a more softer feathering to the image, as well as noticeably rounded the corners of the image.'
+  },
 ]
 
 export const suggestionsDontWork = [

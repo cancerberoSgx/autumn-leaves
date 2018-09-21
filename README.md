@@ -5,8 +5,7 @@
  * Easy to use tools for common tasks. 
  * Both a website and a framework around WASM-ImageMagick library
  * author, store, reuse, share transformations. 
-
- * [Pure JavaScript+HTML WASM-ImageMagick demo page](https://cancerberosgx.github.io/autumn-leaves/test1.html)
+ * Check out [convert demo page](https://cancerberosgx.github.io/autumn-leaves/#/convertDemo) to see it in action, use many ImageMagick command examples and different image formats!
 
 # STATUS / ROADMAP
 
