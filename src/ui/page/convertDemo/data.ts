@@ -50,7 +50,7 @@ export const transformations: ConvertDemoTransformation[] = [
   {
     id: 'charcoal1',
     name: 'charcoal 1',
-    command: ["convert", "$INPUT", "-charcoal", "5", "$OUTPUT"],
+    command: ["convert", "$INPUT", "-charcoal", "4", "-blur", "0x1", "-rotate", "10", "$OUTPUT"],
     description: 'The Charcoal Sketch Transform, offers users a very simple way of generating a simplified gray-scale rendering of the image.'
   },
   {
@@ -133,7 +133,7 @@ export const transformations: ConvertDemoTransformation[] = [
   {
     id: 'framePolaroid3',
     name: 'frame polaroid 3',
-    command: ["convert", "-size", "150x150", "xc:none", "-background", "none", "-fill", "white", "-stroke", "grey60", "-draw", "rectangle 0,0 130,100", "$INPUT", "-geometry", "+5+5", "-composite", "-rotate", "-10", "-draw", "rectangle 0,0 130,100", "$INPUT", "-geometry", "+5+5", "-composite", "-rotate", "-10", "-draw", "rectangle 0,0 130,100", "$INPUT", "-geometry", "+5+5", "-composite", "-rotate", "+10", "-trim", "+repage", "-background", "LightSteelBlue", "-flatten", "$OUTPUT"],
+    command: ["convert", "-size", "150x150", "xc:none", "-background", "none", "-fill", "white", "-stroke", "grey60", "-draw", "rectangle 0,0  119,155", "$INPUT", "-geometry", "+5+5", "-composite", "-rotate", "-10", "-draw", "rectangle 0,0 119,155", "$INPUT", "-geometry", "+5+5", "-composite", "-rotate", "-10", "-draw", "rectangle 0,0 119,155", "$INPUT", "-geometry", "+5+5", "-composite", "-rotate", "+10", "-trim", "+repage", "-background", "LightSteelBlue", "-flatten", "$OUTPUT"],
     description: ' '
   },
 
@@ -170,11 +170,46 @@ export const transformations: ConvertDemoTransformation[] = [
     description: ' '
   },
   {
+    id: 'pattern2',
+    name: 'pattern2',
+    command: ["convert", '-size', '250x250', 'xc:', '+noise', 'Random', '(', '+clone', '-transpose', ')', '(', '+clone', '-sparse-color', 'voronoi', '%w,0 white 0,%h black', ')', '-composite', '(', '+clone', '-rotate', '-90', ')', '+append', '(', '+clone', '-rotate', '180', ')', '-append', '-virtual-pixel', 'Tile', '-blur', '0x5', '-auto-level', '-separate', '-background', 'white', '-compose', 'ModulusAdd', '-flatten', '-channel', 'R', '-combine', '+channel', '-set', 'colorspace', 'HSB', '-colorspace', 'RGB', "$OUTPUT"],
+    description: ' '
+  },
+  {
     id: 'tile1',
     name: 'tile1',
     command: ["convert", "$INPUT", '-set', 'option:distort:viewport', '100x100-50-50', '-virtual-pixel', 'tile', '-distort', 'Arc', '45 0 50', '+repage', "$OUTPUT"],
     description: ' '
   },
+
+  {
+    id: 'backgroundRemoval1',
+    name: 'backgroundRemoval1',
+    command: ["convert", "$INPUT", "-bordercolor", "grey", "-border", "1x1", "-alpha", "set", "-channel", "RGBA", "-fuzz", "10%", "-fill", "none", "-floodfill", "+0+0", "grey", "-shave", "1x1", "$OUTPUT"],
+    description: ' '
+  },
+
+  {
+    id: 'quantize1',
+    name: 'quantize two colors',
+    command: ["convert", "$INPUT", '+dither', '-colors', '2', '-colorspace', 'gray', '-normalize', "$OUTPUT"],
+    description: ' '
+  },
+  {
+    id: 'quantize2',
+    name: 'quantize colormap',
+    command: ["convert", '-size', '16x16', 'xc:', '-channel', 'R', '-fx', '(i%8)/7', '-channel', 'G', '-fx', '(j%8)/7', '-channel', 'B', '-fx', '((i>>3&1)|(j>>2&2))/3', '-scale', '600%', "$OUTPUT"],
+    description: ' '
+  },
+
+  {
+    id: 'quantize3',
+    name: 'quantize dither 1',
+    command: ["convert", '$INPUT', '-set', 'option:distort:viewport', '%wx%h+0+0', '-colorspace', 'CMYK', '-separate', 'null:', '(', '-size', '2x2', 'xc:', '(', '+clone', '-negate', ')', '+append', '(', '+clone', '-negate', ')', '-append', ')', '-virtual-pixel', 'tile', '-filter', 'gaussian', '(', '+clone', '-distort', 'SRT', '2,60', ')', '+swap', '(', '+clone', '-distort', 'SRT', '2,30', ')', '+swap', '(', '+clone', '-distort', 'SRT', '2,45', ')', '+swap', '(', '+clone', '-distort', 'SRT', '2,0', '', '-blur', '0x0.7', ')', '+swap', '+delete', '-compose', 'Overlay', '-layers', 'composite', '-set', 'colorspace', 'CMYK', '-combine', '-colorspace', 'RGB', "$OUTPUT"],
+    description: ' '
+  },
+
+
 ]
 
 export const suggestionsDontWork = [

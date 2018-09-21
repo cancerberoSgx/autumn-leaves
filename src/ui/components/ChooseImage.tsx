@@ -24,6 +24,7 @@ function render(props: WithStyles<typeof styles>) {
         <Paper className={classes.paper}>
           Please choose an image<br />
           <input type="file"></input>
+          <p>Or load from the web: <input type="text" placeholder="http://address.to/some/image.png"></input> </p>
           <p>Or, </p>
           <div className="fileDropTarget">
             drag and drop files & folders from your desktop here
