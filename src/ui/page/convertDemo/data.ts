@@ -80,10 +80,25 @@ export const transformations: ConvertDemoTransformation[] = [
   },
   {
     id: 'frameFeathering2',
-    name: 'frame feathering 2',
+    name: 'frame soft rounded corners',
     command: ["convert", "$INPUT", "-alpha", "set", "-virtual-pixel", "transparent", "-channel", "A", "-blur", "0x8", "", "-level", "50%,100%", "+channel", "$OUTPUT"],
     description: 'You can also Feather Images using Blur, using the same method of adding a transparent Virtual Pixels before bluring just the alpha channel. This generates a more softer feathering to the image, as well as noticeably rounded the corners of the image.'
   },
+
+  {
+    id: 'frameFeathering3',
+    name: 'frame rounded corners',
+    command: ["convert", "$INPUT", "-alpha", "set", "-virtual-pixel", "transparent", "-channel", "A", "-blur", "0x8", "", "-threshold", "50%", "+channel", "$OUTPUT"],
+    description: ' '
+  },
+
+  {
+    id: 'frameShape1',
+    name: 'frame shape 1',
+    command: ["convert", "$INPUT", "-alpha", "set", "-compose", "DstOut", "(", "-size", "20x15", "xc:none", "-draw", "polygon 0,0  0,14 19,0", "-write", "mpr:triangle", "", "+delete", ")", "(", "mpr:triangle", ")", "-gravity", "northwest", "-composite", "(", "mpr:triangle", "-flip", ")", "-gravity", "southwest", "-composite", "(", "mpr:triangle", "-flop", ")", "-gravity", "northeast", "-composite", "(", "mpr:triangle", "-rotate", "180", ")", "-gravity", "southeast", "-composite", "$OUTPUT"],
+    description: ' '
+  },
+
 ]
 
 export const suggestionsDontWork = [
