@@ -84,7 +84,6 @@ export const transformations: ConvertDemoTransformation[] = [
     command: ["convert", "$INPUT", "-alpha", "set", "-virtual-pixel", "transparent", "-channel", "A", "-blur", "0x8", "", "-level", "50%,100%", "+channel", "$OUTPUT"],
     description: 'You can also Feather Images using Blur, using the same method of adding a transparent Virtual Pixels before bluring just the alpha channel. This generates a more softer feathering to the image, as well as noticeably rounded the corners of the image.'
   },
-
   {
     id: 'frameFeathering3',
     name: 'frame rounded corners',
@@ -98,6 +97,53 @@ export const transformations: ConvertDemoTransformation[] = [
     command: ["convert", "$INPUT", "-alpha", "set", "-compose", "DstOut", "(", "-size", "20x15", "xc:none", "-draw", "polygon 0,0  0,14 19,0", "-write", "mpr:triangle", "", "+delete", ")", "(", "mpr:triangle", ")", "-gravity", "northwest", "-composite", "(", "mpr:triangle", "-flip", ")", "-gravity", "southwest", "-composite", "(", "mpr:triangle", "-flop", ")", "-gravity", "northeast", "-composite", "(", "mpr:triangle", "-rotate", "180", ")", "-gravity", "southeast", "-composite", "$OUTPUT"],
     description: ' '
   },
+
+  {
+    id: 'frameTornPaperEdge1',
+    name: 'frame torn paper edges 1',
+    command: ["convert", "$INPUT", "(", "+clone", "-alpha", "extract", "-virtual-pixel", "black", "-spread", "10", "-blur", "0x3", "-threshold", "50%", "-spread", "1", "-blur", "0x.7", ")", "-alpha", "off", "-compose", "Copy_Opacity", "-composite", "$OUTPUT"],
+    description: ' '
+  },
+  {
+    id: 'frameTornPaperEdge2',
+    name: 'frame torn paper edges 2',
+    command: ["convert", "$INPUT", "-bordercolor", "linen", "-border", "8x8", "-background", "Linen", "", "-gravity", "SouthEast", "-splice", "10x10+0+0", "(", "+clone", "-alpha", "extract", "-virtual-pixel", "black", "-spread", "10", "-blur", "0x3", "-threshold", "50%", "-spread", "1", "-blur", "0x.7", ")", "-alpha", "off", "-compose", "Copy_Opacity", "-composite", "-gravity", "SouthEast", "-chop", "10x10", "$OUTPUT"],
+    description: ' '
+  },
+
+  {
+    id: 'frameShadow1',
+    name: 'frame shadow soft',
+    command: ["convert", "$INPUT", "-page", "+4+4", "-alpha", "set", "(", "+clone", "-background", "navy", "-shadow", "60x4+4+4", ")", "+swap", "-background", "none", "-mosaic", "$OUTPUT"],
+    description: ' '
+  },
+
+  {
+    id: 'framePolaroid1',
+    name: 'frame polaroid 1',
+    command: ["convert", "$INPUT", "-bordercolor", "white", "-border", "6", "-bordercolor", "grey60", "-border", "1", "-background", "none", "-rotate", "6", "-background", "black", "(", "+clone", "-shadow", "60x4+4+4", ")", "+swap", "-background", "none", "-flatten", "$OUTPUT"],
+    description: ' '
+  },
+  {
+    id: 'framePolaroid2',
+    name: 'frame polaroid 2',
+    command: ["convert", "$INPUT", "-bordercolor", "snow", "-background", "black", "+polaroid", "$OUTPUT"],
+    description: ' '
+  },
+  {
+    id: 'framePolaroid3',
+    name: 'frame polaroid 3',
+    command: ["convert", "-size", "150x150", "xc:none", "-background", "none", "-fill", "white", "-stroke", "grey60", "-draw", "rectangle 0,0 130,100", "$INPUT", "-geometry", "+5+5", "-composite", "-rotate", "-10", "-draw", "rectangle 0,0 130,100", "$INPUT", "-geometry", "+5+5", "-composite", "-rotate", "-10", "-draw", "rectangle 0,0 130,100", "$INPUT", "-geometry", "+5+5", "-composite", "-rotate", "+10", "-trim", "+repage", "-background", "LightSteelBlue", "-flatten", "$OUTPUT"],
+    description: ' '
+  },
+
+  {
+    id: 'gradient1',
+    name: 'gradient 1',
+    command: ["convert", "(", "xc:red", "xc:blue", "+append", ")", "(", "xc:yellow", "xc:cyan", "+append", ")", "-append", "-filter", "triangle", "-resize", "100x100!", "$OUTPUT"],
+    description: ' '
+  },
+
 
 ]
 
