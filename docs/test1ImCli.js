@@ -69,9 +69,7 @@ ${images.map(image => {
 }
 
 function toCliArg(arg){
-  return arg.match(/[\s()]/) ? `'${arg}'` : arg
-    // (arg.trim()==='('||arg.trim()===')') ? ('\\'+arg.trim()) : 
-    // arg
+  return arg.match(/[\s()]/) ? `'${arg}'` : arg // quote if includes spaces or parenthesis
 }
 
 console.log(getImCommands(images, transformations))

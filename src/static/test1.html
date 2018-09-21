@@ -11,7 +11,7 @@
 <body>
 
   <style>
-.input {
+    .input {
   width: 100%;
   height: 100px;
 }
@@ -32,7 +32,7 @@
   <p>Try an ImageMagick command on different test images. Check out the suggestions!</p>
 
   <textarea class="input">["convert", "$INPUT", "-sigmoidal-contrast", "15x30%", "(", "+clone",  "-sparse-color", "Barycentric", "0,0 black 0,%h gray80", "-solarize", "50%", "-level", "50%,0", ")", "-compose", "Blur", "-set", "option:compose:args", "10", "-composite", "$OUTPUT"]
-  </textarea> 
+  </textarea>
 
   <p class="error">
   </p>
@@ -66,15 +66,17 @@
     <!-- The Charcoal Sketch Transform, offers users a very simple way of generating a simplified gray-scale rendering of the image. -->
 
     <!-- Convert a simple photo into something children can color in. -->
-    <option>["convert", "$INPUT", "-edge", "1", "-negate", "-normalize", "-colorspace", "Gray", "-blur", "0x.5", "-contrast-stretch", "0x50%", "$OUTPUT"]</option> 
+    <option>["convert", "$INPUT", "-edge", "1", "-negate", "-normalize", "-colorspace", "Gray", "-blur", "0x.5",
+      "-contrast-stretch", "0x50%", "$OUTPUT"]</option>
 
-     <!-- Convert a simple photo into something children can color in. -->
-     <option>["convert", "$INPUT", "-segment", "1x1", "+dither", "-colors", "2", "-edge", "1", "-negate", "-normalize", "$OUTPUT"]</option> 
+    <!-- Convert a simple photo into something children can color in. -->
+    <option>["convert", "$INPUT", "-segment", "1x1", "+dither", "-colors", "2", "-edge", "1", "-negate", "-normalize",
+      "$OUTPUT"]</option>
 
-     <!-- <option>["convert", "$INPUT", "-charcoal", "5", "$OUTPUT"]</option> -->
+    <!-- <option>["convert", "$INPUT", "-charcoal", "5", "$OUTPUT"]</option> -->
     <!-- ", "-alpha", "set", "-background", "none", -vignette", "0x4"
 ", "  -->
-  <option>...</option>
+    <option>...</option>
     <option>THE FOLLOWING ONES DON'T WORK:</option>
     <option>...</option>
 
@@ -105,7 +107,7 @@
 
     <tr>
       <td>
-        <img id="srcImage2" src="gnu.jpg"><br/>gnu.jpg
+        <img id="srcImage2" src="gnu.jpg"><br />gnu.jpg
       </td>
       <td>
         <img class="spinner" src="spinner.gif">
@@ -118,7 +120,7 @@
 
     <tr>
       <td>
-        <img id="srcImage2" src="holocaust.jpg"><br/>holocaust.jpg
+        <img id="srcImage2" src="holocaust.jpg"><br />holocaust.jpg
       </td>
       <td>
         <img class="spinner" src="spinner.gif">
@@ -131,11 +133,11 @@
 
     <tr>
       <td>
-        <img id="srcImage1" src="rotate.png"><br/>rotate.png
+        <img id="srcImage1" src="rotate.png"><br />rotate.png
       </td>
       <td>
-          <img class="spinner" src="spinner.gif">
-        <img id="outputImage1" >
+        <img class="spinner" src="spinner.gif">
+        <img id="outputImage1">
       </td>
       <td>
         <p class="took"></p>
@@ -144,11 +146,11 @@
 
     <tr>
       <td>
-        <img id="srcImage5" src="zelda.gif"><br/>zelda.gif
+        <img id="srcImage5" src="zelda.gif"><br />zelda.gif
       </td>
       <td>
-          <img class="spinner" src="spinner.gif">
-        <img id="outputImage5" >
+        <img class="spinner" src="spinner.gif">
+        <img id="outputImage5">
       </td>
       <td>
         <p class="took"></p>
@@ -156,19 +158,20 @@
     </tr>
     <tr>
       <td>
-        <img id="srcImage3" src="Hermitcrab.gif"><br/>Hermitcrab.gif
+        <img id="srcImage3" src="Hermitcrab.gif"><br />Hermitcrab.gif
       </td>
       <td>
-          <img class="spinner" src="spinner.gif">
-        <img id="outputImage3" >
+        <img class="spinner" src="spinner.gif">
+        <img id="outputImage3">
       </td>
       <td>
         <p class="took"></p>
       </td>
     </tr>
 
+    <tr>
       <td>
-        <img id="srcImage4_DONTWORK" src="react.svg"><br/>react.svg
+        <img id="srcImage4_DONTWORK" src="react.svg"><br />react.svg
       </td>
       <td>
         It doesn't work <br />
@@ -181,17 +184,17 @@
     </tr>
 
     <tr>
-        <td>
-          <img id="srcImage6" src="pic.tiff"><br/>pic.tiff
-        </td>
-        <td>
-          <img class="spinner" src="spinner.gif">
-          <img id="outputImage6">
-        </td>
-        <td>
-          <p class="took"></p>
-        </td>
-      </tr>
+      <td>
+        <img id="srcImage6" src="pic.tiff"><br />pic.tiff
+      </td>
+      <td>
+        <img class="spinner" src="spinner.gif">
+        <img id="outputImage6">
+      </td>
+      <td>
+        <p class="took"></p>
+      </td>
+    </tr>
     <tr>
 
   </table>

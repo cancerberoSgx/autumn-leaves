@@ -4,10 +4,11 @@
   "description": "online application to define, administer and apply transformations on images, based on ImageMagick, runs 100% in the browser.",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack.prod.js && npm run static",
+    "build": "webpack --config webpack.prod.js && npm run static && npm run im-cli-convert",
     "start": "webpack-dev-server --config webpack.dev.js --open",
     "static": "cp -rf src/static/* docs",
-    "test": "jest"
+    "test": "jest",
+    "im-cli-convert": "cd docs && sh test1ImDesktopConvert.sh && cd .."
   },
   "keywords": [],
   "author": "Sebastian Gurin",

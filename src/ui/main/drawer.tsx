@@ -51,6 +51,9 @@ const drawer = (props: WithStyles<typeof styles> & { open: boolean, handleDrawer
 
     <Link  to="TestImages">See test images</Link>
     <Divider />
+
+    <Link  to="test1">Convert test page</Link>
+    <Divider />
     
     <Link  to="download">Download Results</Link>
   </Drawer>
