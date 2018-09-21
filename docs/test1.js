@@ -7,7 +7,10 @@ const images = [
   { sourceUrl: 'zelda.gif', targetId: 'outputImage5', outFile: 'zeldaOut.gif' },
   { sourceUrl: 'gnu.jpg', targetId: 'outputImage2', outFile: 'gnuOut.jpg' },
   { sourceUrl: 'react.svg', targetId: 'outputImage4', outFile: 'reactOut.png' },// doesn't work
-  { sourceUrl: 'pic.tiff', targetId: 'outputImage6', outFile: 'picOut.png' },
+  { sourceUrl: 'pic.tiff', targetId: 'outputImage6', outFile: 'picOut.png' }, 
+   { sourceUrl: 'holocaust.jpg', targetId: 'outputImage7', outFile: 'holocaustOut.png' },
+  
+
 ]
 
 async function transformImages() {

@@ -60,8 +60,20 @@
       "option:compose:args", "10", "-composite", "$OUTPUT"]</option>
 
     <option>["convert", "$INPUT", "-colorspace", "HSL", "-channel", "Hue", "-separate", "$OUTPUT"]</option>
+    <!-- extracting the 'Hue' by Separating Channel Images, then looking up the 'hue shade' wanted. -->
 
-    <option>...</option>
+    <option>["convert", "$INPUT", "-charcoal", "5", "$OUTPUT"]</option>
+    <!-- The Charcoal Sketch Transform, offers users a very simple way of generating a simplified gray-scale rendering of the image. -->
+
+    <!-- Convert a simple photo into something children can color in. -->
+    <option>["convert", "$INPUT", "-edge", "1", "-negate", "-normalize", "-colorspace", "Gray", "-blur", "0x.5", "-contrast-stretch", "0x50%", "$OUTPUT"]</option> 
+
+     <!-- Convert a simple photo into something children can color in. -->
+     <option>["convert", "$INPUT", "-segment", "1x1", "+dither", "-colors", "2", "-edge", "1", "-negate", "-normalize", "$OUTPUT"]</option> 
+
+    
+  
+  <option>...</option>
     <option>THE FOLLOWING ONES DON'T WORK:</option>
     <option>...</option>
 
@@ -89,6 +101,33 @@
   <p>Images: </p>
 
   <table class="images">
+
+    <tr>
+      <td>
+        <img id="srcImage2" src="gnu.jpg"><br/>gnu.jpg
+      </td>
+      <td>
+        <img class="spinner" src="spinner.gif">
+        <img id="outputImage2">
+      </td>
+      <td>
+        <p class="took"></p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <img id="srcImage2" src="holocaust.jpg"><br/>holocaust.jpg
+      </td>
+      <td>
+        <img class="spinner" src="spinner.gif">
+        <img id="outputImage7">
+      </td>
+      <td>
+        <p class="took"></p>
+      </td>
+    </tr>
+
     <tr>
       <td>
         <img id="srcImage1" src="rotate.png"><br/>rotate.png
@@ -121,19 +160,6 @@
       <td>
           <img class="spinner" src="spinner.gif">
         <img id="outputImage3" >
-      </td>
-      <td>
-        <p class="took"></p>
-      </td>
-    </tr>
-
-    <tr>
-      <td>
-        <img id="srcImage2" src="gnu.jpg"><br/>gnu.jpg
-      </td>
-      <td>
-        <img class="spinner" src="spinner.gif">
-        <img id="outputImage2">
       </td>
       <td>
         <p class="took"></p>

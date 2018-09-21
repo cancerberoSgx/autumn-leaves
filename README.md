@@ -28,7 +28,8 @@
  * IM manual : https://imagemagick.org/script/command-line-processing.php
  * API to talk to the tool externally as a js library: import autumn from 'http://autumnleaves.com/lib.js'; const outputImage = await autumn.convert('http://my.img.jpg', 'myImg.png')
  * the wizard should ask first the transformation because it will be responsible of declaring how/which kind of files it requires as input. eg: user chooses pdf2png transformation so the wizard will ask the user to choose a .pdf document
-
+ * test1 : commands in js - build sh script calling im that generates imgs and then show them in the page for comparing. 
+ 
 magick logo: gif:- | display gif:-
 
 
