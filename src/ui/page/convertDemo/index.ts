@@ -1,26 +1,22 @@
 import { ConvertDemoImage } from './data';
-
 import * as Magick from '../../../imagemagick/magickApi'
+import { readImageUrlToUintArray } from '../../../util/image'
 
 export async function DoMagickCall(config: any) {
-  let fetchedSourceImage = await fetch(config.image.sourceUrl)
-  let arrayBuffer = await fetchedSourceImage.arrayBuffer()
-  let content = new Uint8Array(arrayBuffer)
-
+  const content = await readImageUrlToUintArray(config.image.sourceUrl)
   const name = config.image.sourceUrl
   const newFiles = [{ name, content }]
   const files = (config.files || [])
     .filter((f: any) => f.name !== name) // remove file if already there
     .concat(newFiles)
   let processedFiles = await Magick.Call(files, config.imArguments)
-  return Promise.resolve({ processedFiles })
+  return { processedFiles }
 }
 
 export function arrayToIMCommand(command: string[]): string {
   return command
-    .map(c => c.match(/\s/) ? `'${c}'` : c)
-    .map(c => c.replace(/\(/gm, '\\('))
-    .map(c => c.replace(/\)/gm, '\\)'))
+    .map(c => (c.trim().match(/\s/) || (c.trim() === '(' || c.trim() === ')')) ? `'${c}'` : c) // if it contain spaces or is parenthesis then quote it
+    // .map(c => c.trim() === '(' ? '\\(' : c.trim() === ')' ? '\\)' : c) // transform "(" to "\("
     .join(' ')
 }
 

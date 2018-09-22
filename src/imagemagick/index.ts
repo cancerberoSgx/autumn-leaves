@@ -1,4 +1,4 @@
-import { readUrlContent } from '../util/image';
+import { readImageUrlToUintArray } from '../util/image';
 
 export interface MagickOutputFile {
   name: string
@@ -25,7 +25,7 @@ export function getMagickApi(): IMagick {
 
 export async function doImageMagick(command: string[]) {
   const url = command[1] // TODO !
-  const sourceBytes = await readUrlContent(url)
+  const sourceBytes = await readImageUrlToUintArray(url)
 
   const files: MagickInputFile[] = [{
     'name': url, // TODO !

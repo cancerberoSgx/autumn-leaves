@@ -1,7 +1,9 @@
 export interface State {
-  imagePool: Image[]
-  selectedImages: Image[]
-
+  imagePool: ImageRef[]
+  selectedImages: ImageRef[]
+}
+export interface ImageRef {
+  name: string
 }
 export enum CommandTypes { convert = 'convert' }
 
@@ -17,17 +19,14 @@ export enum ConvertMorphologies { 'Convolve' = 'Convolve', 'Hit-and-Miss' = 'Hit
 
 export interface Operation {
 }
-export interface ConvertMorphology extends Operation {
-  kernel?: string
-  morphology?: string
-  type: ConvertMorphologies
-  // type: ConvertMorphologies.
-}
+// export interface ConvertMorphology extends Operation {
+//   kernel?: string
+//   morphology?: string
+//   type: ConvertMorphologies
+//   // type: ConvertMorphologies.
+// }
 // export class ConvertMorphologyConvolveImpl1 implements ConvertMorphologyConvolve {
 //   kernel?: string;
 //   morphology?: string;
 //   type: CommandTypes = CommandTypes.convert
 // }
-export interface Image {
-  name: string
-}

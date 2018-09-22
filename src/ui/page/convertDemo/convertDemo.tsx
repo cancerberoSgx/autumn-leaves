@@ -2,6 +2,7 @@ import * as React from 'react'
 import { withStyles, Theme, createStyles, WithStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import { Button, MenuItem, FormControl, InputLabel, Select } from '@material-ui/core';
+import { ConvertDemoCliScript } from './ConvertDemoCliScript';
 
 const styles = (theme: Theme) => createStyles({
   paper: {
@@ -46,6 +47,7 @@ function render(props: WithStyles<typeof styles>) {
 
       {renderSuggestions(props, transformations)}<br/><br/>
 
+      <ConvertDemoCliScript/>
       <textarea className={classes.input + ' input'} defaultValue='["convert", "$INPUT", "-sigmoidal-contrast", "15x30%", "(", "+clone",  "-sparse-color", "Barycentric", "0,0 black 0,%h gray80", "-solarize", "50%", "-level", "50%,0", ")", "-compose", "Blur", "-set", "option:compose:args", "10", "-composite", "$OUTPUT"]'></textarea>
 
       <p className="error"></p>
@@ -60,6 +62,7 @@ function render(props: WithStyles<typeof styles>) {
       {renderSuggestions(props, suggestionsDontWork, 'Not working transformations')}
 
       {renderImageTable(props)}
+
 
     </Paper>
   )
@@ -118,21 +121,14 @@ function renderImageTable(props: WithStyles<typeof styles>) {
   )
 }
 
-
-
 export default withStyles(styles)(render)
-
-
 
 import { images as defaultImages, transformations, ConvertDemoTransformation, suggestionsDontWork } from './data'
 import { buildImArguments, DoMagickCall, arrayToIMCommand } from './index';
 
-
 function suggestionChange(e: React.ChangeEvent) {
   const value: any = (e.target as any).value
   document.querySelector<HTMLInputElement>('.input').value = JSON.stringify(value)
-  // selectedTransformationIndex = transformations.indexOf(transformations.find(t => JSON.stringify(t.command) === JSON.stringify(value)))
-  // debugger
   transformImages()
 }
 

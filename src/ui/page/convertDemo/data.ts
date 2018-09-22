@@ -48,11 +48,31 @@ export const transformations: ConvertDemoTransformation[] = [
     command: ["convert", "$INPUT", "-colorspace", "HSL", "-channel", "Hue", "-separate", "$OUTPUT"]
   },
   {
-    id: 'charcoal1',
-    name: 'charcoal 1',
+    id: 'transformCharcoal1',
+    name: 'transform charcoal 1',
     command: ["convert", "$INPUT", "-charcoal", "4", "-blur", "0x1", "-rotate", "10", "$OUTPUT"],
     description: 'The Charcoal Sketch Transform, offers users a very simple way of generating a simplified gray-scale rendering of the image.'
   },
+  {
+    id: 'transformEdge1',
+    name: 'transform Edge 1',
+    command: ["convert", "$INPUT", '(', '-clone', '0', '-roll', '+1+0', '-clone', '0', '-compose', 'difference', '-composite', ')', '(', '-clone', '0', '-roll', '+0+1', '-clone', '0', '-compose', 'difference', '-composite', ')', '-delete', '0', '', '-compose', 'screen', '-composite', '-negate', "$OUTPUT"],
+    description: ' '
+  },
+  {
+    id: 'transformDefine1',
+    name: 'transform define 1',
+    command: ["convert", "$INPUT", '-define', 'hough-lines:accumulator=true', '-hough-lines', '5x5+20', '-delete', '0', '-contrast-stretch', '0.1%', "$OUTPUT"],
+    description: ' '
+  },
+  {
+    id: 'transformChannelSwap1',
+    name: 'transformChannelSwap1',
+    command: ["convert", "$INPUT", '(', '+clone', '-channel', 'R', '-fx', 'B', ')', '+swap', '-channel', 'B', '-fx', 'v.R', "$OUTPUT"],
+    description: ' '
+  },
+
+
   {
     id: 'childrenCanColor1',
     name: 'children can color 1',
@@ -136,6 +156,13 @@ export const transformations: ConvertDemoTransformation[] = [
     command: ["convert", "-size", "150x150", "xc:none", "-background", "none", "-fill", "white", "-stroke", "grey60", "-draw", "rectangle 0,0  119,155", "$INPUT", "-geometry", "+5+5", "-composite", "-rotate", "-10", "-draw", "rectangle 0,0 119,155", "$INPUT", "-geometry", "+5+5", "-composite", "-rotate", "-10", "-draw", "rectangle 0,0 119,155", "$INPUT", "-geometry", "+5+5", "-composite", "-rotate", "+10", "-trim", "+repage", "-background", "LightSteelBlue", "-flatten", "$OUTPUT"],
     description: ' '
   },
+  {
+    id: 'framePolaroid4',
+    name: 'frame polaroid 4',
+    command: ["convert", "-caption", 'Spiral Staircase, Arc de Triumph, Paris, April 2006', "$INPUT", '-thumbnail', '240x240', '-bordercolor', 'Lavender', '-border', '5x5', '-density', '144', '', '-gravity', 'center', '-pointsize', '8', '-background', 'black', '-polaroid', '-15', '-resize', '50%', "$OUTPUT"],
+    description: ' '
+  },
+
 
   {
     id: 'gradient1',
@@ -208,7 +235,6 @@ export const transformations: ConvertDemoTransformation[] = [
     command: ["convert", '$INPUT', '-set', 'option:distort:viewport', '%wx%h+0+0', '-colorspace', 'CMYK', '-separate', 'null:', '(', '-size', '2x2', 'xc:', '(', '+clone', '-negate', ')', '+append', '(', '+clone', '-negate', ')', '-append', ')', '-virtual-pixel', 'tile', '-filter', 'gaussian', '(', '+clone', '-distort', 'SRT', '2,60', ')', '+swap', '(', '+clone', '-distort', 'SRT', '2,30', ')', '+swap', '(', '+clone', '-distort', 'SRT', '2,45', ')', '+swap', '(', '+clone', '-distort', 'SRT', '2,0', '', '-blur', '0x0.7', ')', '+swap', '+delete', '-compose', 'Overlay', '-layers', 'composite', '-set', 'colorspace', 'CMYK', '-combine', '-colorspace', 'RGB', "$OUTPUT"],
     description: ' '
   },
-
 
 ]
 
