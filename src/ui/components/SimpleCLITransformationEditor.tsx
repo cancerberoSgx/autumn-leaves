@@ -1,22 +1,23 @@
-import * as React from 'react';
-import { withStyles, Theme, createStyles, WithStyles } from '@material-ui/core/styles';
-import { doImageMagick } from '../../imagemagick'
-import { Button } from '@material-ui/core';
+import * as React from 'react'
+import { withStyles, Theme, createStyles, WithStyles } from '@material-ui/core/styles'
+import { Button } from '@material-ui/core'
+import { readImageUrlToUintArray } from '../../util/image'
+import { MagickInputFile, getMagickApi } from '../../imagemagick'
 
 const styles = (theme: Theme) => createStyles({
   input: {
     width: '100%',
     height: '80px'
   }
-});
+})
 
 const defaultValue = ["convert", "rotate.png", "-rotate", "90", "-resize", "200%", "out.png"]
 
 function render(props: WithStyles<typeof styles>) {
-  const { classes } = props;
+  const { classes } = props
 
   return (<div>
-
+    <h2>Old simple example</h2>
     <p>IM Command</p>
     <textarea defaultValue={JSON.stringify(defaultValue)} className={classes.input + ' input'}></textarea>
     <Button onClick={execute} variant="contained" color="primary" >Execute</Button>
@@ -41,9 +42,8 @@ function render(props: WithStyles<typeof styles>) {
     <br /><br />
 
   </div>
-  );
+  )
 }
-
 
 function execute() {
   const input = document.querySelector('.input') as HTMLInputElement
@@ -51,4 +51,20 @@ function execute() {
   doImageMagick(imArguments)
 }
 
-export default withStyles(styles)(render);
+async function doImageMagick(command: string[]) {
+  const url = command[1] // TODO !
+  const sourceBytes = await readImageUrlToUintArray(url)
+
+  const files: MagickInputFile[] = [{
+    'name': url, // TODO !
+    'content': sourceBytes
+  }]
+
+  let processedFiles = await getMagickApi().Call(files, command)
+
+  let firstOutputImage = processedFiles[0]
+  let rotatedImage = document.getElementById('rotatedImage') as HTMLImageElement
+
+  rotatedImage.src = URL.createObjectURL(firstOutputImage['blob'])
+}
+export default withStyles(styles)(render)

@@ -140,6 +140,7 @@ export default withStyles(styles)(render)
 
 import { images as defaultImages, transformations, ConvertDemoTransformation, suggestionsDontWork } from './data'
 import { buildImArguments, DoMagickCall, arrayToIMCommand } from './index';
+
 const defaultTransformation = transformations[0]
 let selectedTransformation: ConvertDemoTransformation = defaultTransformation
 function suggestionChange(e: React.ChangeEvent) {

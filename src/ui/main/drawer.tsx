@@ -1,11 +1,11 @@
-import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
-import IconButton from '@material-ui/core/IconButton';
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
+import ChevronRightIcon from '@material-ui/icons/ChevronRight'
+import * as React from 'react'
+import { Link, LinkProps } from 'react-router-dom'
+import { List, Divider, Drawer, IconButton, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
+import { Home, FormatPaint, CameraAlt, Transform } from '@material-ui/icons';
+import { ListItemProps } from '@material-ui/core/ListItem';
 
 export const drawerWidth = 240;
 
@@ -21,7 +21,7 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'flex-end',
     ...theme.mixins.toolbar,
   }
-});
+})
 
 const drawer = (props: WithStyles<typeof styles> & { open: boolean, handleDrawerClose: () => void }) => (
   <Drawer
@@ -40,23 +40,46 @@ const drawer = (props: WithStyles<typeof styles> & { open: boolean, handleDrawer
     </div>
     <Divider />
 
-    <Link to="">Home</Link>
-    <Divider />
-
-    <Link to="page1">Page 1</Link>
-    <Divider />
-
-    <Link to="SimpleCLITransformationEditor">Basic CLI transformation tool</Link>
-    <Divider />
-
-    <Link to="TestImages">See test images</Link>
-    <Divider />
-
-    <Link to="convertDemo">Convert test page</Link>
-    <Divider />
-
     <Link to="download">Download Results</Link>
-  </Drawer>
-);
 
-export default withStyles(styles, { withTheme: true })(drawer);
+    <List component="nav">
+
+      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="" {...props} onClick={() => { }} />}>
+        <ListItemIcon>
+          <Home />
+        </ListItemIcon>
+        <ListItemText primary="Home" />
+      </ListItem>
+
+      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="SimpleCLITransformationEditor" {...props}  />}>
+        <ListItemIcon>
+          <FormatPaint />
+        </ListItemIcon>
+        <ListItemText primary="Basic CLI transformation tool" />
+      </ListItem>
+
+      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="TestImages" {...props}   />}>
+        <ListItemIcon>
+          <CameraAlt />
+        </ListItemIcon>
+        <ListItemText primary="See test images" />
+      </ListItem>
+
+      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="convertDemo" {...props}   />}>
+        <ListItemIcon>
+          <Transform />
+        </ListItemIcon>
+        <ListItemText primary="Convert test page !" />
+      </ListItem>
+
+      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="compositeCommands" {...props}   />}>
+        <ListItemIcon>
+          <Home />
+        </ListItemIcon>
+        <ListItemText primary="Composite Commands" />
+      </ListItem>
+    </List>
+
+  </Drawer>
+)
+export default withStyles(styles, { withTheme: true })(drawer)

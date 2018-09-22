@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { withStyles, Theme, createStyles, WithStyles } from '@material-ui/core/styles'
 import { Route, Switch } from 'react-router'
-import page1 from '../page/page1'
+import {CompositeCommands} from '../page/CompositeCommands'
 import home from '../page/home'
 import DownloadResult from '../components/DownloadResult'
 import SimpleCLITransformationEditor from '../components/SimpleCLITransformationEditor'
@@ -22,7 +22,7 @@ function main(props: WithStyles<typeof styles>) {
     <div className={classes.root}>
       <Switch>
         <Route exact path='/' component={home} />
-        <Route path='/page1' component={page1} />
+        <Route path='/compositeCommands' component={CompositeCommands} />
         <Route path='/SimpleCLITransformationEditor' component={SimpleCLITransformationEditor} />
         
         <Route path='/TestImages' component={TestImages} />

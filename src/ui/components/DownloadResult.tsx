@@ -13,7 +13,7 @@ const styles = (theme: Theme) => createStyles({
   }
 })
 
-function page1(props: WithStyles<typeof styles>) {
+function render(props: WithStyles<typeof styles>) {
   const { classes } = props
 
   return (
@@ -29,4 +29,4 @@ function page1(props: WithStyles<typeof styles>) {
   )
 }
 
-export default withStyles(styles)(page1)
+export default withStyles(styles)(render)

@@ -1,6 +1,6 @@
-import { ConvertDemoImage } from './data';
-import * as Magick from '../../../imagemagick/magickApi'
+import { ConvertDemoImage } from './data'
 import { readImageUrlToUintArray } from '../../../util/image'
+import { getMagickApi } from '../../../imagemagick'
 
 export async function DoMagickCall(config: any) {
   const content = await readImageUrlToUintArray(config.image.sourceUrl)
@@ -9,14 +9,14 @@ export async function DoMagickCall(config: any) {
   const files = (config.files || [])
     .filter((f: any) => f.name !== name) // remove file if already there
     .concat(newFiles)
-  let processedFiles = await Magick.Call(files, config.imArguments)
+  let processedFiles = await getMagickApi().Call(files, config.imArguments)
   return { processedFiles }
 }
 
 export function arrayToIMCommand(command: string[]): string {
   return command
-    .map(c => (c.trim().match(/\s/) || (c.trim() === '(' || c.trim() === ')')) ? `'${c}'` : c) // if it contain spaces or is parenthesis then quote it
-    // .map(c => c.trim() === '(' ? '\\(' : c.trim() === ')' ? '\\)' : c) // transform "(" to "\("
+    // if it contain spaces or is parenthesis then quote it
+    .map(c => (c.trim().match(/\s/) || (c.trim() === '(' || c.trim() === ')')) ? `'${c}'` : c)
     .join(' ')
 }
 
