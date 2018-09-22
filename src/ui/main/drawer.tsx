@@ -4,7 +4,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import * as React from 'react'
 import { Link, LinkProps } from 'react-router-dom'
 import { List, Divider, Drawer, IconButton, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
-import { Home, FormatPaint, CameraAlt, Transform } from '@material-ui/icons';
+import { Home, FormatPaint, CameraAlt, Transform, PlaylistPlay } from '@material-ui/icons';
 import { ListItemProps } from '@material-ui/core/ListItem';
 
 export const drawerWidth = 240;
@@ -51,6 +51,20 @@ const drawer = (props: WithStyles<typeof styles> & { open: boolean, handleDrawer
         <ListItemText primary="Home" />
       </ListItem>
 
+      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="convertDemo" {...props}   />}>
+        <ListItemIcon>
+          <Transform />
+        </ListItemIcon>
+        <ListItemText primary="Convert test page !" />
+      </ListItem>
+
+      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="compositeCommands" {...props}   />}>
+        <ListItemIcon>
+          <PlaylistPlay />
+        </ListItemIcon>
+        <ListItemText primary="Composite Commands" />
+      </ListItem>
+      
       <ListItem component={(props: ListItemProps & LinkProps) => <Link to="SimpleCLITransformationEditor" {...props}  />}>
         <ListItemIcon>
           <FormatPaint />
@@ -65,19 +79,6 @@ const drawer = (props: WithStyles<typeof styles> & { open: boolean, handleDrawer
         <ListItemText primary="See test images" />
       </ListItem>
 
-      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="convertDemo" {...props}   />}>
-        <ListItemIcon>
-          <Transform />
-        </ListItemIcon>
-        <ListItemText primary="Convert test page !" />
-      </ListItem>
-
-      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="compositeCommands" {...props}   />}>
-        <ListItemIcon>
-          <Home />
-        </ListItemIcon>
-        <ListItemText primary="Composite Commands" />
-      </ListItem>
     </List>
 
   </Drawer>

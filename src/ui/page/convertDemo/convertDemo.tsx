@@ -35,8 +35,7 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 'bold'
   },
   formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 120,
+    margin: theme.spacing.unit
   },
 })
 
@@ -49,7 +48,6 @@ function render(props: WithStyles<typeof styles>) {
 
       {renderSuggestions(props, transformations)}<br /><br />
 
-      <ConvertDemoCliScript />
       <textarea className={classes.input + ' input'} defaultValue={JSON.stringify(selectedTransformation.command)}></textarea>
 
       <p className="error"></p>
@@ -63,6 +61,8 @@ function render(props: WithStyles<typeof styles>) {
       </p>
       {renderSuggestions(props, suggestionsDontWork, 'Not working transformations')}
 
+      <ConvertDemoCliScript />
+      
       {renderImageTable(props)}
 
 
@@ -138,8 +138,9 @@ function renderImageTable(props: WithStyles<typeof styles>) {
 
 export default withStyles(styles)(render)
 
-import { images as defaultImages, transformations, ConvertDemoTransformation, suggestionsDontWork } from './data'
-import { buildImArguments, DoMagickCall, arrayToIMCommand } from './index';
+import { images as defaultImages, transformations, suggestionsDontWork } from './data'
+import { buildImArguments, DoMagickCall,  ConvertDemoTransformation } from './index';
+import { arrayToIMCommand } from '../../../util/cli';
 
 const defaultTransformation = transformations[0]
 let selectedTransformation: ConvertDemoTransformation = defaultTransformation
@@ -164,9 +165,9 @@ async function transformImages(images = defaultImages) {
 
     const imArguments = buildImArguments((document.querySelector('.input') as HTMLInputElement).value, image)
 
-    const { processedFiles } = await DoMagickCall({ image, imArguments }) // TODO: images []
+    const { outputFiles } = await DoMagickCall({ image, imArguments }) // TODO: images []
 
-    let firstOutputImage = processedFiles[0]
+    let firstOutputImage = outputFiles[0]
 
     if (outputImage) {
       outputImage.src = URL.createObjectURL(firstOutputImage['blob'])

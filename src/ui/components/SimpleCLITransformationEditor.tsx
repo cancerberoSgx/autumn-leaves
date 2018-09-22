@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { withStyles, Theme, createStyles, WithStyles } from '@material-ui/core/styles'
 import { Button } from '@material-ui/core'
-import { readImageUrlToUintArray } from '../../util/image'
-import { MagickInputFile, getMagickApi } from '../../imagemagick'
+import { readImageUrlToUintArray, loadImg } from '../../util/image'
+import { MagickInputFile, getMagickApi, MagickOutputFile } from '../../imagemagick'
 
 const styles = (theme: Theme) => createStyles({
   input: {
@@ -63,8 +63,8 @@ async function doImageMagick(command: string[]) {
   let processedFiles = await getMagickApi().Call(files, command)
 
   let firstOutputImage = processedFiles[0]
-  let rotatedImage = document.getElementById('rotatedImage') as HTMLImageElement
 
-  rotatedImage.src = URL.createObjectURL(firstOutputImage['blob'])
+  loadImg(firstOutputImage, document.getElementById('rotatedImage') as HTMLImageElement)
 }
+
 export default withStyles(styles)(render)

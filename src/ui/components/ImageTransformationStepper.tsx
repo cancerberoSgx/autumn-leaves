@@ -117,8 +117,6 @@ class ImageTransformationStepper extends React.Component<any, any> {
                   ))} */}
               </div>
             </div>
-          // )
-          }
         </div>
       </div>
     )

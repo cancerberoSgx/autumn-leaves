@@ -1,5 +1,6 @@
-import { ConvertDemoImage, ConvertDemoTransformation } from './data';
-import { toCliArg } from './index';
+import { ConvertDemoImage, ConvertDemoTransformation } from './index';
+import { toCliArg } from '../../../util/cli';
+// import { toCliArg } from './index';
 
 /** return a .sh script that will call imagemagick convert so we can generate te same transformations in the desktop with the real thing and compare */
 export function getImCommands(images: ConvertDemoImage[], transformations: ConvertDemoTransformation[]): string {

@@ -1,26 +1,42 @@
-import { ConvertDemoImage } from './data'
+// import { ConvertDemoImage } from './data'
 import { readImageUrlToUintArray } from '../../../util/image'
-import { getMagickApi } from '../../../imagemagick'
+import { getMagickApi, Command, ExecuteConfig, ExecuteResult } from '../../../imagemagick'
+import { execute } from '../../../execute';
 
-export async function DoMagickCall(config: any) {
+export interface ConvertDemoImage {
+  sourceUrl: string
+  targetId: string
+  outFile: string
+}
+export interface ConvertDemoTransformation {
+  id: string
+  name: string
+  command: Command
+  description?: string
+}
+export interface ConvertDemoMagickCallConfig {
+  image: ConvertDemoImage
+  imArguments: Command
+  // files: 
+}
+export async function DoMagickCall(config: ConvertDemoMagickCallConfig): Promise<ExecuteResult> {
   const content = await readImageUrlToUintArray(config.image.sourceUrl)
   const name = config.image.sourceUrl
   const newFiles = [{ name, content }]
-  const files = (config.files || [])
+  const files = (/*config.files || */[])
     .filter((f: any) => f.name !== name) // remove file if already there
     .concat(newFiles)
-  let processedFiles = await getMagickApi().Call(files, config.imArguments)
-  return { processedFiles }
+  const c: ExecuteConfig = {
+    inputFiles: files,
+    commands: [config.imArguments]
+  }
+  // let processedFiles = await getMagickApi().Call(files, config.imArguments)
+  const results = await execute(c)
+  return results[0]
+  // return { processedFiles: results[0].outputFiles }
 }
 
-export function arrayToIMCommand(command: string[]): string {
-  return command
-    // if it contain spaces or is parenthesis then quote it
-    .map(c => (c.trim().match(/\s/) || (c.trim() === '(' || c.trim() === ')')) ? `'${c}'` : c)
-    .join(' ')
-}
-
-export function buildImArguments(s: string, image: ConvertDemoImage): string[] {
+export function buildImArguments(s: string, image: ConvertDemoImage): Command {
   try {
     let result = JSON.parse(s.replace(/\s{2}/g, ' ')).map((a: string) => a === '$INPUT' ? image.sourceUrl : a === '$OUTPUT' ? image.outFile : a)
     document.querySelector('.error').innerHTML = ''
@@ -28,7 +44,4 @@ export function buildImArguments(s: string, image: ConvertDemoImage): string[] {
   } catch (error) {
     document.querySelector('.error').innerHTML = error + ''
   }
-}
-export function toCliArg(arg: string): string {
-  return arg.match(/[\s()]/) ? `'${arg}'` : arg // quote if includes spaces or parenthesis
 }

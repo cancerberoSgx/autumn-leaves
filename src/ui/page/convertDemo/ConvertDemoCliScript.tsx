@@ -43,15 +43,16 @@ export class ConvertDemoCliScriptNaked extends React.Component<ConvertDemoCliScr
           onClose={this.handleClose}
           aria-labelledby="scroll-dialog-title"
         >
-          <DialogTitle id="scroll-dialog-title">Subscribe</DialogTitle>
+          <DialogTitle id="scroll-dialog-title">Convert all images with all transformations script</DialogTitle>
           <DialogContent>
             <DialogContentText>
+              <p>Copy&paste the following text into a .sh file at the root folder of this project and execute. It will generate lots of output images using the real ImageMagick on the desktop on /docs folder:</p>
               <textarea>{getImCommands(images, transformations)}</textarea>
             </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button onClick={() => this.handleClose()} color="primary">
-              Cancel
+              Close
             </Button>
           </DialogActions>
         </Dialog>

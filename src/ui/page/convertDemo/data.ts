@@ -1,7 +1,5 @@
+import { ConvertDemoTransformation, ConvertDemoImage } from '.';
 
-export interface ConvertDemoImage {
-  sourceUrl: string, targetId: string, outFile: string
-}
 export const images: ConvertDemoImage[] = [
   { sourceUrl: 'rotate.png', targetId: 'outputImage1', outFile: 'rotateOut.png' },
   { sourceUrl: 'Hermitcrab.gif', targetId: 'outputImage3', outFile: 'HermitcrabOut.gif' },
@@ -12,9 +10,6 @@ export const images: ConvertDemoImage[] = [
   { sourceUrl: 'holocaust.jpg', targetId: 'outputImage7', outFile: 'holocaustOut.png' },
 ]
 
-export interface ConvertDemoTransformation {
-  id: string, name: string, command: string[], description?: string
-}
 export const transformations: ConvertDemoTransformation[] = [
   {
     id: 'distorBarrel1',

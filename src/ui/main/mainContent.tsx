@@ -22,12 +22,11 @@ function main(props: WithStyles<typeof styles>) {
     <div className={classes.root}>
       <Switch>
         <Route exact path='/' component={home} />
+        <Route path='/convertDemo' component={convertDemo} /> 
         <Route path='/compositeCommands' component={CompositeCommands} />
         <Route path='/SimpleCLITransformationEditor' component={SimpleCLITransformationEditor} />
-        
         <Route path='/TestImages' component={TestImages} />
         <Route path='/download' component={DownloadResult} />
-        <Route path='/convertDemo' component={convertDemo} /> 
       </Switch>
     </div>
   )

@@ -10,10 +10,13 @@ import * as React from 'react';
 import Main from './mainContent';
 import Drawer, { drawerWidth } from './drawer';
 import AppBarIcons from './AppBarIcons';
+import { Link } from 'react-router-dom';
 
 const styles = (theme: Theme) => createStyles({
   root: {
     flexGrow: 1,
+    margin: 0,
+    padding: 0
   },
   appFrame: {
     height: '100%',
@@ -22,6 +25,8 @@ const styles = (theme: Theme) => createStyles({
     position: 'relative',
     display: 'flex',
     width: '100%',
+    margin: 0,
+    padding: 0
   },
   appBar: {
     position: 'absolute',
@@ -46,6 +51,8 @@ const styles = (theme: Theme) => createStyles({
   menuButton: {
     marginLeft: 12,
     marginRight: 20,
+    // paddingRight: '20px',
+    paddingLeft: '20px'
   },
   hide: {
     display: 'none',
@@ -53,7 +60,7 @@ const styles = (theme: Theme) => createStyles({
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
+    padding: 0,//theme.spacing.unit * 3,
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -76,6 +83,9 @@ const styles = (theme: Theme) => createStyles({
   },
   'contentShift-right': {
     marginRight: 0,
+  },
+  logo: {
+    fontSize: '9px',
   },
 });
 
@@ -117,10 +127,13 @@ export class AppBarNaked extends React.Component<AppBarProps, AppBarState> {
                     aria-label="open drawer"
                     onClick={() => this.handleDrawerOpen()}
                     className={classNames('toolbar-button', classes.menuButton, open && classes.hide)}
+                    
                   >
                     <MenuIcon />
+                  
+                    <span className={classes.logo}><Link to="">Autumn Leaves</Link></span>
                   </IconButton>
-                  <span>Autumn Leaves: ImageMagick utilities 100% in the browser</span>
+                  {/* <span>Autumn Leaves: ImageMagick utilities 100% in the browser</span> */}
                 </Grid>
                 <Grid item xs={6} sm={6} style={{flexBasis: '50%'}}>
 

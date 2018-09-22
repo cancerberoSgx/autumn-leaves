@@ -24,11 +24,6 @@ export interface ExecuteResult {
 }
 export type Command = string[]
 
-
-export async function execute(config: ExecuteConfig): Promise<ExecuteResult> {
-  return { outputFiles: await getMagickApi().Call(config.inputFiles, config.commands[0]) }
-}
-
 let magickApiObj: IMagick
 export function getMagickApi(): IMagick {
   if (!magickApiObj) {
@@ -37,3 +32,4 @@ export function getMagickApi(): IMagick {
   }
   return magickApiObj
 }
+
