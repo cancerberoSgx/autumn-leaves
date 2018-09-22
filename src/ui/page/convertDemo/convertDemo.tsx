@@ -1,3 +1,5 @@
+//TODO: make it a component
+
 import * as React from 'react'
 import { withStyles, Theme, createStyles, WithStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
@@ -13,7 +15,7 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexWrap: 'wrap',
   },
-  select : {
+  select: {
     minWidth: '240px'
   },
   input: {
@@ -45,10 +47,10 @@ function render(props: WithStyles<typeof styles>) {
     <Paper className={classes.paper}>
       <p>Try an ImageMagick command on different test images. Check out the suggestions!</p>
 
-      {renderSuggestions(props, transformations)}<br/><br/>
+      {renderSuggestions(props, transformations)}<br /><br />
 
-      <ConvertDemoCliScript/>
-      <textarea className={classes.input + ' input'} defaultValue='["convert", "$INPUT", "-sigmoidal-contrast", "15x30%", "(", "+clone",  "-sparse-color", "Barycentric", "0,0 black 0,%h gray80", "-solarize", "50%", "-level", "50%,0", ")", "-compose", "Blur", "-set", "option:compose:args", "10", "-composite", "$OUTPUT"]'></textarea>
+      <ConvertDemoCliScript />
+      <textarea className={classes.input + ' input'} defaultValue={JSON.stringify(selectedTransformation.command)}></textarea>
 
       <p className="error"></p>
 
@@ -68,14 +70,14 @@ function render(props: WithStyles<typeof styles>) {
   )
 }
 
-function renderSuggestions(props: WithStyles<typeof styles>, transformations: ConvertDemoTransformation[], title: string='Transformation examples') {
+function renderSuggestions(props: WithStyles<typeof styles>, transformations: ConvertDemoTransformation[], title: string = 'Transformation examples') {
   const { classes } = props
   return (<div>
     <form className={classes.root} autoComplete="off">
       <FormControl className={classes.formControl}>
         <InputLabel htmlFor="suggestion-simple">{title}</InputLabel>
         <Select className={classes.select}
-          // value={transformations[0].command}
+          // value={defaultTransformation.command}
           onChange={suggestionChange}
           inputProps={{
             name: 'suggestion',
@@ -83,7 +85,7 @@ function renderSuggestions(props: WithStyles<typeof styles>, transformations: Co
           }}
         >
           {transformations.map((t: ConvertDemoTransformation, i: number) =>
-            <MenuItem   value={t.command}>{t.name}</MenuItem>
+            <MenuItem value={t.command}>{t.name}</MenuItem>
           )}
         </Select>
       </FormControl>
@@ -100,6 +102,14 @@ function renderImageTable(props: WithStyles<typeof styles>) {
       <p>Images: </p>
 
       <table className={classes.images + ' images'}>
+        <thead>
+          <tr>
+            <th>Input</th>
+            <th>Output</th>
+            <th>Time it took</th>
+            <th>ImageMagick (the real thing)</th>
+          </tr>
+        </thead>
         <tbody>
           {defaultImages.map(image =>
             <tr className={classes.demoEntry}>
@@ -113,6 +123,11 @@ function renderImageTable(props: WithStyles<typeof styles>) {
               <td>
                 <p className="took"></p>
               </td>
+              <td>
+                <img src={`test1ImOutput/${selectedTransformation.id}_${image.outFile}`} alt={`test1ImOutput/${selectedTransformation.id}_${image.outFile}`}></img>
+                <br/>
+                {`test1ImOutput/${selectedTransformation.id}_${image.outFile}`}
+                </td>
             </tr>
           )}
         </tbody>
@@ -125,10 +140,12 @@ export default withStyles(styles)(render)
 
 import { images as defaultImages, transformations, ConvertDemoTransformation, suggestionsDontWork } from './data'
 import { buildImArguments, DoMagickCall, arrayToIMCommand } from './index';
-
+const defaultTransformation = transformations[0]
+let selectedTransformation: ConvertDemoTransformation = defaultTransformation
 function suggestionChange(e: React.ChangeEvent) {
   const value: any = (e.target as any).value
   document.querySelector<HTMLInputElement>('.input').value = JSON.stringify(value)
+  selectedTransformation = transformations.find(t => JSON.stringify(t.command) === JSON.stringify(value))
   transformImages()
 }
 
@@ -153,7 +170,7 @@ async function transformImages(images = defaultImages) {
     if (outputImage) {
       outputImage.src = URL.createObjectURL(firstOutputImage['blob'])
       outputImage.setAttribute('data-outfile', image.outFile)
-      outputImage.parentElement.parentElement.querySelector('.took').innerHTML = 'Took: ' + Math.round(performance.now() - t0) + ' ms'
+      outputImage.parentElement.parentElement.querySelector('.took').innerHTML = Math.round(performance.now() - t0) + ' ms'
     }
     document.querySelector('.im-command').innerHTML = arrayToIMCommand(imArguments)
 

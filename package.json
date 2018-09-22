@@ -8,7 +8,7 @@
     "start": "webpack-dev-server --config webpack.dev.js --open",
     "static": "cp -rf src/static/* docs",
     "test": "jest",
-    "im-cli-convert": "cd docs && sh test1ImDesktopConvert.sh && cd .."
+    "im-cli-convert": "sh docs/test1ImDesktopConvert.sh"
   },
   "keywords": [],
   "author": "Sebastian Gurin",
