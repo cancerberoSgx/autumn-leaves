@@ -1,8 +1,8 @@
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import * as React from 'react';
-import { Command, ExecuteConfig } from '../../imagemagick';
+import { Command, ExecuteConfig, getMagickApi } from '../../imagemagick';
 import { Button } from '@material-ui/core';
-import { loadImg } from '../../util/image';
+import { loadImg, buildInputFiles } from '../../util/image';
 import { execute } from '../../execute';
 
 const styles = (theme: Theme) => createStyles({
@@ -58,6 +58,11 @@ export class CompositeCommandsNaked extends React.Component<CompositeCommandsPro
         <Button variant="contained" onClick={() => this.execute()}>
           Execute!
         </Button>
+        <br/>
+
+        <Button variant="contained" onClick={() => this.test()}>
+          test
+        </Button>
         <img id="outputFile" />
       </div>
     )
@@ -70,11 +75,27 @@ export class CompositeCommandsNaked extends React.Component<CompositeCommandsPro
     }
     const results = await execute(config)
 
-    // const outputFile = results[results.length-1].outputFiles[0]
-    const outputFile = results[0].outputFiles[0]
+    const outputFile = results[results.length-1].outputFiles[0]
+    // const outputFile = results[0].outputFiles[0]
     loadImg(outputFile, document.getElementById('outputFile') as HTMLImageElement)
-    debugger
+    // debugger
     // alert(s)
+  }
+
+  async test(){
+    const result1 = await execute({
+      inputFiles: await buildInputFiles(['rotate.png']), 
+     
+      commands: [
+        ["convert", "rotate.png", "-rotate", "33", "roseOut.png"]
+        // ['convert', 'rose:', '-rotate', '33', 'out1.png']
+      ]
+    })
+    loadImg(result1[0].outputFiles[0], document.getElementById('outputFile') as HTMLImageElement)
+    // const command1: ExecuteConfig = {
+    //   inputFiles: await buildInputFiles(['rotate.png']), 
+    //   commands: []
+    // }
   }
 }
 

@@ -17,7 +17,8 @@ export interface IMagick {
 export interface ExecuteConfig {
   inputFiles: MagickInputFile[]
   /** commands to execute, serially */
-  commands: Command[]
+  commands?: Command[]
+  command?: Command
 }
 export interface ExecuteResult {
   outputFiles: MagickOutputFile[]
