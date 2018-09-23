@@ -4,7 +4,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import * as React from 'react'
 import { Link, LinkProps } from 'react-router-dom'
 import { List, Divider, Drawer, IconButton, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
-import { Home, FormatPaint, CameraAlt, Transform, PlaylistPlay } from '@material-ui/icons';
+import { Home, FormatPaint, CameraAlt, Transform, PlaylistPlay, FileDownload, ImageAspectRatio } from '@material-ui/icons';
 import { ListItemProps } from '@material-ui/core/ListItem';
 
 export const drawerWidth = 240;
@@ -40,9 +40,8 @@ const drawer = (props: WithStyles<typeof styles> & { open: boolean, handleDrawer
     </div>
     <Divider />
 
-    <Link to="download">Download Results</Link>
 
-    <List component="nav">
+    <List component="nav" dense={true}>
 
       <ListItem component={(props: ListItemProps & LinkProps) => <Link to="" {...props} onClick={() => { }} />}>
         <ListItemIcon>
@@ -51,34 +50,47 @@ const drawer = (props: WithStyles<typeof styles> & { open: boolean, handleDrawer
         <ListItemText primary="Home" />
       </ListItem>
 
-      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="convertDemo" {...props}   />}>
+      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="convertDemo" {...props} />}>
         <ListItemIcon>
           <Transform />
         </ListItemIcon>
         <ListItemText primary="Convert test page !" />
       </ListItem>
 
-      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="compositeCommands" {...props}   />}>
+      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="imageFrame" {...props} />}>
+        <ListItemIcon>
+          <ImageAspectRatio />
+        </ListItemIcon>
+        <ListItemText primary="Image Frame Tool" />
+      </ListItem>
+
+      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="compositeCommands" {...props} />}>
         <ListItemIcon>
           <PlaylistPlay />
         </ListItemIcon>
         <ListItemText primary="Composite Commands" />
       </ListItem>
-      
-      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="SimpleCLITransformationEditor" {...props}  />}>
+
+      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="SimpleCLITransformationEditor" {...props} />}>
         <ListItemIcon>
           <FormatPaint />
         </ListItemIcon>
         <ListItemText primary="Basic CLI transformation tool" />
       </ListItem>
 
-      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="TestImages" {...props}   />}>
+      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="TestImages" {...props} />}>
         <ListItemIcon>
           <CameraAlt />
         </ListItemIcon>
         <ListItemText primary="See test images" />
       </ListItem>
 
+      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="download" {...props} />}>
+        <ListItemIcon>
+          <FileDownload />
+        </ListItemIcon>
+        <ListItemText primary="Download Results" />
+      </ListItem>
     </List>
 
   </Drawer>

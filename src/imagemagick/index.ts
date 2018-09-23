@@ -34,3 +34,14 @@ export function getMagickApi(): IMagick {
   return magickApiObj
 }
 
+class Fruit {
+  color: string
+}
+
+function comer(f: Fruit) {
+
+}
+
+comer({
+  color: 'marron'
+})

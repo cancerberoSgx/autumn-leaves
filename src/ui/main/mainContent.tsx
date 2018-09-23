@@ -3,10 +3,11 @@ import { withStyles, Theme, createStyles, WithStyles } from '@material-ui/core/s
 import { Route, Switch } from 'react-router'
 import {CompositeCommands} from '../page/CompositeCommands'
 import home from '../page/home'
-import DownloadResult from '../components/DownloadResult'
 import SimpleCLITransformationEditor from '../components/SimpleCLITransformationEditor'
 import TestImages from '../components/TestImages';
 import convertDemo from '../page/convertDemo/convertDemo';
+import DownloadResult from '../page/imageFrame/DownloadResult';
+import imageFrameTool from '../page/imageFrame/imageFrameTool';
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -22,7 +23,8 @@ function main(props: WithStyles<typeof styles>) {
     <div className={classes.root}>
       <Switch>
         <Route exact path='/' component={home} />
-        <Route path='/convertDemo' component={convertDemo} /> 
+        <Route path='/convertDemo' component={convertDemo} /> imageFrame
+        <Route path='/imageFrame' component={imageFrameTool} />
         <Route path='/compositeCommands' component={CompositeCommands} />
         <Route path='/SimpleCLITransformationEditor' component={SimpleCLITransformationEditor} />
         <Route path='/TestImages' component={TestImages} />

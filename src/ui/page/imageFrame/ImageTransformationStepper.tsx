@@ -6,9 +6,9 @@ import Step from '@material-ui/core/Step'
 import StepButton from '@material-ui/core/StepButton'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import { EmptyComponent } from '../../test/emptyComponent'
+import { EmptyComponent } from '../../../test/emptyComponent'
 import DownloadResult from './DownloadResult'
-import SimpleCLITransformationEditor from './SimpleCLITransformationEditor';
+import SimpleCLITransformationEditor from '../../components/SimpleCLITransformationEditor';
 
 const styles = (theme: any) => ({
   root: {

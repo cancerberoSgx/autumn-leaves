@@ -2,7 +2,7 @@ import { AppBarProps } from '@material-ui/core/AppBar';
 import * as Enzyme from 'enzyme';
 import * as Adapter from 'enzyme-adapter-react-16';
 import * as React from 'react';
-import { MemoryRouter } from 'react-router';
+// import { MemoryRouter } from 'react-router';
 import { AppBar, AppBarState } from './appBar';
 
 describe('<AppBar />', () => {
@@ -14,7 +14,9 @@ describe('<AppBar />', () => {
   })
 
   beforeEach(() => {
-    appBar = Enzyme.mount(<MemoryRouter><AppBar /></MemoryRouter>);
+    appBar = Enzyme.mount(
+      <AppBar />
+    );
   })
 
   it('should call handleDrawerOpen and handleDrawerClose', () => {

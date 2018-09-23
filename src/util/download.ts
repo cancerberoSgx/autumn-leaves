@@ -1,7 +1,7 @@
 import { saveAs } from 'file-saver'
 import * as JSZip from 'jszip'
 
-export function download() {
+export function downloadExample() {
   var zip = new JSZip()
   zip.file("Hello.txt", "Hello World\n")
   var img = zip.folder("other")

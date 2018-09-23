@@ -3,7 +3,7 @@ import { withStyles, Theme, createStyles, WithStyles } from '@material-ui/core/s
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import { Button, Typography } from '@material-ui/core'
-import { download } from '../../util/download';
+import { downloadExample } from '../../../util/download';
 
 const styles = (theme: Theme) => createStyles({
   fileDropTarget: {
@@ -21,7 +21,7 @@ function render(props: WithStyles<typeof styles>) {
       <Grid item xs={12}>
         <Paper>
           <Typography className={''}>
-            <Button onClick={download}>Click to download result images</Button>
+            <Button onClick={downloadExample}>Click to download result images</Button>
           </Typography>
         </Paper>
       </Grid>

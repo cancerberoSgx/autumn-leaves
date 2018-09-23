@@ -65,7 +65,6 @@ function render(props: WithStyles<typeof styles>) {
       
       {renderImageTable(props)}
 
-
     </Paper>
   )
 }
