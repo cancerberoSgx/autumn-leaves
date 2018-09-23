@@ -2,8 +2,9 @@ import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/s
 import * as React from 'react';
 import { Command, ExecuteConfig, getMagickApi } from '../../imagemagick';
 import { Button } from '@material-ui/core';
-import { loadImg, buildInputFiles } from '../../util/image';
-import { execute } from '../../execute';
+import { loadImg, buildInputFiles, outputFileToInputFile } from '../../util/image';
+import { execute } from '../../imagemagick/execute';
+// import { execute } from '../../execute';
 
 const styles = (theme: Theme) => createStyles({
   root: {},
@@ -44,7 +45,7 @@ export class CompositeCommandsNaked extends React.Component<CompositeCommandsPro
                   try {
                     value = JSON.parse(e.target.value)
                   } catch (error) {
-                    alert('JSON Syntax error: '+error)
+                    alert('JSON Syntax error: ' + error)
                   }
                   this.state.commands[i] = value
                   this.setState({
@@ -58,7 +59,7 @@ export class CompositeCommandsNaked extends React.Component<CompositeCommandsPro
         <Button variant="contained" onClick={() => this.execute()}>
           Execute!
         </Button>
-        <br/>
+        <br />
 
         <Button variant="contained" onClick={() => this.test()}>
           test
@@ -68,34 +69,28 @@ export class CompositeCommandsNaked extends React.Component<CompositeCommandsPro
     )
   }
   async execute() {
-    // const commands: string[][] = this.state.commands.map(command=>JSON.parse(command) as string[])
     const config: ExecuteConfig = {
       inputFiles: [],
       commands: this.state.commands
     }
     const results = await execute(config)
 
-    const outputFile = results[results.length-1].outputFiles[0]
-    // const outputFile = results[0].outputFiles[0]
+    const outputFile = results[results.length - 1].outputFiles[0]
     loadImg(outputFile, document.getElementById('outputFile') as HTMLImageElement)
-    // debugger
-    // alert(s)
   }
 
-  async test(){
+  async test() {
     const result1 = await execute({
-      inputFiles: await buildInputFiles(['rotate.png']), 
-     
-      commands: [
-        ["convert", "rotate.png", "-rotate", "33", "roseOut.png"]
-        // ['convert', 'rose:', '-rotate', '33', 'out1.png']
-      ]
+      inputFiles: await buildInputFiles(['rotate.png']),
+      command: ["convert", "rotate.png", "-rotate", "33", "roseRotate.png"]
     })
-    loadImg(result1[0].outputFiles[0], document.getElementById('outputFile') as HTMLImageElement)
-    // const command1: ExecuteConfig = {
-    //   inputFiles: await buildInputFiles(['rotate.png']), 
-    //   commands: []
-    // }
+    const roseRotate = await outputFileToInputFile(result1[0].outputFiles[0])
+    const result2 = await execute({
+      inputFiles: [roseRotate],
+      command: ["convert", "roseRotate.png", "-blur", "0x2", "roseRotateBlur.png"]
+    })
+    loadImg(result2[0].outputFiles[0], document.getElementById('outputFile') as HTMLImageElement)
+
   }
 }
 

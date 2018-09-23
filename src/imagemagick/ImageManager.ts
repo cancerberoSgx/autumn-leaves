@@ -1,18 +1,19 @@
-import { ImageRef } from '../state/State';
+// import { ImageRef } from '../state/State';
+// import { MagickInputFile, MagickFile } from '.';
 
-export class ImageManager {
+// export class ImageManager {
 
-  images: { [name: string]: ImageWithBlob } = {}
+//   images: { [name: string]: MagickInputFile } = {}
 
-  add(image: ImageRef, blob: Blob) {
-    this.images[image.name] = { ...image, blob }
-  }
+//   add(image: MagickFile, blob: Blob) {
+//     // this.images[image.name] = { ...image, blob }
+//   }
 
-  get(name: string): ImageWithBlob {
-    return this.images[name]
-  }
-}
+//   get(name: string): MagickInputFile {
+//     return this.images[name]
+//   }
+// }
 
-export interface ImageWithBlob extends ImageRef {
-  blob: Blob
-}
+// // export interface ImageWithBlob extends ImageRef {
+// //   blob: Blob
+// // }
