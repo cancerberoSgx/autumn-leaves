@@ -1,4 +1,5 @@
-import { ConvertDemoTransformation, ConvertDemoImage } from '.';
+import { ConvertDemoImage } from '.';
+import { CommandTemplate } from "./CommandTemplate";
 
 export const images: ConvertDemoImage[] = [
   { sourceUrl: 'rotate.png', targetId: 'outputImage1', outFile: 'rotateOut.png' },
@@ -10,7 +11,7 @@ export const images: ConvertDemoImage[] = [
   { sourceUrl: 'holocaust.jpg', targetId: 'outputImage7', outFile: 'holocaustOut.png' },
 ]
 
-export const transformations: ConvertDemoTransformation[] = [
+export const transformations: CommandTemplate[] = [
   {
     id: 'distorBarrel1',
     name: 'distor barrel 1',

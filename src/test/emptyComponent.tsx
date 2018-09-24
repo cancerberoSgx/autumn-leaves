@@ -22,7 +22,6 @@ export class EmptyComponentNaked extends React.Component<EmptyComponentProps, Em
 
   constructor(props: EmptyComponentProps, state: EmptyComponentState) {
     super(props, state)
-    this.setState({ toggle: props.initialToggleState || false })
   }
 
   render(): React.ReactNode {

@@ -1,11 +1,12 @@
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import * as React from 'react';
 import { FormControl, InputLabel, Select, MenuItem, TextField, Button, Grid } from '@material-ui/core';
-import { imageFrames, Frame } from './data';
+import { imageFrames } from './data';
 import { commandsToString, readImageUrlToUintArray, loadImg, getImageSize, ImageSize } from '../../../util/image';
 import { Command, ExecuteConfig } from '../../../imagemagick';
 import { clone, query } from '../../../util/misc';
 import { execute } from '../../../imagemagick/execute';
+import { CommandTemplate } from '../convertDemo/CommandTemplate';
 
 const styles = (theme: Theme) => createStyles({
   input: {
@@ -14,17 +15,18 @@ const styles = (theme: Theme) => createStyles({
   formControl: {
     width: '100%',
   },
-  // error: {
-  //   fontWeight: 'bold'
-  // }
+  error: {
+    fontWeight: 'bold'
+  }
 });
 
 export interface ImageFrameTransformationProps extends WithStyles<typeof styles> {
 }
 export interface ImageFrameTransformationState {
-  selectedFrameTemplate: Frame,
+  selectedFrameTemplate: CommandTemplate,
   commands: Command[],
-  imageSize?: ImageSize
+  imageSize?: ImageSize,
+  jsonError?: string
 }
 
 export class ImageFrameTransformationNaked extends React.Component<ImageFrameTransformationProps, ImageFrameTransformationState> {
@@ -53,7 +55,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
                 id: 'template-simple',
               }}
             >
-              {imageFrames.map((t: Frame, i: number) =>
+              {imageFrames.map((t: CommandTemplate, i: number) =>
                 <MenuItem value={commandsToString(t.commands)}>{t.name}</MenuItem>
               )}
             </Select>
@@ -71,7 +73,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
           </ul>
           <br />
 
-          {/* <p className={classes.error}></p> */}
+          <p className={classes.error}>{this.state.jsonError || ''}</p>
 
           <Button variant="contained" onClick={() => this.execute()}>
             Execute!
@@ -84,7 +86,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
             <br />
                 <img src="rotate.png"></img>
               </p>
-              <p>Size: {JSON.stringify(this.state.imageSize||{}) }</p>
+              <p>Size: {JSON.stringify(this.state.imageSize || {})}</p>
             </Grid>
 
             <Grid item xs={12} sm={6}  >
@@ -93,49 +95,43 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
                 <img id="outputFile" />
               </p>
             </Grid>
-            {/* )} */}
           </Grid>
         </form>
       </div>
     )
   }
-  private imageSizeCalled: boolean=false
-  private  async  setImageSize(){
-    if(!this.imageSizeCalled){
-      this.imageSizeCalled=true
+  private imageSizeCalled: boolean = false
+  private async  setImageSize() {
+    if (!this.imageSizeCalled) {
+      this.imageSizeCalled = true
       const imageSize = await getImageSize('rotate.png')
-      this.setState({...this.state, imageSize}) 
+      this.setState({ ...this.state, imageSize })
     }
     await this.execute()
   }
 
-  async componentDidUpdate(){
+  async componentDidUpdate() {
     await this.setImageSize()
   }
 
-  async componentDidMount(){
+  async componentDidMount() {
     await this.setImageSize()
   }
 
   commandInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     const commands: Command[] = []
-    console.log(query('.'+this.props.classes.input));
-    
-    query('.'+this.props.classes.input)
+    query('.' + this.props.classes.input)
       .forEach((input: HTMLInputElement) => {
         let value
         try {
           value = JSON.parse(e.target.value)
+          this.setState({ ...this.state, jsonError: '' })
         } catch (error) {
-          alert('JSON Syntax error: ' + error)
-          // query('.'+this.props.classes.error)[0].innerHTML = 'JSON Syntax error: ' + error
-          throw error
+          this.setState({ ...this.state, jsonError: 'JSON Syntax error: ' + error })
         }
-        // query('.'+this.props.classes.error)[0].innerHTML = ''
         commands.push(value)
       })
-      debugger;
-    this.setState({...this.state, commands })
+    this.setState({ ...this.state, commands })
   }
 
   async execute() {

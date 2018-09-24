@@ -1,10 +1,11 @@
-import { ConvertDemoImage, ConvertDemoTransformation } from './index';
+import { ConvertDemoImage } from './index';
+import { CommandTemplate } from "./CommandTemplate";
 import { toCliArg } from '../../../util/cli';
 // import { toCliArg } from './index';
 
 /** return a .sh script that will call imagemagick convert so we can generate te same transformations in the desktop with the real thing and compare */
-export function getImCommands(images: ConvertDemoImage[], transformations: ConvertDemoTransformation[]): string {
-  function getOutputFile(dir: any, image: ConvertDemoImage, transformation: ConvertDemoTransformation) {
+export function getImCommands(images: ConvertDemoImage[], transformations: CommandTemplate[]): string {
+  function getOutputFile(dir: any, image: ConvertDemoImage, transformation: CommandTemplate) {
     return `${dir}/${transformation.id}_${image.outFile}`
   }
   const dir = 'test1ImOutput'

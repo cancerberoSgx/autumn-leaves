@@ -1,16 +1,28 @@
 import { Command } from '../../../imagemagick';
+import { CommandTemplate, TemplateContext, SizedImageContext, Color, ArgumentType } from '../convertDemo/CommandTemplate';
+// import { ArgumentType, Color } from '../../components/argumentEditor/types';
 
-export interface Frame {
-  name: string
-  description?: string
-  id: string
-  /**
-   * commands implementing this image frame. need to consume input image using '$INPUT' file name and declare
-   * the output image as '$OUTPUT'. See example provided.
-   */
-  commands: Command[]
+export interface Crop1Context extends SizedImageContext {
+  background?: Color
 }
-export const imageFrames: Frame[] = [
+export const imageFrames: CommandTemplate[] = [
+
+  {
+    id: 'crop1',
+    name: 'simple crop 1',
+    commands: [["convert", "$INPUT", "-quiet", "-crop", "129x158-9-6!", "-background", "skyblue", "-flatten", "$OUTPUT"]],
+    description: ' '
+  },
+  {
+    id: 'crop2',
+    name: 'simple crop 2',
+    commands: [["convert", "$INPUT", "-quiet", "-crop", "129x158-9-6!", "-background", "skyblue", "-flatten", "$OUTPUT"]],
+    description: ' ',
+    template: function (context: Crop1Context) {
+      return JSON.parse(`[["convert", "$INPUT", "-quiet", "-crop", "${context.imageSizes[0].width + 20}x${context.imageSizes[0].height + 20}-9-6!", "-background", "${context.background || 'skyblue'}", "-flatten", "$OUTPUT"]]`) as Command[]
+    },
+    arguments: [{ type: ArgumentType.color, id: 'background', name: 'background' }]
+  },
   {
     // name: 'test1',
     id: 'frameVignette1',
@@ -98,6 +110,5 @@ export const imageFrames: Frame[] = [
     commands: [["convert", "-caption", 'Spiral Staircase, Arc de Triumph, Paris, April 2006', "$INPUT", '-thumbnail', '240x240', '-bordercolor', 'Lavender', '-border', '5x5', '-density', '144', '', '-gravity', 'center', '-pointsize', '8', '-background', 'black', '-polaroid', '-15', '-resize', '50%', "$OUTPUT"]],
     description: ' '
   },
-
 
 ]

@@ -69,7 +69,7 @@ function render(props: WithStyles<typeof styles>) {
   )
 }
 
-function renderSuggestions(props: WithStyles<typeof styles>, transformations: ConvertDemoTransformation[], title: string = 'Transformation examples') {
+function renderSuggestions(props: WithStyles<typeof styles>, transformations: CommandTemplate[], title: string = 'Transformation examples') {
   const { classes } = props
   return (<div>
     <form className={classes.root} autoComplete="off">
@@ -83,7 +83,7 @@ function renderSuggestions(props: WithStyles<typeof styles>, transformations: Co
             id: 'suggestion-simple',
           }}
         >
-          {transformations.map((t: ConvertDemoTransformation, i: number) =>
+          {transformations.map((t: CommandTemplate, i: number) =>
             <MenuItem value={t.command}>{t.name}</MenuItem>
           )}
         </Select>
@@ -138,11 +138,12 @@ function renderImageTable(props: WithStyles<typeof styles>) {
 export default withStyles(styles)(render)
 
 import { images as defaultImages, transformations, suggestionsDontWork } from './data'
-import { buildImArguments, DoMagickCall,  ConvertDemoTransformation } from './index';
+import { buildImArguments, DoMagickCall } from './index';
+import { CommandTemplate } from "./CommandTemplate";
 import { arrayToIMCommand } from '../../../util/cli';
 
 const defaultTransformation = transformations[0]
-let selectedTransformation: ConvertDemoTransformation = defaultTransformation
+let selectedTransformation: CommandTemplate = defaultTransformation
 function suggestionChange(e: React.ChangeEvent) {
   const value: any = (e.target as any).value
   document.querySelector<HTMLInputElement>('.input').value = JSON.stringify(value)

@@ -1,20 +1,14 @@
-// import { ConvertDemoImage } from './data'
 import { readImageUrlToUintArray } from '../../../util/image'
 import { getMagickApi, Command, ExecuteConfig, ExecuteResult } from '../../../imagemagick'
 import { execute } from '../../../imagemagick/execute';
-// import { execute } from '../../../execute';
 
 export interface ConvertDemoImage {
   sourceUrl: string
   targetId: string
   outFile: string
 }
-export interface ConvertDemoTransformation {
-  id: string
-  name: string
-  command: Command
-  description?: string
-}
+
+
 export interface ConvertDemoMagickCallConfig {
   image: ConvertDemoImage
   imArguments: Command
