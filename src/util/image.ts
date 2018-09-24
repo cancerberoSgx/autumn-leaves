@@ -79,3 +79,22 @@ export async function outputFileToInputFile(outputFile: MagickOutputFile): Promi
     content: await blobToUint8Array(outputFile.blob)
   }
 }
+
+export interface ImageSize {
+  width: number,
+  height: number
+}
+export function getImageSize(url: string): Promise<ImageSize> {
+  return new Promise(resolve => {
+
+    const img = new Image();
+    img.onload = function () {
+      resolve({
+        width: (this as any).width,
+        height: (this as any).height
+      })
+      // alert((this as any).width + 'x' + (this as any).height);
+    }
+    img.src = url;
+  })
+}

@@ -30,7 +30,10 @@ const styles = (theme: any) => ({
 })
 
 function getSteps() {
-  return ['Select image', 'Add Image Frame', 'Download the result']
+  return [
+    'Select image', 
+    'Add Image Frame', 
+    'Download the result']
 }
 
 function getStepContent(step: number): React.ReactElement<any> | string {
@@ -38,7 +41,11 @@ function getStepContent(step: number): React.ReactElement<any> | string {
     case 0:
       return <div>Step 1: Select Image<br /><ChooseImage onFileChange={(e)=>{}}/></div>
     case 1:
-      return <div>Step 2: Add Image Frame<br /><ImageFrameTransformation /></div>
+      return <div>
+        <p>Step 2: Add Image Frame</p>
+        <p>Go ahead, select one of the templates, and try to understand and modify numbers in the transformation and observe the changes.</p>
+        <ImageFrameTransformation />
+        </div>
     case 2:
       return <div>Step 3: Download Result<br /><DownloadResult /></div>
     default:

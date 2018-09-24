@@ -1,8 +1,8 @@
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import * as React from 'react';
-import { FormControl, InputLabel, Select, MenuItem, TextField, Button } from '@material-ui/core';
+import { FormControl, InputLabel, Select, MenuItem, TextField, Button, Grid } from '@material-ui/core';
 import { imageFrames, Frame } from './data';
-import { commandsToString, readImageUrlToUintArray, loadImg } from '../../../util/image';
+import { commandsToString, readImageUrlToUintArray, loadImg, getImageSize, ImageSize } from '../../../util/image';
 import { Command, ExecuteConfig } from '../../../imagemagick';
 import { clone, query } from '../../../util/misc';
 import { execute } from '../../../imagemagick/execute';
@@ -14,16 +14,17 @@ const styles = (theme: Theme) => createStyles({
   formControl: {
     width: '100%',
   },
-  error: {
-    fontWeight: 'bold'
-  }
+  // error: {
+  //   fontWeight: 'bold'
+  // }
 });
 
 export interface ImageFrameTransformationProps extends WithStyles<typeof styles> {
 }
 export interface ImageFrameTransformationState {
   selectedFrameTemplate: Frame,
-  commands: Command[]
+  commands: Command[],
+  imageSize?: ImageSize
 }
 
 export class ImageFrameTransformationNaked extends React.Component<ImageFrameTransformationProps, ImageFrameTransformationState> {
@@ -69,45 +70,72 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
             )}
           </ul>
           <br />
-          <p className={classes.error}></p>
+
+          {/* <p className={classes.error}></p> */}
 
           <Button variant="contained" onClick={() => this.execute()}>
             Execute!
         </Button>
 
           <br />
-          <p>rotate.png original image:
+          <Grid container spacing={24}>
+            <Grid item xs={12} sm={6}  >
+              <p>Original image:
             <br />
+                <img src="rotate.png"></img>
+              </p>
+              <p>Size: {JSON.stringify(this.state.imageSize||{}) }</p>
+            </Grid>
 
-            <img src="rotate.png"></img>
-          </p>
-
-          <p>Result:
+            <Grid item xs={12} sm={6}  >
+              <p>Result:
              <br />
-            <img id="outputFile" />
-          </p>
-
+                <img id="outputFile" />
+              </p>
+            </Grid>
+            {/* )} */}
+          </Grid>
         </form>
       </div>
     )
   }
+  private imageSizeCalled: boolean=false
+  private  async  setImageSize(){
+    if(!this.imageSizeCalled){
+      this.imageSizeCalled=true
+      const imageSize = await getImageSize('rotate.png')
+      this.setState({...this.state, imageSize}) 
+    }
+    await this.execute()
+  }
+
+  async componentDidUpdate(){
+    await this.setImageSize()
+  }
+
+  async componentDidMount(){
+    await this.setImageSize()
+  }
 
   commandInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     const commands: Command[] = []
-    query(this.props.classes.input)
+    console.log(query('.'+this.props.classes.input));
+    
+    query('.'+this.props.classes.input)
       .forEach((input: HTMLInputElement) => {
         let value
         try {
           value = JSON.parse(e.target.value)
         } catch (error) {
-          // alert('JSON Syntax error: ' + error)
-          query(this.props.classes.error)[0].innerHTML = 'JSON Syntax error: ' + error
+          alert('JSON Syntax error: ' + error)
+          // query('.'+this.props.classes.error)[0].innerHTML = 'JSON Syntax error: ' + error
           throw error
         }
-        query(this.props.classes.error)[0].innerHTML = ''
+        // query('.'+this.props.classes.error)[0].innerHTML = ''
         commands.push(value)
       })
-    this.setState({ commands })
+      debugger;
+    this.setState({...this.state, commands })
   }
 
   async execute() {
@@ -131,12 +159,11 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     loadImg(result[result.length - 1].outputFiles[0], query('#outputFile')[0] as HTMLImageElement)
   }
 
-  selectedTemplateChange(e: React.ChangeEvent<HTMLSelectElement>) {
+  async selectedTemplateChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const commands = JSON.parse(e.target.value) as Command[]
-    // const name = e.currentTarget.innerHTML
-    const frame = imageFrames.find(i=>JSON.stringify(commands)===JSON.stringify(i.commands))
-    debugger
-    this.setState({...this.state, selectedFrameTemplate: frame, commands: frame.commands})
+    const frame = imageFrames.find(i => JSON.stringify(commands) === JSON.stringify(i.commands))
+    this.setState({ ...this.state, selectedFrameTemplate: frame, commands: frame.commands })
+    await this.execute()
   }
 }
 
