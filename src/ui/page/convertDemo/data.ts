@@ -1,5 +1,5 @@
 import { ConvertDemoImage } from '.';
-import { CommandTemplate } from "./CommandTemplate";
+import { CommandTemplate } from "../../components/argumentEditor/CommandTemplate";
 
 export const images: ConvertDemoImage[] = [
   { sourceUrl: 'rotate.png', targetId: 'outputImage1', outFile: 'rotateOut.png' },

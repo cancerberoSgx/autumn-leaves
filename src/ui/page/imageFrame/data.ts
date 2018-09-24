@@ -1,5 +1,5 @@
 import { Command } from '../../../imagemagick';
-import { CommandTemplate, TemplateContext, SizedImageContext, Color, ArgumentType } from '../convertDemo/CommandTemplate';
+import { CommandTemplate, TemplateContext, SizedImageContext, Color, ArgumentType } from '../../components/argumentEditor/CommandTemplate';
 // import { ArgumentType, Color } from '../../components/argumentEditor/types';
 
 export interface Crop1Context extends SizedImageContext {

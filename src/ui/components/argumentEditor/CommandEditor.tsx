@@ -3,7 +3,7 @@ import * as React from 'react';
 // import { Argument, ArgumentType } from './types';
 // import { ArgumentEditorState, ArgumentEditorProps } from './types';
 import { Color } from 'csstype';
-import { CommandTemplate, ArgumentChangeEvent, CommandEditorProps, TemplateContext } from '../../page/convertDemo/CommandTemplate';
+import { CommandTemplate, ArgumentChangeEvent, CommandEditorProps, TemplateContext, Argument } from './CommandTemplate';
 import { ColorPickerEditor } from './ArgumentEditor';
 import { query } from '../../../util/misc';
 import { Command } from '../../../imagemagick';
@@ -48,20 +48,14 @@ export class CommandEditor extends React.Component<CommandEditorProps2, CommandE
     // const { classes, theme }: { classes: any, theme?: Theme } = this.props
     return (
       <div className={this.props.classes.root}>
-
-
         {(() => {
           // TODO: split this to different classes responsibilities:
           if (this.props.commandTemplate.template && this.props.commandTemplate.arguments) {
             return this.props.commandTemplate.arguments.map(arg =>
               <div>
                 {arg.name}: <ColorPickerEditor {...this.props as any}
-                  onChange={(event: ArgumentChangeEvent<Color>) => {
-                    this.state.templateContext[arg.id] = event.value
-                    const value = this.props.commandTemplate.template(this.state.templateContext)
-                    this.props.onChange({ commandTemplate: this.props.commandTemplate, value })
-                  }}
-                />CommandEditor
+                  onChange={(event: ArgumentChangeEvent<Color>) => this.argumentChangeEvent(arg, event)}
+                />
               </div>)
           }
           else {
@@ -79,7 +73,11 @@ export class CommandEditor extends React.Component<CommandEditorProps2, CommandE
       </div>
     )
   }
-
+  argumentChangeEvent  (arg: Argument, event: ArgumentChangeEvent<Color>) {
+    this.state.templateContext[arg.id] = event.value
+    const value = this.props.commandTemplate.template(this.state.templateContext)
+    this.props.onChange({ commandTemplate: this.props.commandTemplate, value })
+  }
   commandInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     const commands: Command[] = []
     query('.' + this.props.classes.input)

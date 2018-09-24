@@ -1,7 +1,7 @@
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import * as React from 'react';
 import { Color } from 'csstype';
-import { ArgumentEditorProps, ArgumentEditorState, ArgumentType } from '../../page/convertDemo/CommandTemplate';
+import { ArgumentEditorProps, ArgumentEditorState, ArgumentType } from './CommandTemplate';
 
 
 const styles = (theme: Theme) => createStyles({

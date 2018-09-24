@@ -29,20 +29,23 @@ export enum ArgumentType {
   point = 'point', // can be implemented differently: 1 input, two inputs or a point clicked on an image by the user
   rectangle = 'rectangle'// can be implemented differently: 1 input, two inputs or a rectangle drawn by the user over an image
 }
-export interface Thing {
+// export interface Thing {
+//   id: string
+//   name?: string
+//   description?: string
+// }
+export interface Argument {
+  type?: ArgumentType
   id: string
   name?: string
   description?: string
-}
-export interface Argument extends Thing {
-  type?: ArgumentType
   // toIMCommandFragment(): string[]
 }
-export interface IMCommand extends Thing {
-  type: 'convert' // TODO: wont work on other commands than convert right now
-  arguments: Argument[]
-  toIMCommand(): Command
-}
+// export interface IMCommand extends Thing {
+//   type: 'convert' // TODO: wont work on other commands than convert right now
+//   arguments: Argument[]
+//   toIMCommand(): Command
+// }
 
 
 // UI / react base framework types
