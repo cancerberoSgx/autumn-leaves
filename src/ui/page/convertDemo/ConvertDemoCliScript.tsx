@@ -27,9 +27,11 @@ export class ConvertDemoCliScriptNaked extends React.Component<ConvertDemoCliScr
     super(props, state)
     this.setState({ open: false })
   }
+  
   handleClose() {
     this.setState({ open: false })
   }
+
   render(): React.ReactNode {
     const { classes, theme }: { classes: any, theme?: Theme } = this.props
     return (

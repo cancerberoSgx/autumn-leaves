@@ -4,7 +4,6 @@ import { Command, ExecuteConfig, getMagickApi } from '../../imagemagick';
 import { Button } from '@material-ui/core';
 import { loadImg, buildInputFiles, outputFileToInputFile } from '../../util/image';
 import { execute } from '../../imagemagick/execute';
-// import { execute } from '../../execute';
 
 const styles = (theme: Theme) => createStyles({
   root: {},

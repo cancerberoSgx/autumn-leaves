@@ -1,8 +1,7 @@
 import * as React from 'react'
 import { withStyles, Theme, createStyles, WithStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
-import Grid from '@material-ui/core/Grid'
-import ImageTransformationStepper from './ImageTransformationStepper'
+import ImageFrameToolStepper from './ImageFrameToolStepper'
 import { Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
@@ -24,7 +23,7 @@ function render(props: WithStyles<typeof styles>) {
       <h2>Image frame</h2>
       <p>Put a frame on your images. First select an image, then use the tool to try different frames formats and configuration, and last, download the result.  </p>
 
-      <ImageTransformationStepper />
+      <ImageFrameToolStepper />
       </Typography>
     </Paper>
   )

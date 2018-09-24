@@ -7,20 +7,20 @@ const styles = (theme: Theme) => createStyles({
   }
 });
 
-export interface EmptyComponentProps extends WithStyles<typeof styles> {
+export interface CommandEditor1Props extends WithStyles<typeof styles> {
   initialToggleState: boolean
 }
-export interface EmptyComponentState {
+export interface CommandEditor1State {
   toggle: boolean
 }
 
-export class EmptyComponentNaked extends React.Component<EmptyComponentProps, EmptyComponentState> {
+export class CommandEditor1Naked extends React.Component<CommandEditor1Props, CommandEditor1State> {
 
-  state: EmptyComponentState = {
+  state = {
     toggle: true
   }
 
-  constructor(props: EmptyComponentProps, state: EmptyComponentState) {
+  constructor(props: CommandEditor1Props, state: CommandEditor1State) {
     super(props, state)
     this.setState({ toggle: props.initialToggleState || false })
   }
@@ -30,12 +30,10 @@ export class EmptyComponentNaked extends React.Component<EmptyComponentProps, Em
     const { toggle } = this.state
     return (
       <div className={classes.root}>
-        <button onClick={e => this.setState({ toggle: !this.state.toggle })}>
-          {this.state.toggle ? 'ON' : 'OFF'}
-        </button>
+        <textarea defaultValue="[]"></textarea>
       </div>
     )
   }
 }
 
-export const EmptyComponent = withStyles(styles, { withTheme: true })(EmptyComponentNaked as any);
+export const CommandEditor1 = withStyles(styles, { withTheme: true })(CommandEditor1Naked as any);

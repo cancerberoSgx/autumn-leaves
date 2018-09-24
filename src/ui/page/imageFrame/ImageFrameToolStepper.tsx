@@ -9,6 +9,9 @@ import Typography from '@material-ui/core/Typography'
 import { EmptyComponent } from '../../../test/emptyComponent'
 import DownloadResult from './DownloadResult'
 import SimpleCLITransformationEditor from '../../components/SimpleCLITransformationEditor';
+// import ChooseImage from '../../components/ChooseImage';
+import { ImageFrameTransformation } from './ImageFrameTransformation';
+import { ChooseImage } from '../../components/ChooseImage';
 
 const styles = (theme: any) => ({
   root: {
@@ -27,25 +30,23 @@ const styles = (theme: any) => ({
 })
 
 function getSteps() {
-  return ['Choose a tool', 'Select images', 'Edit the image with the tool', 'Download the result']
+  return ['Select image', 'Add Image Frame', 'Download the result']
 }
 
-function getStepContent(step: number): React.ReactElement<any>|string {
+function getStepContent(step: number): React.ReactElement<any> | string {
   switch (step) {
     case 0:
-      return <div>Step 1: Select a tool<br/><EmptyComponent /></div>
+      return <div>Step 1: Select Image<br /><ChooseImage onFileChange={(e)=>{}}/></div>
     case 1:
-      return 'Step 2: Select images'
+      return <div>Step 2: Add Image Frame<br /><ImageFrameTransformation /></div>
     case 2:
-      return <div>Step 3: Manipulate images<br/><SimpleCLITransformationEditor/></div>
-    case 3:
-      return <div>Step 4: Download results<br/><DownloadResult /></div>
+      return <div>Step 3: Download Result<br /><DownloadResult /></div>
     default:
       return 'Unknown step'
   }
 }
 
-class ImageTransformationStepper extends React.Component<any, any> {
+class ImageFrameToolStepper extends React.Component<any, any> {
   state = {
     activeStep: 0,
     completed: new Set(),
@@ -87,25 +88,25 @@ class ImageTransformationStepper extends React.Component<any, any> {
               <Button onClick={this.handleReset}>Reset</Button>
             </div>
           ) : ( */}
+          <div>
+            <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
             <div>
-              <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-              <div>
-                <Button
-                  disabled={activeStep === 0}
-                  onClick={this.handleBack}
-                  className={classes.button}
-                >
-                  Back
+              <Button
+                disabled={activeStep === 0}
+                onClick={this.handleBack}
+                className={classes.button}
+              >
+                Back
                 </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={this.handleNext}
-                  className={classes.button}
-                >
-                  Next
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.handleNext}
+                className={classes.button}
+              >
+                Next
                 </Button>
-                {/* {activeStep !== steps.length &&
+              {/* {activeStep !== steps.length &&
                   (this.state.completed.has(this.state.activeStep) ? (
                     <Typography variant="caption" className={classes.completed}>
                       Step {activeStep + 1} already completed
@@ -115,8 +116,8 @@ class ImageTransformationStepper extends React.Component<any, any> {
                       {this.completedSteps() === this.totalSteps() - 1 ? 'Finish' : 'Complete Step'}
                     </Button>
                   ))} */}
-              </div>
             </div>
+          </div>
         </div>
       </div>
     )
@@ -137,10 +138,10 @@ class ImageTransformationStepper extends React.Component<any, any> {
     //   const steps = getSteps()
     //   activeStep = steps.findIndex((step, i) => !this.state.completed.has(i))
     // } else {
-      // activeStep = this.state.activeStep + 1
+    // activeStep = this.state.activeStep + 1
     // }
     this.setState({
-      activeStep:  this.state.activeStep + 1,
+      activeStep: this.state.activeStep + 1,
     })
   }
 
@@ -199,8 +200,8 @@ class ImageTransformationStepper extends React.Component<any, any> {
   }
 }
 
-(ImageTransformationStepper as any).propTypes = {
+(ImageFrameToolStepper as any).propTypes = {
   classes: PropTypes.object,
 }
 
-export default withStyles(styles)(ImageTransformationStepper)
+export default withStyles(styles)(ImageFrameToolStepper)
