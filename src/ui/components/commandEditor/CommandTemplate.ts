@@ -1,12 +1,12 @@
 import { Command } from '../../../imagemagick';
 import { ImageSize } from '../../../util/image';
 export interface TemplateContext {
-  [key: string]: string
+  [key: string]: string | number
 }
 export interface SizedImageContext extends TemplateContext {
   // imageSizes: ImageSize[]
-  width: string,
-  height: string
+  imageWidth: number,
+  imageHeight: number
 }
 export interface CommandTemplate {
   id: string;
@@ -61,7 +61,7 @@ export interface CommandChangeEvent {
 }
 export interface ArgumentEditorProps<T> {
   argument?: Argument
-  initialValue?: T
+  value?: T
   onChange: (event: ArgumentChangeEvent<T>) => void
 }
 export interface CommandEditorProps {

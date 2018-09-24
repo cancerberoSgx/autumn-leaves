@@ -139,7 +139,7 @@ export default withStyles(styles)(render)
 
 import { images as defaultImages, transformations, suggestionsDontWork } from './data'
 import { buildImArguments, DoMagickCall } from './index';
-import { CommandTemplate } from "../../components/argumentEditor/CommandTemplate";
+import { CommandTemplate } from "../../components/commandEditor/CommandTemplate";
 import { arrayToIMCommand } from '../../../util/cli';
 
 const defaultTransformation = transformations[0]

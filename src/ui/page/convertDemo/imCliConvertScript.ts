@@ -1,5 +1,5 @@
 import { ConvertDemoImage } from './index';
-import { CommandTemplate } from "../../components/argumentEditor/CommandTemplate";
+import { CommandTemplate } from "../../components/commandEditor/CommandTemplate";
 import { toCliArg } from '../../../util/cli';
 // import { toCliArg } from './index';
 

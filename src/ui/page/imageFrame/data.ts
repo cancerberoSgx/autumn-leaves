@@ -1,5 +1,5 @@
 import { Command } from '../../../imagemagick';
-import { CommandTemplate, TemplateContext, SizedImageContext, Color, ArgumentType } from '../../components/argumentEditor/CommandTemplate';
+import { CommandTemplate, TemplateContext, SizedImageContext, Color, ArgumentType } from '../../components/commandEditor/CommandTemplate';
 // import { ArgumentType, Color } from '../../components/argumentEditor/types';
 
 export interface Crop1Context extends SizedImageContext {
@@ -7,20 +7,23 @@ export interface Crop1Context extends SizedImageContext {
 }
 export const imageFrames: CommandTemplate[] = [
   {
+    id: 'crop2',
+    name: 'simple crop 2',
+    commands: [["convert", "$INPUT", "-quiet", "-crop", "129x158-9-6!", "-background", "black", "-flatten", "$OUTPUT"]],
+    description: ' ',
+    template: function (context: Crop1Context) {
+      const result = JSON.parse(`[["convert", "$INPUT", "-quiet", "-crop", "${context.imageWidth + 20}x${context.imageHeight + 20}-9-6!", "-background", "${context.background || 'skyblue'}", "-flatten", "$OUTPUT"]]`) as Command[]
+      console.log('result', result);
+
+      return result
+    },
+    arguments: [{ type: ArgumentType.color, id: 'background', name: 'background' }, { type: ArgumentType.number, id: 'imageWidth', name: 'imageWidth' }, { type: ArgumentType.number, id: 'imageHeight', name: 'imageHeight' }]
+  },
+  {
     id: 'crop1',
     name: 'simple crop 1',
     commands: [["convert", "$INPUT", "-quiet", "-crop", "129x158-9-6!", "-background", "skyblue", "-flatten", "$OUTPUT"]],
     description: ' '
-  },
-  {
-    id: 'crop2',
-    name: 'simple crop 2',
-    commands: [["convert", "$INPUT", "-quiet", "-crop", "129x158-9-6!", "-background", "red", "-flatten", "$OUTPUT"]],
-    description: ' ',
-    template: function (context: Crop1Context) {
-      return JSON.parse(`[["convert", "$INPUT", "-quiet", "-crop", "129x158-9-6!", "-background", "${context.background || 'skyblue'}", "-flatten", "$OUTPUT"]]`) as Command[]
-    },
-    arguments: [{ type: ArgumentType.color, id: 'background', name: 'background' }]
   },
   {
     // name: 'test1',

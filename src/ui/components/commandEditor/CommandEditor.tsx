@@ -3,10 +3,12 @@ import * as React from 'react';
 // import { Argument, ArgumentType } from './types';
 // import { ArgumentEditorState, ArgumentEditorProps } from './types';
 import { Color } from 'csstype';
-import { CommandTemplate, ArgumentChangeEvent, CommandEditorProps, TemplateContext, Argument } from './CommandTemplate';
-import { ColorPickerEditor } from './ArgumentEditor';
+import { CommandTemplate, ArgumentChangeEvent, CommandEditorProps, TemplateContext, Argument, SizedImageContext, ArgumentType } from './CommandTemplate';
+import { ColorPickerEditor } from './ColorPickerEditor';
 import { query } from '../../../util/misc';
 import { Command } from '../../../imagemagick';
+import { getLastImageSize } from '../../page/imageFrame/ImageFrameTransformation';
+import { NumberEditor } from './NumberEditor';
 // import { ArgumentEditorProps, ArgumentEditorState, ArgumentType } from '../../page/convertDemo/CommandTemplate';
 
 
@@ -21,6 +23,7 @@ const styles = (theme: Theme) => createStyles({
 });
 export interface CommandEditorProps2 extends CommandEditorProps, WithStyles<typeof styles> {
   // template: CommandTemplate
+  templateContext: SizedImageContext
 }
 export interface CommandEditorState {
   commands: Command[]
@@ -35,11 +38,17 @@ export class CommandEditor extends React.Component<CommandEditorProps2, CommandE
   constructor(props: CommandEditorProps2, state: CommandEditorState) {
     super(props, state)
     this.state = { commands: [], templateContext: {} }
+    // this.props.templateContext = this.props.templateContext || {}
     if (props.commandTemplate.arguments) {
       props.commandTemplate.arguments.forEach(arg => {
-        this.state.templateContext[arg.id] = this.props.templateContext[arg.id] || 'undefined'
+        this.state.templateContext[arg.id] = this.props.templateContext && this.props.templateContext[arg.id] || 'undefined'
       })
     }
+    // const imageSize = getLastImageSize()
+    // if(this.props.imageSize){
+    // this.props.templateContext.imageWidth = imageSize.width
+    // this.props.templateContext.imageHeight = imageSize.height
+    // }
     this.state.commands = props.commandTemplate.commands
     this.setState({ ...this.state })
   }
@@ -53,9 +62,27 @@ export class CommandEditor extends React.Component<CommandEditorProps2, CommandE
           if (this.props.commandTemplate.template && this.props.commandTemplate.arguments) {
             return this.props.commandTemplate.arguments.map(arg =>
               <div>
-                {arg.name}: <ColorPickerEditor {...this.props as any}
-                  onChange={(event: ArgumentChangeEvent<Color>) => this.argumentChangeEvent(arg, event)}
-                />
+                {arg.name}:
+
+                {(() => {
+                  console.log('inside', this.state.templateContext[arg.id]);
+                  
+                  if (arg.type === ArgumentType.color) {
+                    return <ColorPickerEditor {...this.props as any}
+                      value={this.state.templateContext[arg.id]}
+                      onChange={(event: ArgumentChangeEvent<Color>) => this.argumentChangeEvent(arg, event)}
+                    />
+                  }
+                  else if (arg.type === ArgumentType.number) {
+                    return <NumberEditor {...this.props as any}
+                      onChange={(event: ArgumentChangeEvent<Color>) => this.argumentChangeEvent(arg, event)}
+                    />
+                  }
+                  else {
+                    return <div>Sorry, dont know how to represent {arg.type}, yet</div>
+                  }
+                })()}
+
               </div>)
           }
           else {
@@ -73,11 +100,13 @@ export class CommandEditor extends React.Component<CommandEditorProps2, CommandE
       </div>
     )
   }
-  argumentChangeEvent  (arg: Argument, event: ArgumentChangeEvent<Color>) {
+
+  argumentChangeEvent(arg: Argument, event: ArgumentChangeEvent<Color>) {
     this.state.templateContext[arg.id] = event.value
     const value = this.props.commandTemplate.template(this.state.templateContext)
     this.props.onChange({ commandTemplate: this.props.commandTemplate, value })
   }
+
   commandInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     const commands: Command[] = []
     query('.' + this.props.classes.input)

@@ -6,8 +6,8 @@ import { commandsToString, readImageUrlToUintArray, loadImg, getImageSize, Image
 import { Command, ExecuteConfig } from '../../../imagemagick';
 import { clone, query } from '../../../util/misc';
 import { execute } from '../../../imagemagick/execute';
-import { CommandTemplate } from '../../components/argumentEditor/CommandTemplate';
-import { CommandEditor } from '../../components/argumentEditor/CommandEditor';
+import { CommandTemplate } from '../../components/commandEditor/CommandTemplate';
+import { CommandEditor } from '../../components/commandEditor/CommandEditor';
 
 const styles = (theme: Theme) => createStyles({
   input: {
@@ -63,23 +63,24 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
           </FormControl>
 
           <ul>
-            {this.state.commands.map((command: Command, i: number) =>
-              <li>
-                <CommandEditor 
-                {...this.props as any} 
-                commandTemplate={this.state.selectedFrameTemplate}
-                onChange={e=>{
-                  console.log('ESSS', e);
-                  this.setState({...this.state, commands: e.value})
-                  this.execute()
-                }}
-                 />
-                {/* <input className={classes.input} type="text"
-                  value={JSON.stringify(command)}
-                  onChange={e => this.commandInputChange(e)}
-                /> */}
+            {this.state.commands.map((command: Command, i: number) =>{
+              const context = { 
+                imageWidth: this.state.imageSize && this.state.imageSize.width || 0, 
+                height: this.state.imageSize && this.state.imageSize.height || 0 
+              }
+              return <li>
+                <CommandEditor
+                  {...this.props as any}
+                  templateContext={context}
+                  commandTemplate={this.state.selectedFrameTemplate}
+                  onChange={e => {
+                    console.log('ESSS', e);
+                    this.setState({ ...this.state, commands: e.value })
+                    this.execute()
+                  }}
+                />
               </li>
-            )}
+            })}
           </ul>
           <br />
 
@@ -116,6 +117,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
       this.imageSizeCalled = true
       const imageSize = await getImageSize('rotate.png')
       this.setState({ ...this.state, imageSize })
+      lastImageSize = imageSize
     }
     await this.execute()
   }
@@ -159,4 +161,8 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
   }
 }
 
+let lastImageSize: ImageSize //TODO: this better, dont cheat!
+export function getLastImageSize(): ImageSize {//TODO: this better, dont cheat!
+  return lastImageSize
+}
 export const ImageFrameTransformation = withStyles(styles, { withTheme: true })(ImageFrameTransformationNaked as any);
