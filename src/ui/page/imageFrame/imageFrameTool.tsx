@@ -4,6 +4,7 @@ import Paper from '@material-ui/core/Paper'
 import ImageFrameToolStepper from './ImageFrameToolStepper'
 import { Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import { ImageFrameTransformation } from './ImageFrameTransformation';
 
 const styles = (theme: Theme) => createStyles({
   paper: {
@@ -23,7 +24,10 @@ function render(props: WithStyles<typeof styles>) {
       <h2>Image frame</h2>
       <p>Put a frame on your images. First select an image, then use the tool to try different frames formats and configuration, and last, download the result.  </p>
 
-      <ImageFrameToolStepper />
+      {/* <ImageFrameToolStepper /> */}
+
+      <p>Go ahead, select one of the templates, and try to understand and modify numbers in the transformation and observe the changes.</p>
+        <ImageFrameTransformation />
       </Typography>
     </Paper>
   )

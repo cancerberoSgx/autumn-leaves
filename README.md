@@ -20,8 +20,12 @@
 
 # TODO / INVESTIGATE
 
+ * Idea : ImageMagick react component: <ImageMagick src="foo.png" convert=['-rotate', '88'] /> that displays given image in src using the convertion. (WIP)
+ * CommandEditor : autogenerate editors for IM commands from given metadata implemented as react components. Able to render as a IM Command[] and notify changes. (WIP)
+ * idea make a "photo frame" editor. (WIP)
+ * composite commands (WIP)
+
  * idea: image format conversion tool - png, jpg, gif, tiff, svg, pdf, psd, ps, pnm, .ico, tga, webp, xpm, xbm, xcf
- * idea make a "photo frame" editor
  * idea: convert image.jpg -quality 75 output_file.jpg
  * idea: montage image1.jpg image2.jpg image3.jpg image4.jpg -geometry +2+2 output_montage.jpg
  * idea: convert output_montage.jpg output_montage.pdf

@@ -1,9 +1,12 @@
 import { Command } from '../../../imagemagick';
 import { ImageSize } from '../../../util/image';
 export interface TemplateContext {
+  [key: string]: string
 }
 export interface SizedImageContext extends TemplateContext {
-  imageSizes: ImageSize[]
+  // imageSizes: ImageSize[]
+  width: string,
+  height: string
 }
 export interface CommandTemplate {
   id: string;
@@ -13,14 +16,6 @@ export interface CommandTemplate {
   description?: string;
   template?(context: TemplateContext): Command[];
   arguments?: Argument[]
-}
-
-export interface ArgumentEditorProps<T> {
-  argument?: Argument
-  initialValue?: T
-}
-export interface ArgumentEditorState<T> {
-  value?: T
 }
 
 
@@ -47,4 +42,32 @@ export interface IMCommand extends Thing {
   type: 'convert' // TODO: wont work on other commands than convert right now
   arguments: Argument[]
   toIMCommand(): Command
+}
+
+
+// UI / react base framework types
+
+export interface ArgumentChangeEvent<T> {
+  value: T
+  argument: Argument
+  changeEvent?: React.ChangeEvent
+}
+export interface CommandChangeEvent {
+  value: Command[]
+  commandTemplate: CommandTemplate
+}
+export interface ArgumentEditorProps<T> {
+  argument?: Argument
+  initialValue?: T
+  onChange: (event: ArgumentChangeEvent<T>) => void
+}
+export interface CommandEditorProps {
+  commandTemplate: CommandTemplate
+  templateContext?: TemplateContext
+  // commands: Command[]
+  // initialValue?: T
+  onChange: (event: CommandChangeEvent) => void
+}
+export interface ArgumentEditorState<T> {
+  value: T
 }

@@ -6,7 +6,6 @@ export interface Crop1Context extends SizedImageContext {
   background?: Color
 }
 export const imageFrames: CommandTemplate[] = [
-
   {
     id: 'crop1',
     name: 'simple crop 1',
@@ -16,10 +15,10 @@ export const imageFrames: CommandTemplate[] = [
   {
     id: 'crop2',
     name: 'simple crop 2',
-    commands: [["convert", "$INPUT", "-quiet", "-crop", "129x158-9-6!", "-background", "skyblue", "-flatten", "$OUTPUT"]],
+    commands: [["convert", "$INPUT", "-quiet", "-crop", "129x158-9-6!", "-background", "red", "-flatten", "$OUTPUT"]],
     description: ' ',
     template: function (context: Crop1Context) {
-      return JSON.parse(`[["convert", "$INPUT", "-quiet", "-crop", "${context.imageSizes[0].width + 20}x${context.imageSizes[0].height + 20}-9-6!", "-background", "${context.background || 'skyblue'}", "-flatten", "$OUTPUT"]]`) as Command[]
+      return JSON.parse(`[["convert", "$INPUT", "-quiet", "-crop", "129x158-9-6!", "-background", "${context.background || 'skyblue'}", "-flatten", "$OUTPUT"]]`) as Command[]
     },
     arguments: [{ type: ArgumentType.color, id: 'background', name: 'background' }]
   },

@@ -7,6 +7,7 @@ import { Command, ExecuteConfig } from '../../../imagemagick';
 import { clone, query } from '../../../util/misc';
 import { execute } from '../../../imagemagick/execute';
 import { CommandTemplate } from '../convertDemo/CommandTemplate';
+import { CommandEditor } from '../../components/argumentEditor/CommandEditor';
 
 const styles = (theme: Theme) => createStyles({
   input: {
@@ -64,16 +65,25 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
           <ul>
             {this.state.commands.map((command: Command, i: number) =>
               <li>
-                <input className={classes.input} type="text"
+                <CommandEditor 
+                {...this.props as any} 
+                commandTemplate={this.state.selectedFrameTemplate}
+                onChange={e=>{
+                  console.log('ESSS', e);
+                  this.setState({...this.state, commands: e.value})
+                  this.execute()
+                }}
+                 />
+                {/* <input className={classes.input} type="text"
                   value={JSON.stringify(command)}
                   onChange={e => this.commandInputChange(e)}
-                />
+                /> */}
               </li>
             )}
           </ul>
           <br />
 
-          <p className={classes.error}>{this.state.jsonError || ''}</p>
+          {/* <p className={classes.error}>{this.state.jsonError || ''}</p> */}
 
           <Button variant="contained" onClick={() => this.execute()}>
             Execute!
@@ -118,21 +128,6 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     await this.setImageSize()
   }
 
-  commandInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const commands: Command[] = []
-    query('.' + this.props.classes.input)
-      .forEach((input: HTMLInputElement) => {
-        let value
-        try {
-          value = JSON.parse(e.target.value)
-          this.setState({ ...this.state, jsonError: '' })
-        } catch (error) {
-          this.setState({ ...this.state, jsonError: 'JSON Syntax error: ' + error })
-        }
-        commands.push(value)
-      })
-    this.setState({ ...this.state, commands })
-  }
 
   async execute() {
     const inputImageName = 'inputImage.png'
@@ -158,6 +153,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
   async selectedTemplateChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const commands = JSON.parse(e.target.value) as Command[]
     const frame = imageFrames.find(i => JSON.stringify(commands) === JSON.stringify(i.commands))
+    // debugger
     this.setState({ ...this.state, selectedFrameTemplate: frame, commands: frame.commands })
     await this.execute()
   }
