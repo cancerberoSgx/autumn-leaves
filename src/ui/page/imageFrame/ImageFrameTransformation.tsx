@@ -1,13 +1,13 @@
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
-import * as React from 'react';
-import { FormControl, InputLabel, Select, MenuItem, TextField, Button, Grid } from '@material-ui/core';
-import { imageFrames } from './data';
-import { commandsToString, readImageUrlToUintArray, loadImg, getImageSize, ImageSize } from '../../../util/image';
-import { Command, ExecuteConfig } from '../../../imagemagick';
-import { clone, query } from '../../../util/misc';
-import { execute } from '../../../imagemagick/execute';
-import { CommandTemplate } from '../../components/commandEditor/CommandTemplate';
-import { CommandEditor } from '../../components/commandEditor/CommandEditor';
+import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
+import * as React from 'react'
+import { FormControl, InputLabel, Select, MenuItem, TextField, Button, Grid } from '@material-ui/core'
+import { imageFrames } from './data'
+import { commandsToString, readImageUrlToUintArray, loadImg, getImageSize, ImageSize } from '../../../util/image'
+import { Command, ExecuteConfig } from '../../../imagemagick'
+import { clone, query } from '../../../util/misc'
+import { execute } from '../../../imagemagick/execute'
+import { CommandTemplate } from '../../components/commandEditor/CommandTemplate'
+import { CommandEditor } from '../../components/commandEditor/CommandEditor'
 
 const styles = (theme: Theme) => createStyles({
   input: {
@@ -19,7 +19,7 @@ const styles = (theme: Theme) => createStyles({
   error: {
     fontWeight: 'bold'
   }
-});
+})
 
 export interface ImageFrameTransformationProps extends WithStyles<typeof styles> {
 }
@@ -40,11 +40,16 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
   constructor(props: ImageFrameTransformationProps, state: ImageFrameTransformationState) {
     super(props, state)
   }
-
+  updateCommandValue(commands: Command[]) {
+    this.setState({ ...this.state, commands })
+    console.log('updateCommandValue', commands)
+    this.execute()
+  }
   render(): React.ReactNode {
     const { classes, theme }: { classes: any, theme?: Theme } = this.props
     return (
       <div className={classes.root}>
+        <p>Add a frame to your images. Select one of the templates below and change its parameters using the form. </p>
         <form className={classes.root} autoComplete="off">
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor="template-simple">{'Template'}</InputLabel>
@@ -63,24 +68,15 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
           </FormControl>
 
           <ul>
-            {this.state.commands.map((command: Command, i: number) =>{
-              // const context = { 
-              //   imageWidth: this.state.imageSize && this.state.imageSize.width || 100, 
-              //   imageHeight: this.state.imageSize && this.state.imageSize.height || 100 
-              // }
-              // debugger
-
-              // console.log('PASANDO', this.state.selectedFrameTemplate.defaultTemplateContext||{});
-              
-              return <li> 
+            {this.state.commands.map((command: Command, i: number) => {
+              console.log('PASANDO', this.state.selectedFrameTemplate.defaultTemplateContext || {})
+              return <li>
                 <CommandEditor
                   {...this.props as any}
-                  templateContext={this.state.selectedFrameTemplate.defaultTemplateContext||{}}
+                  templateContext={this.state.selectedFrameTemplate.defaultTemplateContext || {}}
                   commandTemplate={this.state.selectedFrameTemplate}
                   onChange={e => {
-                    // console.log('ESSS', e);
-                    this.setState({ ...this.state, commands: e.value })
-                    this.execute()
+                    this.updateCommandValue(e.value)
                   }}
                 />
               </li>
@@ -88,11 +84,9 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
           </ul>
           <br />
 
-          {/* <p className={classes.error}>{this.state.jsonError || ''}</p> */}
-
           <Button variant="contained" onClick={() => this.execute()}>
             Execute!
-        </Button>
+          </Button>
 
           <br />
           <Grid container spacing={24}>
@@ -116,8 +110,8 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     )
   }
   private imageSizeCalled: boolean = false
-  private async  setImageSize() {
-    if (!this.imageSizeCalled) {
+  private async  setImageSize(force: boolean = false) {
+    if (!this.imageSizeCalled || force) {
       this.imageSizeCalled = true
       const imageSize = await getImageSize('rotate.png')
       this.setState({ ...this.state, imageSize })
@@ -134,16 +128,17 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     await this.setImageSize()
   }
 
-
   async execute() {
     const inputImageName = 'inputImage.png'
     const outputImageName = 'outputImage.png'
-    debugger
+
     const commands = this.state.commands.map((command: Command) =>
       command.map(s =>
         s === '$INPUT' ? inputImageName : s === '$OUTPUT' ? outputImageName : s
       )
     )
+    console.log('commands:', commands)
+
     const execConfig: ExecuteConfig = {
       commands,
       inputFiles: [
@@ -158,35 +153,22 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
   }
 
   async selectedTemplateChange(e: React.ChangeEvent<HTMLSelectElement>) {
-
-    // 
-    // this.state.templateContext.imageWidth = getLastImageSize().width
-    // this.state.templateContext.imageHeight = getLastImageSize().height
-    // const value = this.props.commandTemplate.template(this.state.templateContext)
-    // this.props.onChange({ commandTemplate: this.props.commandTemplate, value })
-    // this.setState({...this.state})
-
     const _commands = JSON.parse(e.target.value) as Command[]
     const frame = imageFrames.find(i => JSON.stringify(_commands) === JSON.stringify(i.commands))
     let commands: Command[]
-    if(frame.template) {
+    if (frame.template) {
       commands = frame.template(frame.defaultTemplateContext)
     }
     else {
       commands = frame.commands
     }
-    debugger // aca esta el problema
-    
-    // const context = frame.template()
-    // debugger
-    // const commands = frame.commands
-    this.setState({ ...this.state, selectedFrameTemplate: frame, commands  })
+    this.setState({ ...this.state, selectedFrameTemplate: frame, commands })
     await this.execute()
   }
 }
 
-let lastImageSize: ImageSize = {width: 109, height: 125} //TODO: this better, dont cheat!
+let lastImageSize: ImageSize = { width: 109, height: 125 } //TODO: this better, dont cheat!
 export function getLastImageSize(): ImageSize {//TODO: this better, dont cheat!
   return lastImageSize
 }
-export const ImageFrameTransformation = withStyles(styles, { withTheme: true })(ImageFrameTransformationNaked as any);
+export const ImageFrameTransformation = withStyles(styles, { withTheme: true })(ImageFrameTransformationNaked as any)

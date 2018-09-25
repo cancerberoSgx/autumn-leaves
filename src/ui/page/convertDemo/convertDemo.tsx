@@ -44,7 +44,7 @@ function render(props: WithStyles<typeof styles>) {
 
   return (
     <Paper className={classes.paper}>
-      <p>Try an ImageMagick command on different test images. Choose one example below and press execute. Edit the command and see what it does: </p>
+      <p>Try an ImageMagick command on different test images. Choose one example below and press execute. Edit the command and see what it does. Some transformation could take a couple of seconds to finish. so be patient. </p>
 
       {renderSuggestions(props, transformations)}<br /><br />
 
