@@ -1,38 +1,12 @@
-import { Command } from '../../../imagemagick';
-import { CommandTemplate, TemplateContext, SizedImageContext, Color, ArgumentType } from '../../components/commandEditor/CommandTemplate';
-// import { ArgumentType, Color } from '../../components/argumentEditor/types';
+import { CommandTemplate } from '../../components/commandEditor/CommandTemplate';
+import { cropTemplate1 } from './templates/cropTemplate1';
+import { vignetteTemplate1 } from './templates/vignetteTemplate1';
+import { polaroidTemplate1 } from './templates/polaroid2';
 
-export interface Crop1Context extends SizedImageContext {
-  background?: Color
-}
 export const imageFrames: CommandTemplate[] = [
-  {
-    id: 'crop2',
-    name: 'simple crop 2',
-    commands: [["convert", "$INPUT", "-quiet", "-crop", "129x158-9-6!", "-background", "black", "-flatten", "$OUTPUT"]],
-    description: ' ',
-    template: function (context: Crop1Context) {
-      const result = JSON.parse(`[["convert", "$INPUT", "-quiet", "-crop", "${context.imageWidth + 20}x${context.imageHeight + 20}-9-6!", "-background", "${context.background || 'skyblue'}", "-flatten", "$OUTPUT"]]`) as Command[]
-      console.log('result', result);
-
-      return result
-    },
-    arguments: [{ type: ArgumentType.color, id: 'background', name: 'background' }, { type: ArgumentType.number, id: 'imageWidth', name: 'imageWidth' }, { type: ArgumentType.number, id: 'imageHeight', name: 'imageHeight' }]
-  },
-  {
-    id: 'crop1',
-    name: 'simple crop 1',
-    commands: [["convert", "$INPUT", "-quiet", "-crop", "129x158-9-6!", "-background", "skyblue", "-flatten", "$OUTPUT"]],
-    description: ' '
-  },
-  {
-    // name: 'test1',
-    id: 'frameVignette1',
-    name: 'frame Vignette',
-    // commands:[ ['convert', '$INPUT', '-alpha', 'set', '-background', 'none', '-vignette', '0x4', '$OUTPUT'],
-    description: 'The Vignette Operator provides a simple means to add a blurry edge around an image.',
-    commands: [['convert', '$INPUT', '-alpha', 'set', '-background', 'none', '-vignette', '0x4', '$OUTPUT']],
-  },
+  cropTemplate1,
+  vignetteTemplate1,
+  polaroidTemplate1,
 
   {
     id: 'frameFeathering1',

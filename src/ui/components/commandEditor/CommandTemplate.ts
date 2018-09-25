@@ -15,6 +15,7 @@ export interface CommandTemplate {
   commands?: Command[];
   description?: string;
   template?(context: TemplateContext): Command[];
+  defaultTemplateContext?: TemplateContext
   arguments?: Argument[]
 }
 
@@ -66,7 +67,7 @@ export interface ArgumentEditorProps<T> {
 }
 export interface CommandEditorProps {
   commandTemplate: CommandTemplate
-  templateContext?: TemplateContext
+  templateContext: TemplateContext
   // commands: Command[]
   // initialValue?: T
   onChange: (event: CommandChangeEvent) => void

@@ -41,9 +41,11 @@ export class CommandEditor extends React.Component<CommandEditorProps2, CommandE
     // this.props.templateContext = this.props.templateContext || {}
     if (props.commandTemplate.arguments) {
       props.commandTemplate.arguments.forEach(arg => {
-        this.state.templateContext[arg.id] = this.props.templateContext && this.props.templateContext[arg.id] || 'undefined'
+        // this.state.templateContext[arg.id] = this.props.templateContext && this.props.templateContext[arg.id] || undefined
+        this.state.templateContext[arg.id] = this.props.templateContext && this.props.templateContext[arg.id] || this.props.commandTemplate.defaultTemplateContext&&this.props.commandTemplate.defaultTemplateContext[arg.id]||  undefined
       })
     }
+    // debugger
     // const imageSize = getLastImageSize()
     // if(this.props.imageSize){
     // this.props.templateContext.imageWidth = imageSize.width
@@ -51,9 +53,27 @@ export class CommandEditor extends React.Component<CommandEditorProps2, CommandE
     // }
     this.state.commands = props.commandTemplate.commands
     this.setState({ ...this.state })
+  } 
+
+
+  componentWillUpdate(nextProps: CommandEditorProps2, nextState: CommandEditorState, nextContext: any): void {
+    
+    // debugger
+    // super.componentWillUpdate(nextProps, nextState, nextContext)
+
+    // if (nextProps.commandTemplate.arguments) {
+    //   nextProps.commandTemplate.arguments.forEach(arg => {
+    //     this.state.templateContext[arg.id] = this.props.templateContext && this.props.templateContext[arg.id] || 'undefined'
+    //   })
+    // }
+
+    // this.state.templateContext
   }
 
+
+
   render(): React.ReactNode {
+    console.log({render: JSON.stringify(this.state.templateContext)});
     // const { classes, theme }: { classes: any, theme?: Theme } = this.props
     return (
       <div className={this.props.classes.root}>
@@ -66,7 +86,7 @@ export class CommandEditor extends React.Component<CommandEditorProps2, CommandE
 
                 {(() => {
                   console.log('inside', this.state.templateContext[arg.id]);
-                  
+
                   if (arg.type === ArgumentType.color) {
                     return <ColorPickerEditor {...this.props as any}
                       value={this.state.templateContext[arg.id]}
@@ -75,6 +95,7 @@ export class CommandEditor extends React.Component<CommandEditorProps2, CommandE
                   }
                   else if (arg.type === ArgumentType.number) {
                     return <NumberEditor {...this.props as any}
+                      value={this.state.templateContext[arg.id]}
                       onChange={(event: ArgumentChangeEvent<Color>) => this.argumentChangeEvent(arg, event)}
                     />
                   }
@@ -103,8 +124,11 @@ export class CommandEditor extends React.Component<CommandEditorProps2, CommandE
 
   argumentChangeEvent(arg: Argument, event: ArgumentChangeEvent<Color>) {
     this.state.templateContext[arg.id] = event.value
+    this.state.templateContext.imageWidth = getLastImageSize().width
+    this.state.templateContext.imageHeight = getLastImageSize().height
     const value = this.props.commandTemplate.template(this.state.templateContext)
     this.props.onChange({ commandTemplate: this.props.commandTemplate, value })
+    this.setState({...this.state})
   }
 
   commandInputChange(e: React.ChangeEvent<HTMLInputElement>) {

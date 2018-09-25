@@ -18,6 +18,8 @@ export interface ColorPickerEditorState extends ArgumentEditorState<Color> {
 
 }
 
+// import { debounce } from 'debounce'
+
 export class ColorPickerEditor extends React.Component<ColorPickerEditorProps, ColorPickerEditorState> {
 
   state: ColorPickerEditorState = {
@@ -26,14 +28,20 @@ export class ColorPickerEditor extends React.Component<ColorPickerEditorProps, C
 
   constructor(props: ColorPickerEditorProps, state: ColorPickerEditorState) {
     super(props, state)
-    this.state.value = props.value || '#ffffff'
+    this.setState({ value: props.value || '#ffff11' })
+    // this.state.value = props.value || '#ffffff'
   }
 
   render(): React.ReactNode {
     const { classes, theme }: { classes: any, theme?: Theme } = this.props
     return (
       <span className={classes.root}>
-        <input type="color" onChange={e => this.inputChange(e)} />
+        <input type="color" onChange={
+          // debounce(
+            e => this.inputChange(e)
+            // , 300)
+          } 
+            />
       </span>
     )
   }

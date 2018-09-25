@@ -64,14 +64,14 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
 
           <ul>
             {this.state.commands.map((command: Command, i: number) =>{
-              const context = { 
-                imageWidth: this.state.imageSize && this.state.imageSize.width || 0, 
-                height: this.state.imageSize && this.state.imageSize.height || 0 
-              }
-              return <li>
+              // const context = { 
+              //   imageWidth: this.state.imageSize && this.state.imageSize.width || 100, 
+              //   imageHeight: this.state.imageSize && this.state.imageSize.height || 100 
+              // }
+              return <li> 
                 <CommandEditor
                   {...this.props as any}
-                  templateContext={context}
+                  // templateContext={context}
                   commandTemplate={this.state.selectedFrameTemplate}
                   onChange={e => {
                     console.log('ESSS', e);
@@ -118,6 +118,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
       const imageSize = await getImageSize('rotate.png')
       this.setState({ ...this.state, imageSize })
       lastImageSize = imageSize
+      // this.render()
     }
     await this.execute()
   }
@@ -161,7 +162,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
   }
 }
 
-let lastImageSize: ImageSize //TODO: this better, dont cheat!
+let lastImageSize: ImageSize = {width: 109, height: 125} //TODO: this better, dont cheat!
 export function getLastImageSize(): ImageSize {//TODO: this better, dont cheat!
   return lastImageSize
 }
