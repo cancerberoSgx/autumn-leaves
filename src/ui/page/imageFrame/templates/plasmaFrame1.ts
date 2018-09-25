@@ -17,7 +17,8 @@ export const tornPaper1: CommandTemplate = {
     return result
   },
   defaultTemplateContext: { // TODO :move defaultValue to arguments[i].defaultVaLue
-
+    spread1: 6,
+    spread2: 5
   },
   arguments: [
     { type: ArgumentType.number, id: 'spread1', name: 'spread1', description: 'TODO' },

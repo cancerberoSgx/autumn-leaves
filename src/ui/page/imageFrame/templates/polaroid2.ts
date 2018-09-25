@@ -5,15 +5,13 @@ export interface Polaroid2Context extends SizedImageContext {
   background: Color
   bordercolor: Color
 }
-export const polaroidTemplate1: CommandTemplate = {
+export const polaroidTemplate2: CommandTemplate = {
   id: 'framePolaroid2_',
   name: 'Polaroid 2',
   commands: [["convert", "$INPUT", "-bordercolor", "snow", "-background", "black", "+polaroid", "$OUTPUT"]],
   description: 'TODO',
   template: function (context: Polaroid2Context) {
     const s = `[["convert", "$INPUT", "-bordercolor", "${context.bordercolor}", "-background", "${context.background}", "+polaroid", "$OUTPUT"]]`
-    // console.log('SSSSSS', s);
-
     const result = JSON.parse(s) as Command[]
     return result
   },

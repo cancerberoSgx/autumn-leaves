@@ -1,14 +1,17 @@
 import { CommandTemplate } from '../../components/commandEditor/CommandTemplate';
 import { cropTemplate1 } from './templates/cropTemplate1';
 import { vignetteTemplate1 } from './templates/vignetteTemplate1';
-import { polaroidTemplate1 } from './templates/polaroid2';
+import { polaroidTemplate2 } from './templates/polaroid2';
 import { tornPaper1 } from './templates/tornPaper1';
+import { polaroidTemplate3 } from './templates/polaroid3';
 
 export const imageFrames: CommandTemplate[] = [
   cropTemplate1,
   vignetteTemplate1,
-  polaroidTemplate1,
+  polaroidTemplate2,
+  polaroidTemplate3,
   tornPaper1,
+  // framePlasma1,
 
   {
     id: 'frameFeathering1',
@@ -68,18 +71,6 @@ export const imageFrames: CommandTemplate[] = [
     id: 'framePolaroid1',
     name: 'frame polaroid 1',
     commands: [["convert", "$INPUT", "-bordercolor", "white", "-border", "6", "-bordercolor", "grey60", "-border", "1", "-background", "none", "-rotate", "6", "-background", "black", "(", "+clone", "-shadow", "60x4+4+4", ")", "+swap", "-background", "none", "-flatten", "$OUTPUT"]],
-    description: ' '
-  },
-  {
-    id: 'framePolaroid2',
-    name: 'frame polaroid 2',
-    commands: [["convert", "$INPUT", "-bordercolor", "snow", "-background", "black", "+polaroid", "$OUTPUT"]],
-    description: ' '
-  },
-  {
-    id: 'framePolaroid3',
-    name: 'frame polaroid 3',
-    commands: [["convert", "-size", "150x150", "xc:none", "-background", "none", "-fill", "white", "-stroke", "grey60", "-draw", "rectangle 0,0  119,155", "$INPUT", "-geometry", "+5+5", "-composite", "-rotate", "-10", "-draw", "rectangle 0,0 119,155", "$INPUT", "-geometry", "+5+5", "-composite", "-rotate", "-10", "-draw", "rectangle 0,0 119,155", "$INPUT", "-geometry", "+5+5", "-composite", "-rotate", "+10", "-trim", "+repage", "-background", "LightSteelBlue", "-flatten", "$OUTPUT"]],
     description: ' '
   },
   {
