@@ -122,7 +122,6 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
       const imageSize = await getImageSize('rotate.png')
       this.setState({ ...this.state, imageSize })
       lastImageSize = imageSize
-      // this.render()
     }
     await this.execute()
   }
@@ -139,6 +138,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
   async execute() {
     const inputImageName = 'inputImage.png'
     const outputImageName = 'outputImage.png'
+    debugger
     const commands = this.state.commands.map((command: Command) =>
       command.map(s =>
         s === '$INPUT' ? inputImageName : s === '$OUTPUT' ? outputImageName : s
@@ -166,7 +166,6 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     // this.props.onChange({ commandTemplate: this.props.commandTemplate, value })
     // this.setState({...this.state})
 
-
     const _commands = JSON.parse(e.target.value) as Command[]
     const frame = imageFrames.find(i => JSON.stringify(_commands) === JSON.stringify(i.commands))
     let commands: Command[]
@@ -176,6 +175,8 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     else {
       commands = frame.commands
     }
+    debugger // aca esta el problema
+    
     // const context = frame.template()
     // debugger
     // const commands = frame.commands

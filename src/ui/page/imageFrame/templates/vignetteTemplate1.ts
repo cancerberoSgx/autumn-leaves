@@ -3,8 +3,8 @@ import { Command } from "../../../../imagemagick";
 
 export interface Vignette1Context extends SizedImageContext {
     background: Color
-    x: number
-    y: number
+    radius: number
+    sigma: number
 }
 export const vignetteTemplate1: CommandTemplate = {
     id: 'frameVignette1',
@@ -16,9 +16,9 @@ export const vignetteTemplate1: CommandTemplate = {
         return result
     },
     defaultTemplateContext: {
-        radius: 12,
-        sigma: 2,
-        background: '#ed6601'
+        radius: 13,
+        sigma: 12,
+        background: '#8a1717'
     },
     arguments: [
         { type: ArgumentType.color, id: 'background', name: 'background', description: 'TODO' },

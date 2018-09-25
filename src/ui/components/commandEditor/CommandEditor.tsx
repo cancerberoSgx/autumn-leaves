@@ -75,6 +75,8 @@ export class CommandEditor extends React.Component<CommandEditorProps2, CommandE
   render(): React.ReactNode {
     // console.log({render: JSON.stringify(this.state.templateContext)});
     // const { classes, theme }: { classes: any, theme?: Theme } = this.props
+    console.log(this.state.templateContext);
+    debugger
     return (
       <div className={this.props.classes.root}>
         {(() => {
