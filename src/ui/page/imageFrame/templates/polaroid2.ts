@@ -12,7 +12,7 @@ export const polaroidTemplate1: CommandTemplate = {
   description: 'TODO',
   template: function (context: Polaroid2Context) {
     const s = `[["convert", "$INPUT", "-bordercolor", "${context.bordercolor}", "-background", "${context.background}", "+polaroid", "$OUTPUT"]]`
-    console.log('SSSSSS', s);
+    // console.log('SSSSSS', s);
 
     const result = JSON.parse(s) as Command[]
     return result

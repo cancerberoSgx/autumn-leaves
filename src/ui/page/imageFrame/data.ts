@@ -2,11 +2,13 @@ import { CommandTemplate } from '../../components/commandEditor/CommandTemplate'
 import { cropTemplate1 } from './templates/cropTemplate1';
 import { vignetteTemplate1 } from './templates/vignetteTemplate1';
 import { polaroidTemplate1 } from './templates/polaroid2';
+import { tornPaper1 } from './templates/tornPaper1';
 
 export const imageFrames: CommandTemplate[] = [
   cropTemplate1,
   vignetteTemplate1,
   polaroidTemplate1,
+  tornPaper1,
 
   {
     id: 'frameFeathering1',
