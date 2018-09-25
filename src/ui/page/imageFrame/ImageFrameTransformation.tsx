@@ -68,13 +68,17 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
               //   imageWidth: this.state.imageSize && this.state.imageSize.width || 100, 
               //   imageHeight: this.state.imageSize && this.state.imageSize.height || 100 
               // }
+              // debugger
+
+              // console.log('PASANDO', this.state.selectedFrameTemplate.defaultTemplateContext||{});
+              
               return <li> 
                 <CommandEditor
                   {...this.props as any}
-                  // templateContext={context}
+                  templateContext={this.state.selectedFrameTemplate.defaultTemplateContext||{}}
                   commandTemplate={this.state.selectedFrameTemplate}
                   onChange={e => {
-                    console.log('ESSS', e);
+                    // console.log('ESSS', e);
                     this.setState({ ...this.state, commands: e.value })
                     this.execute()
                   }}
@@ -154,10 +158,28 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
   }
 
   async selectedTemplateChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    const commands = JSON.parse(e.target.value) as Command[]
-    const frame = imageFrames.find(i => JSON.stringify(commands) === JSON.stringify(i.commands))
+
+    // 
+    // this.state.templateContext.imageWidth = getLastImageSize().width
+    // this.state.templateContext.imageHeight = getLastImageSize().height
+    // const value = this.props.commandTemplate.template(this.state.templateContext)
+    // this.props.onChange({ commandTemplate: this.props.commandTemplate, value })
+    // this.setState({...this.state})
+
+
+    const _commands = JSON.parse(e.target.value) as Command[]
+    const frame = imageFrames.find(i => JSON.stringify(_commands) === JSON.stringify(i.commands))
+    let commands: Command[]
+    if(frame.template) {
+      commands = frame.template(frame.defaultTemplateContext)
+    }
+    else {
+      commands = frame.commands
+    }
+    // const context = frame.template()
     // debugger
-    this.setState({ ...this.state, selectedFrameTemplate: frame, commands: frame.commands })
+    // const commands = frame.commands
+    this.setState({ ...this.state, selectedFrameTemplate: frame, commands  })
     await this.execute()
   }
 }

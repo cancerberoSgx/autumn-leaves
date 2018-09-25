@@ -4,6 +4,8 @@ import { vignetteTemplate1 } from './templates/vignetteTemplate1';
 import { polaroidTemplate2 } from './templates/polaroid2';
 import { tornPaper1 } from './templates/tornPaper1';
 import { polaroidTemplate3 } from './templates/polaroid3';
+import { plasmaFrame1 } from './templates/plasmaFrame1';
+import { shadowFrame1 } from './templates/shadowFrame1';
 
 export const imageFrames: CommandTemplate[] = [
   cropTemplate1,
@@ -11,7 +13,8 @@ export const imageFrames: CommandTemplate[] = [
   polaroidTemplate2,
   polaroidTemplate3,
   tornPaper1,
-  // framePlasma1,
+  plasmaFrame1,
+  shadowFrame1,
 
   {
     id: 'frameFeathering1',
@@ -19,13 +22,6 @@ export const imageFrames: CommandTemplate[] = [
     commands: [['convert', '$INPUT', '-alpha', 'set', '-virtual-pixel', 'transparent', '-channel', 'A', '-morphology', 'Distance', 'Euclidean:1,10!', '+channel', '$OUTPUT']],
     description: 'The Morphology Distance method provides a true transparent \'Feathering\' of an image\'s edges.'
   },
-  {
-    id: 'framePlasma1',
-    name: 'frame plasma 1',
-    commands: [['convert', '$INPUT', '-matte', '-mattecolor', '#CCC6', '-frame', '10x10+3+4', '(', '-size', '209x245', 'plasma:fractal', '-normalize', '-blur', '0x1', ')', '-compose', 'DstOver', '-composite', '$OUTPUT']],
-    description: 'You can even use a semi-transparent \'-mattecolor\' for the frame \'-frame\' and then \'underlay\' a interesting pattern (such as a Fractal Plasma Canvas), to produce a more colorful frame.'
-  },
-
 
   {
     id: 'frameFeathering2',
@@ -60,12 +56,6 @@ export const imageFrames: CommandTemplate[] = [
     description: ' '
   },
 
-  {
-    id: 'frameShadow1',
-    name: 'frame shadow soft',
-    commands: [["convert", "$INPUT", "-page", "+4+4", "-alpha", "set", "(", "+clone", "-background", "navy", "-shadow", "60x4+4+4", ")", "+swap", "-background", "none", "-mosaic", "$OUTPUT"]],
-    description: ' '
-  },
 
   {
     id: 'framePolaroid1',

@@ -73,7 +73,7 @@ export class CommandEditor extends React.Component<CommandEditorProps2, CommandE
 
 
   render(): React.ReactNode {
-    console.log({render: JSON.stringify(this.state.templateContext)});
+    // console.log({render: JSON.stringify(this.state.templateContext)});
     // const { classes, theme }: { classes: any, theme?: Theme } = this.props
     return (
       <div className={this.props.classes.root}>
@@ -85,9 +85,11 @@ export class CommandEditor extends React.Component<CommandEditorProps2, CommandE
                 {arg.name}:
 
                 {(() => {
-                  console.log('inside', this.state.templateContext[arg.id]);
+                  // console.log('inside', this.state.templateContext[arg.id]);
 
+                  // console.log('>>>', arg.id, this.state.templateContext[arg.id]);
                   if (arg.type === ArgumentType.color) {
+                    
                     return <ColorPickerEditor {...this.props as any}
                       value={this.state.templateContext[arg.id]}
                       onChange={(event: ArgumentChangeEvent<Color>) => this.argumentChangeEvent(arg, event)}
@@ -124,6 +126,9 @@ export class CommandEditor extends React.Component<CommandEditorProps2, CommandE
 
   argumentChangeEvent(arg: Argument, event: ArgumentChangeEvent<Color>) {
     this.state.templateContext[arg.id] = event.value
+    this.setTemplateValue()
+  }
+  protected setTemplateValue(){
     this.state.templateContext.imageWidth = getLastImageSize().width
     this.state.templateContext.imageHeight = getLastImageSize().height
     const value = this.props.commandTemplate.template(this.state.templateContext)

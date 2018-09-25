@@ -28,7 +28,8 @@ export class ColorPickerEditor extends React.Component<ColorPickerEditorProps, C
 
   constructor(props: ColorPickerEditorProps, state: ColorPickerEditorState) {
     super(props, state)
-    this.setState({ value: props.value || '#ffff11' })
+    this.state.value = props.value || '#ffff11'
+    // this.setState({ value: props.value || '#ffff11' })
     // this.state.value = props.value || '#ffffff'
   }
 
@@ -36,7 +37,7 @@ export class ColorPickerEditor extends React.Component<ColorPickerEditorProps, C
     const { classes, theme }: { classes: any, theme?: Theme } = this.props
     return (
       <span className={classes.root}>
-        <input type="color" onChange={
+        <input type="color" value={this.state.value} onChange={
           // debounce(
             e => this.inputChange(e)
             // , 300)
