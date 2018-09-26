@@ -98,3 +98,7 @@ export function getImageSize(url: string): Promise<ImageSize> {
     img.src = url;
   })
 }
+
+export function writeOutputImageToEl(image: MagickOutputFile, el: HTMLImageElement) {
+  el.src = URL.createObjectURL(image['blob'])
+}

@@ -1,0 +1,7 @@
+src
+docs
+test-project1
+tests
+tsconfig.json
+*.log
+*.tgz

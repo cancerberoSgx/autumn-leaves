@@ -14,6 +14,8 @@ export interface IMagick {
   Call(files: MagickInputFile[], command: string[]): Promise<MagickOutputFile[]>
 }
 
+export type Command = string[]
+
 export interface ExecuteConfig {
   inputFiles: MagickInputFile[]
   /** commands to execute, serially */
@@ -23,7 +25,6 @@ export interface ExecuteConfig {
 export interface ExecuteResult {
   outputFiles: MagickOutputFile[]
 }
-export type Command = string[]
 
 let magickApiObj: IMagick
 export function getMagickApi(): IMagick {
@@ -34,14 +35,6 @@ export function getMagickApi(): IMagick {
   return magickApiObj
 }
 
-class Fruit {
-  color: string
-}
-
-function comer(f: Fruit) {
-
-}
-
-comer({
-  color: 'marron'
-})
+export * from './execute'
+export * from './util/image'
+export * from './util/cli'

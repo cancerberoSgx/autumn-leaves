@@ -2,12 +2,13 @@
   "name": "imagemagick-browser",
   "version": "0.0.1",
   "description": "Abstractions on top of WASM-ImageMagick to easy usage",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "build": "npx tsc",
     "test": "export NODE_PATH=$(npm root --quiet -g) && npx jest"
   },
-  "keywords": [],
+  "keywords": ["imagemagick", "browser", "typescript", "images", "image processing"],
   "author": "Sebastian Gurin",
   "license": "MIT",
   "dependencies": {

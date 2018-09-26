@@ -170,6 +170,8 @@ import { buildImArguments, DoMagickCall } from './index';
 import { CommandTemplate } from "../../components/commandEditor/CommandTemplate";
 import { arrayToIMCommand } from '../../../util/cli';
 import { TableRow, TableBody } from 'material-ui';
+import { MagickOutputFile } from '../../../imagemagick';
+import { writeOutputImageToEl } from '../../../util/image';
 
 const defaultTransformation = transformations[0]
 let selectedTransformation: CommandTemplate = defaultTransformation
@@ -199,7 +201,8 @@ async function transformImages(images = defaultImages) {
     let firstOutputImage = outputFiles[0]
 
     if (outputImage) {
-      outputImage.src = URL.createObjectURL(firstOutputImage['blob'])
+      writeOutputImageToEl(firstOutputImage, outputImage)
+      // outputImage.src = URL.createObjectURL(firstOutputImage['blob'])
       outputImage.setAttribute('data-outfile', image.outFile)
       outputImage.parentElement.parentElement.querySelector('.took').innerHTML = Math.round(performance.now() - t0) + ' ms'
     }

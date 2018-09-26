@@ -33,6 +33,9 @@ export function commandsToString(commands: Command[]): string {
   return JSON.stringify(commands, null, 2)
 }
 
+export function writeOutputImageToEl(image: MagickOutputFile, el: HTMLImageElement) {
+  el.src = URL.createObjectURL(image['blob'])
+}
 export async function inputFileToUint8Array(el: HTMLInputElement): Promise<{ file: File, content: Uint8Array }[]> {
   return await inputFileFiles(el).map(file => {
     // debugger

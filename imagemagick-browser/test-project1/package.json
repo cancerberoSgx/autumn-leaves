@@ -1,0 +1,39 @@
+{
+  "name": "test-project1",
+  "version": "0.0.1",
+  "description": "just a test project using the library which will be asserted by src/test with a browser - the test assertions are actually there - here we just transform some images in the browser",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "bundle": "npx browserify dist/index.js -o dist/bundle.js",
+    "copy": "cp -r src/static/* ../../docs/magick.js ../../docs/magick.wasm dist",
+    "serve": "npx http-server dist",
+    "start": "npm run build && npm run bundle && npm run copy && npm run serve"
+  },
+  "keywords": [],
+  "author": "Sebastian Gurin",
+  "license": "MIT",
+  "dependencies": {
+    "imagemagick-browser": ".."
+  },
+  "devDependencies": {
+    "browserify": "^16.2.3",
+    "http-server": "^0.11.1",
+    "ts-node": "^7.0.0",
+    "typescript": "^3.0.3"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  }
+}
