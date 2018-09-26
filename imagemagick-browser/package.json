@@ -1,0 +1,41 @@
+{
+  "name": "imagemagick-browser",
+  "version": "0.0.1",
+  "description": "Abstractions on top of WASM-ImageMagick to easy usage",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "test": "export NODE_PATH=$(npm root --quiet -g) && npx jest"
+  },
+  "keywords": [],
+  "author": "Sebastian Gurin",
+  "license": "MIT",
+  "dependencies": {
+    "@types/puppeteer": "^1.6.4",
+    "p-map": "^1.0.0",
+    "wasm-imagemagick": "^1.1.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.1.4",
+    "@types/p-map": "^1.0.0",
+    "@types/sinon": "^5.0.1",
+    "jest": "^23.3.0",
+    "sinon": "^6.1.0",
+    "ts-node": "^7.0.0",
+    "typescript": "^3.0.3"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  }
+}

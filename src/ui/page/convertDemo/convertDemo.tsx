@@ -3,7 +3,9 @@
 import * as React from 'react'
 import { withStyles, Theme, createStyles, WithStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
-import { Button, MenuItem, FormControl, InputLabel, Select } from '@material-ui/core';
+import { Button, MenuItem, FormControl, InputLabel, Select
+  // , Table, TableHead, TableCell 
+} from '@material-ui/core';
 import { ConvertDemoCliScript } from './ConvertDemoCliScript';
 
 const styles = (theme: Theme) => createStyles({
@@ -131,6 +133,32 @@ function renderImageTable(props: WithStyles<typeof styles>) {
           )}
         </tbody>
       </table>
+      {/* <Table className={ ''}>
+        <TableHead>
+          <TableRow>
+            <TableCell>Dessert (100g serving)</TableCell>
+            <TableCell numeric>Calories</TableCell>
+            <TableCell numeric>Fat (g)</TableCell>
+            <TableCell numeric>Carbs (g)</TableCell>
+            <TableCell numeric>Protein (g)</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {[{calories: '123123'}].map(row => {
+            return (
+              <TableRow key={row.calories}>
+                <TableCell component="th" scope="row">
+                  {row.calories}
+                </TableCell>
+                <TableCell numeric>{row.calories}</TableCell>
+                <TableCell numeric>{row.calories}</TableCell>
+                <TableCell numeric>{row.calories}</TableCell>
+                <TableCell numeric>{row.calories}</TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table> */}
     </div>
   )
 }
@@ -141,6 +169,7 @@ import { images as defaultImages, transformations, suggestionsDontWork } from '.
 import { buildImArguments, DoMagickCall } from './index';
 import { CommandTemplate } from "../../components/commandEditor/CommandTemplate";
 import { arrayToIMCommand } from '../../../util/cli';
+import { TableRow, TableBody } from 'material-ui';
 
 const defaultTransformation = transformations[0]
 let selectedTransformation: CommandTemplate = defaultTransformation

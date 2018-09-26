@@ -9,6 +9,7 @@ export const images: ConvertDemoImage[] = [
   { sourceUrl: 'react.svg', targetId: 'outputImage4', outFile: 'reactOut.png' },
   { sourceUrl: 'pic.tiff', targetId: 'outputImage6', outFile: 'picOut.png' },
   { sourceUrl: 'holocaust.jpg', targetId: 'outputImage7', outFile: 'holocaustOut.png' },
+  { sourceUrl: 'knight.png', targetId: 'outputImage8', outFile: 'knightOut.png' },
 ]
 
 export const transformations: CommandTemplate[] = [
@@ -239,6 +240,18 @@ export const transformations: CommandTemplate[] = [
     description: ' '
   },
 
+  {
+    id: 'semiTransparentHalo1',
+    name: 'semi transparent halo 1',
+    command: ["convert", '$INPUT', '(', '+clone', '-channel', 'A', '-blur', '0x2.5', '-level', '0,50%', '+channel', '+level-colors', 'red', ')', '-compose', 'DstOver', '-composite', "$OUTPUT"],
+    description: 'generate a soft semi-transparent halo around the shape. To do this we Blur and recolor the image, then again Under (DstOver) Compose it with the original. - https://imagemagick.org/Usage//masking/ '
+  },
+  // 'convert', 'knight.png', '(', '+clone', '-channel', 'A', '-blur', '0x2.5', '-level', '0,50%', '+channel', '+level-colors', 'red', ')', '-compose', 'DstOver', '-composite', 'knight_halo.png
+  // convert knight.png \(  +clone \
+  //   -channel A  -blur 0x2.5 -level 0,50% +channel \
+  //   +level-colors red \
+  // \) -compose DstOver  -composite    knight_halo.png
+
 ]
 
 export const suggestionsDontWork = [
@@ -260,4 +273,11 @@ export const suggestionsDontWork = [
     command: ["convert", "$INPUT", "(", "+clone", "-scale", "25%", "-scale", "400%", ")", "(", "+clone", "-gamma", "0", "-fill", "white", "-draw", "circle 65,53 50,40", "-blur", "10x4", ")", "-composite", "$OUTPUT"],
     description: 'NOT WORKING AS EXPECTED'
   },
+  {
+    id: 'gifRemoveBackground',
+    name: 'remove background from gif',
+    command: ["convert", '$INPUT', '-layers', 'coalesce', '-background', "#cccccc", "-fuzz", '15%', '-draw', "fill none matte 0,0 floodfill", '-transparent-color', '#ffffff', '-layers', 'optimize', "$OUTPUT"],
+    description: 'NOT WORKING AS EXPECTED or perhaps not matching colors / using it right : http://imagemagick.org/discourse-server/viewtopic.php?t=12675 '
+  },
+
 ]

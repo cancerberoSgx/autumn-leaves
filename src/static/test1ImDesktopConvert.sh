@@ -20,6 +20,7 @@ convert rotate.png -alpha set -background none -vignette 0x4 test1ImOutput/frame
 convert rotate.png -alpha set -virtual-pixel transparent -channel A -morphology Distance Euclidean:1,10! +channel test1ImOutput/frameFeathering1_rotateOut.png
 convert rotate.png -alpha set -virtual-pixel transparent -channel A -blur 0x8  -level 50%,100% +channel test1ImOutput/frameFeathering2_rotateOut.png
 convert rotate.png -alpha set -virtual-pixel transparent -channel A -blur 0x8  -threshold 50% +channel test1ImOutput/frameFeathering3_rotateOut.png
+convert rotate.png -matte -mattecolor #CCC6 -frame 10x10+3+4 '(' -size 209x245 plasma:fractal -normalize -blur 0x1 ')' -compose DstOver -composite test1ImOutput/framePlasma1_rotateOut.png
 convert rotate.png -alpha set -compose DstOut '(' -size 20x15 xc:none -draw 'polygon 0,0  0,14 19,0' -write mpr:triangle  +delete ')' '(' mpr:triangle ')' -gravity northwest -composite '(' mpr:triangle -flip ')' -gravity southwest -composite '(' mpr:triangle -flop ')' -gravity northeast -composite '(' mpr:triangle -rotate 180 ')' -gravity southeast -composite test1ImOutput/frameShape1_rotateOut.png
 convert rotate.png '(' +clone -alpha extract -virtual-pixel black -spread 10 -blur 0x3 -threshold 50% -spread 1 -blur 0x.7 ')' -alpha off -compose Copy_Opacity -composite test1ImOutput/frameTornPaperEdge1_rotateOut.png
 convert rotate.png -bordercolor linen -border 8x8 -background Linen  -gravity SouthEast -splice 10x10+0+0 '(' +clone -alpha extract -virtual-pixel black -spread 10 -blur 0x3 -threshold 50% -spread 1 -blur 0x.7 ')' -alpha off -compose Copy_Opacity -composite -gravity SouthEast -chop 10x10 test1ImOutput/frameTornPaperEdge2_rotateOut.png
@@ -39,6 +40,7 @@ convert rotate.png -bordercolor grey -border 1x1 -alpha set -channel RGBA -fuzz 
 convert rotate.png +dither -colors 2 -colorspace gray -normalize test1ImOutput/quantize1_rotateOut.png
 convert -size 16x16 xc: -channel R -fx '(i%8)/7' -channel G -fx '(j%8)/7' -channel B -fx '((i>>3&1)|(j>>2&2))/3' -scale 600% test1ImOutput/quantize2_rotateOut.png
 convert rotate.png -set option:distort:viewport %wx%h+0+0 -colorspace CMYK -separate null: '(' -size 2x2 xc: '(' +clone -negate ')' +append '(' +clone -negate ')' -append ')' -virtual-pixel tile -filter gaussian '(' +clone -distort SRT 2,60 ')' +swap '(' +clone -distort SRT 2,30 ')' +swap '(' +clone -distort SRT 2,45 ')' +swap '(' +clone -distort SRT 2,0  -blur 0x0.7 ')' +swap +delete -compose Overlay -layers composite -set colorspace CMYK -combine -colorspace RGB test1ImOutput/quantize3_rotateOut.png
+convert rotate.png '(' +clone -channel A -blur 0x2.5 -level 0,50% +channel +level-colors red ')' -compose DstOver -composite test1ImOutput/semiTransparentHalo1_rotateOut.png
 convert Hermitcrab.gif -distort barrel '0.7 -0.009 0.0' -resize 200% test1ImOutput/distorBarrel1_HermitcrabOut.gif
 convert Hermitcrab.gif -rotate 90 -resize 200% test1ImOutput/rotateAndResize1_HermitcrabOut.gif
 convert Hermitcrab.gif -sigmoidal-contrast 4,0% test1ImOutput/sigmoidalContrast1_HermitcrabOut.gif
@@ -55,6 +57,7 @@ convert Hermitcrab.gif -alpha set -background none -vignette 0x4 test1ImOutput/f
 convert Hermitcrab.gif -alpha set -virtual-pixel transparent -channel A -morphology Distance Euclidean:1,10! +channel test1ImOutput/frameFeathering1_HermitcrabOut.gif
 convert Hermitcrab.gif -alpha set -virtual-pixel transparent -channel A -blur 0x8  -level 50%,100% +channel test1ImOutput/frameFeathering2_HermitcrabOut.gif
 convert Hermitcrab.gif -alpha set -virtual-pixel transparent -channel A -blur 0x8  -threshold 50% +channel test1ImOutput/frameFeathering3_HermitcrabOut.gif
+convert Hermitcrab.gif -matte -mattecolor #CCC6 -frame 10x10+3+4 '(' -size 209x245 plasma:fractal -normalize -blur 0x1 ')' -compose DstOver -composite test1ImOutput/framePlasma1_HermitcrabOut.gif
 convert Hermitcrab.gif -alpha set -compose DstOut '(' -size 20x15 xc:none -draw 'polygon 0,0  0,14 19,0' -write mpr:triangle  +delete ')' '(' mpr:triangle ')' -gravity northwest -composite '(' mpr:triangle -flip ')' -gravity southwest -composite '(' mpr:triangle -flop ')' -gravity northeast -composite '(' mpr:triangle -rotate 180 ')' -gravity southeast -composite test1ImOutput/frameShape1_HermitcrabOut.gif
 convert Hermitcrab.gif '(' +clone -alpha extract -virtual-pixel black -spread 10 -blur 0x3 -threshold 50% -spread 1 -blur 0x.7 ')' -alpha off -compose Copy_Opacity -composite test1ImOutput/frameTornPaperEdge1_HermitcrabOut.gif
 convert Hermitcrab.gif -bordercolor linen -border 8x8 -background Linen  -gravity SouthEast -splice 10x10+0+0 '(' +clone -alpha extract -virtual-pixel black -spread 10 -blur 0x3 -threshold 50% -spread 1 -blur 0x.7 ')' -alpha off -compose Copy_Opacity -composite -gravity SouthEast -chop 10x10 test1ImOutput/frameTornPaperEdge2_HermitcrabOut.gif
@@ -74,6 +77,7 @@ convert Hermitcrab.gif -bordercolor grey -border 1x1 -alpha set -channel RGBA -f
 convert Hermitcrab.gif +dither -colors 2 -colorspace gray -normalize test1ImOutput/quantize1_HermitcrabOut.gif
 convert -size 16x16 xc: -channel R -fx '(i%8)/7' -channel G -fx '(j%8)/7' -channel B -fx '((i>>3&1)|(j>>2&2))/3' -scale 600% test1ImOutput/quantize2_HermitcrabOut.gif
 convert Hermitcrab.gif -set option:distort:viewport %wx%h+0+0 -colorspace CMYK -separate null: '(' -size 2x2 xc: '(' +clone -negate ')' +append '(' +clone -negate ')' -append ')' -virtual-pixel tile -filter gaussian '(' +clone -distort SRT 2,60 ')' +swap '(' +clone -distort SRT 2,30 ')' +swap '(' +clone -distort SRT 2,45 ')' +swap '(' +clone -distort SRT 2,0  -blur 0x0.7 ')' +swap +delete -compose Overlay -layers composite -set colorspace CMYK -combine -colorspace RGB test1ImOutput/quantize3_HermitcrabOut.gif
+convert Hermitcrab.gif '(' +clone -channel A -blur 0x2.5 -level 0,50% +channel +level-colors red ')' -compose DstOver -composite test1ImOutput/semiTransparentHalo1_HermitcrabOut.gif
 convert zelda.gif -distort barrel '0.7 -0.009 0.0' -resize 200% test1ImOutput/distorBarrel1_zeldaOut.gif
 convert zelda.gif -rotate 90 -resize 200% test1ImOutput/rotateAndResize1_zeldaOut.gif
 convert zelda.gif -sigmoidal-contrast 4,0% test1ImOutput/sigmoidalContrast1_zeldaOut.gif
@@ -90,6 +94,7 @@ convert zelda.gif -alpha set -background none -vignette 0x4 test1ImOutput/frameV
 convert zelda.gif -alpha set -virtual-pixel transparent -channel A -morphology Distance Euclidean:1,10! +channel test1ImOutput/frameFeathering1_zeldaOut.gif
 convert zelda.gif -alpha set -virtual-pixel transparent -channel A -blur 0x8  -level 50%,100% +channel test1ImOutput/frameFeathering2_zeldaOut.gif
 convert zelda.gif -alpha set -virtual-pixel transparent -channel A -blur 0x8  -threshold 50% +channel test1ImOutput/frameFeathering3_zeldaOut.gif
+convert zelda.gif -matte -mattecolor #CCC6 -frame 10x10+3+4 '(' -size 209x245 plasma:fractal -normalize -blur 0x1 ')' -compose DstOver -composite test1ImOutput/framePlasma1_zeldaOut.gif
 convert zelda.gif -alpha set -compose DstOut '(' -size 20x15 xc:none -draw 'polygon 0,0  0,14 19,0' -write mpr:triangle  +delete ')' '(' mpr:triangle ')' -gravity northwest -composite '(' mpr:triangle -flip ')' -gravity southwest -composite '(' mpr:triangle -flop ')' -gravity northeast -composite '(' mpr:triangle -rotate 180 ')' -gravity southeast -composite test1ImOutput/frameShape1_zeldaOut.gif
 convert zelda.gif '(' +clone -alpha extract -virtual-pixel black -spread 10 -blur 0x3 -threshold 50% -spread 1 -blur 0x.7 ')' -alpha off -compose Copy_Opacity -composite test1ImOutput/frameTornPaperEdge1_zeldaOut.gif
 convert zelda.gif -bordercolor linen -border 8x8 -background Linen  -gravity SouthEast -splice 10x10+0+0 '(' +clone -alpha extract -virtual-pixel black -spread 10 -blur 0x3 -threshold 50% -spread 1 -blur 0x.7 ')' -alpha off -compose Copy_Opacity -composite -gravity SouthEast -chop 10x10 test1ImOutput/frameTornPaperEdge2_zeldaOut.gif
@@ -109,6 +114,7 @@ convert zelda.gif -bordercolor grey -border 1x1 -alpha set -channel RGBA -fuzz 1
 convert zelda.gif +dither -colors 2 -colorspace gray -normalize test1ImOutput/quantize1_zeldaOut.gif
 convert -size 16x16 xc: -channel R -fx '(i%8)/7' -channel G -fx '(j%8)/7' -channel B -fx '((i>>3&1)|(j>>2&2))/3' -scale 600% test1ImOutput/quantize2_zeldaOut.gif
 convert zelda.gif -set option:distort:viewport %wx%h+0+0 -colorspace CMYK -separate null: '(' -size 2x2 xc: '(' +clone -negate ')' +append '(' +clone -negate ')' -append ')' -virtual-pixel tile -filter gaussian '(' +clone -distort SRT 2,60 ')' +swap '(' +clone -distort SRT 2,30 ')' +swap '(' +clone -distort SRT 2,45 ')' +swap '(' +clone -distort SRT 2,0  -blur 0x0.7 ')' +swap +delete -compose Overlay -layers composite -set colorspace CMYK -combine -colorspace RGB test1ImOutput/quantize3_zeldaOut.gif
+convert zelda.gif '(' +clone -channel A -blur 0x2.5 -level 0,50% +channel +level-colors red ')' -compose DstOver -composite test1ImOutput/semiTransparentHalo1_zeldaOut.gif
 convert gnu.jpg -distort barrel '0.7 -0.009 0.0' -resize 200% test1ImOutput/distorBarrel1_gnuOut.jpg
 convert gnu.jpg -rotate 90 -resize 200% test1ImOutput/rotateAndResize1_gnuOut.jpg
 convert gnu.jpg -sigmoidal-contrast 4,0% test1ImOutput/sigmoidalContrast1_gnuOut.jpg
@@ -125,6 +131,7 @@ convert gnu.jpg -alpha set -background none -vignette 0x4 test1ImOutput/frameVig
 convert gnu.jpg -alpha set -virtual-pixel transparent -channel A -morphology Distance Euclidean:1,10! +channel test1ImOutput/frameFeathering1_gnuOut.jpg
 convert gnu.jpg -alpha set -virtual-pixel transparent -channel A -blur 0x8  -level 50%,100% +channel test1ImOutput/frameFeathering2_gnuOut.jpg
 convert gnu.jpg -alpha set -virtual-pixel transparent -channel A -blur 0x8  -threshold 50% +channel test1ImOutput/frameFeathering3_gnuOut.jpg
+convert gnu.jpg -matte -mattecolor #CCC6 -frame 10x10+3+4 '(' -size 209x245 plasma:fractal -normalize -blur 0x1 ')' -compose DstOver -composite test1ImOutput/framePlasma1_gnuOut.jpg
 convert gnu.jpg -alpha set -compose DstOut '(' -size 20x15 xc:none -draw 'polygon 0,0  0,14 19,0' -write mpr:triangle  +delete ')' '(' mpr:triangle ')' -gravity northwest -composite '(' mpr:triangle -flip ')' -gravity southwest -composite '(' mpr:triangle -flop ')' -gravity northeast -composite '(' mpr:triangle -rotate 180 ')' -gravity southeast -composite test1ImOutput/frameShape1_gnuOut.jpg
 convert gnu.jpg '(' +clone -alpha extract -virtual-pixel black -spread 10 -blur 0x3 -threshold 50% -spread 1 -blur 0x.7 ')' -alpha off -compose Copy_Opacity -composite test1ImOutput/frameTornPaperEdge1_gnuOut.jpg
 convert gnu.jpg -bordercolor linen -border 8x8 -background Linen  -gravity SouthEast -splice 10x10+0+0 '(' +clone -alpha extract -virtual-pixel black -spread 10 -blur 0x3 -threshold 50% -spread 1 -blur 0x.7 ')' -alpha off -compose Copy_Opacity -composite -gravity SouthEast -chop 10x10 test1ImOutput/frameTornPaperEdge2_gnuOut.jpg
@@ -144,6 +151,7 @@ convert gnu.jpg -bordercolor grey -border 1x1 -alpha set -channel RGBA -fuzz 10%
 convert gnu.jpg +dither -colors 2 -colorspace gray -normalize test1ImOutput/quantize1_gnuOut.jpg
 convert -size 16x16 xc: -channel R -fx '(i%8)/7' -channel G -fx '(j%8)/7' -channel B -fx '((i>>3&1)|(j>>2&2))/3' -scale 600% test1ImOutput/quantize2_gnuOut.jpg
 convert gnu.jpg -set option:distort:viewport %wx%h+0+0 -colorspace CMYK -separate null: '(' -size 2x2 xc: '(' +clone -negate ')' +append '(' +clone -negate ')' -append ')' -virtual-pixel tile -filter gaussian '(' +clone -distort SRT 2,60 ')' +swap '(' +clone -distort SRT 2,30 ')' +swap '(' +clone -distort SRT 2,45 ')' +swap '(' +clone -distort SRT 2,0  -blur 0x0.7 ')' +swap +delete -compose Overlay -layers composite -set colorspace CMYK -combine -colorspace RGB test1ImOutput/quantize3_gnuOut.jpg
+convert gnu.jpg '(' +clone -channel A -blur 0x2.5 -level 0,50% +channel +level-colors red ')' -compose DstOver -composite test1ImOutput/semiTransparentHalo1_gnuOut.jpg
 convert react.svg -distort barrel '0.7 -0.009 0.0' -resize 200% test1ImOutput/distorBarrel1_reactOut.png
 convert react.svg -rotate 90 -resize 200% test1ImOutput/rotateAndResize1_reactOut.png
 convert react.svg -sigmoidal-contrast 4,0% test1ImOutput/sigmoidalContrast1_reactOut.png
@@ -160,6 +168,7 @@ convert react.svg -alpha set -background none -vignette 0x4 test1ImOutput/frameV
 convert react.svg -alpha set -virtual-pixel transparent -channel A -morphology Distance Euclidean:1,10! +channel test1ImOutput/frameFeathering1_reactOut.png
 convert react.svg -alpha set -virtual-pixel transparent -channel A -blur 0x8  -level 50%,100% +channel test1ImOutput/frameFeathering2_reactOut.png
 convert react.svg -alpha set -virtual-pixel transparent -channel A -blur 0x8  -threshold 50% +channel test1ImOutput/frameFeathering3_reactOut.png
+convert react.svg -matte -mattecolor #CCC6 -frame 10x10+3+4 '(' -size 209x245 plasma:fractal -normalize -blur 0x1 ')' -compose DstOver -composite test1ImOutput/framePlasma1_reactOut.png
 convert react.svg -alpha set -compose DstOut '(' -size 20x15 xc:none -draw 'polygon 0,0  0,14 19,0' -write mpr:triangle  +delete ')' '(' mpr:triangle ')' -gravity northwest -composite '(' mpr:triangle -flip ')' -gravity southwest -composite '(' mpr:triangle -flop ')' -gravity northeast -composite '(' mpr:triangle -rotate 180 ')' -gravity southeast -composite test1ImOutput/frameShape1_reactOut.png
 convert react.svg '(' +clone -alpha extract -virtual-pixel black -spread 10 -blur 0x3 -threshold 50% -spread 1 -blur 0x.7 ')' -alpha off -compose Copy_Opacity -composite test1ImOutput/frameTornPaperEdge1_reactOut.png
 convert react.svg -bordercolor linen -border 8x8 -background Linen  -gravity SouthEast -splice 10x10+0+0 '(' +clone -alpha extract -virtual-pixel black -spread 10 -blur 0x3 -threshold 50% -spread 1 -blur 0x.7 ')' -alpha off -compose Copy_Opacity -composite -gravity SouthEast -chop 10x10 test1ImOutput/frameTornPaperEdge2_reactOut.png
@@ -179,6 +188,7 @@ convert react.svg -bordercolor grey -border 1x1 -alpha set -channel RGBA -fuzz 1
 convert react.svg +dither -colors 2 -colorspace gray -normalize test1ImOutput/quantize1_reactOut.png
 convert -size 16x16 xc: -channel R -fx '(i%8)/7' -channel G -fx '(j%8)/7' -channel B -fx '((i>>3&1)|(j>>2&2))/3' -scale 600% test1ImOutput/quantize2_reactOut.png
 convert react.svg -set option:distort:viewport %wx%h+0+0 -colorspace CMYK -separate null: '(' -size 2x2 xc: '(' +clone -negate ')' +append '(' +clone -negate ')' -append ')' -virtual-pixel tile -filter gaussian '(' +clone -distort SRT 2,60 ')' +swap '(' +clone -distort SRT 2,30 ')' +swap '(' +clone -distort SRT 2,45 ')' +swap '(' +clone -distort SRT 2,0  -blur 0x0.7 ')' +swap +delete -compose Overlay -layers composite -set colorspace CMYK -combine -colorspace RGB test1ImOutput/quantize3_reactOut.png
+convert react.svg '(' +clone -channel A -blur 0x2.5 -level 0,50% +channel +level-colors red ')' -compose DstOver -composite test1ImOutput/semiTransparentHalo1_reactOut.png
 convert pic.tiff -distort barrel '0.7 -0.009 0.0' -resize 200% test1ImOutput/distorBarrel1_picOut.png
 convert pic.tiff -rotate 90 -resize 200% test1ImOutput/rotateAndResize1_picOut.png
 convert pic.tiff -sigmoidal-contrast 4,0% test1ImOutput/sigmoidalContrast1_picOut.png
@@ -195,6 +205,7 @@ convert pic.tiff -alpha set -background none -vignette 0x4 test1ImOutput/frameVi
 convert pic.tiff -alpha set -virtual-pixel transparent -channel A -morphology Distance Euclidean:1,10! +channel test1ImOutput/frameFeathering1_picOut.png
 convert pic.tiff -alpha set -virtual-pixel transparent -channel A -blur 0x8  -level 50%,100% +channel test1ImOutput/frameFeathering2_picOut.png
 convert pic.tiff -alpha set -virtual-pixel transparent -channel A -blur 0x8  -threshold 50% +channel test1ImOutput/frameFeathering3_picOut.png
+convert pic.tiff -matte -mattecolor #CCC6 -frame 10x10+3+4 '(' -size 209x245 plasma:fractal -normalize -blur 0x1 ')' -compose DstOver -composite test1ImOutput/framePlasma1_picOut.png
 convert pic.tiff -alpha set -compose DstOut '(' -size 20x15 xc:none -draw 'polygon 0,0  0,14 19,0' -write mpr:triangle  +delete ')' '(' mpr:triangle ')' -gravity northwest -composite '(' mpr:triangle -flip ')' -gravity southwest -composite '(' mpr:triangle -flop ')' -gravity northeast -composite '(' mpr:triangle -rotate 180 ')' -gravity southeast -composite test1ImOutput/frameShape1_picOut.png
 convert pic.tiff '(' +clone -alpha extract -virtual-pixel black -spread 10 -blur 0x3 -threshold 50% -spread 1 -blur 0x.7 ')' -alpha off -compose Copy_Opacity -composite test1ImOutput/frameTornPaperEdge1_picOut.png
 convert pic.tiff -bordercolor linen -border 8x8 -background Linen  -gravity SouthEast -splice 10x10+0+0 '(' +clone -alpha extract -virtual-pixel black -spread 10 -blur 0x3 -threshold 50% -spread 1 -blur 0x.7 ')' -alpha off -compose Copy_Opacity -composite -gravity SouthEast -chop 10x10 test1ImOutput/frameTornPaperEdge2_picOut.png
@@ -214,6 +225,7 @@ convert pic.tiff -bordercolor grey -border 1x1 -alpha set -channel RGBA -fuzz 10
 convert pic.tiff +dither -colors 2 -colorspace gray -normalize test1ImOutput/quantize1_picOut.png
 convert -size 16x16 xc: -channel R -fx '(i%8)/7' -channel G -fx '(j%8)/7' -channel B -fx '((i>>3&1)|(j>>2&2))/3' -scale 600% test1ImOutput/quantize2_picOut.png
 convert pic.tiff -set option:distort:viewport %wx%h+0+0 -colorspace CMYK -separate null: '(' -size 2x2 xc: '(' +clone -negate ')' +append '(' +clone -negate ')' -append ')' -virtual-pixel tile -filter gaussian '(' +clone -distort SRT 2,60 ')' +swap '(' +clone -distort SRT 2,30 ')' +swap '(' +clone -distort SRT 2,45 ')' +swap '(' +clone -distort SRT 2,0  -blur 0x0.7 ')' +swap +delete -compose Overlay -layers composite -set colorspace CMYK -combine -colorspace RGB test1ImOutput/quantize3_picOut.png
+convert pic.tiff '(' +clone -channel A -blur 0x2.5 -level 0,50% +channel +level-colors red ')' -compose DstOver -composite test1ImOutput/semiTransparentHalo1_picOut.png
 convert holocaust.jpg -distort barrel '0.7 -0.009 0.0' -resize 200% test1ImOutput/distorBarrel1_holocaustOut.png
 convert holocaust.jpg -rotate 90 -resize 200% test1ImOutput/rotateAndResize1_holocaustOut.png
 convert holocaust.jpg -sigmoidal-contrast 4,0% test1ImOutput/sigmoidalContrast1_holocaustOut.png
@@ -230,6 +242,7 @@ convert holocaust.jpg -alpha set -background none -vignette 0x4 test1ImOutput/fr
 convert holocaust.jpg -alpha set -virtual-pixel transparent -channel A -morphology Distance Euclidean:1,10! +channel test1ImOutput/frameFeathering1_holocaustOut.png
 convert holocaust.jpg -alpha set -virtual-pixel transparent -channel A -blur 0x8  -level 50%,100% +channel test1ImOutput/frameFeathering2_holocaustOut.png
 convert holocaust.jpg -alpha set -virtual-pixel transparent -channel A -blur 0x8  -threshold 50% +channel test1ImOutput/frameFeathering3_holocaustOut.png
+convert holocaust.jpg -matte -mattecolor #CCC6 -frame 10x10+3+4 '(' -size 209x245 plasma:fractal -normalize -blur 0x1 ')' -compose DstOver -composite test1ImOutput/framePlasma1_holocaustOut.png
 convert holocaust.jpg -alpha set -compose DstOut '(' -size 20x15 xc:none -draw 'polygon 0,0  0,14 19,0' -write mpr:triangle  +delete ')' '(' mpr:triangle ')' -gravity northwest -composite '(' mpr:triangle -flip ')' -gravity southwest -composite '(' mpr:triangle -flop ')' -gravity northeast -composite '(' mpr:triangle -rotate 180 ')' -gravity southeast -composite test1ImOutput/frameShape1_holocaustOut.png
 convert holocaust.jpg '(' +clone -alpha extract -virtual-pixel black -spread 10 -blur 0x3 -threshold 50% -spread 1 -blur 0x.7 ')' -alpha off -compose Copy_Opacity -composite test1ImOutput/frameTornPaperEdge1_holocaustOut.png
 convert holocaust.jpg -bordercolor linen -border 8x8 -background Linen  -gravity SouthEast -splice 10x10+0+0 '(' +clone -alpha extract -virtual-pixel black -spread 10 -blur 0x3 -threshold 50% -spread 1 -blur 0x.7 ')' -alpha off -compose Copy_Opacity -composite -gravity SouthEast -chop 10x10 test1ImOutput/frameTornPaperEdge2_holocaustOut.png
@@ -249,3 +262,41 @@ convert holocaust.jpg -bordercolor grey -border 1x1 -alpha set -channel RGBA -fu
 convert holocaust.jpg +dither -colors 2 -colorspace gray -normalize test1ImOutput/quantize1_holocaustOut.png
 convert -size 16x16 xc: -channel R -fx '(i%8)/7' -channel G -fx '(j%8)/7' -channel B -fx '((i>>3&1)|(j>>2&2))/3' -scale 600% test1ImOutput/quantize2_holocaustOut.png
 convert holocaust.jpg -set option:distort:viewport %wx%h+0+0 -colorspace CMYK -separate null: '(' -size 2x2 xc: '(' +clone -negate ')' +append '(' +clone -negate ')' -append ')' -virtual-pixel tile -filter gaussian '(' +clone -distort SRT 2,60 ')' +swap '(' +clone -distort SRT 2,30 ')' +swap '(' +clone -distort SRT 2,45 ')' +swap '(' +clone -distort SRT 2,0  -blur 0x0.7 ')' +swap +delete -compose Overlay -layers composite -set colorspace CMYK -combine -colorspace RGB test1ImOutput/quantize3_holocaustOut.png
+convert holocaust.jpg '(' +clone -channel A -blur 0x2.5 -level 0,50% +channel +level-colors red ')' -compose DstOver -composite test1ImOutput/semiTransparentHalo1_holocaustOut.png
+convert knight.png -distort barrel '0.7 -0.009 0.0' -resize 200% test1ImOutput/distorBarrel1_knightOut.png
+convert knight.png -rotate 90 -resize 200% test1ImOutput/rotateAndResize1_knightOut.png
+convert knight.png -sigmoidal-contrast 4,0% test1ImOutput/sigmoidalContrast1_knightOut.png
+convert knight.png -sparse-color Barycentric '0,0 black 0,%h white' -function polynomial 4,-4,1 test1ImOutput/sparseColor1_knightOut.png
+convert knight.png -sigmoidal-contrast 15x30% '(' +clone -sparse-color Barycentric '0,0 black 0,%h gray80' -solarize 50% -level 50%,0 ')' -compose Blur -set option:compose:args 10 -composite test1ImOutput/composite1_knightOut.png
+convert knight.png -colorspace HSL -channel Hue -separate test1ImOutput/colorspaceChannelSeparate1_knightOut.png
+convert knight.png -charcoal 4 -blur 0x1 -rotate 10 test1ImOutput/transformCharcoal1_knightOut.png
+convert knight.png '(' -clone 0 -roll +1+0 -clone 0 -compose difference -composite ')' '(' -clone 0 -roll +0+1 -clone 0 -compose difference -composite ')' -delete 0  -compose screen -composite -negate test1ImOutput/transformEdge1_knightOut.png
+convert knight.png -define hough-lines:accumulator=true -hough-lines 5x5+20 -delete 0 -contrast-stretch 0.1% test1ImOutput/transformDefine1_knightOut.png
+convert knight.png '(' +clone -channel R -fx B ')' +swap -channel B -fx v.R test1ImOutput/transformChannelSwap1_knightOut.png
+convert knight.png -edge 1 -negate -normalize -colorspace Gray -blur 0x.5 -contrast-stretch 0x50% test1ImOutput/childrenCanColor1_knightOut.png
+convert knight.png -segment 1x1 +dither -colors 2 -edge 1 -negate -normalize test1ImOutput/childrenCanColor2_knightOut.png
+convert knight.png -alpha set -background none -vignette 0x4 test1ImOutput/frameVignette1_knightOut.png
+convert knight.png -alpha set -virtual-pixel transparent -channel A -morphology Distance Euclidean:1,10! +channel test1ImOutput/frameFeathering1_knightOut.png
+convert knight.png -alpha set -virtual-pixel transparent -channel A -blur 0x8  -level 50%,100% +channel test1ImOutput/frameFeathering2_knightOut.png
+convert knight.png -alpha set -virtual-pixel transparent -channel A -blur 0x8  -threshold 50% +channel test1ImOutput/frameFeathering3_knightOut.png
+convert knight.png -matte -mattecolor #CCC6 -frame 10x10+3+4 '(' -size 209x245 plasma:fractal -normalize -blur 0x1 ')' -compose DstOver -composite test1ImOutput/framePlasma1_knightOut.png
+convert knight.png -alpha set -compose DstOut '(' -size 20x15 xc:none -draw 'polygon 0,0  0,14 19,0' -write mpr:triangle  +delete ')' '(' mpr:triangle ')' -gravity northwest -composite '(' mpr:triangle -flip ')' -gravity southwest -composite '(' mpr:triangle -flop ')' -gravity northeast -composite '(' mpr:triangle -rotate 180 ')' -gravity southeast -composite test1ImOutput/frameShape1_knightOut.png
+convert knight.png '(' +clone -alpha extract -virtual-pixel black -spread 10 -blur 0x3 -threshold 50% -spread 1 -blur 0x.7 ')' -alpha off -compose Copy_Opacity -composite test1ImOutput/frameTornPaperEdge1_knightOut.png
+convert knight.png -bordercolor linen -border 8x8 -background Linen  -gravity SouthEast -splice 10x10+0+0 '(' +clone -alpha extract -virtual-pixel black -spread 10 -blur 0x3 -threshold 50% -spread 1 -blur 0x.7 ')' -alpha off -compose Copy_Opacity -composite -gravity SouthEast -chop 10x10 test1ImOutput/frameTornPaperEdge2_knightOut.png
+convert knight.png -page +4+4 -alpha set '(' +clone -background navy -shadow 60x4+4+4 ')' +swap -background none -mosaic test1ImOutput/frameShadow1_knightOut.png
+convert knight.png -bordercolor white -border 6 -bordercolor grey60 -border 1 -background none -rotate 6 -background black '(' +clone -shadow 60x4+4+4 ')' +swap -background none -flatten test1ImOutput/framePolaroid1_knightOut.png
+convert knight.png -bordercolor snow -background black +polaroid test1ImOutput/framePolaroid2_knightOut.png
+convert -size 150x150 xc:none -background none -fill white -stroke grey60 -draw 'rectangle 0,0  119,155' knight.png -geometry +5+5 -composite -rotate -10 -draw 'rectangle 0,0 119,155' knight.png -geometry +5+5 -composite -rotate -10 -draw 'rectangle 0,0 119,155' knight.png -geometry +5+5 -composite -rotate +10 -trim +repage -background LightSteelBlue -flatten test1ImOutput/framePolaroid3_knightOut.png
+convert -caption 'Spiral Staircase, Arc de Triumph, Paris, April 2006' knight.png -thumbnail 240x240 -bordercolor Lavender -border 5x5 -density 144  -gravity center -pointsize 8 -background black -polaroid -15 -resize 50% test1ImOutput/framePolaroid4_knightOut.png
+convert '(' xc:red xc:blue +append ')' '(' xc:yellow xc:cyan +append ')' -append -filter triangle -resize 100x100! test1ImOutput/gradient1_knightOut.png
+convert -size 100x100 xc: +size xc:red xc:blue xc:lime -colorspace HSB -fx 'ar=1/max(1,  (i-50)*(i-50)+(j-10)*(j-10)  ); br=1/max(1,  (i-10)*(i-10)+(j-70)*(j-70)  );       cr=1/max(1,  (i-90)*(i-90)+(j-90)*(j-90)  );       ( u[1]*ar + u[2]*br + u[3]*cr )/( ar+br+cr )' -colorspace sRGB test1ImOutput/gradient2_knightOut.png
+convert -size 100x100 xc: -colorspace RGB -define shepards:power=1 -sparse-color Shepards '30,10 red  10,80 blue  70,60 lime  80,20 yellow' -colorspace sRGB -fill white -stroke black -draw 'circle 30,10 30,12  circle 10,80 10,82' -draw 'circle 70,60 70,62  circle 80,20 80,22' test1ImOutput/gradient3_knightOut.png
+convert knight.png -function Sinusoid 3,3 test1ImOutput/sinusoid1_knightOut.png
+convert -size 80x80  xc: -tile-offset +20+20 +size -tile pattern:checkerboard -draw 'color 30,20 reset' test1ImOutput/pattern1_knightOut.png
+convert -size 250x250 xc: +noise Random '(' +clone -transpose ')' '(' +clone -sparse-color voronoi '%w,0 white 0,%h black' ')' -composite '(' +clone -rotate -90 ')' +append '(' +clone -rotate 180 ')' -append -virtual-pixel Tile -blur 0x5 -auto-level -separate -background white -compose ModulusAdd -flatten -channel R -combine +channel -set colorspace HSB -colorspace RGB test1ImOutput/pattern2_knightOut.png
+convert knight.png -set option:distort:viewport 100x100-50-50 -virtual-pixel tile -distort Arc '45 0 50' +repage test1ImOutput/tile1_knightOut.png
+convert knight.png -bordercolor grey -border 1x1 -alpha set -channel RGBA -fuzz 10% -fill none -floodfill +0+0 grey -shave 1x1 test1ImOutput/backgroundRemoval1_knightOut.png
+convert knight.png +dither -colors 2 -colorspace gray -normalize test1ImOutput/quantize1_knightOut.png
+convert -size 16x16 xc: -channel R -fx '(i%8)/7' -channel G -fx '(j%8)/7' -channel B -fx '((i>>3&1)|(j>>2&2))/3' -scale 600% test1ImOutput/quantize2_knightOut.png
+convert knight.png -set option:distort:viewport %wx%h+0+0 -colorspace CMYK -separate null: '(' -size 2x2 xc: '(' +clone -negate ')' +append '(' +clone -negate ')' -append ')' -virtual-pixel tile -filter gaussian '(' +clone -distort SRT 2,60 ')' +swap '(' +clone -distort SRT 2,30 ')' +swap '(' +clone -distort SRT 2,45 ')' +swap '(' +clone -distort SRT 2,0  -blur 0x0.7 ')' +swap +delete -compose Overlay -layers composite -set colorspace CMYK -combine -colorspace RGB test1ImOutput/quantize3_knightOut.png
+convert knight.png '(' +clone -channel A -blur 0x2.5 -level 0,50% +channel +level-colors red ')' -compose DstOver -composite test1ImOutput/semiTransparentHalo1_knightOut.png

@@ -1,4 +1,4 @@
-import { Command } from "../imagemagick";
+import { Command } from "../index";
 
 // utilities related to formating IM CLI arguments, command array to and from valid IMPLY arguments
 

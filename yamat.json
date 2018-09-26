@@ -1,0 +1,10 @@
+[
+  {
+    "name": "imagemagick-browser",
+    "path": "imagemagick-browser"
+  },
+  {
+    "name": "autumn-leaves",
+    "path": "."
+  }
+]
