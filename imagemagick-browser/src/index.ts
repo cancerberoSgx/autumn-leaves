@@ -7,7 +7,8 @@ export interface MagickOutputFile extends MagickFile {
 }
 
 export interface MagickInputFile extends MagickFile {
-  content: Uint8Array
+  /** is nto really optional: content must be set in order to execute() to work. But we leave it optional so higher level APIs can be build by extending it. */
+  content?: Uint8Array
 }
 
 export interface IMagick {

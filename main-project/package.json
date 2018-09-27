@@ -1,0 +1,15 @@
+{
+  "name": "main-project",
+  "version": "1.0.0",
+  "description": "main yamat project to manage all the other subprojects together",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx yamat run npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "yamat": "0.0.15"
+  }
+}

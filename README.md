@@ -24,6 +24,7 @@
  * CommandEditor : autogenerate editors for IM commands from given metadata implemented as react components. Able to render as a IM Command[] and notify changes. (WIP)
  * idea make a "photo frame" editor. (WIP)
  * composite commands (WIP)
+ * test1 : commands in js - build sh script calling im that generates imgs and then show them in the page for comparing. (WIP - only compare in html UI is missing)
 
  * idea: image format conversion tool - png, jpg, gif, tiff, svg, pdf, psd, ps, pnm, .ico, tga, webp, xpm, xbm, xcf
  * idea: convert image.jpg -quality 75 output_file.jpg
@@ -36,19 +37,16 @@
  * IM manual : https://imagemagick.org/script/command-line-processing.php
  * API to talk to the tool externally as a js library: import autumn from 'http://autumnleaves.com/lib.js'; const outputImage = await autumn.convert('http://my.img.jpg', 'myImg.png')
  * the wizard should ask first the transformation because it will be responsible of declaring how/which kind of files it requires as input. eg: user chooses pdf2png transformation so the wizard will ask the user to choose a .pdf document
- * test1 : commands in js - build sh script calling im that generates imgs and then show them in the page for comparing. 
- 
-magick logo: gif:- | display gif:-
+
+# Useful links and tips
+
+ * magick logo: gif:- | display gif:-
 
 
 
 
 # about this setup
-
-setup made from scratch,
-
-## uses: 
-
+ * at least three projects here : imagemagick-browser (high level API for wasm-imagemagick), react-imagemagick (basic IM react componenets), autumn-leaves (end user application with visual utilities and initial research) 
  * webpack - production and dev
  * material-ui
  * typescript 

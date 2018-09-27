@@ -3,7 +3,6 @@ export interface TemplateContext {
   [key: string]: string | number
 }
 export interface SizedImageContext extends TemplateContext {
-  // imageSizes: ImageSize[]
   imageWidth: number,
   imageHeight: number
 }
@@ -13,11 +12,15 @@ export interface SizedImageContext extends TemplateContext {
 export interface CommandTemplate {
   id: string;
   name: string;
+  /** initial value */
   command?: Command;
+  /** initial value */
   commands?: Command[];
   description?: string;
+  /** implementation of the template. Tip use js template strings and JSON.parse like: ```JSON.parse(`[["convert" "input.png", "-rotate", ${context.amount} ]]`)``` */
   template?(context: TemplateContext): Command[];
   defaultTemplateContext?: TemplateContext
+  /** metadata for arguments */
   arguments?: Argument[]
 }
 
@@ -32,6 +35,7 @@ export enum ArgumentType {
   point = 'point', // can be implemented differently: 1 input, two inputs or a point clicked on an image by the user
   rectangle = 'rectangle'// can be implemented differently: 1 input, two inputs or a rectangle drawn by the user over an image
 }
+
 export interface Argument {
   type?: ArgumentType
   id: string

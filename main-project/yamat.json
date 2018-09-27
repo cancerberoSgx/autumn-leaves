@@ -1,0 +1,14 @@
+[
+  {
+    "name": "imagemagick-browser",
+    "path": "../imagemagick-browser"
+  },
+  {
+    "name": "react-imagemagick",
+    "path": "../react-imagemagick"
+  },
+  {
+    "name": "autumn-leaves",
+    "path": ".."
+  }
+]
