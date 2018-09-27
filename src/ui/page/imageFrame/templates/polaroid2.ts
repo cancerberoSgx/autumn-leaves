@@ -1,5 +1,5 @@
 import { CommandTemplate, Color, SizedImageContext, ArgumentType } from "../../../components/commandEditor/CommandTemplate";
-import { Command } from "../../../../imagemagick";
+import { Command } from "imagemagick-browser";
 
 export interface Polaroid2Context extends SizedImageContext {
   background: Color

@@ -1,6 +1,6 @@
-import { readImageUrlToUintArray } from '../../../util/image'
-import { getMagickApi, Command, ExecuteConfig, ExecuteResult } from '../../../imagemagick'
-import { execute } from '../../../imagemagick/execute';
+// import { readImageUrlToUintArray } from '../../../util/image'
+import { getMagickApi, Command, ExecuteConfig, ExecuteResult, readImageUrlToUintArray, execute } from 'imagemagick-browser'
+// import { execute } from '../../../imagemagick/execute';
 
 export interface ConvertDemoImage {
   sourceUrl: string

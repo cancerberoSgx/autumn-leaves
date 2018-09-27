@@ -1,4 +1,4 @@
-import { MagickInputFile } from '../../../imagemagick';
+import { MagickInputFile } from 'imagemagick-browser';
 
 export interface ToolApp {
   images: MagickInputFile[]

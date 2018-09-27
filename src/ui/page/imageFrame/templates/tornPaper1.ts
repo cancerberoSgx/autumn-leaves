@@ -1,5 +1,5 @@
 import { CommandTemplate, Color, SizedImageContext, ArgumentType } from "../../../components/commandEditor/CommandTemplate";
-import { Command } from "../../../../imagemagick";
+import { Command } from "imagemagick-browser";
 
 export interface TornPaper1Context extends SizedImageContext {
   spread1: number

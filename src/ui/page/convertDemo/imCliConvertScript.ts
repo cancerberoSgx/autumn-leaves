@@ -1,6 +1,6 @@
 import { ConvertDemoImage } from './index';
 import { CommandTemplate } from "../../components/commandEditor/CommandTemplate";
-import { toCliArg } from '../../../util/cli';
+import { toCliArg } from 'imagemagick-browser';
 // import { toCliArg } from './index';
 
 /** return a .sh script that will call imagemagick convert so we can generate te same transformations in the desktop with the real thing and compare */
@@ -18,7 +18,7 @@ mkdir ${dir}
 ${images.map(image => {
       return transformations
         .map(t => {
-          const command = t.command.map(arg => arg === '$INPUT' ? image.sourceUrl : arg === '$OUTPUT' ? getOutputFile(dir, image, t) : toCliArg(arg))
+          const command = t.command.map((arg: string) => arg === '$INPUT' ? image.sourceUrl : arg === '$OUTPUT' ? getOutputFile(dir, image, t) : toCliArg(arg))
           return command.join(' ')
         }).join('\n')
     }).join('\n')}

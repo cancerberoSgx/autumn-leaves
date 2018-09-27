@@ -1,5 +1,4 @@
-import { Command } from '../../../imagemagick';
-import { ImageSize } from '../../../util/image';
+import { Command } from 'imagemagick-browser'
 export interface TemplateContext {
   [key: string]: string | number
 }

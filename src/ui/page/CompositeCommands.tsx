@@ -1,9 +1,9 @@
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import * as React from 'react';
-import { Command, ExecuteConfig, getMagickApi } from '../../imagemagick';
+// import { Command, ExecuteConfig, getMagickApi } from '../../imagemagick';
 import { Button } from '@material-ui/core';
-import { loadImg, buildInputFiles, outputFileToInputFile } from '../../util/image';
-import { execute } from '../../imagemagick/execute';
+// import { loadImg, buildInputFiles, outputFileToInputFile } from '../../util/image';
+import { execute, loadImg, buildInputFiles, outputFileToInputFile, Command } from 'imagemagick-browser';
 
 const styles = (theme: Theme) => createStyles({
   root: {},

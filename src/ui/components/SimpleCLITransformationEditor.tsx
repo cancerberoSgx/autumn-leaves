@@ -3,8 +3,8 @@
 import * as React from 'react'
 import { withStyles, Theme, createStyles, WithStyles } from '@material-ui/core/styles'
 import { Button } from '@material-ui/core'
-import { readImageUrlToUintArray, loadImg } from '../../util/image'
-import { MagickInputFile, getMagickApi, MagickOutputFile } from '../../imagemagick'
+import { readImageUrlToUintArray, loadImg, MagickInputFile, getMagickApi, MagickOutputFile } from 'imagemagick-browser'
+// import { MagickInputFile, getMagickApi, MagickOutputFile } from '../../imagemagick'
 
 const styles = (theme: Theme) => createStyles({
   input: {

@@ -2,8 +2,8 @@ import * as React from 'react'
 import { withStyles, Theme, createStyles, WithStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
-import { inputFileToUint8Array } from '../../util/image';
-import { MagickFile } from '../../imagemagick';
+import { inputFileToUint8Array  ,MagickFile} from 'imagemagick-browser';
+// import { MagickFile } from '../../imagemagick';
 
 const styles = (theme: Theme) => createStyles({
   paper: {

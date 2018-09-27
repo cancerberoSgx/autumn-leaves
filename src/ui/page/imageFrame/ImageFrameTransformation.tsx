@@ -2,10 +2,10 @@ import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/s
 import * as React from 'react'
 import { FormControl, InputLabel, Select, MenuItem, TextField, Button, Grid } from '@material-ui/core'
 import { imageFrames } from './data'
-import { commandsToString, readImageUrlToUintArray, loadImg, getImageSize, ImageSize } from '../../../util/image'
-import { Command, ExecuteConfig } from '../../../imagemagick'
+import { commandsToString, readImageUrlToUintArray, loadImg, getImageSize, ImageSize, Command, ExecuteConfig, execute } from 'imagemagick-browser'
+// import { Command, ExecuteConfig } from '../../../imagemagick'
 import { clone, query } from '../../../util/misc'
-import { execute } from '../../../imagemagick/execute'
+// import { execute } from '../../../imagemagick/execute'
 import { CommandTemplate } from '../../components/commandEditor/CommandTemplate'
 import { CommandEditor } from '../../components/commandEditor/CommandEditor'
 

@@ -4,9 +4,16 @@ import * as React from 'react'
 import { withStyles, Theme, createStyles, WithStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import { Button, MenuItem, FormControl, InputLabel, Select
-  // , Table, TableHead, TableCell 
 } from '@material-ui/core';
 import { ConvertDemoCliScript } from './ConvertDemoCliScript';
+
+import { images as defaultImages, transformations, suggestionsDontWork } from './data'
+import { buildImArguments, DoMagickCall } from './index';
+import { CommandTemplate } from "../../components/commandEditor/CommandTemplate";
+import { arrayToIMCommand, writeOutputImageToEl } from 'imagemagick-browser';
+// import { TableRow, TableBody } from 'material-ui';
+// import { MagickOutputFile } from '../../../imagemagick';
+// import { writeOutputImageToEl } from '../../../util/image';
 
 const styles = (theme: Theme) => createStyles({
   paper: {
@@ -165,13 +172,6 @@ function renderImageTable(props: WithStyles<typeof styles>) {
 
 export default withStyles(styles)(render)
 
-import { images as defaultImages, transformations, suggestionsDontWork } from './data'
-import { buildImArguments, DoMagickCall } from './index';
-import { CommandTemplate } from "../../components/commandEditor/CommandTemplate";
-import { arrayToIMCommand } from '../../../util/cli';
-import { TableRow, TableBody } from 'material-ui';
-import { MagickOutputFile } from '../../../imagemagick';
-import { writeOutputImageToEl } from '../../../util/image';
 
 const defaultTransformation = transformations[0]
 let selectedTransformation: CommandTemplate = defaultTransformation

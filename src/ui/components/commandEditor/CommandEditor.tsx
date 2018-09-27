@@ -1,7 +1,7 @@
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import { Color } from 'csstype';
 import * as React from 'react';
-import { Command } from '../../../imagemagick';
+import { Command } from 'imagemagick-browser';
 import { query } from '../../../util/misc';
 import { getLastImageSize } from '../../page/imageFrame/ImageFrameTransformation';
 import { ColorPickerEditor } from './ColorPickerEditor';
