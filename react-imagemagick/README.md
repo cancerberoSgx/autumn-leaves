@@ -1,0 +1,1 @@
+abstractions and types fof WASM-ImageMagick so it's easy to use.

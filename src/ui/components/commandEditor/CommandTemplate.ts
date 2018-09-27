@@ -8,6 +8,9 @@ export interface SizedImageContext extends TemplateContext {
   imageWidth: number,
   imageHeight: number
 }
+/**
+ * metadata of a command in `arguments` together with implementation of command in `template`
+ */
 export interface CommandTemplate {
   id: string;
   name: string;
@@ -30,24 +33,12 @@ export enum ArgumentType {
   point = 'point', // can be implemented differently: 1 input, two inputs or a point clicked on an image by the user
   rectangle = 'rectangle'// can be implemented differently: 1 input, two inputs or a rectangle drawn by the user over an image
 }
-// export interface Thing {
-//   id: string
-//   name?: string
-//   description?: string
-// }
 export interface Argument {
   type?: ArgumentType
   id: string
   name?: string
   description?: string
-  // toIMCommandFragment(): string[]
 }
-// export interface IMCommand extends Thing {
-//   type: 'convert' // TODO: wont work on other commands than convert right now
-//   arguments: Argument[]
-//   toIMCommand(): Command
-// }
-
 
 // UI / react base framework types
 

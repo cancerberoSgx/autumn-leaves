@@ -1,24 +1,29 @@
 {
-  "name": "imagemagick-browser",
+  "name": "react-imagemagick",
   "version": "0.0.1",
-  "description": "Abstractions on top of WASM-ImageMagick to easy usage",
+  "description": "React componenet to transform images using ImageMagick 100% in the browser",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
     "build": "npx tsc",
     "test": "export NODE_PATH=$(npm root --quiet -g) && npx jest"
   },
-  "keywords": ["imagemagick", "browser", "typescript", "images", "image processing"],
+  "keywords": [
+    "imagemagick",
+    "browser",
+    "typescript",
+    "images",
+    "image processing",
+    "reacts"
+  ],
   "author": "Sebastian Gurin",
   "license": "MIT",
   "dependencies": {
-    "p-map": "^1.0.0",
-    "wasm-imagemagick": "^1.1.0"
+    "imagemagick-browser": "file:../imagemagick-browser",
+    "react": "^16.5.2"
   },
   "devDependencies": {
-    "@types/puppeteer": "^1.6.4",
     "@types/jest": "^23.1.4",
-    "@types/p-map": "^1.0.0",
     "@types/sinon": "^5.0.1",
     "jest": "^23.3.0",
     "sinon": "^6.1.0",

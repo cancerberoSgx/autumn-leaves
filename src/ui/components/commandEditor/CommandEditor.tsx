@@ -1,12 +1,12 @@
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
-import * as React from 'react'
-import { Color } from 'csstype'
-import { CommandTemplate, ArgumentChangeEvent, CommandEditorProps, TemplateContext, Argument, SizedImageContext, ArgumentType } from './CommandTemplate'
-import { ColorPickerEditor } from './ColorPickerEditor'
-import { query } from '../../../util/misc'
-import { Command } from '../../../imagemagick'
-import { getLastImageSize } from '../../page/imageFrame/ImageFrameTransformation'
-import { NumberEditor } from './NumberEditor'
+import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
+import { Color } from 'csstype';
+import * as React from 'react';
+import { Command } from '../../../imagemagick';
+import { query } from '../../../util/misc';
+import { getLastImageSize } from '../../page/imageFrame/ImageFrameTransformation';
+import { ColorPickerEditor } from './ColorPickerEditor';
+import { Argument, ArgumentChangeEvent, ArgumentType, CommandEditorProps as CommandEditorPropsBase, SizedImageContext, TemplateContext } from './CommandTemplate';
+import { NumberEditor } from './NumberEditor';
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -18,7 +18,7 @@ const styles = (theme: Theme) => createStyles({
   }
 })
 
-export interface CommandEditorProps2 extends CommandEditorProps, WithStyles<typeof styles> {
+export interface CommandEditorProps extends CommandEditorPropsBase, WithStyles<typeof styles> {
   templateContext: SizedImageContext
 }
 
@@ -28,11 +28,11 @@ export interface CommandEditorState {
   templateContext: TemplateContext
 }
 
-export class CommandEditor extends React.Component<CommandEditorProps2, CommandEditorState> {
+export class CommandEditor extends React.Component<CommandEditorProps, CommandEditorState> {
 
   state: CommandEditorState
 
-  constructor(props: CommandEditorProps2, state: CommandEditorState) {
+  constructor(props: CommandEditorProps, state: CommandEditorState) {
     super(props, state)
     this.state = {
       commands: [],
