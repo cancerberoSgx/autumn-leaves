@@ -7,6 +7,7 @@ import { polaroidTemplate3 } from './templates/polaroid3';
 import { plasmaFrame1 } from './templates/plasmaFrame1';
 import { shadowFrame1 } from './templates/shadowFrame1';
 import { virtualRandom1 } from './templates/virtualRandom1';
+import { frameFeathering1 } from './templates/frameFeathering1';
 
 export const imageFrames: CommandTemplate[] = [
   cropTemplate1,
@@ -17,22 +18,7 @@ export const imageFrames: CommandTemplate[] = [
   plasmaFrame1,
   shadowFrame1,
   virtualRandom1,
-
-  // {
-  //   id: 'virtualRandom1',
-  //   name: 'virtual random 1',
-  //   commands: [['convert', '$INPUT', '-set', 'option:distort:viewport', '70x70-19-19', '-virtual-pixel', 'Random', '-filter', 'point', '-distort', 'SRT', '0', '+repage', '$OUTPUT']],
-  //   description: 'pick random pixels of the image to build the frame'
-  // },
-
-
-
-  {
-    id: 'frameFeathering1',
-    name: 'frame feathering 1',
-    commands: [['convert', '$INPUT', '-alpha', 'set', '-virtual-pixel', 'transparent', '-channel', 'A', '-morphology', 'Distance', 'Euclidean:1,10!', '+channel', '$OUTPUT']],
-    description: 'The Morphology Distance method provides a true transparent \'Feathering\' of an image\'s edges.'
-  },
+  frameFeathering1,
 
   {
     id: 'frameFeathering2',
