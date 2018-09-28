@@ -8,7 +8,7 @@ module.exports = merge(common, {
   plugins: [
     new CleanWebpackPlugin(['docs']),
     new HtmlWebpackPlugin({
-      template: 'src/index.html',
+      template: 'src/static/index.html',
       hash: true, 
       minify: true
     })
