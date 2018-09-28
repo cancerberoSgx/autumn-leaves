@@ -1,4 +1,4 @@
-import { CommandTemplate, Color, SizedImageContext, ArgumentType } from "../../../components/commandEditor/CommandTemplate";
+import { CommandTemplate, Color, SizedImageContext, ArgumentType } from "imagemagick-browser";
 import { Command } from "imagemagick-browser";
 
 export interface VirtualRandom1Context extends SizedImageContext {
@@ -12,7 +12,7 @@ export const virtualRandom1: CommandTemplate = {
   commands: [["convert", "$INPUT", "-set", "option:distort:viewport", "70x70-19-19", "-virtual-pixel", "Random", "-filter", "point", "-distort", "SRT", "0", "+repage", "$OUTPUT"]],
   description: "TODO",
   template: function (context: VirtualRandom1Context) {
-    const s = `[["convert", "$INPUT", "-set", "option:distort:viewport", "${context.imageWidth + context.width * 2}x${context.imageHeight + context.height * 2}-${context.width}-${context.height}", "-virtual-pixel", "Random", "-filter", "point", "-distort", "SRT", "0", "+repage", "$OUTPUT"]]`
+    const s = `[["convert", "$INPUT", "-set", "option:distort:viewport", "${context.imageWidth + context.width * 2}x${context.imageHeight + context.height * 2}-${context.width}-${context.height}", "-virtual-pixel", "Dither", "-filter", "point", "-distort", "SRT", "0", "+repage", "$OUTPUT"]]`
 
     const result = JSON.parse(s) as Command[]
     return result

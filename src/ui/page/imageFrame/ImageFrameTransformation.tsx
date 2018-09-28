@@ -6,7 +6,7 @@ import { commandsToString, readImageUrlToUintArray, loadImg, getImageSize, Image
 // import { Command, ExecuteConfig } from '../../../imagemagick'
 import { clone, query } from '../../../util/misc'
 // import { execute } from '../../../imagemagick/execute'
-import { CommandTemplate } from '../../components/commandEditor/CommandTemplate'
+import { CommandTemplate }  from 'imagemagick-browser'
 import { CommandEditor } from '../../components/commandEditor/CommandEditor'
 
 const styles = (theme: Theme) => createStyles({

@@ -1,5 +1,5 @@
 import { ConvertDemoImage } from '.';
-import { CommandTemplate } from "../../components/commandEditor/CommandTemplate";
+import { CommandTemplate } from 'imagemagick-browser'
 
 export const images: ConvertDemoImage[] = [
   { sourceUrl: 'rotate.png', targetId: 'outputImage1', outFile: 'rotateOut.png' },

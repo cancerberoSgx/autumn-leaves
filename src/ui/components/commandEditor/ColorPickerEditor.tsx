@@ -1,7 +1,6 @@
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
-import * as React from 'react'
-import { Color } from 'csstype'
-import { ArgumentEditorProps, ArgumentEditorState, ArgumentType } from './CommandTemplate'
+import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
+import { ArgumentEditorProps, ArgumentEditorState, Color } from 'imagemagick-browser';
+import * as React from 'react';
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -28,7 +27,7 @@ export class ColorPickerEditor extends React.Component<ColorPickerEditorProps, C
 
   constructor(props: ColorPickerEditorProps, state: ColorPickerEditorState) {
     super(props, state)
-    this.state.value = props.value || '#ffff11'
+    this.setState({...this.state, value: props.value || '#ffff11'})
   }
 
   render(): React.ReactNode {

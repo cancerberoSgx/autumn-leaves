@@ -1,4 +1,4 @@
-import { CommandTemplate } from '../../components/commandEditor/CommandTemplate';
+import { CommandTemplate, Color, SizedImageContext, ArgumentType } from "imagemagick-browser";
 import { cropTemplate1 } from './templates/cropTemplate1';
 import { vignetteTemplate1 } from './templates/vignetteTemplate1';
 import { polaroidTemplate2 } from './templates/polaroid2';
@@ -8,6 +8,7 @@ import { plasmaFrame1 } from './templates/plasmaFrame1';
 import { shadowFrame1 } from './templates/shadowFrame1';
 import { virtualRandom1 } from './templates/virtualRandom1';
 import { frameFeathering1 } from './templates/frameFeathering1';
+import { frameShape1 } from './templates/frameShape1';
 
 export const imageFrames: CommandTemplate[] = [
   cropTemplate1,
@@ -19,7 +20,7 @@ export const imageFrames: CommandTemplate[] = [
   shadowFrame1,
   virtualRandom1,
   frameFeathering1,
-
+  frameShape1,
   {
     id: 'frameFeathering2',
     name: 'frame soft rounded corners',
@@ -33,12 +34,6 @@ export const imageFrames: CommandTemplate[] = [
     description: ' '
   },
 
-  {
-    id: 'frameShape1',
-    name: 'frame shape 1',
-    commands: [["convert", "$INPUT", "-alpha", "set", "-compose", "DstOut", "(", "-size", "20x15", "xc:none", "-draw", "polygon 0,0  0,14 19,0", "-write", "mpr:triangle", "", "+delete", ")", "(", "mpr:triangle", ")", "-gravity", "northwest", "-composite", "(", "mpr:triangle", "-flip", ")", "-gravity", "southwest", "-composite", "(", "mpr:triangle", "-flop", ")", "-gravity", "northeast", "-composite", "(", "mpr:triangle", "-rotate", "180", ")", "-gravity", "southeast", "-composite", "$OUTPUT"]],
-    description: ' '
-  },
 
   {
     id: 'frameTornPaperEdge1',

@@ -39,3 +39,5 @@ export function getMagickApi(): IMagick {
 export * from './execute'
 export * from './util/image'
 export * from './util/cli'
+
+export * from './CommandTemplate'

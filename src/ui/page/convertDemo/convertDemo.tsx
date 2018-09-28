@@ -9,7 +9,7 @@ import { ConvertDemoCliScript } from './ConvertDemoCliScript';
 
 import { images as defaultImages, transformations, suggestionsDontWork } from './data'
 import { buildImArguments, DoMagickCall } from './index';
-import { CommandTemplate } from "../../components/commandEditor/CommandTemplate";
+import { CommandTemplate }  from 'imagemagick-browser'
 import { arrayToIMCommand, writeOutputImageToEl } from 'imagemagick-browser';
 // import { TableRow, TableBody } from 'material-ui';
 // import { MagickOutputFile } from '../../../imagemagick';

@@ -1,11 +1,9 @@
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
-import { Color } from 'csstype';
+import { Argument, ArgumentChangeEvent, ArgumentType, Color, Command, CommandEditorProps as CommandEditorPropsBase, SizedImageContext, TemplateContext } from 'imagemagick-browser';
 import * as React from 'react';
-import { Command } from 'imagemagick-browser';
 import { query } from '../../../util/misc';
 import { getLastImageSize } from '../../page/imageFrame/ImageFrameTransformation';
 import { ColorPickerEditor } from './ColorPickerEditor';
-import { Argument, ArgumentChangeEvent, ArgumentType, CommandEditorProps as CommandEditorPropsBase, SizedImageContext, TemplateContext } from './CommandTemplate';
 import { NumberEditor } from './NumberEditor';
 
 const styles = (theme: Theme) => createStyles({

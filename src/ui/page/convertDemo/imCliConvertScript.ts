@@ -1,5 +1,5 @@
 import { ConvertDemoImage } from './index';
-import { CommandTemplate } from "../../components/commandEditor/CommandTemplate";
+import { CommandTemplate } from 'imagemagick-browser'
 import { toCliArg } from 'imagemagick-browser';
 // import { toCliArg } from './index';
 

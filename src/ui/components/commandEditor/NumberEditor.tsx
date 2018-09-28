@@ -1,6 +1,6 @@
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
 import * as React from 'react'
-import { ArgumentEditorProps, ArgumentEditorState, ArgumentType } from './CommandTemplate'
+import { ArgumentEditorProps, ArgumentEditorState, ArgumentType } from 'imagemagick-browser'
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -26,7 +26,7 @@ export class NumberEditor extends React.Component<NumberEditorProps, NumberEdito
 
   constructor(props: NumberEditorProps, state: NumberEditorState) {
     super(props, state)
-    this.state.value = props.value || 0
+    this.setState({...this.state, value: props.value || 0})
   }
 
   render(): React.ReactNode {
