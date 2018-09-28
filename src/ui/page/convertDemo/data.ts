@@ -128,12 +128,15 @@ export const transformations: CommandTemplate[] = [
     command: ["convert", "$INPUT", "(", "+clone", "-alpha", "extract", "-virtual-pixel", "black", "-spread", "10", "-blur", "0x3", "-threshold", "50%", "-spread", "1", "-blur", "0x.7", ")", "-alpha", "off", "-compose", "Copy_Opacity", "-composite", "$OUTPUT"],
     description: ' '
   },
+
   {
     id: 'frameTornPaperEdge2',
     name: 'frame torn paper edges 2',
-    command: ["convert", "$INPUT", "-bordercolor", "linen", "-border", "8x8", "-background", "Linen", "", "-gravity", "SouthEast", "-splice", "10x10+0+0", "(", "+clone", "-alpha", "extract", "-virtual-pixel", "black", "-spread", "10", "-blur", "0x3", "-threshold", "50%", "-spread", "1", "-blur", "0x.7", ")", "-alpha", "off", "-compose", "Copy_Opacity", "-composite", "-gravity", "SouthEast", "-chop", "10x10", "$OUTPUT"],
+    command:
+      ["convert", "$INPUT", "-bordercolor", "blue", "-border", "18x18", "-background", "blue", "", "-gravity", "SouthEast", "-splice", "1x1+0+0", "(", "+clone", "-alpha", "extract", "-virtual-pixel", "black", "-spread", "10", "-blur", "0x3", "-threshold", "50%", "-spread", "1", "-blur", "0x.7", ")", "-alpha", "off", "-compose", "Copy_Opacity", "-composite", "-gravity", "SouthEast", "$OUTPUT"],
     description: ' '
   },
+
 
   {
     id: 'frameShadow1',

@@ -34,6 +34,7 @@ export class CompositeCommandsNaked extends React.Component<CompositeCommandsPro
     const { classes, theme } = this.props
     return (
       <div className={classes.root}>
+      Welcome, this is a quick and dirty demonstration of executing two IM commands serially, the second consuming the first's output. 
         <ul>
           {this.state.commands.map((command, i) =>
             <li>

@@ -9,6 +9,7 @@ import { shadowFrame1 } from './templates/shadowFrame1';
 import { virtualRandom1 } from './templates/virtualRandom1';
 import { frameFeathering1 } from './templates/frameFeathering1';
 import { frameShape1 } from './templates/frameShape1';
+import { tornPaper2 } from './templates/tornPaper2';
 
 export const imageFrames: CommandTemplate[] = [
   cropTemplate1,
@@ -16,6 +17,7 @@ export const imageFrames: CommandTemplate[] = [
   polaroidTemplate2,
   polaroidTemplate3,
   tornPaper1,
+  tornPaper2,
   plasmaFrame1,
   shadowFrame1,
   virtualRandom1,
@@ -27,6 +29,18 @@ export const imageFrames: CommandTemplate[] = [
     commands: [["convert", "$INPUT", "-alpha", "set", "-virtual-pixel", "transparent", "-channel", "A", "-blur", "0x8", "", "-level", "50%,100%", "+channel", "$OUTPUT"]],
     description: 'You can also Feather Images using Blur, using the same method of adding a transparent Virtual Pixels before bluring just the alpha channel. This generates a more softer feathering to the image, as well as noticeably rounded the corners of the image.'
   },
+
+  // {
+  //   id: 'frameTornPaperEdge2',
+  //   name: 'frame torn paper edges 2',
+  //   commands:
+  //     [["convert", "$INPUT", "-bordercolor", "blue", "-border", "18x18", "-background", "blue", "", "-gravity", "SouthEast", "-splice", "1x1+0+0", "(", "+clone", "-alpha", "extract", "-virtual-pixel", "black", "-spread", "10", "-blur", "0x3", "-threshold", "50%", "-spread", "1", "-blur", "0x.7", ")", "-alpha", "off", "-compose", "Copy_Opacity", "-composite", "-gravity", "SouthEast", "$OUTPUT"]],
+  //   description: ' '
+  // },
+
+
+
+
   {
     id: 'frameFeathering3',
     name: 'frame rounded corners',
@@ -41,12 +55,12 @@ export const imageFrames: CommandTemplate[] = [
     commands: [["convert", "$INPUT", "(", "+clone", "-alpha", "extract", "-virtual-pixel", "black", "-spread", "10", "-blur", "0x3", "-threshold", "50%", "-spread", "1", "-blur", "0x.7", ")", "-alpha", "off", "-compose", "Copy_Opacity", "-composite", "$OUTPUT"]],
     description: ' '
   },
-  {
-    id: 'frameTornPaperEdge2',
-    name: 'frame torn paper edges 2',
-    commands: [["convert", "$INPUT", "-bordercolor", "linen", "-border", "8x8", "-background", "Linen", "", "-gravity", "SouthEast", "-splice", "10x10+0+0", "(", "+clone", "-alpha", "extract", "-virtual-pixel", "black", "-spread", "10", "-blur", "0x3", "-threshold", "50%", "-spread", "1", "-blur", "0x.7", ")", "-alpha", "off", "-compose", "Copy_Opacity", "-composite", "-gravity", "SouthEast", "-chop", "10x10", "$OUTPUT"]],
-    description: ' '
-  },
+  // {
+  //   id: 'frameTornPaperEdge2',
+  //   name: 'frame torn paper edges 2',
+  //   commands: [["convert", "$INPUT", "-bordercolor", "linen", "-border", "8x8", "-background", "Linen", "", "-gravity", "SouthEast", "-splice", "10x10+0+0", "(", "+clone", "-alpha", "extract", "-virtual-pixel", "black", "-spread", "10", "-blur", "0x3", "-threshold", "50%", "-spread", "1", "-blur", "0x.7", ")", "-alpha", "off", "-compose", "Copy_Opacity", "-composite", "-gravity", "SouthEast", "-chop", "10x10", "$OUTPUT"]],
+  //   description: ' '
+  // },
 
 
   {
