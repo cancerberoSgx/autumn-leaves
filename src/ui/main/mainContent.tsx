@@ -5,7 +5,7 @@ import {CompositeCommands} from '../page/CompositeCommands'
 import home from '../page/home'
 import SimpleCLITransformationEditor from '../components/SimpleCLITransformationEditor'
 import TestImages from '../components/TestImages';
-import convertDemo from '../page/convertDemo/convertDemo';
+import {ConvertDemo} from '../page/convertDemo/convertDemo';
 // import DownloadResult from '../page/imageFrame/DownloadResult';
 import { ImageFrameTransformation } from '../page/imageFrame/ImageFrameTransformation';
 // import imageFrameTool from '../page/imageFrame/imageFrameTool';
@@ -24,7 +24,7 @@ function main(props: WithStyles<typeof styles>) {
     <div className={classes.root}>
       <Switch>
         <Route exact path='/' component={home} />
-        <Route path='/convertDemo' component={convertDemo} /> imageFrame
+        <Route path='/convertDemo' component={ConvertDemo} /> imageFrame
         <Route path='/imageFrame' component={ImageFrameTransformation} />
         <Route path='/compositeCommands' component={CompositeCommands} />
         <Route path='/SimpleCLITransformationEditor' component={SimpleCLITransformationEditor} />

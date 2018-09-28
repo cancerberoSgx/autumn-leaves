@@ -14,7 +14,6 @@ export const polaroidTemplate3: CommandTemplate = {
   description: 'TODO',
   template: function (context: Polaroid3Context) {
     const s = `[["convert","-size","150x150","xc:none","-background","none","-fill","white","-stroke","${context.stroke}","-draw","rectangle 0,0  ${context.imageWidth + context.size * 2},${context.imageHeight + context.size * 2}","$INPUT","-geometry","+${context.size}+${context.size}","-composite","-rotate","-${context.rotate}","-draw","rectangle 0,0 ${context.imageWidth + context.size * 2},${context.imageHeight + context.size * 2}","$INPUT","-geometry","+${context.size}+${context.size}","-composite","-rotate","-${context.rotate}","-draw","rectangle 0,0 ${context.imageWidth + context.size * 2},${context.imageHeight + context.size * 2}","$INPUT","-geometry","+${context.size}+${context.size}","-composite","-rotate","+${context.rotate}","-trim","+repage","-background","${context.background}","-flatten","$OUTPUT"]]`
-    // console.log(s);
 
     const result = JSON.parse(s) as Command[]
     return result

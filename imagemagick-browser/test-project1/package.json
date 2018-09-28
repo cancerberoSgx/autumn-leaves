@@ -8,7 +8,8 @@
     "bundle": "npx browserify dist/index.js -o dist/bundle.js",
     "copy": "cp -r src/static/* ../../docs/magick.js ../../docs/magick.wasm dist",
     "serve": "npx http-server dist",
-    "start": "npm run build && npm run bundle && npm run copy && npm run serve"
+    "build-all": "npm run build && npm run bundle && npm run copy",
+    "start": "npm run build-all && npm run serve"
   },
   "keywords": [],
   "author": "Sebastian Gurin",

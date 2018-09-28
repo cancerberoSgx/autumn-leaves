@@ -4,11 +4,13 @@
   "description": "main yamat project to manage all the other subprojects together",
   "main": "index.js",
   "scripts": {
-    "build": "npx yamat run npm run build"
+    "build": "npx yamat run npm run build",
+    "patch": "npx yamat run npm patch && npm yamat link && npm yamat run npm patch",
+    "test": "npx yamat run npm test"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Sebastian Gurin",
+  "license": "MIT",
   "devDependencies": {
     "yamat": "0.0.15"
   }

@@ -1,1 +1,1 @@
-abstractions and types fof WASM-ImageMagick so it's easy to use.
+React component and abstractions to transform images using ImageMagick 100% in the browser

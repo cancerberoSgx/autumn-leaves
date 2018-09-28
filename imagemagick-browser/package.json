@@ -6,9 +6,16 @@
   "typings": "dist/index.d.ts",
   "scripts": {
     "build": "npx tsc",
-    "test": "export NODE_PATH=$(npm root --quiet -g) && npx jest"
+    "test": "npx concurrently --kill-others \"cd test-project1 && npm start\" \"sleep 10s && npm run test-jest\"",
+    "test-jest": "export NODE_PATH=$(npm root --quiet -g) && npx jest"
   },
-  "keywords": ["imagemagick", "browser", "typescript", "images", "image processing"],
+  "keywords": [
+    "imagemagick",
+    "browser",
+    "typescript",
+    "images",
+    "image processing"
+  ],
   "author": "Sebastian Gurin",
   "license": "MIT",
   "dependencies": {
@@ -16,10 +23,11 @@
     "wasm-imagemagick": "^1.1.0"
   },
   "devDependencies": {
-    "@types/puppeteer": "^1.6.4",
     "@types/jest": "^23.1.4",
     "@types/p-map": "^1.0.0",
+    "@types/puppeteer": "^1.6.4",
     "@types/sinon": "^5.0.1",
+    "concurrently": "^4.0.1",
     "jest": "^23.3.0",
     "sinon": "^6.1.0",
     "ts-node": "^7.0.0",

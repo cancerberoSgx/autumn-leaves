@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "online application to define, administer and apply transformations on images, based on ImageMagick, runs 100% in the browser.",
   "main": "index.js",
+  "private": true,
   "scripts": {
     "build": "webpack --config webpack.prod.js && npm run static",
     "start": "webpack-dev-server --config webpack.dev.js --open",

@@ -1,7 +1,7 @@
 {
   "name": "react-imagemagick",
   "version": "0.0.1",
-  "description": "React componenet to transform images using ImageMagick 100% in the browser",
+  "description": "React component and abstractions to transform images using ImageMagick 100% in the browser",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
