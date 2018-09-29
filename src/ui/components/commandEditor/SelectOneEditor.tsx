@@ -1,13 +1,7 @@
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import { ArgumentEditorProps, ArgumentEditorState } from 'imagemagick-browser';
 import * as React from 'react';
 
-const styles = (theme: Theme) => createStyles({
-  root: {
-  }
-})
-
-export interface SelectOneEditorProps extends ArgumentEditorProps<string>, WithStyles<typeof styles> {
+export interface SelectOneEditorProps extends ArgumentEditorProps<string>  {
   select: { id: string, name: string }[]
 }
 
@@ -22,18 +16,22 @@ export class SelectOneEditor extends React.Component<SelectOneEditorProps, Selec
 
   constructor(props: SelectOneEditorProps, state: SelectOneEditorState) {
     super(props, state)
-    this.setState({ ...this.state, value: props.value || '' })
-    // this.state.value = props.value || '#ffff11'
+    this.state.value = props.value || ''
+    this.setState({...this.state })
+    console.log('SelectOneEditor', this.props.select);
+    
   }
 
   render(): React.ReactNode {
-    const { classes, theme }: { classes: any, theme?: Theme } = this.props
+    console.log('SelectOneEditor render', this.props.select);
     return (
-      <span className={classes.root}>
+      <span >
         <select onChange={e => this.inputChange(e)}>
           {
             this.props.select.map(select =>
-              <option id={select.id} key={select.id}>{select.name}
+              <option id={select.id} key={select.id}
+                selected={select.id===this.state.value}>
+                {select.name} 
               </option>)
           }
         </select>
@@ -48,5 +46,4 @@ export class SelectOneEditor extends React.Component<SelectOneEditorProps, Selec
   }
 }
 
-export const ArgumentEditor = withStyles(styles, { withTheme: true })(SelectOneEditor as any)
 

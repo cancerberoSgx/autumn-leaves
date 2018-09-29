@@ -22,7 +22,7 @@ export const polaroidTemplate3: CommandTemplate = {
     stroke: '#046691',
     background: '#ff0000',
     size: 5,
-    rotate: 10
+    rotate: 20
   },
   arguments: [
     { type: ArgumentType.color, id: 'background', name: 'background', description: 'TODO' },

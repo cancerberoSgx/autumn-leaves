@@ -1,16 +1,7 @@
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import { ArgumentEditorProps, ArgumentEditorState, Color } from 'imagemagick-browser';
 import * as React from 'react';
 
-const styles = (theme: Theme) => createStyles({
-  root: {
-  },
-  hidden: {
-    display: 'none'
-  }
-})
-
-export interface ColorPickerEditorProps extends ArgumentEditorProps<Color>, WithStyles<typeof styles> {
+export interface ColorPickerEditorProps extends ArgumentEditorProps<Color> {
 }
 
 export interface ColorPickerEditorState extends ArgumentEditorState<Color> {
@@ -27,13 +18,14 @@ export class ColorPickerEditor extends React.Component<ColorPickerEditorProps, C
 
   constructor(props: ColorPickerEditorProps, state: ColorPickerEditorState) {
     super(props, state)
-    this.setState({...this.state, value: props.value || '#ffff11'})
+    this.state.value = props.value || '#ffff11'
+    this.setState({...this.state })
+    // this.setState({...this.state, value: props.value || '#ffff11'})
   }
 
   render(): React.ReactNode {
-    const { classes, theme }: { classes: any, theme?: Theme } = this.props
     return (
-      <span className={classes.root}>
+      <span>
         <input type="color" value={this.state.value} onChange={
           // debounce(
             e => this.inputChange(e)
@@ -51,5 +43,4 @@ export class ColorPickerEditor extends React.Component<ColorPickerEditorProps, C
   }
 }
 
-export const ArgumentEditor = withStyles(styles, { withTheme: true })(ColorPickerEditor as any)
 

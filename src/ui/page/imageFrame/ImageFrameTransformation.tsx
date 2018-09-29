@@ -2,7 +2,7 @@ import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/s
 import * as React from 'react'
 import { FormControl, InputLabel, Select, MenuItem, TextField, Button, Grid } from '@material-ui/core'
 import { imageFrames } from './data'
-import { commandsToString, readImageUrlToUintArray, loadImg, getImageSize, ImageSize, Command, ExecuteConfig, execute } from 'imagemagick-browser'
+import {  readImageUrlToUintArray, loadImg, getImageSize, ImageSize, Command, ExecuteConfig, execute } from 'imagemagick-browser'
 // import { Command, ExecuteConfig } from '../../../imagemagick'
 import { clone, query } from '../../../util/misc'
 // import { execute } from '../../../imagemagick/execute'
@@ -62,14 +62,13 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
               }}
             >
               {imageFrames.map((t: CommandTemplate, i: number) =>
-                <MenuItem value={commandsToString(t.commands)}>{t.name}</MenuItem>
+                <MenuItem value={JSON.stringify(t.commands, null, 2)}>{t.name}</MenuItem>
               )}
             </Select>
           </FormControl>
 
           <ul>
             {this.state.commands.map((command: Command, i: number) => {
-              console.log('PASANDO', this.state.selectedFrameTemplate.defaultTemplateContext || {})
               return <li>
                 <CommandEditor
                   {...this.props as any}
@@ -137,7 +136,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
         s === '$INPUT' ? inputImageName : s === '$OUTPUT' ? outputImageName : s
       )
     )
-    console.log('commands:', commands)
+    // console.log('commands:', commands)
 
     const execConfig: ExecuteConfig = {
       commands,

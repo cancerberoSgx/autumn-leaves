@@ -17,9 +17,9 @@ export default function MyApp() {
     <JssProvider jss={jss} generateClassName={generateClassName}>
       <React.Fragment>
         <CssBaseline />
-        <HashRouter>
+        <BrowserRouter>
           <AppBar />
-        </HashRouter>
+        </BrowserRouter>
       </React.Fragment>
     </JssProvider>
     </MuiThemeProvider>

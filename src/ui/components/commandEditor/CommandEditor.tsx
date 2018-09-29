@@ -1,22 +1,12 @@
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import { Argument, ArgumentChangeEvent, ArgumentType, Color, Command, CommandEditorProps as CommandEditorPropsBase, SizedImageContext, TemplateContext } from 'imagemagick-browser';
 import * as React from 'react';
 import { query } from '../../../util/misc';
 import { getLastImageSize } from '../../page/imageFrame/ImageFrameTransformation';
 import { ColorPickerEditor } from './ColorPickerEditor';
 import { NumberEditor } from './NumberEditor';
+import { SelectOneEditor } from './SelectOneEditor';
 
-const styles = (theme: Theme) => createStyles({
-  root: {
-  },
-  error: {
-    fontWeight: 'bold'
-  },
-  input: {
-  }
-})
-
-export interface CommandEditorProps extends CommandEditorPropsBase, WithStyles<typeof styles> {
+export interface CommandEditorProps extends CommandEditorPropsBase {
   templateContext: SizedImageContext
 }
 
@@ -25,7 +15,9 @@ export interface CommandEditorState {
   jsonError?: string
   templateContext: TemplateContext
 }
-
+/**
+ * component able to render given command templates. Will delegate on concrete value editor implementations in componenets/commandEditor
+ */
 export class CommandEditor extends React.Component<CommandEditorProps, CommandEditorState> {
 
   state: CommandEditorState
@@ -55,42 +47,15 @@ export class CommandEditor extends React.Component<CommandEditorProps, CommandEd
   }
 
   render(): React.ReactNode {
+
     return (
-      <div className={this.props.classes.root}>
+      <div>
         {(() => {
-          // TODO: split this to different classes responsibilities:
           if (this.props.commandTemplate.template && this.props.commandTemplate.arguments) {
             return this.props.commandTemplate.arguments.map(arg =>
               <div>
-                {arg.name}:
-                {(() => {
-                  if (arg.type === ArgumentType.color) {
-                    return <ColorPickerEditor {...this.props as any}
-                      value={this.state.templateContext[arg.id]}
-                      onChange={(event: ArgumentChangeEvent<Color>) => this.argumentChangeEvent(arg, event)}
-                    />
-                  }
-                  else if (arg.type === ArgumentType.number) {
-                    return <NumberEditor {...this.props as any}
-                      value={this.state.templateContext[arg.id]}
-                      onChange={(event: ArgumentChangeEvent<Color>) => this.argumentChangeEvent(arg, event)}
-                    />
-                  }
-                  else {
-                    return <div>Sorry, dont know how to represent {arg.type}, yet</div>
-                  }
-                })()}
+                {arg.name}: {buildArgumentEditor(arg, this.state.templateContext, e => this.argumentChangeEvent(arg, e))}
               </div>)
-          }
-          else {
-            return <div>
-              <input className={this.props.classes.input} type="text"
-                value={JSON.stringify(this.state.commands)}
-                onChange={e => this.commandInputChange(e)}
-              />
-              <p className={this.props.classes.error}>{this.state.jsonError || ''}</p>
-              hello
-              </div>
           }
         })()}
         {}
@@ -98,39 +63,48 @@ export class CommandEditor extends React.Component<CommandEditorProps, CommandEd
     )
   }
 
-  argumentChangeEvent(arg: Argument, event: ArgumentChangeEvent<Color>) {
+  protected argumentChangeEvent(arg: Argument, event: ArgumentChangeEvent<any>) {
     this.state.templateContext[arg.id] = event.value
     this.setTemplateValue()
   }
-  
+
   protected setTemplateValue() {
     this.state.templateContext.imageWidth = getLastImageSize().width
     this.state.templateContext.imageHeight = getLastImageSize().height
     const value = this.props.commandTemplate.template(this.state.templateContext)
+    this.state.commands = value
     this.setState({ ...this.state })
     this.props.onChange({ commandTemplate: this.props.commandTemplate, value })
-  }
-
-  // old code - only useful for tramsformations without editors. TODO: remove them and this.
-  commandInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const commands: Command[] = []
-    query('.' + this.props.classes.input)
-      .forEach((input: HTMLInputElement) => {
-        let value
-        try {
-          value = JSON.parse(e.target.value)
-          this.setState({ ...this.state, jsonError: '' })
-        } catch (error) {
-          this.setState({ ...this.state, jsonError: 'JSON Syntax error: ' + error })
-        }
-        commands.push(value)
-      })
-    this.setState({ ...this.state, commands })
   }
 
   componentDidMount() {
     this.setTemplateValue()
   }
 }
-export const ArgumentEditor = withStyles(styles, { withTheme: true })(CommandEditor as any)
 
+
+function buildArgumentEditor<T>(arg: Argument, templateContext: TemplateContext, onChange: (e: ArgumentChangeEvent<T>) => void) {
+  if (arg.type === ArgumentType.color) {
+    return <ColorPickerEditor
+      value={templateContext[arg.id] + ''}
+      onChange={onChange as any}
+    />
+  }
+  else if (arg.type === ArgumentType.number) {
+    const value = parseInt(templateContext[arg.id] + '')
+    return <NumberEditor
+      value={value}
+      onChange={onChange as any}
+    />
+  }
+  else if (arg.type === ArgumentType.selectOne) {
+    return <SelectOneEditor
+      value={templateContext[arg.id] + ''}
+      select={arg.list}
+      onChange={onChange as any}
+    />
+  }
+  else {
+    return <div>Sorry, dont know how to represent {arg.type}, yet</div>
+  }
+}

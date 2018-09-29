@@ -1,4 +1,4 @@
-**[autumn leaves](https://cancerberosgx.github.io/autumn-leaves/#/)**
+**Website : [autumn leaves](https://cancerberosgx.github.io/autumn-leaves/#/)**
 
  * Nice UI experience for ImageMagick transformations
  * small visual tools for concrete things: add a frame, distort, format conversor, remove background, etc
@@ -11,14 +11,21 @@
 # STATUS / ROADMAP
 
  * WIP
- * researching IM
+ * separated generic-high level framework on top of wasm-imagemagick : imagemagick-browser
+ * separated react related utilities in react-imagemagick
+ * researching IM complex use cases
+ * composite IM commands: chain of commands so some can consume other's output. WIP
  * designing a friendly JS API for IM commands
  * (research) don't know how well wasm-IM will behave for complex tasks. Done: seems to be equivalent of using IM cli, besides no supported libs like fft. 
  * start by being just a im transformation editor by just editing im CLI text. Done: https://cancerberosgx.github.io/autumn-leaves/#/convertDemo
  * try to compose (examples) real - life examples like http://www.fmwconcepts.com/imagemagick
  * then start designing and develop a nice UI to edit the commands more visually (no plain text)
 
-# TODO / INVESTIGATE
+# TODO / INVESTIGATE / ROADMAP
+
+ * Issue: initial editor binding in image frame app
+
+## Ideas
 
  * Idea : ImageMagick react component: <ImageMagick src="foo.png" convert=['-rotate', '88'] /> that displays given image in src using the convertion. (WIP)
  * CommandEditor : autogenerate editors for IM commands from given metadata implemented as react components. Able to render as a IM Command[] and notify changes. (WIP)
@@ -38,7 +45,7 @@
  * API to talk to the tool externally as a js library: import autumn from 'http://autumnleaves.com/lib.js'; const outputImage = await autumn.convert('http://my.img.jpg', 'myImg.png')
  * the wizard should ask first the transformation because it will be responsible of declaring how/which kind of files it requires as input. eg: user chooses pdf2png transformation so the wizard will ask the user to choose a .pdf document
 
-# Useful links and tips
+## Useful links and tips
 
  * magick logo: gif:- | display gif:-
 

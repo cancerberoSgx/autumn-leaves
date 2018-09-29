@@ -27,10 +27,18 @@ export async function buildInputFiles(urls: string[]): Promise<MagickInputFile[]
 
 export async function blobToUint8Array(blob: Blob): Promise<Uint8Array> {
   return readImageUrlToUintArray(URL.createObjectURL(blob))
-
 }
-export function commandsToString(commands: Command[]): string {
-  return JSON.stringify(commands, null, 2)
+
+export function blobToString(blb: Blob): Promise<string> {
+
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.addEventListener('loadend', (e) => {
+      const text = (e.srcElement as any).result as string;
+      resolve(text)
+    });
+    reader.readAsText(blb);
+  })
 }
 
 export async function inputFileToUint8Array(el: HTMLInputElement): Promise<{ file: File, content: Uint8Array }[]> {
@@ -40,38 +48,16 @@ export async function inputFileToUint8Array(el: HTMLInputElement): Promise<{ fil
     reader.readAsArrayBuffer(file)
     return { file, content: new Uint8Array(reader.result as any) }
   })
-  // return null as any
-  // el.files.map(file=>{
-  // })
 }
-// export function fileToUint8Array(file: File) {
-//   const fileReader = new FileReader()
-// }
 
 export function inputFileFiles(el: HTMLInputElement): File[] {
   const files = []
   for (let i = 0; i < el.files.length; i++) {
     const file = el.files.item(i)
     files.push(file)
-    // console.log({file});
   }
   return files
 }
-
-
-// export async function inputFileToUint8Array(el: HTMLInputElement): Promise<Uint8Array> {
-//   return new Promise<Uint8Array>(resolve => {
-//     // // let arrayBuffer: Uint8Array
-//     // const fileReader = new FileReader()
-//     // fileReader.onload = function (event) {
-//     //   const arrayBuffer = this.result
-//     //   const array = new Uint8Array(arrayBuffer as any)
-//     //   const binaryString = String.fromCharCode.apply(null, array)
-//     //   resolve(binaryString)
-//     // }
-//     // fileReader.readAsArrayBuffer(this.files[0])
-//   })
-// }
 
 export async function outputFileToInputFile(outputFile: MagickOutputFile): Promise<MagickInputFile> {
   return {
@@ -93,7 +79,6 @@ export function getImageSize(url: string): Promise<ImageSize> {
         width: (this as any).width,
         height: (this as any).height
       })
-      // alert((this as any).width + 'x' + (this as any).height);
     }
     img.src = url;
   })

@@ -1,16 +1,7 @@
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
 import * as React from 'react'
 import { ArgumentEditorProps, ArgumentEditorState, ArgumentType } from 'imagemagick-browser'
 
-const styles = (theme: Theme) => createStyles({
-  root: {
-  },
-  hidden: {
-    display: 'none'
-  }
-})
-
-export interface NumberEditorProps extends ArgumentEditorProps<number>, WithStyles<typeof styles> {
+export interface NumberEditorProps extends ArgumentEditorProps<number> {
   isInteger?: boolean
 }
 
@@ -25,14 +16,15 @@ export class NumberEditor extends React.Component<NumberEditorProps, NumberEdito
   }
 
   constructor(props: NumberEditorProps, state: NumberEditorState) {
-    super(props, state)
-    this.setState({...this.state, value: props.value || 0})
+    super(props, state)    
+    this.state.value = props.value || 0
+    this.setState({...this.state })
+    console.log('NumberEditor props', this.state.value);
   }
 
   render(): React.ReactNode {
-    const { classes, theme }: { classes: any, theme?: Theme } = this.props
     return (
-      <span className={classes.root}>
+      <span className=''>
         <input type="number" value={this.state.value} onChange={e => this.inputChange(e)} />
       </span>
     )
@@ -43,7 +35,4 @@ export class NumberEditor extends React.Component<NumberEditorProps, NumberEdito
     this.setState({ value })
     this.props.onChange({ value, changeEvent, argument: this.props.argument })
   }
-
 }
-export const ArgumentEditor = withStyles(styles, { withTheme: true })(NumberEditor as any)
-
