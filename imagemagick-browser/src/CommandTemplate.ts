@@ -1,9 +1,9 @@
 import { Command } from '.';
 
 // import { Command } from 'imagemagick-browser'
-
+// TODO: maybe it's better to remove this interface for stricter typechecking
 export interface TemplateContext {
-  [key: string]: string | number
+  [key: string]: any
 }
 export interface SizedImageContext extends TemplateContext {
   imageWidth: number,
@@ -26,7 +26,6 @@ export interface CommandTemplate<Context=TemplateContext> {
   /** metadata for arguments */
   arguments?: Argument[];
 }
-
 
 export type Color = string
 
@@ -59,6 +58,7 @@ export interface Point {
 export interface PointHandler extends Point {
   id: string
   name?: string
+  color?: Color
 }
 
 // UI / react base framework types

@@ -22,6 +22,7 @@ const styles = (theme: Theme) => createStyles({
 })
 
 export interface ImageFrameTransformationProps extends WithStyles<typeof styles> {
+  imageSrc: string
 }
 export interface ImageFrameTransformationState {
   selectedFrameTemplate: CommandTemplate,
@@ -71,9 +72,11 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
             {this.state.commands.map((command: Command, i: number) => {
               return <li>
                 <CommandEditor
-                  {...this.props as any}
-                  templateContext={this.state.selectedFrameTemplate.defaultTemplateContext || {}}
+                  templateContext={{...this.state.selectedFrameTemplate.defaultTemplateContext,imageWidth: getLastImageSize().width, imageHeight:getLastImageSize().height}} 
                   commandTemplate={this.state.selectedFrameTemplate}
+                  imageSrc={'rotate.png'}
+                  imageWidth={getLastImageSize().width}
+                  imageHeight={getLastImageSize().height}
                   onChange={e => {
                     this.updateCommandValue(e.value)
                   }}

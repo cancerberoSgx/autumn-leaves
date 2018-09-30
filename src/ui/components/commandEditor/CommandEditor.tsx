@@ -58,7 +58,7 @@ export class CommandEditor extends React.Component<CommandEditorProps, CommandEd
           if (this.props.commandTemplate.template && this.props.commandTemplate.arguments) {
             return this.props.commandTemplate.arguments.map(arg =>
               <div>
-                {arg.name}: {buildArgumentEditor(arg, this.state.templateContext, e => this.argumentChangeEvent(arg, e))}
+                {arg.name}: {buildArgumentEditor(arg, this.state.templateContext, e => this.argumentChangeEvent(arg, e), this.props.imageSrc)}
               </div>)
           }
         })()}
@@ -87,7 +87,7 @@ export class CommandEditor extends React.Component<CommandEditorProps, CommandEd
 }
 
 
-function buildArgumentEditor<T>(arg: Argument, templateContext: TemplateContext, onChange: (e: ArgumentChangeEvent<T>) => void) {
+function buildArgumentEditor<T>(arg: Argument, templateContext: TemplateContext, onChange: (e: ArgumentChangeEvent<T>) => void, imageSrc: string) {
   if (arg.type === ArgumentType.color) {
     return <ColorPickerEditor
       value={templateContext[arg.id] + ''}
@@ -109,10 +109,11 @@ function buildArgumentEditor<T>(arg: Argument, templateContext: TemplateContext,
     />
   }
   else if (arg.type === ArgumentType.imagePoints) {
+    
     return <ImagePointsEditor
       imageWidth={getLastImageSize().width}
       imageHeight={getLastImageSize().height}
-      imageSrc={this.props.imageSrc}
+      imageSrc={imageSrc}
       value={arg.points}
       onChange={onChange as any}
     />

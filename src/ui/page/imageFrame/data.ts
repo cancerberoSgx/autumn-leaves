@@ -10,6 +10,7 @@ import { virtualRandom1 } from './templates/virtualRandom1';
 import { frameFeathering1 } from './templates/frameFeathering1';
 import { frameShape1 } from './templates/frameShape1';
 import { tornPaper2 } from './templates/tornPaper2';
+import { DistortPerspective1 } from './templates/distortPerspective1';
 
 export const imageFrames: CommandTemplate[] = [
   cropTemplate1,
@@ -23,6 +24,7 @@ export const imageFrames: CommandTemplate[] = [
   virtualRandom1,
   frameFeathering1,
   frameShape1,
+  DistortPerspective1,
   {
     id: 'frameFeathering2',
     name: 'frame soft rounded corners',
