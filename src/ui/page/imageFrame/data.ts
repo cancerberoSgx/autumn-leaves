@@ -6,7 +6,7 @@ import { tornPaper1 } from './templates/tornPaper1';
 import { polaroidTemplate3 } from './templates/polaroid3';
 import { plasmaFrame1 } from './templates/plasmaFrame1';
 import { shadowFrame1 } from './templates/shadowFrame1';
-import { virtualRandom1 } from './templates/virtualRandom1';
+import { virtualPixel1 } from './templates/virtualPixel1';
 import { frameFeathering1 } from './templates/frameFeathering1';
 import { frameShape1 } from './templates/frameShape1';
 import { tornPaper2 } from './templates/tornPaper2';
@@ -21,7 +21,7 @@ export const imageFrames: CommandTemplate[] = [
   tornPaper2,
   plasmaFrame1,
   shadowFrame1,
-  virtualRandom1,
+  virtualPixel1,
   frameFeathering1,
   frameShape1,
   DistortPerspective1,

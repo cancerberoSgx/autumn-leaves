@@ -3,7 +3,6 @@ import { withStyles, Theme, createStyles, WithStyles } from '@material-ui/core/s
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import { inputFileToUint8Array  ,MagickFile} from 'imagemagick-browser';
-// import { MagickFile } from '../../imagemagick';
 
 const styles = (theme: Theme) => createStyles({
   paper: {

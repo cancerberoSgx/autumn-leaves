@@ -1,6 +1,5 @@
 import { Argument, ArgumentChangeEvent, ArgumentType, Color, Command, CommandEditorProps as CommandEditorPropsBase, SizedImageContext, TemplateContext } from 'imagemagick-browser';
 import * as React from 'react';
-import { query } from '../../../util/misc';
 import { getLastImageSize } from '../../page/imageFrame/ImageFrameTransformation';
 import { ColorPickerEditor } from './ColorPickerEditor';
 import { NumberEditor } from './NumberEditor';
