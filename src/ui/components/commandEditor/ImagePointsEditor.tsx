@@ -38,7 +38,7 @@ export class ImagePointsEditor extends React.Component<ImagePointsEditorProps, I
   render(): React.ReactNode {
     return (
       <div >
-        <p>Just a test for drag handles on top of an image - starting point for a point visual editor for IM operations </p>
+        <p>WIP - Please drag all the handlers to fix an issue - then start working with it. WIP</p>
         <div>
 
           <img src={this.props.imageSrc} id="ImagePointsEditorImage"></img>
@@ -49,7 +49,7 @@ export class ImagePointsEditor extends React.Component<ImagePointsEditorProps, I
                 handle=".handle"
                 defaultPosition={{ 
                   x: point.x, 
-                  y: this.props.imageHeight * -1 + point.y 
+                  y: point.y  - this.props.imageHeight 
                 }}
                 // position={{ 
                 //   x: point.x, 
@@ -86,13 +86,21 @@ export class ImagePointsEditor extends React.Component<ImagePointsEditorProps, I
     this.props.onChange({value: this.state.value, argument: this.props.argument })
   }
   private getCoordsRelativeToImage(e1: MouseEvent): Point {
-    const el = document.getElementById('ImagePointsEditorImage')
+    // debugger
+    const el = document.getElementById('ImagePointsEditorImage') 
+    const absolute = getElementabsoluteCoords(el)
+    // console.log({x: e1.screenX, y: e1.screenY}, absolute)
     return {
-      x: e1.clientX - el.offsetLeft,
-      y: e1.clientY - el.offsetTop
+      x: e1.pageX - absolute.x,
+      y: e1.pageY - absolute.y - this.props.imageHeight 
     }
   }
-
+}
+function getElementabsoluteCoords(el: HTMLElement): Point{
+  return {
+    x: window.scrollX + el.getBoundingClientRect().left,
+    y: window.scrollY + el.getBoundingClientRect().top
+  }
 }
 
 
