@@ -91,6 +91,16 @@ const drawer = (props: WithStyles<typeof styles> & { open: boolean, handleDrawer
         </ListItemIcon>
         <ListItemText primary="Download Results" />
       </ListItem>
+
+      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="ImageHandleEditorTest" {...props} />}>
+        <ListItemIcon>
+          <FileDownload />
+        </ListItemIcon>
+        <ListItemText primary="ImageHandleEditorTest" />
+      </ListItem>
+      
+
+
     </List>
 
   </Drawer>

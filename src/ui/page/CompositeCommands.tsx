@@ -1,9 +1,7 @@
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import * as React from 'react';
-// import { Command, ExecuteConfig, getMagickApi } from '../../imagemagick';
 import { Button } from '@material-ui/core';
-// import { loadImg, buildInputFiles, outputFileToInputFile } from '../../util/image';
-import { execute, loadImg, buildInputFiles, outputFileToInputFile, Command } from 'imagemagick-browser';
+import { executeOne, loadImg, buildInputFiles, outputFileToInputFile, Command, ExecuteConfig } from 'imagemagick-browser';
 
 const styles = (theme: Theme) => createStyles({
   root: {},
@@ -34,7 +32,7 @@ export class CompositeCommandsNaked extends React.Component<CompositeCommandsPro
     const { classes, theme } = this.props
     return (
       <div className={classes.root}>
-      Welcome, this is a quick and dirty demonstration of executing two IM commands serially, the second consuming the first's output. 
+        Welcome, this is a quick and dirty demonstration of executing two IM commands serially, the second consuming the first's output.
         <ul>
           {this.state.commands.map((command, i) =>
             <li>
@@ -56,43 +54,51 @@ export class CompositeCommandsNaked extends React.Component<CompositeCommandsPro
             </li>
           )}
         </ul>
-        {/* <Button variant="contained" onClick={() => this.execute()}>
-          Execute!
-        </Button> */}
         <br />
 
-        <Button variant="contained" onClick={() => this.test()}>
-        Execute!
+        <Button variant="contained" onClick={() => this.doExecute()}>
+          Execute!
         </Button>
-        <p>rotate.png original image: <br/><img src="rotate.png"></img></p>
+        <p>rotate.png original image: <br /><img src="rotate.png"></img></p>
         <img id="outputFile" />
       </div>
     )
   }
-  // async execute() {
-  //   const config: ExecuteConfig = {
-  //     inputFiles: [],
-  //     commands: this.state.commands
-  //   }
-  //   const results = await execute(config)
 
-  //   const outputFile = results[results.length - 1].outputFiles[0]
-  //   loadImg(outputFile, document.getElementById('outputFile') as HTMLImageElement)
-  // }
-
-  async test() {
-    const result1 = await execute({
+  async doExecute() {
+    const config: ExecuteConfig = {
       inputFiles: await buildInputFiles(['rotate.png']),
-      command: this.state.commands[0]// ["convert", "rotate.png", "-rotate", "33", "roseRotate.png"]
-    })
-    const roseRotate = await outputFileToInputFile(result1[0].outputFiles[0])
-    const result2 = await execute({
-      inputFiles: [roseRotate],
-      command: this.state.commands[1]//["convert", "roseRotate.png", "-blur", "0x2", "roseRotateBlur.png"]
-    })
-    loadImg(result2[0].outputFiles[0], document.getElementById('outputFile') as HTMLImageElement)
-
+      commands: this.state.commands
+    }
+    await execute(config)
   }
+  // async test() {
+  //   const result1 = await execute({
+  //     inputFiles: await buildInputFiles(['rotate.png']),
+  //     command: this.state.commands[0]
+  //   })
+  //   const roseRotate = await outputFileToInputFile(result1[0].outputFiles[0])
+  //   const result2 = await execute({
+  //     inputFiles: [roseRotate],
+  //     command: this.state.commands[1]
+  //   })
+  //   loadImg(result2[0].outputFiles[0], document.getElementById('outputFile') as HTMLImageElement)
+
+  // }
+}
+
+async function execute(config: ExecuteConfig) {
+  const inputFiles = config.inputFiles.concat([])
+  const result1 = await executeOne({ ...config, commands: [config.commands[0]] })
+  result1.outputFiles.forEach(async f => {
+    const inputFile = await outputFileToInputFile(f)
+    inputFiles.push(inputFile) //TODO: check if inputFiles already contain it and replace it
+  })
+  // const roseRotate = await outputFileToInputFile(result1.outputFiles[0])
+  // loadImg(roseRotate, document.getElementById('outputFile') as HTMLImageElement)
+  const result2 = await executeOne({ ...config, commands: [config.commands[1]], inputFiles })
+
+  loadImg(result2.outputFiles[0], document.getElementById('outputFile') as HTMLImageElement)
 }
 
 export const CompositeCommands = withStyles(styles, { withTheme: true })(CompositeCommandsNaked as any);

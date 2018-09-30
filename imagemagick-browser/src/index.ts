@@ -20,8 +20,8 @@ export type Command = string[]
 export interface ExecuteConfig {
   inputFiles: MagickInputFile[]
   /** commands to execute, serially */
-  commands?: Command[]
-  command?: Command
+  commands: Command[]
+  // command?: Command
 }
 export interface ExecuteResult {
   outputFiles: MagickOutputFile[]
@@ -41,3 +41,5 @@ export * from './util/image'
 export * from './util/cli'
 
 export * from './CommandTemplate'
+export * from './options/virtualPixel'
+export * from './options/filter'

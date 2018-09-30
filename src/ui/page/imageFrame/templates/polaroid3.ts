@@ -1,13 +1,13 @@
 import { CommandTemplate, Color, SizedImageContext, ArgumentType } from "imagemagick-browser";
 import { Command } from "imagemagick-browser";
 
-export interface Polaroid3Context extends SizedImageContext {
+export interface Polaroid3Context extends Partial<SizedImageContext> {
   background: Color
   stroke: Color
   size: number
   rotate: number
 }
-export const polaroidTemplate3: CommandTemplate = {
+export const polaroidTemplate3: CommandTemplate<Polaroid3Context> = {
   id: 'framePolaroid3_',
   name: 'Polaroid 3',
   commands: [["convert", "-size", "150x150", "xc:none", "-background", "none", "-fill", "white", "-stroke", "grey60", "-draw", "rectangle 0,0  119,155", "$INPUT", "-geometry", "+5+5", "-composite", "-rotate", "-10", "-draw", "rectangle 0,0 119,155", "$INPUT", "-geometry", "+5+5", "-composite", "-rotate", "-10", "-draw", "rectangle 0,0 119,155", "$INPUT", "-geometry", "+5+5", "-composite", "-rotate", "+10", "-trim", "+repage", "-background", "#ff0000", "-flatten", "$OUTPUT"]],

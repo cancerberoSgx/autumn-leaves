@@ -6,9 +6,8 @@ import home from '../page/home'
 import SimpleCLITransformationEditor from '../components/SimpleCLITransformationEditor'
 import TestImages from '../components/TestImages';
 import {ConvertDemo} from '../page/convertDemo/convertDemo';
-// import DownloadResult from '../page/imageFrame/DownloadResult';
 import { ImageFrameTransformation } from '../page/imageFrame/ImageFrameTransformation';
-// import imageFrameTool from '../page/imageFrame/imageFrameTool';
+import { ImageHandleEditorTest } from '../page/imageHandleEditorTest1';
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -29,7 +28,7 @@ function main(props: WithStyles<typeof styles>) {
         <Route path='/compositeCommands' component={CompositeCommands} />
         <Route path='/SimpleCLITransformationEditor' component={SimpleCLITransformationEditor} />
         <Route path='/TestImages' component={TestImages} />
-        {/* <Route path='/download' component={DownloadResult} /> */}
+        <Route path='/ImageHandleEditorTest' component={ImageHandleEditorTest} />
       </Switch>
     </div>
   )

@@ -5,9 +5,13 @@ import { getLastImageSize } from '../../page/imageFrame/ImageFrameTransformation
 import { ColorPickerEditor } from './ColorPickerEditor';
 import { NumberEditor } from './NumberEditor';
 import { SelectOneEditor } from './SelectOneEditor';
+import { ImagePointsEditor } from './ImagePointsEditor';
 
 export interface CommandEditorProps extends CommandEditorPropsBase {
   templateContext: SizedImageContext
+  imageSrc: string
+  imageWidth: number
+  imageHeight: number
 }
 
 export interface CommandEditorState {
@@ -101,6 +105,15 @@ function buildArgumentEditor<T>(arg: Argument, templateContext: TemplateContext,
     return <SelectOneEditor
       value={templateContext[arg.id] + ''}
       select={arg.list}
+      onChange={onChange as any}
+    />
+  }
+  else if (arg.type === ArgumentType.imagePoints) {
+    return <ImagePointsEditor
+      imageWidth={getLastImageSize().width}
+      imageHeight={getLastImageSize().height}
+      imageSrc={this.props.imageSrc}
+      value={arg.points}
       onChange={onChange as any}
     />
   }

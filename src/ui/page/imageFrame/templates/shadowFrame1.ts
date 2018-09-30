@@ -1,13 +1,13 @@
 import { CommandTemplate, Color, SizedImageContext, ArgumentType } from "imagemagick-browser";
 import { Command } from "imagemagick-browser";
 
-export interface shadowFrame1Context extends SizedImageContext {
+export interface shadowFrame1Context extends Partial<SizedImageContext> {
   background: Color
   intensity: number
   size: number
   offsetX: number
 }
-export const shadowFrame1: CommandTemplate = {
+export const shadowFrame1: CommandTemplate<shadowFrame1Context> = {
   id: 'shadowFrame1',
   name: 'shadow 1',
   commands: [["convert", "$INPUT", "-page", "+4+4", "-alpha", "set", "(", "+clone", "-background", "navy", "-shadow", "60x4+4+4", ")", "+swap", "-background", "none", "-mosaic", "$OUTPUT"]],

@@ -1,16 +1,16 @@
 import { CommandTemplate, Color, SizedImageContext, ArgumentType } from "imagemagick-browser";
 import { Command } from "imagemagick-browser";
 
-export interface frameFeathering1Context extends SizedImageContext {
+export interface FrameFeathering1Context extends Partial<SizedImageContext> {
   strength: number
 }
 
-export const frameFeathering1: CommandTemplate = {
+export const frameFeathering1: CommandTemplate<FrameFeathering1Context> = {
   id: 'frameFeathering1',
   name: 'Feathering 1',
   commands: [['convert', '$INPUT', '-alpha', 'set', '-virtual-pixel', 'transparent', '-channel', 'A', '-morphology', 'Distance', 'Euclidean:1,10!', '+channel', '$OUTPUT']],
   description: "TODO",
-  template: function (context: frameFeathering1Context) {
+  template: function (context: FrameFeathering1Context) {
     const s = `[["convert", "$INPUT", "-alpha", "set", "-virtual-pixel", "transparent", "-channel", "A", "-morphology", "Distance", "Euclidean:1,${context.strength}!", "+channel", "$OUTPUT"]]`
     const result = JSON.parse(s) as Command[]
     return result

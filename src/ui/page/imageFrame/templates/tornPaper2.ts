@@ -1,14 +1,14 @@
 import { CommandTemplate, Color, SizedImageContext, ArgumentType } from "imagemagick-browser";
 import { Command } from "imagemagick-browser";
 
-export interface TornPaper2Context extends SizedImageContext {
+export interface TornPaper2Context extends Partial<SizedImageContext> {
   spread1: number
   spread2: number
   paddingHorizontal: number
   paddingVertical: number
   background: Color
 }
-export const tornPaper2: CommandTemplate = {
+export const tornPaper2: CommandTemplate<TornPaper2Context> = {
   id: 'frameTornPaperEdge2',
   name: 'Torn paper 2',
   commands: [["convert", "$INPUT", "-bordercolor", "blue", "-border", "18x18", "-background", "blue", "", "-gravity", "SouthEast", "-splice", "1x1+0+0", "(", "+clone", "-alpha", "extract", "-virtual-pixel", "black", "-spread", "10", "-blur", "0x3", "-threshold", "50%", "-spread", "1", "-blur", "0x.7", ")", "-alpha", "off", "-compose", "Copy_Opacity", "-composite", "-gravity", "SouthEast", "$OUTPUT"]],

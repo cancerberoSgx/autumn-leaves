@@ -1,11 +1,11 @@
 import { CommandTemplate, Color, SizedImageContext, ArgumentType } from "imagemagick-browser";
 import { Command } from "imagemagick-browser";
 
-export interface Polaroid2Context extends SizedImageContext {
+export interface Polaroid2Context extends Partial<SizedImageContext> {
   background: Color
   bordercolor: Color
 }
-export const polaroidTemplate2: CommandTemplate = {
+export const polaroidTemplate2: CommandTemplate<Polaroid2Context> = {
   id: 'framePolaroid2_',
   name: 'Polaroid 2',
   commands: [["convert", "$INPUT", "-bordercolor", "snow", "-background", "black", "+polaroid", "$OUTPUT"]],
@@ -24,8 +24,6 @@ export const polaroidTemplate2: CommandTemplate = {
     { type: ArgumentType.color, id: 'bordercolor', name: 'bordercolor', description: 'TODO' }
   ]
 }
-
-
 
 // {
 //     id: 'framePolaroid2_',

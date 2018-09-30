@@ -12,7 +12,7 @@ export interface SizedImageContext extends TemplateContext {
 /**
  * metadata of a command in `arguments` together with implementation of command in `template`
  */
-export interface CommandTemplate {
+export interface CommandTemplate<Context=TemplateContext> {
   id: string;
   name: string;
   /** initial value */
@@ -21,10 +21,10 @@ export interface CommandTemplate {
   commands?: Command[];
   description?: string;
   /** implementation of the template. Tip use js template strings and JSON.parse like: ```JSON.parse(`[["convert" "input.png", "-rotate", ${context.amount} ]]`)``` */
-  template?(context: TemplateContext): Command[];
-  defaultTemplateContext?: TemplateContext
+  template?(context: Context): Command[];
+  defaultTemplateContext?: Context;
   /** metadata for arguments */
-  arguments?: Argument[]
+  arguments?: Argument[];
 }
 
 
@@ -35,6 +35,7 @@ export enum ArgumentType {
   number = 'number',
   text = 'text',
   selectOne = 'select-single', // select list single item selection
+  imagePoints = 'imagePoints',
   file = 'file', // configurable file / multi file / extension filter / see component/ChooseImage
   point = 'point', // can be implemented differently: 1 input, two inputs or a point clicked on an image by the user
   rectangle = 'rectangle'// can be implemented differently: 1 input, two inputs or a rectangle drawn by the user over an image
@@ -47,6 +48,17 @@ export interface Argument {
   description?: string
   /** if type is selectOne then user must provide items for the list here */
   list?: { name: string, id: string }[]
+  points?: PointHandler[]
+}
+
+export interface Point {
+  x: number
+  y: number
+}
+
+export interface PointHandler extends Point {
+  id: string
+  name?: string
 }
 
 // UI / react base framework types

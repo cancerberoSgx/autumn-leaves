@@ -199,7 +199,7 @@ export class ConvertDemoNaked extends React.Component<ConvertDemoProps, ConvertD
       ]
       const results = await execute({ commands, inputFiles })
       const json = await blobToString(results[0].outputFiles[0].blob)
-      alert(json)
+      // alert(json)
     })
   }
 }

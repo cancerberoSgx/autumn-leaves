@@ -1,12 +1,12 @@
 import { CommandTemplate, Color, SizedImageContext, ArgumentType } from "imagemagick-browser";
 import { Command } from "imagemagick-browser";
 
-export interface Crop1Context extends SizedImageContext {
+export interface Crop1Context extends Partial<SizedImageContext> {
     background: Color
     horizontalMargin: number
     verticalMargin: number
 }
-export const cropTemplate1: CommandTemplate = {
+export const cropTemplate1: CommandTemplate<Crop1Context> = {
     id: 'crop1',
     name: 'Simple Crop',
     commands: [["convert", "$INPUT", "-quiet", "-crop", "119x165-9-6!", "-background", "black", "-flatten", "$OUTPUT"]],
