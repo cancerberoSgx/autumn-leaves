@@ -28,9 +28,7 @@ export class LoggerNaked extends React.Component<LoggerProps, LoggerState> {
   constructor(props: LoggerProps, state: LoggerState) {
     super(props, state)
     addExecuteListener(e=>{
-      this.state.logs.push(e)
-      console.log(e, 'eeeeee');
-      
+      this.state.logs.push(e)      
       this.setState({...this.state})
     })
   }
@@ -51,7 +49,6 @@ export class LoggerNaked extends React.Component<LoggerProps, LoggerState> {
             <li>{Math.round(l.took)}ms. Command: {JSON.stringify(l.command)}</li>
           )}
         </ul>
-       {/* <p>Last command took: {Math.round(this.state.logs.length && this.state.logs[this.state.logs.length-1].took)}ms</p> */}
       </ExpansionPanelDetails>
     </ExpansionPanel>
     )

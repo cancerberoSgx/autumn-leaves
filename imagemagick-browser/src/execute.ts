@@ -22,7 +22,7 @@ export async function execute(config: ExecuteConfig): Promise<ExecuteResult[]> {
 export async function executeOne(config: ExecuteConfig): Promise<ExecuteResult> {
   const command = config.commands[0]
   const result = { outputFiles: await getMagickApi().Call(config.inputFiles, command) }
-  console.log('Executed: ' + JSON.stringify(command), 'Output files: ', result.outputFiles.map(f => f.name));
+  // console.log('Executed: ' + JSON.stringify(command), 'Output files: ', result.outputFiles.map(f => f.name));
   return result
 }
 

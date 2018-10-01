@@ -3,7 +3,7 @@ import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/s
 import { Command, CommandTemplate, execute, ExecuteConfig, getImageSize, ImageSize, loadImg, MagickInputFile, uint8ArrayToBlob, readInputImageFromUrl } from 'imagemagick-browser';
 import * as React from 'react';
 import { clone, query } from '../../../util/misc';
-import { ChooseImage } from '../../components/ChooseImage';
+import { SelectImageEditor } from '../../components/commandEditor/SelectImageEditor';
 import { CommandEditor } from '../../components/commandEditor/CommandEditor';
 import { imageFrames } from './data';
 
@@ -53,13 +53,13 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     return (
       <div className={classes.root}>
         <p>Add a frame to your images. First, load an image:</p>
-        <ChooseImage
+        <SelectImageEditor
           onChange={e => {
             const file = e.value[0] // TODO: user might select more than one file ?
             const outputFile = { name: file.name, blob: uint8ArrayToBlob(file.content) }
             loadImg(outputFile, document.getElementById('sourceImage') as HTMLImageElement)
-            this.setState({ ...this.state, inputFiles: e.value })
             this.setImageSize(true)
+            this.setState({ ...this.state, inputFiles: e.value })
           }} />
         <p>Then, select one of the templates below and change its parameters using the form. </p>
         <form className={classes.root} autoComplete="off">
@@ -101,13 +101,12 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
           <Button variant="contained" onClick={() => this.execute()}>
             Execute!
           </Button>
-
           <br />
           <Grid container spacing={24}>
             <Grid item xs={12} sm={6}  >
               <p>Original image:
             <br />
-                <img src={this.getFirstInputImage() ? this.getFirstInputImage().name : defaultImageSrc} id="sourceImage"></img>
+                <img onLoad={() => { this.setImageSize(true) }} src={this.getFirstInputImage() ? URL.createObjectURL(uint8ArrayToBlob(this.getFirstInputImage().content)) : defaultImageSrc} id="sourceImage"></img>
               </p>
               <p>Size: {JSON.stringify(this.state.imageSize || {})}</p>
             </Grid>
@@ -138,26 +137,32 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     await this.execute()
   }
 
-  async componentDidUpdate() {
-    await this.setImageSize()
-  }
+  // async componentDidUpdate() {
+  //   await this.setImageSize()
+  // }
 
-  async componentDidMount() {
-    await this.setImageSize()
-  }
+  // async componentDidMount() {
+  //   await this.setImageSize()
+  // }
 
   private getFirstInputImage(): MagickInputFile | undefined {
     return this.state.inputFiles.length ? this.state.inputFiles[0] : undefined
   }
 
-  private imageSizeCalled: boolean = false
+  // private imageSizeCalled: boolean = false
+
   private async setImageSize(force: boolean = false) {
-    if (!this.imageSizeCalled || force) {
-      this.imageSizeCalled = true
-      const imageSize = await getImageSize(this.getFirstInputImage() ? this.getFirstInputImage().name : defaultImageSrc)
+    // if (!this.imageSizeCalled || force) {
+    // this.imageSizeCalled = true
+    // const imageSize = await getImageSize(this.getFirstInputImage() ? this.getFirstInputImage().name : defaultImageSrc)
+    const img = document.querySelector<HTMLImageElement>('#sourceImage')
+    const imageSize = { width: img.width, height: img.height, }
+    // console.log('imageSize', imageSize, JSON.stringify(imageSize)!==JSON.stringify(imageSize));
+    if(JSON.stringify(imageSize)!==JSON.stringify(lastImageSize)){
       this.setState({ ...this.state, imageSize })
       lastImageSize = imageSize
     }
+    // }
     await this.execute()
   }
 
