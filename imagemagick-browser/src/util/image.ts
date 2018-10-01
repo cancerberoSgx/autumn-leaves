@@ -12,7 +12,6 @@ export function loadImg(file: MagickOutputFile, img: HTMLImageElement) {
 }
 
 export async function buildInputFiles(urls: string[]): Promise<MagickInputFile[]> {
-  // return new Promise(resolve=>)
   const result = await Promise.all(urls.map(async url => {
     const content = await readImageUrlToUintArray(url)
     return {
@@ -20,9 +19,7 @@ export async function buildInputFiles(urls: string[]): Promise<MagickInputFile[]
       name: url//TODO extract name from url
     }
   }))
-  // debugger
   return result
-  // const arr = readImageUrlToUintArray()
 }
 
 export async function blobToUint8Array(blob: Blob): Promise<Uint8Array> {
@@ -30,7 +27,6 @@ export async function blobToUint8Array(blob: Blob): Promise<Uint8Array> {
 }
 
 export function blobToString(blb: Blob): Promise<string> {
-
   return new Promise(resolve => {
     const reader = new FileReader();
     reader.addEventListener('loadend', (e) => {
@@ -42,12 +38,23 @@ export function blobToString(blb: Blob): Promise<string> {
 }
 
 export async function inputFileToUint8Array(el: HTMLInputElement): Promise<{ file: File, content: Uint8Array }[]> {
-  return await inputFileFiles(el).map(file => {
+  return Promise.all(inputFileFiles(el).map(async file => {
+    // const blob = 
     // debugger
-    const reader = new FileReader()
-    reader.readAsArrayBuffer(file)
-    return { file, content: new Uint8Array(reader.result as any) }
-  })
+    const array = await new Promise<Uint8Array>(resolve => {
+      const reader = new FileReader()
+      reader.addEventListener('loadend', (e) => {
+        // const text = (e.srcElement as any).result as string;
+        resolve(new Uint8Array(reader.result as any))
+      });
+      reader.readAsArrayBuffer(file)
+    })
+    return { file, content: array }
+  }))
+}
+
+export function uint8ArrayToBlob(arr: Uint8Array): Blob {
+  return new Blob([arr])
 }
 
 export function inputFileFiles(el: HTMLInputElement): File[] {
@@ -70,6 +77,7 @@ export interface ImageSize {
   width: number,
   height: number
 }
+
 export function getImageSize(url: string): Promise<ImageSize> {
   return new Promise(resolve => {
 

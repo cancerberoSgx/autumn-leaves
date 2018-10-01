@@ -8,6 +8,7 @@ import TestImages from '../components/TestImages';
 import {ConvertDemo} from '../page/convertDemo/convertDemo';
 import { ImageFrameTransformation } from '../page/imageFrame/ImageFrameTransformation';
 import { ImageHandleEditorTest } from '../page/imageHandleEditorTest1';
+import { Logger } from './logger';
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -21,6 +22,7 @@ function main(props: WithStyles<typeof styles>) {
 
   return (
     <div className={classes.root}>
+    <Logger/>
       <Switch>
         <Route exact path='/' component={home} />
         <Route path='/convertDemo' component={ConvertDemo} /> imageFrame

@@ -25,8 +25,7 @@ export class EmptyComponentNaked extends React.Component<EmptyComponentProps, Em
   }
 
   render(): React.ReactNode {
-    const { classes, theme }: { classes: any, theme?: Theme } = this.props
-    const { toggle } = this.state
+    const { classes, theme } = this.props
     return (
       <div className={classes.root}>
         <button onClick={e => this.setState({ toggle: !this.state.toggle })}>

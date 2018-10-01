@@ -1,8 +1,8 @@
 import { CommandTemplate, Color, SizedImageContext, ArgumentType, PointHandler, VirtualPixelMethods, VirtualPixelMethod, Distort } from "imagemagick-browser";
 import { Command } from "imagemagick-browser";
 
-type ThisDistorts = Distort.Perspective | Distort.BilinearForward | Distort.BilinearReverse
-const thisDistorts = [Distort.Perspective, Distort.BilinearForward, Distort.BilinearReverse]
+type ThisDistorts = Distort.Perspective | Distort.BilinearForward | Distort.BilinearReverse | Distort.Shepards
+const thisDistorts = [Distort.Perspective, Distort.BilinearForward, Distort.BilinearReverse, Distort.Shepards]
 
 class PointHandlerImpl implements PointHandler {
   constructor(public x: number, public y: number, public id: string, public color: Color) { }

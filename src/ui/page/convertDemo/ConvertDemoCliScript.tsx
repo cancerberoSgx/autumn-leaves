@@ -33,7 +33,7 @@ export class ConvertDemoCliScriptNaked extends React.Component<ConvertDemoCliScr
   }
 
   render(): React.ReactNode {
-    const { classes, theme }: { classes: any, theme?: Theme } = this.props
+    const { classes, theme } = this.props
     return (
       <div className={classes.root}>
         <Button onClick={e => this.setState({ open: true })} variant="contained">

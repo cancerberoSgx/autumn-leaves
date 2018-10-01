@@ -8,14 +8,18 @@ import { clone, query } from '../../../util/misc'
 // import { execute } from '../../../imagemagick/execute'
 import { CommandTemplate }  from 'imagemagick-browser'
 import { CommandEditor } from '../../components/commandEditor/CommandEditor'
+import { ChooseImage, ChooseImageChangeEvent } from '../../components/ChooseImage';
+import { arrayBufferToBlob } from 'blob-util';
 
 const styles = (theme: Theme) => createStyles({
   input: {
     width: '100%',
   },
+  root: {},
   formControl: {
     width: '100%',
   },
+  select: {},
   error: {
     fontWeight: 'bold'
   }
@@ -47,7 +51,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     this.execute()
   }
   render(): React.ReactNode {
-    const { classes, theme }: { classes: any, theme?: Theme } = this.props
+    const { classes, theme } = this.props
     return (
       <div className={classes.root}>
         <p>Add a frame to your images. Select one of the templates below and change its parameters using the form. </p>
@@ -95,15 +99,21 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
             <Grid item xs={12} sm={6}  >
               <p>Original image:
             <br />
-                <img src="rotate.png"></img>
+                <img src="rotate.png" id="sourceImage"></img>
               </p>
               <p>Size: {JSON.stringify(this.state.imageSize || {})}</p>
+              <ChooseImage onFileChange={(e: ChooseImageChangeEvent)=>{
+                const file = e.files[0] // TODO: user might select more than one file ?
+                loadImg({name: file.file.name, blob: new Blob([file.content])}, document.getElementById('sourceImage') as HTMLImageElement)
+                debugger
+              }}/>
             </Grid>
 
             <Grid item xs={12} sm={6}  >
               <p>Result:
              <br />
                 <img id="outputFile" />
+                <button>Download</button>
               </p>
             </Grid>
           </Grid>
