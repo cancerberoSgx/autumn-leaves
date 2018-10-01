@@ -1,15 +1,13 @@
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles'
-import * as React from 'react'
-import { FormControl, InputLabel, Select, MenuItem, TextField, Button, Grid } from '@material-ui/core'
-import { imageFrames } from './data'
-import {  readImageUrlToUintArray, loadImg, getImageSize, ImageSize, Command, ExecuteConfig, execute } from 'imagemagick-browser'
-// import { Command, ExecuteConfig } from '../../../imagemagick'
-import { clone, query } from '../../../util/misc'
-// import { execute } from '../../../imagemagick/execute'
-import { CommandTemplate }  from 'imagemagick-browser'
-import { CommandEditor } from '../../components/commandEditor/CommandEditor'
-import { ChooseImage, ChooseImageChangeEvent } from '../../components/ChooseImage';
-import { arrayBufferToBlob } from 'blob-util';
+import { Button, FormControl, Grid, InputLabel, MenuItem, Select } from '@material-ui/core';
+import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
+import { Command, CommandTemplate, execute, ExecuteConfig, getImageSize, ImageSize, loadImg, MagickInputFile, uint8ArrayToBlob, readInputImageFromUrl } from 'imagemagick-browser';
+import * as React from 'react';
+import { clone, query } from '../../../util/misc';
+import { ChooseImage } from '../../components/ChooseImage';
+import { CommandEditor } from '../../components/commandEditor/CommandEditor';
+import { imageFrames } from './data';
+
+const defaultImageSrc = 'rotate.png'
 
 const styles = (theme: Theme) => createStyles({
   input: {
@@ -28,33 +26,42 @@ const styles = (theme: Theme) => createStyles({
 export interface ImageFrameTransformationProps extends WithStyles<typeof styles> {
   imageSrc: string
 }
+
 export interface ImageFrameTransformationState {
   selectedFrameTemplate: CommandTemplate,
   commands: Command[],
   imageSize?: ImageSize,
   jsonError?: string
+  inputFiles: MagickInputFile[]
 }
 
 export class ImageFrameTransformationNaked extends React.Component<ImageFrameTransformationProps, ImageFrameTransformationState> {
 
   state: ImageFrameTransformationState = {
     selectedFrameTemplate: imageFrames[0],
-    commands: clone(imageFrames[0].commands)
+    commands: clone(imageFrames[0].commands),
+    inputFiles: [],
   }
 
   constructor(props: ImageFrameTransformationProps, state: ImageFrameTransformationState) {
     super(props, state)
   }
-  updateCommandValue(commands: Command[]) {
-    this.setState({ ...this.state, commands })
-    console.log('updateCommandValue', commands)
-    this.execute()
-  }
+
   render(): React.ReactNode {
     const { classes, theme } = this.props
+    const image = this.getFirstInputImage()
     return (
       <div className={classes.root}>
-        <p>Add a frame to your images. Select one of the templates below and change its parameters using the form. </p>
+        <p>Add a frame to your images. First, load an image:</p>
+        <ChooseImage
+          onChange={e => {
+            const file = e.value[0] // TODO: user might select more than one file ?
+            const outputFile = { name: file.name, blob: uint8ArrayToBlob(file.content) }
+            loadImg(outputFile, document.getElementById('sourceImage') as HTMLImageElement)
+            this.setState({ ...this.state, inputFiles: e.value })
+            this.setImageSize(true)
+          }} />
+        <p>Then, select one of the templates below and change its parameters using the form. </p>
         <form className={classes.root} autoComplete="off">
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor="template-simple">{'Template'}</InputLabel>
@@ -76,13 +83,14 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
             {this.state.commands.map((command: Command, i: number) => {
               return <li>
                 <CommandEditor
-                  templateContext={{...this.state.selectedFrameTemplate.defaultTemplateContext,imageWidth: getLastImageSize().width, imageHeight:getLastImageSize().height}} 
+                  templateContext={{ ...this.state.selectedFrameTemplate.defaultTemplateContext, imageWidth: getLastImageSize().width, imageHeight: getLastImageSize().height }}
                   commandTemplate={this.state.selectedFrameTemplate}
-                  imageSrc={'rotate.png'}
+                  imageSrc={this.getFirstInputImage() ? this.getFirstInputImage().name : defaultImageSrc}
                   imageWidth={getLastImageSize().width}
                   imageHeight={getLastImageSize().height}
                   onChange={e => {
-                    this.updateCommandValue(e.value)
+                    this.setState({ ...this.state, commands: e.value })
+                    this.execute()
                   }}
                 />
               </li>
@@ -99,16 +107,10 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
             <Grid item xs={12} sm={6}  >
               <p>Original image:
             <br />
-                <img src="rotate.png" id="sourceImage"></img>
+                <img src={this.getFirstInputImage() ? this.getFirstInputImage().name : defaultImageSrc} id="sourceImage"></img>
               </p>
               <p>Size: {JSON.stringify(this.state.imageSize || {})}</p>
-              <ChooseImage onFileChange={(e: ChooseImageChangeEvent)=>{
-                const file = e.files[0] // TODO: user might select more than one file ?
-                loadImg({name: file.file.name, blob: new Blob([file.content])}, document.getElementById('sourceImage') as HTMLImageElement)
-                debugger
-              }}/>
             </Grid>
-
             <Grid item xs={12} sm={6}  >
               <p>Result:
              <br />
@@ -120,48 +122,6 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
         </form>
       </div>
     )
-  }
-  private imageSizeCalled: boolean = false
-  private async  setImageSize(force: boolean = false) {
-    if (!this.imageSizeCalled || force) {
-      this.imageSizeCalled = true
-      const imageSize = await getImageSize('rotate.png')
-      this.setState({ ...this.state, imageSize })
-      lastImageSize = imageSize
-    }
-    await this.execute()
-  }
-
-  async componentDidUpdate() {
-    await this.setImageSize()
-  }
-
-  async componentDidMount() {
-    await this.setImageSize()
-  }
-
-  async execute() {
-    const inputImageName = 'inputImage.png'
-    const outputImageName = 'outputImage.png'
-
-    const commands = this.state.commands.map((command: Command) =>
-      command.map(s =>
-        s === '$INPUT' ? inputImageName : s === '$OUTPUT' ? outputImageName : s
-      )
-    )
-    // console.log('commands:', commands)
-
-    const execConfig: ExecuteConfig = {
-      commands,
-      inputFiles: [
-        {
-          name: inputImageName,
-          content: await readImageUrlToUintArray('rotate.png')
-        }
-      ]
-    }
-    const result = await execute(execConfig)
-    loadImg(result[result.length - 1].outputFiles[0], query('#outputFile')[0] as HTMLImageElement)
   }
 
   async selectedTemplateChange(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -177,6 +137,58 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     this.setState({ ...this.state, selectedFrameTemplate: frame, commands })
     await this.execute()
   }
+
+  async componentDidUpdate() {
+    await this.setImageSize()
+  }
+
+  async componentDidMount() {
+    await this.setImageSize()
+  }
+
+  private getFirstInputImage(): MagickInputFile | undefined {
+    return this.state.inputFiles.length ? this.state.inputFiles[0] : undefined
+  }
+
+  private imageSizeCalled: boolean = false
+  private async setImageSize(force: boolean = false) {
+    if (!this.imageSizeCalled || force) {
+      this.imageSizeCalled = true
+      const imageSize = await getImageSize(this.getFirstInputImage() ? this.getFirstInputImage().name : defaultImageSrc)
+      this.setState({ ...this.state, imageSize })
+      lastImageSize = imageSize
+    }
+    await this.execute()
+  }
+
+  async execute() {
+    let image = this.getFirstInputImage()
+    if (!image) {
+      image = await readInputImageFromUrl(defaultImageSrc)
+      // alert('Can\'t execute, you need to load an image first!')
+      // return
+    }
+    const inputImageName = image.name
+    const outputImageName = this.getOutputImageNameFor(inputImageName)
+    const commands = this.state.commands.map((command: Command) =>
+      command.map(s =>
+        s === '$INPUT' ? inputImageName : s === '$OUTPUT' ? outputImageName : s
+      )
+    )
+    const execConfig: ExecuteConfig = {
+      commands,
+      inputFiles: [image]
+    }
+    const result = await execute(execConfig)
+    loadImg(result[result.length - 1].outputFiles[0], query('#outputFile')[0] as HTMLImageElement)
+  }
+
+  private getOutputImageNameFor(inputImageName: string): string {
+    let extension = inputImageName.substring(inputImageName.indexOf('.'), inputImageName.length)
+    extension = extension === '.tiff' ? '.png' : extension
+    return inputImageName.substring(0, inputImageName.indexOf('.')) + 'Output' + extension
+  }
+
 }
 
 let lastImageSize: ImageSize = { width: 109, height: 125 } //TODO: this better, dont cheat!

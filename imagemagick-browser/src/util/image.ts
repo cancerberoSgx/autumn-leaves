@@ -7,6 +7,20 @@ export async function readImageUrlToUintArray(url: string): Promise<Uint8Array> 
   return sourceBytes
 }
 
+export async function readInputImageFromUrl(url: string): Promise<MagickInputFile> {
+  const content = await readImageUrlToUintArray(url)
+  let name = getNameFromUrl(url)
+  return { name, content }
+}
+
+export function getNameFromUrl(url: string): string {
+  try {
+    return new URL(url).pathname.replace(/^\//, '')
+  } catch (error) {
+    return url
+  }
+}
+
 export function loadImg(file: MagickOutputFile, img: HTMLImageElement) {
   img.src = URL.createObjectURL(file.blob)
 }
@@ -39,12 +53,9 @@ export function blobToString(blb: Blob): Promise<string> {
 
 export async function inputFileToUint8Array(el: HTMLInputElement): Promise<{ file: File, content: Uint8Array }[]> {
   return Promise.all(inputFileFiles(el).map(async file => {
-    // const blob = 
-    // debugger
     const array = await new Promise<Uint8Array>(resolve => {
       const reader = new FileReader()
       reader.addEventListener('loadend', (e) => {
-        // const text = (e.srcElement as any).result as string;
         resolve(new Uint8Array(reader.result as any))
       });
       reader.readAsArrayBuffer(file)

@@ -1,21 +1,28 @@
 import * as React from 'react'
-import { inputFileToUint8Array, MagickFile } from 'imagemagick-browser';
+import { inputFileToUint8Array, MagickFile, ArgumentEditorProps, MagickInputFile, ArgumentEditorState } from 'imagemagick-browser';
 
-export interface ChooseImageChangeEvent {
-  files: { content: Uint8Array, file: File }[]
-}
-export interface ChooseImageProps {
-  onFileChange: (e: ChooseImageChangeEvent) => void
+// export interface ChooseImageChangeEvent {
+  // files: { content: Uint8Array, file: File }[]
+// }
+// export interface ChooseImageProps {
+//   onFileChange: (e: ChooseImageChangeEvent) => void
+// }
+
+// export interface ChooseImageState {
+//   images: MagickFile[]
+// }
+export interface ChooseImageProps extends ArgumentEditorProps<MagickInputFile[]> {
 }
 
-export interface ChooseImageState {
-  images: MagickFile[]
+export interface ChooseImageState extends ArgumentEditorState<MagickInputFile[]> {
 }
+
+
 
 export class ChooseImage extends React.Component<ChooseImageProps, ChooseImageState> {
 
-  state = {
-    images: [] as MagickFile[]
+  state : ChooseImageState= {
+    value: [] as MagickInputFile[]
   }
 
   render() {
@@ -34,6 +41,8 @@ export class ChooseImage extends React.Component<ChooseImageProps, ChooseImageSt
 
   async onChange(e: React.ChangeEvent) {
     const files = await inputFileToUint8Array(e.currentTarget as HTMLInputElement)
-    this.props.onFileChange({ files })
+    const inputFiles: MagickInputFile[] = files.map(f=>({name: f.file.name, content: f.content}))
+    this.props.onChange({value: inputFiles, argument: this.props.argument})
+    // this.props.onFileChange({ files })
   }
 }
