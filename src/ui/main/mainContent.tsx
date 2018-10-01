@@ -7,7 +7,7 @@ import SimpleCLITransformationEditor from '../components/SimpleCLITransformation
 import TestImages from '../components/TestImages';
 import {ConvertDemo} from '../page/convertDemo/convertDemo';
 import { ImageFrameTransformation } from '../page/imageFrame/ImageFrameTransformation';
-import { ImageHandleEditorTest } from '../page/imageHandleEditorTest1';
+// import { ImageHandleEditorTest } from '../page/imageHandleEditorTest1';
 import { Logger } from './logger';
 
 const styles = (theme: Theme) => createStyles({
@@ -29,8 +29,8 @@ function main(props: WithStyles<typeof styles>) {
         <Route path='/imageFrame' component={ImageFrameTransformation} />
         <Route path='/compositeCommands' component={CompositeCommands} />
         <Route path='/SimpleCLITransformationEditor' component={SimpleCLITransformationEditor} />
-        <Route path='/TestImages' component={TestImages} />
-        <Route path='/ImageHandleEditorTest' component={ImageHandleEditorTest} />
+        {/* <Route path='/TestImages' component={TestImages} /> */}
+        {/* <Route path='/ImageHandleEditorTest' component={ImageHandleEditorTest} /> */}
       </Switch>
     </div>
   )

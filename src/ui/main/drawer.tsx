@@ -78,26 +78,26 @@ const drawer = (props: WithStyles<typeof styles> & { open: boolean, handleDrawer
         <ListItemText primary="Basic CLI transformation tool" />
       </ListItem>
 
-      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="TestImages" {...props} />}>
+      {/* <ListItem component={(props: ListItemProps & LinkProps) => <Link to="TestImages" {...props} />}>
         <ListItemIcon>
           <CameraAlt />
         </ListItemIcon>
         <ListItemText primary="See test images" />
-      </ListItem>
+      </ListItem> */}
 
-      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="download" {...props} />}>
+      {/* <ListItem component={(props: ListItemProps & LinkProps) => <Link to="download" {...props} />}>
         <ListItemIcon>
           <FileDownload />
         </ListItemIcon>
         <ListItemText primary="Download Results" />
-      </ListItem>
+      </ListItem> */}
 
-      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="ImageHandleEditorTest" {...props} />}>
+      {/* <ListItem component={(props: ListItemProps & LinkProps) => <Link to="ImageHandleEditorTest" {...props} />}>
         <ListItemIcon>
           <FileDownload />
         </ListItemIcon>
         <ListItemText primary="ImageHandleEditorTest" />
-      </ListItem>
+      </ListItem> */}
       
 
 

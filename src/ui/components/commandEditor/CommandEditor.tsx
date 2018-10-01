@@ -1,10 +1,7 @@
 import { Argument, ArgumentChangeEvent, ArgumentType, Color, Command, CommandEditorProps as CommandEditorPropsBase, SizedImageContext, TemplateContext } from 'imagemagick-browser';
 import * as React from 'react';
 import { getLastImageSize } from '../../page/imageFrame/ImageFrameTransformation';
-import { ColorPickerEditor } from './ColorPickerEditor';
-import { NumberEditor } from './NumberEditor';
-import { SelectOneEditor } from './SelectOneEditor';
-import { ImagePointsEditor } from './ImagePointsEditor';
+import { ColorPickerEditor, NumberEditor, SelectOneEditor, ImagePointsEditor } from 'react-imagemagick';
 
 export interface CommandEditorProps extends CommandEditorPropsBase {
   templateContext: SizedImageContext

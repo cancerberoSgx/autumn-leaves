@@ -1,11 +1,16 @@
 // import { Argument, ArgumentChangeEvent, ArgumentType, Color, Command, CommandEditorProps as CommandEditorPropsBase, SizedImageContext, TemplateContext } from 'imagemagick-browser';
 // import * as React from 'react';
+// import { getLastImageSize } from '../../page/imageFrame/ImageFrameTransformation';
 // import { ColorPickerEditor } from './ColorPickerEditor';
 // import { NumberEditor } from './NumberEditor';
 // import { SelectOneEditor } from './SelectOneEditor';
+// import { ImagePointsEditor } from './ImagePointsEditor';
 
 // export interface CommandEditorProps extends CommandEditorPropsBase {
 //   templateContext: SizedImageContext
+//   imageSrc: string
+//   imageWidth: number
+//   imageHeight: number
 // }
 
 // export interface CommandEditorState {
@@ -52,7 +57,7 @@
 //           if (this.props.commandTemplate.template && this.props.commandTemplate.arguments) {
 //             return this.props.commandTemplate.arguments.map(arg =>
 //               <div>
-//                 {arg.name}: {buildArgumentEditor(arg, this.state.templateContext, e => this.argumentChangeEvent(arg, e))}
+//                 {arg.name}: {buildArgumentEditor(arg, this.state.templateContext, e => this.argumentChangeEvent(arg, e), this.props.imageSrc)}
 //               </div>)
 //           }
 //         })()}
@@ -81,7 +86,7 @@
 // }
 
 
-// function buildArgumentEditor<T>(arg: Argument, templateContext: TemplateContext, onChange: (e: ArgumentChangeEvent<T>) => void) {
+// function buildArgumentEditor<T>(arg: Argument, templateContext: TemplateContext, onChange: (e: ArgumentChangeEvent<T>) => void, imageSrc: string) {
 //   if (arg.type === ArgumentType.color) {
 //     return <ColorPickerEditor
 //       value={templateContext[arg.id] + ''}
@@ -99,6 +104,16 @@
 //     return <SelectOneEditor
 //       value={templateContext[arg.id] + ''}
 //       select={arg.list}
+//       onChange={onChange as any}
+//     />
+//   }
+//   else if (arg.type === ArgumentType.imagePoints) {
+    
+//     return <ImagePointsEditor
+//       imageWidth={getLastImageSize().width}
+//       imageHeight={getLastImageSize().height}
+//       imageSrc={imageSrc}
+//       value={arg.points}
 //       onChange={onChange as any}
 //     />
 //   }

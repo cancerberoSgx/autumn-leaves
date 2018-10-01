@@ -3,7 +3,7 @@ import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/s
 import { Command, CommandTemplate, execute, ExecuteConfig, getImageSize, ImageSize, loadImg, MagickInputFile, uint8ArrayToBlob, readInputImageFromUrl } from 'imagemagick-browser';
 import * as React from 'react';
 import { clone, query } from '../../../util/misc';
-import { SelectImageEditor } from '../../components/commandEditor/SelectImageEditor';
+import { SelectImageEditor } from 'react-imagemagick';
 import { CommandEditor } from '../../components/commandEditor/CommandEditor';
 import { imageFrames } from './data';
 
