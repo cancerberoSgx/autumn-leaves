@@ -14,6 +14,13 @@ export class SelectImageEditor extends React.Component<SelectImageEditorProps, S
     value: [] as MagickInputFile[]
   }
 
+  constructor(props: SelectImageEditorProps, state: SelectImageEditorState) {
+    super(props, state)    
+    this.state.value = props.value || []
+    // this.setState({...this.state })
+    // console.log('NumberEditor props', this.state.value);
+  }
+
   render() {
     return (
       <div>

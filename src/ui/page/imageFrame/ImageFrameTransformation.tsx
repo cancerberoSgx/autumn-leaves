@@ -4,7 +4,8 @@ import { Command, CommandTemplate, execute, ExecuteConfig, getImageSize, ImageSi
 import * as React from 'react';
 import { clone, query } from '../../../util/misc';
 import { SelectImageEditor } from 'react-imagemagick';
-import { CommandEditor } from '../../components/commandEditor/CommandEditor';
+// import { CommandEditor } from '../../components/commandEditor/CommandEditor';
+import { CommandEditor } from 'react-imagemagick';
 import { imageFrames } from './data';
 
 const defaultImageSrc = 'rotate.png'
@@ -45,11 +46,11 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
 
   constructor(props: ImageFrameTransformationProps, state: ImageFrameTransformationState) {
     super(props, state)
+    this.state.imageSize = this.state.imageSize || {width: 0, height: 0}
   }
 
   render(): React.ReactNode {
-    const { classes, theme } = this.props
-    const image = this.getFirstInputImage()
+    const { classes  } = this.props
     return (
       <div className={classes.root}>
         <p>Add a frame to your images. First, load an image:</p>
@@ -78,16 +79,15 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
               )}
             </Select>
           </FormControl>
-
           <ul>
             {this.state.commands.map((command: Command, i: number) => {
               return <li>
-                <CommandEditor
-                  templateContext={{ ...this.state.selectedFrameTemplate.defaultTemplateContext, imageWidth: getLastImageSize().width, imageHeight: getLastImageSize().height }}
+                <CommandEditor 
+                  templateContext={{ ...this.state.selectedFrameTemplate.defaultTemplateContext, imageWidth: this.state.imageSize.width, imageHeight: this.state.imageSize.height }}
                   commandTemplate={this.state.selectedFrameTemplate}
                   imageSrc={this.getFirstInputImage() ? this.getFirstInputImage().name : defaultImageSrc}
-                  imageWidth={getLastImageSize().width}
-                  imageHeight={getLastImageSize().height}
+                  imageWidth={()=>lastImageSize.width}
+                  imageHeight={()=>lastImageSize.height}
                   onChange={e => {
                     this.setState({ ...this.state, commands: e.value })
                     this.execute()
@@ -97,7 +97,6 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
             })}
           </ul>
           <br />
-
           <Button variant="contained" onClick={() => this.execute()}>
             Execute!
           </Button>
@@ -137,32 +136,17 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     await this.execute()
   }
 
-  // async componentDidUpdate() {
-  //   await this.setImageSize()
-  // }
-
-  // async componentDidMount() {
-  //   await this.setImageSize()
-  // }
-
   private getFirstInputImage(): MagickInputFile | undefined {
     return this.state.inputFiles.length ? this.state.inputFiles[0] : undefined
   }
 
-  // private imageSizeCalled: boolean = false
-
   private async setImageSize(force: boolean = false) {
-    // if (!this.imageSizeCalled || force) {
-    // this.imageSizeCalled = true
-    // const imageSize = await getImageSize(this.getFirstInputImage() ? this.getFirstInputImage().name : defaultImageSrc)
     const img = document.querySelector<HTMLImageElement>('#sourceImage')
     const imageSize = { width: img.width, height: img.height, }
-    // console.log('imageSize', imageSize, JSON.stringify(imageSize)!==JSON.stringify(imageSize));
-    if(JSON.stringify(imageSize)!==JSON.stringify(lastImageSize)){
+    if (JSON.stringify(imageSize) !== JSON.stringify(lastImageSize)) {
       this.setState({ ...this.state, imageSize })
       lastImageSize = imageSize
     }
-    // }
     await this.execute()
   }
 
@@ -170,8 +154,6 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     let image = this.getFirstInputImage()
     if (!image) {
       image = await readInputImageFromUrl(defaultImageSrc)
-      // alert('Can\'t execute, you need to load an image first!')
-      // return
     }
     const inputImageName = image.name
     const outputImageName = this.getOutputImageNameFor(inputImageName)
@@ -197,7 +179,4 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
 }
 
 let lastImageSize: ImageSize = { width: 109, height: 125 } //TODO: this better, dont cheat!
-export function getLastImageSize(): ImageSize {//TODO: this better, dont cheat!
-  return lastImageSize
-}
 export const ImageFrameTransformation = withStyles(styles, { withTheme: true })(ImageFrameTransformationNaked as any)

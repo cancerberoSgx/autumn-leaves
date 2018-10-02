@@ -18,8 +18,8 @@ export class NumberEditor extends React.Component<NumberEditorProps, NumberEdito
   constructor(props: NumberEditorProps, state: NumberEditorState) {
     super(props, state)    
     this.state.value = props.value || 0
-    this.setState({...this.state })
-    console.log('NumberEditor props', this.state.value);
+    // this.setState({...this.state })
+    // console.log('NumberEditor props', this.state.value);
   }
 
   render(): React.ReactNode {

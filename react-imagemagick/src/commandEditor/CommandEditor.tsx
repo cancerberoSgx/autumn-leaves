@@ -9,8 +9,8 @@ import { ImagePointsEditor } from './ImagePointsEditor';
 export interface CommandEditorProps extends CommandEditorPropsBase {
   templateContext: SizedImageContext
   imageSrc: string
-  imageWidth: number
-  imageHeight: number
+  imageWidth: ()=>number
+  imageHeight: ()=>number
 }
 
 export interface CommandEditorState {
@@ -18,8 +18,8 @@ export interface CommandEditorState {
   jsonError?: string
   templateContext: TemplateContext
   imageSrc: string
-  imageWidth: number
-  imageHeight: number
+  // imageWidth: number
+  // imageHeight: number
 }
 /**
  * component able to render given command templates. Will delegate on concrete value editor implementations in componenets/commandEditor
@@ -34,13 +34,13 @@ export class CommandEditor extends React.Component<CommandEditorProps, CommandEd
       commands: [],
       templateContext: {},
       imageSrc: '',
-      imageWidth: 0,
-      imageHeight: 0,
+      // imageWidth: 0,
+      // imageHeight: 0,
     }
     this.setStateDefaults()
 
     this.state.commands = props.commandTemplate.commands
-    this.setState({ ...this.state })
+    // this.setState({ ...this.state })
   }
 
   private setStateDefaults() {
@@ -64,8 +64,8 @@ export class CommandEditor extends React.Component<CommandEditorProps, CommandEd
             return this.props.commandTemplate.arguments.map(arg => {
               const context = {
                 ...this.state.templateContext,
-                imageWidth: this.state.imageWidth,
-                imageHeight: this.state.imageHeight
+                imageWidth: this.props.imageWidth(),
+                imageHeight: this.props.imageHeight()
               }
               return <div>
                 {arg.name}: {buildArgumentEditor(arg, context, e => this.argumentChangeEvent(arg, e), this.props.imageSrc)}
@@ -84,8 +84,8 @@ export class CommandEditor extends React.Component<CommandEditorProps, CommandEd
   }
 
   protected setTemplateValue() {
-    this.state.templateContext.imageWidth = this.state.imageWidth
-    this.state.templateContext.imageHeight = this.state.imageHeight
+    this.state.templateContext.imageWidth = this.props.imageWidth()
+    this.state.templateContext.imageHeight = this.props.imageHeight()
     const value = this.props.commandTemplate.template(this.state.templateContext)
     this.state.commands = value
     this.setState({ ...this.state })

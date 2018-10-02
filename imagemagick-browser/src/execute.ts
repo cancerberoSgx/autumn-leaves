@@ -6,14 +6,12 @@ import { outputFileToInputFile } from './util/image';
 export async function execute(config: ExecuteConfig): Promise<ExecuteResult[]> {
   const files: MagickInputFile[] = [] // files generated in between commands are stored and provided by IM on each call to eecuteOne
   async function executor(command: Command): Promise<ExecuteResult> {
-    const t0 = performance.now()
     config.inputFiles = config.inputFiles.concat(files) // TODO: review config.command vs config.commands and and remove duplicated
     const result = await executeOne(config)
     const inputFiles = await Promise.all(result.outputFiles.map(outputFileToInputFile))
     inputFiles.forEach(file => {
       files.push(file) // TODO: replace content if it already exists
     })
-    executeListeners.forEach(l => l({ command, took: performance.now() - t0 }))
     return result
   }
   return await promiseMap(config.commands, command => executor(command), { concurrency: 1 })
@@ -21,7 +19,9 @@ export async function execute(config: ExecuteConfig): Promise<ExecuteResult[]> {
 
 export async function executeOne(config: ExecuteConfig): Promise<ExecuteResult> {
   const command = config.commands[0]
+  let t0 = performance.now()
   const result = { outputFiles: await getMagickApi().Call(config.inputFiles, command) }
+  executeListeners.forEach(l => l({ command, took: performance.now() - t0 }))
   // console.log('Executed: ' + JSON.stringify(command), 'Output files: ', result.outputFiles.map(f => f.name));
   return result
 }
@@ -35,6 +35,10 @@ export interface ExecuteEvent {
 }
 export type ExecuteListener = (event: ExecuteEvent) => void
 
+// export interface ExecuteListener {
+//   afterExecute(event: ExecuteEvent) => void
+
+// }
 let executeListeners: ExecuteListener[] = []
 export function addExecuteListener(l: ExecuteListener) {
   executeListeners.push(l)

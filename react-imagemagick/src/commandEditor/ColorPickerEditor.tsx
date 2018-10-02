@@ -16,7 +16,7 @@ export class ColorPickerEditor extends React.Component<ColorPickerEditorProps, C
   constructor(props: ColorPickerEditorProps, state: ColorPickerEditorState) {
     super(props, state)
     this.state.value = props.value || '#ffff11'
-    this.setState({...this.state })
+    // this.setState({...this.state })
   }
 
   render(): React.ReactNode {

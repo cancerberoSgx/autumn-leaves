@@ -45,8 +45,8 @@ export class LoggerNaked extends React.Component<LoggerProps, LoggerState> {
       <ExpansionPanelDetails>
         <p>Log list: </p>
         <ul className={classes.logList}>
-          {this.state.logs.map(l=>
-            <li>{Math.round(l.took)}ms. Command: {JSON.stringify(l.command)}</li>
+          {this.state.logs.map((l, i)=>
+            <li key={i}>{Math.round(l.took)}ms. Command: {JSON.stringify(l.command)}</li>
           )}
         </ul>
       </ExpansionPanelDetails>
