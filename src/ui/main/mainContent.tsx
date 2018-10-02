@@ -4,10 +4,8 @@ import { Route, Switch } from 'react-router'
 import {CompositeCommands} from '../page/CompositeCommands'
 import home from '../page/home'
 import SimpleCLITransformationEditor from '../components/SimpleCLITransformationEditor'
-import TestImages from '../components/TestImages';
 import {ConvertDemo} from '../page/convertDemo/convertDemo';
-import { ImageFrameTransformation } from '../page/imageFrame/ImageFrameTransformation';
-// import { ImageHandleEditorTest } from '../page/imageHandleEditorTest1';
+import { ImageFrameTransformation } from '../page/imageFrame/ImageFrameTransformation'
 import { Logger } from './logger';
 
 const styles = (theme: Theme) => createStyles({

@@ -1,3 +1,5 @@
+// DEMO / Obsolete component / prototype
+
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import * as React from 'react';
 import { Button } from '@material-ui/core';

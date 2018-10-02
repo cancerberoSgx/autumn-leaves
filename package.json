@@ -5,7 +5,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "build": "mv docs/test1ImOutput . && webpack --config webpack.prod.js && npm run static && mv test1ImOutput docs",
+    "build": "mv docs/test1ImOutput . ; webpack --config webpack.prod.js && npm run static ; mv test1ImOutput docs",
     "start": "webpack-dev-server --config webpack.dev.js --open",
     "static": "cp -rf src/static/* docs",
     "test": "jest",
