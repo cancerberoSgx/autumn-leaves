@@ -20,8 +20,9 @@ export async function execute(config: ExecuteConfig): Promise<ExecuteResult[]> {
 export async function executeOne(config: ExecuteConfig): Promise<ExecuteResult> {
   const command = config.commands[0]
   let t0 = performance.now()
+  executeListeners.forEach(listener => listener.beforeExecute({ command, took: performance.now() - t0, id: t0 }))
   const result = { outputFiles: await getMagickApi().Call(config.inputFiles, command) }
-  executeListeners.forEach(l => l({ command, took: performance.now() - t0 }))
+  executeListeners.forEach(listener => listener.afterExecute({ command, took: performance.now() - t0, id: t0 }))
   // console.log('Executed: ' + JSON.stringify(command), 'Output files: ', result.outputFiles.map(f => f.name));
   return result
 }
@@ -32,13 +33,14 @@ export async function executeOne(config: ExecuteConfig): Promise<ExecuteResult> 
 export interface ExecuteEvent {
   command: Command
   took: number
+  id: number
 }
-export type ExecuteListener = (event: ExecuteEvent) => void
+// export type ExecuteListener = (event: ExecuteEvent) => void
 
-// export interface ExecuteListener {
-//   afterExecute(event: ExecuteEvent) => void
-
-// }
+export interface ExecuteListener {
+  afterExecute?(event: ExecuteEvent): void
+  beforeExecute?(event: ExecuteEvent): void
+}
 let executeListeners: ExecuteListener[] = []
 export function addExecuteListener(l: ExecuteListener) {
   executeListeners.push(l)
