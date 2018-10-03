@@ -1,12 +1,12 @@
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
-import { Command, CommandTemplate, execute, ExecuteConfig, getImageSize, ImageSize, loadImg, MagickInputFile, uint8ArrayToBlob, readInputImageFromUrl } from 'imagemagick-browser';
+import { Command, CommandTemplate, execute, ExecuteConfig, ImageSize, loadImg, MagickInputFile, readInputImageFromUrl, uint8ArrayToBlob } from 'imagemagick-browser';
 import * as React from 'react';
+import { CommandEditor, SelectImageEditor } from 'react-imagemagick';
 import { clone, query } from '../../../util/misc';
-import { SelectImageEditor } from 'react-imagemagick';
-// import { CommandEditor } from '../../components/commandEditor/CommandEditor';
-import { CommandEditor } from 'react-imagemagick';
 import { imageFrames } from './data';
+import { dispatchUrl } from './dispatchUrl';
+import { Link } from 'react-router-dom';
 
 const defaultImageSrc = 'rotate.png'
 
@@ -46,11 +46,20 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
 
   constructor(props: ImageFrameTransformationProps, state: ImageFrameTransformationState) {
     super(props, state)
-    this.state.imageSize = this.state.imageSize || {width: 0, height: 0}
+    this.dispatchUrl()
+    this.state.imageSize = this.state.imageSize || { width: 0, height: 0 }
+  }
+
+  private dispatchUrl(){
+    const urlData = dispatchUrl()
+    if(urlData){
+      
+    }
+    debugger
   }
 
   render(): React.ReactNode {
-    const { classes  } = this.props
+    const { classes } = this.props
     return (
       <div className={classes.root}>
         <p>Add a frame to your images. First, load an image:</p>
@@ -62,64 +71,59 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
             this.setImageSize(true)
             this.setState({ ...this.state, inputFiles: e.value })
           }} />
+          <p>Just a <Link to="/imageFrame?template=t1">link example</Link> (TODO: remove this)</p>
         <p>Then, select one of the templates below and change its parameters using the form. </p>
-        <form className={classes.root} autoComplete="off">
-          <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="template-simple">{'Template'}</InputLabel>
-            <Select className={classes.select}
-              // value={defaultTransformation.command}
-              onChange={e => this.selectedTemplateChange(e)}
-              inputProps={{
-                name: 'template',
-                id: 'template-simple',
-              }}
-            >
-              {imageFrames.map((t: CommandTemplate, i: number) =>
-                <MenuItem value={JSON.stringify(t.commands, null, 2)}>{t.name}</MenuItem>
-              )}
-            </Select>
-          </FormControl>
-          <ul>
-            {this.state.commands.map((command: Command, i: number) => {
-              return <li>
-                <CommandEditor 
-                  templateContext={{ ...this.state.selectedFrameTemplate.defaultTemplateContext, imageWidth: this.state.imageSize.width, imageHeight: this.state.imageSize.height }}
-                  commandTemplate={this.state.selectedFrameTemplate}
-                  imageSrc={this.getFirstInputImage() ? this.getFirstInputImage().name : defaultImageSrc}
-                  imageWidth={()=>lastImageSize.width}
-                  imageHeight={()=>lastImageSize.height}
-                  onChange={e => {
-                    this.setState({ ...this.state, commands: e.value })
-                    this.execute()
-                  }}
-                />
-              </li>
-            })}
-          </ul>
-          <br />
-          <Button variant="contained" onClick={() => this.execute()}>
-            Execute!
+        <select className={classes.select}
+          onChange={e => this.selectedTemplateChange(e)}
+          >
+          {imageFrames.map((t: CommandTemplate, i: number) =>
+            <option value={JSON.stringify(t.commands, null, 2)}>{t.name}</option>
+          )}
+        </select>
+        <ul>
+          {this.state.commands.map((command: Command, i: number) => {
+            return <li>
+              <CommandEditor
+                templateContext={{ ...this.state.selectedFrameTemplate.defaultTemplateContext, imageWidth: this.state.imageSize.width, imageHeight: this.state.imageSize.height }}
+                commandTemplate={this.state.selectedFrameTemplate}
+                imageSrc={this.getFirstInputImage() ? this.getFirstInputImage().name : defaultImageSrc}
+                imageWidth={() => lastImageSize.width}
+                imageHeight={() => lastImageSize.height}
+                onChange={e => {
+                  this.setState({ ...this.state, commands: e.value })
+                  this.execute()
+                }}
+              />
+            </li>
+          })}
+        </ul>
+        <br />
+        <Button variant="contained" onClick={() => this.execute()}>
+          Execute!
           </Button>
-          <br />
-          <Grid container spacing={24}>
-            <Grid item xs={12} sm={6}  >
-              <p>Original image:
+        <br />
+        <Grid container spacing={24}>
+          <Grid item xs={12} sm={6}  >
+            <p>Original image:
             <br />
-                <img onLoad={() => { this.setImageSize(true) }} src={this.getFirstInputImage() ? URL.createObjectURL(uint8ArrayToBlob(this.getFirstInputImage().content)) : defaultImageSrc} id="sourceImage"></img>
-              </p>
-              <p>Size: {JSON.stringify(this.state.imageSize || {})}</p>
-            </Grid>
-            <Grid item xs={12} sm={6}  >
-              <p>Result:
-             <br />
-                <img id="outputFile" />
-                <button>Download</button>
-              </p>
-            </Grid>
+              <img onLoad={() => { this.setImageSize(true) }} src={this.getFirstInputImage() ? URL.createObjectURL(uint8ArrayToBlob(this.getFirstInputImage().content)) : defaultImageSrc} id="sourceImage"></img>
+            </p>
+            <p>Size: {JSON.stringify(this.state.imageSize || {})}</p>
           </Grid>
-        </form>
+          <Grid item xs={12} sm={6}  >
+            <p>Result:
+             <br />
+              <img id="outputFile" />
+              <button>Download</button>
+            </p>
+          </Grid>
+        </Grid>
       </div>
     )
+  }
+
+  componentDidMount(){
+    this.dispatchUrl()
   }
 
   async selectedTemplateChange(e: React.ChangeEvent<HTMLSelectElement>) {

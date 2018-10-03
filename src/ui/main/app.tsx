@@ -6,10 +6,12 @@ import { CssBaseline } from '@material-ui/core';
 import { AppBar } from './appBar';
 import { BrowserRouter, HashRouter } from 'react-router-dom';
 import theme from './theme';
-
+import { config } from './config';
 
 const generateClassName = createGenerateClassName();
 const jss = create(jssPreset());
+
+const Router = config.hashRouter ? HashRouter : BrowserRouter
 
 export default function MyApp() {
   return (
@@ -17,9 +19,9 @@ export default function MyApp() {
       <JssProvider jss={jss} generateClassName={generateClassName}>
         <React.Fragment>
           <CssBaseline />
-          <HashRouter>
+          <Router>
             <AppBar />
-          </HashRouter>
+          </Router>
         </React.Fragment>
       </JssProvider>
     </MuiThemeProvider>

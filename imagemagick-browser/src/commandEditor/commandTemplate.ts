@@ -1,14 +1,16 @@
-import { Command } from '.';
+import { Command } from '..';
 
 // import { Command } from 'imagemagick-browser'
 // TODO: maybe it's better to remove this interface for stricter typechecking
 export interface TemplateContext {
   [key: string]: any
 }
+
 export interface SizedImageContext extends TemplateContext {
   imageWidth: number,
   imageHeight: number
 }
+
 /**
  * metadata of a command in `arguments` together with implementation of command in `template`
  */
@@ -68,15 +70,18 @@ export interface ArgumentChangeEvent<T> {
   argument: Argument
   changeEvent?: React.ChangeEvent
 }
+
 export interface CommandChangeEvent {
   value: Command[]
   commandTemplate: CommandTemplate
 }
+
 export interface ArgumentEditorProps<T> {
   argument?: Argument
   value?: T
   onChange: (event: ArgumentChangeEvent<T>) => void
 }
+
 export interface ArgumentEditorState<T> {
   value: T
 }
@@ -84,7 +89,5 @@ export interface ArgumentEditorState<T> {
 export interface CommandEditorProps {
   commandTemplate: CommandTemplate
   templateContext: TemplateContext
-  // commands: Command[]
-  // initialValue?: T
   onChange: (event: CommandChangeEvent) => void
 }

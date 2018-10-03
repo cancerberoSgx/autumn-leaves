@@ -45,8 +45,6 @@ export class LoggerNaked extends React.Component<LoggerProps, LoggerState> {
 
   render(): React.ReactNode {
     const { classes, theme } = this.props
-    console.log('RENDER', this.state.executing);
-    
     return (
       <ExpansionPanel>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>

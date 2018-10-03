@@ -9,6 +9,7 @@
     "jsx": "react",
     "allowJs": true,
     "moduleResolution": "node",
+    "skipLibCheck": true    
   },
   "include": [
     "src"
