@@ -45,6 +45,7 @@ export * from './options/virtualPixel'
 export * from './options/filter'
 export * from './options/distort'
 
+export * from './chain'
 
 // java.lang
 

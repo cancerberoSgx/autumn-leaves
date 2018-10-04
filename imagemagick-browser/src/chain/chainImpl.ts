@@ -24,6 +24,7 @@ class ChainImpl implements Chain {
     return this
   }
   async execute(): Promise<ExecuteResult> {
+    const inputImages: MagickInputFile[] = []
     const config: ExecuteConfig = {
       inputFiles: this.inputImages,
       commands: [this.toCommand()]

@@ -1,4 +1,4 @@
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select } from '@material-ui/core';
+import { Button, FormControl, Grid, InputLabel, MenuItem, Select, Input, FormHelperText } from '@material-ui/core';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import { Command, CommandTemplate, execute, ExecuteConfig, ImageSize, loadImg, MagickInputFile, readInputImageFromUrl, uint8ArrayToBlob } from 'imagemagick-browser';
 import * as React from 'react';
@@ -43,6 +43,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     commands: clone(imageFrames[0].commands),
     inputFiles: [],
   }
+  commandEditor: JSX.Element;
 
   constructor(props: ImageFrameTransformationProps, state: ImageFrameTransformationState) {
     super(props, state)
@@ -50,12 +51,18 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     this.state.imageSize = this.state.imageSize || { width: 0, height: 0 }
   }
 
-  private dispatchUrl(){
+  protected dispatchUrl() {
     const urlData = dispatchUrl()
-    if(urlData){
-      
+    console.log('dispatchUrl', urlData.template && urlData.template !== this.state.selectedFrameTemplate.id, urlData);
+
+    if (urlData.template && urlData.template !== this.state.selectedFrameTemplate.id) {
+      // debugger
+      this.state.selectedFrameTemplate = imageFrames.find(t => t.id === urlData.template) || this.state.selectedFrameTemplate
+      // console.log('selectedFrameTemplate', this.state.selectedFrameTemplate);
+
+      this.updateCommand(this.state.selectedFrameTemplate)
+      // this.setState({...this.state})
     }
-    debugger
   }
 
   render(): React.ReactNode {
@@ -71,36 +78,65 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
             this.setImageSize(true)
             this.setState({ ...this.state, inputFiles: e.value })
           }} />
-          <p>Just a <Link to="/imageFrame?template=t1">link example</Link> (TODO: remove this)</p>
-        <p>Then, select one of the templates below and change its parameters using the form. </p>
+        <p>Just a <Link to="/imageFrame?template=frameFeathering1">link example</Link> (TODO: remove this). And <Link to="/imageFrame?template=crop1">another place</Link>. </p>
+
+        <p>Then, select one of the templates below and change its parameters using the form. Current template is "{this.state.selectedFrameTemplate.name}"</p>
         <select className={classes.select}
-          onChange={e => this.selectedTemplateChange(e)}
-          >
+          onChange={e => this.selectedTemplateChange(e.target.value)}
+        >
           {imageFrames.map((t: CommandTemplate, i: number) =>
-            <option value={JSON.stringify(t.commands, null, 2)}>{t.name}</option>
+            <option value={t.id} selected={t.id === this.state.selectedFrameTemplate.id}>{t.name}</option>
           )}
         </select>
+
+        <FormControl className={classes.formControl}>
+          <InputLabel htmlFor="age-helper">Age</InputLabel>
+          <Select
+            value={10}
+            onChange={e => {
+              console.log(e.target.value);
+            }}
+            input={<Input name="age" id="age-helper" />}
+          >
+
+            {imageFrames.map((t: CommandTemplate, i: number) =>
+              <MenuItem value={t.id} selected={t.id === this.state.selectedFrameTemplate.id}>{t.name}</MenuItem>
+            )}
+
+
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+            <MenuItem value={30}>Thirty</MenuItem>
+          </Select>
+          <FormHelperText>Select one template to customize:</FormHelperText>
+        </FormControl>
+
         <ul>
           {this.state.commands.map((command: Command, i: number) => {
+            
+            this.commandEditor = <CommandEditor
+            templateContext={{ ...this.state.selectedFrameTemplate.defaultTemplateContext, imageWidth: this.state.imageSize.width, imageHeight: this.state.imageSize.height }}
+            commandTemplate={this.state.selectedFrameTemplate}
+            imageSrc={this.getFirstInputImage() ? this.getFirstInputImage().name : defaultImageSrc}
+            imageWidth={() => lastImageSize.width}
+            imageHeight={() => lastImageSize.height}
+            onChange={e => {
+              this.setState({ ...this.state, commands: e.value })
+              this.execute()
+            }}
+          />
             return <li>
-              <CommandEditor
-                templateContext={{ ...this.state.selectedFrameTemplate.defaultTemplateContext, imageWidth: this.state.imageSize.width, imageHeight: this.state.imageSize.height }}
-                commandTemplate={this.state.selectedFrameTemplate}
-                imageSrc={this.getFirstInputImage() ? this.getFirstInputImage().name : defaultImageSrc}
-                imageWidth={() => lastImageSize.width}
-                imageHeight={() => lastImageSize.height}
-                onChange={e => {
-                  this.setState({ ...this.state, commands: e.value })
-                  this.execute()
-                }}
-              />
+              {this.commandEditor}
             </li>
           })}
         </ul>
         <br />
         <Button variant="contained" onClick={() => this.execute()}>
-          Execute!
-          </Button>
+          Execute! {this.state.commands.join(',')}
+        </Button>
         <br />
         <Grid container spacing={24}>
           <Grid item xs={12} sm={6}  >
@@ -122,13 +158,22 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     )
   }
 
-  componentDidMount(){
+  componentDidMount() {
+    this.dispatchUrl()
+  }
+  componentWillUpdate() {
     this.dispatchUrl()
   }
 
-  async selectedTemplateChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    const _commands = JSON.parse(e.target.value) as Command[]
-    const frame = imageFrames.find(i => JSON.stringify(_commands) === JSON.stringify(i.commands))
+  async selectedTemplateChange(templateId: string) {
+    const template = imageFrames.find(t=>t.id===templateId)
+    // const _commands = JSON.parse(e.target.value) as Command[]
+    // const frame = imageFrames.find(i => JSON.stringify(_commands) === JSON.stringify(i.commands))
+    // window.location.hash = ``
+    this.updateCommand(template)
+    await this.execute()
+  }
+  updateCommand(frame: CommandTemplate = this.state.selectedFrameTemplate): any {
     let commands: Command[]
     if (frame.template) {
       commands = frame.template(frame.defaultTemplateContext)
@@ -137,7 +182,6 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
       commands = frame.commands
     }
     this.setState({ ...this.state, selectedFrameTemplate: frame, commands })
-    await this.execute()
   }
 
   private getFirstInputImage(): MagickInputFile | undefined {
