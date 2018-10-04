@@ -72,6 +72,9 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     const imageSrc = URL.createObjectURL(uint8ArrayToBlob(this.getFirstInputImage().content))
     return (
       <div className={classes.root}>
+
+      {/* select image  */}
+
         <p>Add a frame to your images. First, load an image:</p>
         <SelectImageEditor
           onChange={e => {
@@ -83,6 +86,9 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
           }} />
         <p>Just a <Link to="/imageFrame?template=frameFeathering1">link example</Link> (TODO: remove this). And <Link to="/imageFrame?template=crop1">another place</Link>. </p>
 
+
+        {/* select template  */}
+
         <p>Then, select one of the templates below and change its parameters using the form. Current template is "{this.state.selectedFrameTemplate.name}"</p>
         {/* <select className={classes.select}
           onChange={e => this.selectedTemplateChange(e.target.value)}
@@ -91,7 +97,6 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
             <option value={t.id} selected={t.id === this.state.selectedFrameTemplate.id}>{t.name}</option>
           )}
         </select> */}
-
         <FormControl className={classes.formControl}>
           <InputLabel htmlFor="template-helper">Command Template</InputLabel>
           <Select
@@ -105,6 +110,9 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
           </Select>
           <FormHelperText>Select one template to customize:</FormHelperText>
         </FormControl>
+
+
+{/* command editor  */}
 
         <ul>
           {this.state.commands.map((command: Command, i: number) => {
@@ -123,22 +131,27 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
             </li>
           })}
         </ul>
+
         <br />
         <Button variant="contained" onClick={() => this.execute()}>
           Execute!
         </Button>
         <br />
+
+
+        {/* input and output image */}
+
         <Grid container spacing={24}>
           <Grid item xs={12} sm={6}  >
             <p>Original image:  </p>
             <p>Size: {JSON.stringify(this.state.imageSize || {})}</p>
             <Button variant="contained"
-                onClick={() => alert('TODO')}> {/*// TODO */}
-                Download
+              onClick={() => alert('TODO')}> {/*// TODO */}
+              Download
             </Button>
             <br />
-              <img onLoad={() => { this.setImageSize(true) }} src={imageSrc} id="sourceImage"></img>
-          
+            <img onLoad={() => { this.setImageSize(true) }} src={imageSrc} id="sourceImage"></img>
+
           </Grid>
           <Grid item xs={12} sm={6}  >
             <p>Result:
@@ -160,6 +173,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
             </p>
           </Grid>
         </Grid>
+        
       </div>
     )
   }
@@ -185,10 +199,10 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
       const imageSrc = this.props.match.params.imageSrc ? decodeURIComponent(this.props.match.params.imageSrc) : defaultImageSrc
       const image = await readInputImageFromUrl(imageSrc)
       this.setState({
-        ...this.state, 
+        ...this.state,
         inputFiles: [
-          { 
-            name: getFileNameFromUrl(imageSrc), 
+          {
+            name: getFileNameFromUrl(imageSrc),
             content: image.content
           },
         ],
