@@ -22,7 +22,7 @@ function main(props: WithStyles<typeof styles>) {
     <div className={classes.root}>
     <Logger/>
       <Switch>
-        <Route exact path='/' component={home} />
+        <Route exact path='/' component={ImageFrameTransformation} />
         <Route path='/imageFrame' component={ImageFrameTransformation} />
         <Route path='/imageFrame/:template' component={ImageFrameTransformation} />
         <Route path='/imageFrame/:template/:context' component={ImageFrameTransformation} />

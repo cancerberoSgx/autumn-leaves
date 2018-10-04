@@ -12,7 +12,6 @@ function install() {
 }
 
 function render() {
-
   ReactDOM.render(App(), document.querySelector('#app'));
 }
 
