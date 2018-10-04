@@ -1,14 +1,15 @@
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, Input, FormHelperText } from '@material-ui/core';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
-import { Command, CommandTemplate, execute, ExecuteConfig, ImageSize, loadImg, MagickInputFile, readInputImageFromUrl, uint8ArrayToBlob } from 'imagemagick-browser';
+import { Command, CommandTemplate, execute, ExecuteConfig, ImageSize, loadImg, MagickInputFile, readInputImageFromUrl, uint8ArrayToBlob, getNameFromUrl, getOutputImageNameFor, getFileNameFromUrl } from 'imagemagick-browser';
 import * as React from 'react';
 import { CommandEditor, SelectImageEditor } from 'react-imagemagick';
 import { clone, query } from '../../../util/misc';
 import { imageFrames } from './data';
 import { dispatchUrl } from './dispatchUrl';
-import { Link } from 'react-router-dom';
+import { Link, match } from 'react-router-dom';
 
-const defaultImageSrc = 'rotate.png'
+
+const defaultImageSrc = 'rotate.png' // TODO : remove from almost everywhere
 
 const styles = (theme: Theme) => createStyles({
   input: {
@@ -26,6 +27,13 @@ const styles = (theme: Theme) => createStyles({
 
 export interface ImageFrameTransformationProps extends WithStyles<typeof styles> {
   imageSrc: string
+  match: match<Params>
+}
+
+export interface Params {
+  template?: string
+  context?: string
+  imageSrc?: string
 }
 
 export interface ImageFrameTransformationState {
@@ -67,6 +75,14 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
 
   render(): React.ReactNode {
     const { classes } = this.props
+    if (!this.getFirstInputImage()) {
+      return <div>Loading Image...</div>
+    }
+    else {
+      const img = document.getElementById('sourceImage') as HTMLImageElement
+      console.log(img ? img.src : 'not yet');
+    }
+    const imageSrc = URL.createObjectURL(uint8ArrayToBlob(this.getFirstInputImage().content))
     return (
       <div className={classes.root}>
         <p>Add a frame to your images. First, load an image:</p>
@@ -81,29 +97,24 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
         <p>Just a <Link to="/imageFrame?template=frameFeathering1">link example</Link> (TODO: remove this). And <Link to="/imageFrame?template=crop1">another place</Link>. </p>
 
         <p>Then, select one of the templates below and change its parameters using the form. Current template is "{this.state.selectedFrameTemplate.name}"</p>
-        <select className={classes.select}
+        {/* <select className={classes.select}
           onChange={e => this.selectedTemplateChange(e.target.value)}
         >
           {imageFrames.map((t: CommandTemplate, i: number) =>
             <option value={t.id} selected={t.id === this.state.selectedFrameTemplate.id}>{t.name}</option>
           )}
-        </select>
+        </select> */}
 
         <FormControl className={classes.formControl}>
           <InputLabel htmlFor="age-helper">Age</InputLabel>
           <Select
             value={10}
-            onChange={e => {
-              console.log(e.target.value);
-            }}
+            onChange={e => this.selectedTemplateChange(e.target.value)}
             input={<Input name="age" id="age-helper" />}
           >
-
             {imageFrames.map((t: CommandTemplate, i: number) =>
               <MenuItem value={t.id} selected={t.id === this.state.selectedFrameTemplate.id}>{t.name}</MenuItem>
             )}
-
-
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
@@ -116,33 +127,31 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
 
         <ul>
           {this.state.commands.map((command: Command, i: number) => {
-            
-            this.commandEditor = <CommandEditor
-            templateContext={{ ...this.state.selectedFrameTemplate.defaultTemplateContext, imageWidth: this.state.imageSize.width, imageHeight: this.state.imageSize.height }}
-            commandTemplate={this.state.selectedFrameTemplate}
-            imageSrc={this.getFirstInputImage() ? this.getFirstInputImage().name : defaultImageSrc}
-            imageWidth={() => lastImageSize.width}
-            imageHeight={() => lastImageSize.height}
-            onChange={e => {
-              this.setState({ ...this.state, commands: e.value })
-              this.execute()
-            }}
-          />
             return <li>
-              {this.commandEditor}
+              <CommandEditor
+                templateContext={{ ...this.state.selectedFrameTemplate.defaultTemplateContext, imageWidth: this.state.imageSize.width, imageHeight: this.state.imageSize.height }}
+                commandTemplate={this.state.selectedFrameTemplate}
+                imageSrc={imageSrc}
+                imageWidth={() => lastImageSize.width}
+                imageHeight={() => lastImageSize.height}
+                onChange={e => {
+                  this.setState({ ...this.state, commands: e.value })
+                  this.execute()
+                }}
+              />
             </li>
           })}
         </ul>
         <br />
         <Button variant="contained" onClick={() => this.execute()}>
-          Execute! {this.state.commands.join(',')}
+          Execute!
         </Button>
         <br />
         <Grid container spacing={24}>
           <Grid item xs={12} sm={6}  >
             <p>Original image:
             <br />
-              <img onLoad={() => { this.setImageSize(true) }} src={this.getFirstInputImage() ? URL.createObjectURL(uint8ArrayToBlob(this.getFirstInputImage().content)) : defaultImageSrc} id="sourceImage"></img>
+              <img onLoad={() => { this.setImageSize(true) }} src={imageSrc} id="sourceImage"></img>
             </p>
             <p>Size: {JSON.stringify(this.state.imageSize || {})}</p>
           </Grid>
@@ -151,6 +160,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
              <br />
               <img id="outputFile" />
               <button>Download</button>
+              <button>Make this the source image</button>
             </p>
           </Grid>
         </Grid>
@@ -158,21 +168,42 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     )
   }
 
-  componentDidMount() {
+  async componentWillMount() {
     this.dispatchUrl()
+    if (!this.state.inputFiles.length) {
+      // debugger  
+      // const selectedFrameTemplate = imageFrames.find(t => t.id === this.props.match.params.template)
+      // let context
+      // try {
+      //   context = JSON.parse(decodeURIComponent(this.props.match.params.context) || 'undefined')
+      // } catch (error) {
+      // }
+      // const  //TODO :try catch
+      const imageSrc = this.props.match.params.imageSrc ? decodeURIComponent(this.props.match.params.imageSrc) : defaultImageSrc
+      const image = await readInputImageFromUrl(imageSrc)
+      this.setState({
+        ...this.state, inputFiles: [
+          { name: getFileNameFromUrl(imageSrc), content: image.content }
+        ]
+      })
+    }
+    // console.log('SEBA: ', this.props.match.params);
   }
+
   componentWillUpdate() {
     this.dispatchUrl()
+    this.execute()
   }
 
   async selectedTemplateChange(templateId: string) {
-    const template = imageFrames.find(t=>t.id===templateId)
+    const template = imageFrames.find(t => t.id === templateId)
     // const _commands = JSON.parse(e.target.value) as Command[]
     // const frame = imageFrames.find(i => JSON.stringify(_commands) === JSON.stringify(i.commands))
     // window.location.hash = ``
     this.updateCommand(template)
     await this.execute()
   }
+
   updateCommand(frame: CommandTemplate = this.state.selectedFrameTemplate): any {
     let commands: Command[]
     if (frame.template) {
@@ -185,6 +216,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
   }
 
   private getFirstInputImage(): MagickInputFile | undefined {
+    // if (!this.state.inputFiles.length) { debugger }
     return this.state.inputFiles.length ? this.state.inputFiles[0] : undefined
   }
 
@@ -204,7 +236,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
       image = await readInputImageFromUrl(defaultImageSrc)
     }
     const inputImageName = image.name
-    const outputImageName = this.getOutputImageNameFor(inputImageName)
+    const outputImageName = getOutputImageNameFor(inputImageName)
     const commands = this.state.commands.map((command: Command) =>
       command.map(s =>
         s === '$INPUT' ? inputImageName : s === '$OUTPUT' ? outputImageName : s
@@ -214,15 +246,11 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
       commands,
       inputFiles: [image]
     }
+    // console.log('Execute', execConfig.commands[0]);
     const result = await execute(execConfig)
     loadImg(result[result.length - 1].outputFiles[0], query('#outputFile')[0] as HTMLImageElement)
   }
 
-  private getOutputImageNameFor(inputImageName: string): string {
-    let extension = inputImageName.substring(inputImageName.indexOf('.'), inputImageName.length)
-    extension = extension === '.tiff' ? '.png' : extension
-    return inputImageName.substring(0, inputImageName.indexOf('.')) + 'Output' + extension
-  }
 
 }
 

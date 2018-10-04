@@ -23,10 +23,13 @@ function main(props: WithStyles<typeof styles>) {
     <Logger/>
       <Switch>
         <Route exact path='/' component={home} />
-        <Route path='/convertDemo' component={ConvertDemo} /> imageFrame
         <Route path='/imageFrame' component={ImageFrameTransformation} />
-        <Route path='/compositeCommands' component={CompositeCommands} />
-        <Route path='/SimpleCLITransformationEditor' component={SimpleCLITransformationEditor} />
+        <Route path='/imageFrame/:template' component={ImageFrameTransformation} />
+        <Route path='/imageFrame/:template/:context' component={ImageFrameTransformation} />
+        <Route path='/imageFrame/:template/:context/:imageSrc' component={ImageFrameTransformation} />
+        <Route path='/convertDemo' component={ConvertDemo} />  
+        {/* <Route path='/compositeCommands' component={CompositeCommands} /> */}
+        {/* <Route path='/SimpleCLITransformationEditor' component={SimpleCLITransformationEditor} /> */}
         {/* <Route path='/TestImages' component={TestImages} /> */}
         {/* <Route path='/ImageHandleEditorTest' component={ImageHandleEditorTest} /> */}
       </Switch>

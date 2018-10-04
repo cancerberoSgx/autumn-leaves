@@ -6,6 +6,7 @@ import { Link, LinkProps } from 'react-router-dom'
 import { List, Divider, Drawer, IconButton, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import { Home, FormatPaint, CameraAlt, Transform, PlaylistPlay, FileDownload, ImageAspectRatio } from '@material-ui/icons';
 import { ListItemProps } from '@material-ui/core/ListItem';
+// import { ToolbarSeparator } from '@material-ui/';
 
 export const drawerWidth = 240;
 
@@ -50,13 +51,6 @@ const drawer = (props: WithStyles<typeof styles> & { open: boolean, handleDrawer
         <ListItemText primary="Home" />
       </ListItem>
 
-      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="convertDemo" {...props} />}>
-        <ListItemIcon>
-          <Transform />
-        </ListItemIcon>
-        <ListItemText primary="Convert test page !" />
-      </ListItem>
-
       <ListItem component={(props: ListItemProps & LinkProps) => <Link to="imageFrame" {...props} />}>
         <ListItemIcon>
           <ImageAspectRatio />
@@ -64,7 +58,15 @@ const drawer = (props: WithStyles<typeof styles> & { open: boolean, handleDrawer
         <ListItemText primary="Image Frame Tool" />
       </ListItem>
 
-      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="compositeCommands" {...props} />}>
+      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="convertDemo" {...props} />}>
+        <ListItemIcon>
+          <Transform />
+        </ListItemIcon>
+        <ListItemText primary="Convert test page !" />
+      </ListItem>
+      {/* <ListItem> <ToolbarSeparator></ToolbarSeparator></ListItem> */}
+
+      {/* <ListItem component={(props: ListItemProps & LinkProps) => <Link to="compositeCommands" {...props} />}>
         <ListItemIcon>
           <PlaylistPlay />
         </ListItemIcon>
@@ -76,7 +78,7 @@ const drawer = (props: WithStyles<typeof styles> & { open: boolean, handleDrawer
           <FormatPaint />
         </ListItemIcon>
         <ListItemText primary="Basic CLI transformation tool" />
-      </ListItem>
+      </ListItem> */}
 
       {/* <ListItem component={(props: ListItemProps & LinkProps) => <Link to="TestImages" {...props} />}>
         <ListItemIcon>

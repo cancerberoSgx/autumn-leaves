@@ -84,6 +84,13 @@ export async function outputFileToInputFile(outputFile: MagickOutputFile): Promi
   }
 }
 
+export function inputFileToOutputFile(file: MagickInputFile): MagickOutputFile {
+  return {
+    name: file.name,
+    blob: uint8ArrayToBlob(file.content),
+  }
+}
+
 export interface ImageSize {
   width: number,
   height: number
@@ -105,4 +112,17 @@ export function getImageSize(url: string): Promise<ImageSize> {
 
 export function writeOutputImageToEl(image: MagickOutputFile, el: HTMLImageElement) {
   el.src = URL.createObjectURL(image['blob'])
+}
+
+
+export function getFileNameFromUrl(urlString: string): string {
+  const url = new URL(urlString.startsWith('http') ? urlString : 'http://localhost/' + urlString)
+  const fileName = url.pathname.substring(url.pathname.lastIndexOf('/') + 1, url.pathname.length)
+  return fileName
+}
+
+export function getOutputImageNameFor(inputImageName: string): string {
+  let extension = inputImageName.substring(inputImageName.indexOf('.'), inputImageName.length)
+  extension = extension === '.tiff' ? '.png' : extension
+  return inputImageName.substring(0, inputImageName.indexOf('.')) + 'Output' + extension
 }
