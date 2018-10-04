@@ -93,21 +93,15 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
         </select> */}
 
         <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="age-helper">Age</InputLabel>
+          <InputLabel htmlFor="template-helper">Command Template</InputLabel>
           <Select
-            value={10}
+            value={this.state.selectedFrameTemplate.id}
             onChange={e => this.selectedTemplateChange(e.target.value)}
-            input={<Input name="age" id="age-helper" />}
+            input={<Input name="template" id="template-helper" />}
           >
             {imageFrames.map((t: CommandTemplate, i: number) =>
               <MenuItem value={t.id} selected={t.id === this.state.selectedFrameTemplate.id}>{t.name}</MenuItem>
             )}
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
           </Select>
           <FormHelperText>Select one template to customize:</FormHelperText>
         </FormControl>
@@ -136,25 +130,31 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
         <br />
         <Grid container spacing={24}>
           <Grid item xs={12} sm={6}  >
-            <p>Original image:
+            <p>Original image:  </p>
+            <p>Size: {JSON.stringify(this.state.imageSize || {})}</p>
+            <Button variant="contained"
+                onClick={() => alert('TODO')}> {/*// TODO */}
+                Download
+            </Button>
             <br />
               <img onLoad={() => { this.setImageSize(true) }} src={imageSrc} id="sourceImage"></img>
-            </p>
-            <p>Size: {JSON.stringify(this.state.imageSize || {})}</p>
+          
           </Grid>
           <Grid item xs={12} sm={6}  >
             <p>Result:
-            <button>Download</button>
+            <Button variant="contained"
+                onClick={() => alert('TODO')}> {/*// TODO */}
+                Download
+            </Button>
               <br />
-              <button
-                onClick={async e=>{
+              <Button variant="contained"
+                title="So I can apply transformations on this one..."
+                onClick={async e => {
                   const inputFile = await readInputImageFromUrl((document.getElementById('outputFile') as HTMLImageElement).src, this.state.inputFiles[0].name)
-                  // debugger
-                  this.setState({...this.state, inputFiles: [inputFile]})
-                  // this.state.inputFiles = [await readInputImageFromUrl((document.getElementById('outputFile') as HTMLImageElement).src)]
+                  this.setState({ ...this.state, inputFiles: [inputFile] })
                 }}>
-              Make this the source image
-              </button>
+                Make this the source image
+              </Button>
               <br />
               <img id="outputFile" />
             </p>
@@ -167,35 +167,39 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
   protected async dispatchUrl() {
     const urlData = dispatchUrl()
     // console.log('dispatchUrl', urlData.template && urlData.template !== this.state.selectedFrameTemplate.id, urlData);
-
     if (urlData.template && urlData.template !== this.state.selectedFrameTemplate.id) {
       this.state.selectedFrameTemplate = imageFrames.find(t => t.id === urlData.template) || this.state.selectedFrameTemplate
       // console.log('selectedFrameTemplate', this.state.selectedFrameTemplate);
       this.updateCommand(this.state.selectedFrameTemplate)
       // this.setState({...this.state})
     }
+
+    if (!this.state.inputFiles.length) {
+      // debugger  
+      // const selectedFrameTemplate = imageFrames.find(t => t.id === this.props.match.params.template)
+      let context
+      try {
+        context = JSON.parse(decodeURIComponent(this.props.match.params.context) || 'undefined')
+      } catch (error) {
+      }
+      const imageSrc = this.props.match.params.imageSrc ? decodeURIComponent(this.props.match.params.imageSrc) : defaultImageSrc
+      const image = await readInputImageFromUrl(imageSrc)
+      this.setState({
+        ...this.state, 
+        inputFiles: [
+          { 
+            name: getFileNameFromUrl(imageSrc), 
+            content: image.content
+          },
+        ],
+        //TODO: pass the conetxt and declare it on this.state
+      })
+    }
+    // console.log('SEBA: ', this.props.match.params);
   }
 
   async componentWillMount() {
     await this.dispatchUrl()
-    if (!this.state.inputFiles.length) {
-      // debugger  
-      // const selectedFrameTemplate = imageFrames.find(t => t.id === this.props.match.params.template)
-      // let context
-      // try {
-      //   context = JSON.parse(decodeURIComponent(this.props.match.params.context) || 'undefined')
-      // } catch (error) {
-      // }
-      // const  //TODO :try catch
-      const imageSrc = this.props.match.params.imageSrc ? decodeURIComponent(this.props.match.params.imageSrc) : defaultImageSrc
-      const image = await readInputImageFromUrl(imageSrc)
-      this.setState({
-        ...this.state, inputFiles: [
-          { name: getFileNameFromUrl(imageSrc), content: image.content }
-        ]
-      })
-    }
-    // console.log('SEBA: ', this.props.match.params);
   }
 
   componentWillUpdate() {
