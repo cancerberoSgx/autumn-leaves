@@ -8,7 +8,8 @@
     "build": "npx tsc",
     "test": "npm run test-node",
     "test-browser": "npx concurrently --kill-others \"cd test-project1 && npm start\" \"sleep 10s && npm run test-jest\"",
-    "test-node": "export NODE_PATH=$(npm root --quiet -g) && npx ts-node src/test/index.ts"
+    "test-node": "export NODE_PATH=$(npm root --quiet -g) && npx ts-node src/test/index.ts",
+    "generate-convert-list-enums": "npx ts-node scripts/generateImEnums.ts && npm run build"
   },
   "keywords": [
     "imagemagick",
