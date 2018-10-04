@@ -7,9 +7,9 @@ export async function readImageUrlToUintArray(url: string): Promise<Uint8Array> 
   return sourceBytes
 }
 
-export async function readInputImageFromUrl(url: string): Promise<MagickInputFile> {
+export async function readInputImageFromUrl(url: string, imageName?: string): Promise<MagickInputFile> {
   const content = await readImageUrlToUintArray(url)
-  let name = getNameFromUrl(url)
+  let name = imageName || getNameFromUrl(url)
   return { name, content }
 }
 

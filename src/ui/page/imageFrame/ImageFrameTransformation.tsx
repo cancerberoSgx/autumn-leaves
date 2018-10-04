@@ -1,6 +1,6 @@
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, Input, FormHelperText } from '@material-ui/core';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
-import { Command, CommandTemplate, execute, ExecuteConfig, ImageSize, loadImg, MagickInputFile, readInputImageFromUrl, uint8ArrayToBlob, getNameFromUrl, getOutputImageNameFor, getFileNameFromUrl } from 'imagemagick-browser';
+import { Command, CommandTemplate, execute, ExecuteConfig, ImageSize, loadImg, MagickInputFile, readInputImageFromUrl, uint8ArrayToBlob, getNameFromUrl, getOutputImageNameFor, getFileNameFromUrl, MagickOutputFile } from 'imagemagick-browser';
 import * as React from 'react';
 import { CommandEditor, SelectImageEditor } from 'react-imagemagick';
 import { clone, query } from '../../../util/misc';
@@ -52,6 +52,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     inputFiles: [],
   }
   commandEditor: JSX.Element;
+  // private lastOutputFile: MagickOutputFile;
 
   constructor(props: ImageFrameTransformationProps, state: ImageFrameTransformationState) {
     super(props, state)
@@ -59,29 +60,15 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     this.state.imageSize = this.state.imageSize || { width: 0, height: 0 }
   }
 
-  protected dispatchUrl() {
-    const urlData = dispatchUrl()
-    console.log('dispatchUrl', urlData.template && urlData.template !== this.state.selectedFrameTemplate.id, urlData);
-
-    if (urlData.template && urlData.template !== this.state.selectedFrameTemplate.id) {
-      // debugger
-      this.state.selectedFrameTemplate = imageFrames.find(t => t.id === urlData.template) || this.state.selectedFrameTemplate
-      // console.log('selectedFrameTemplate', this.state.selectedFrameTemplate);
-
-      this.updateCommand(this.state.selectedFrameTemplate)
-      // this.setState({...this.state})
-    }
-  }
-
   render(): React.ReactNode {
     const { classes } = this.props
     if (!this.getFirstInputImage()) {
       return <div>Loading Image...</div>
     }
-    else {
-      const img = document.getElementById('sourceImage') as HTMLImageElement
-      console.log(img ? img.src : 'not yet');
-    }
+    // else {
+    //   const img = document.getElementById('sourceImage') as HTMLImageElement
+    //   console.log(img ? img.src : 'not yet');
+    // }
     const imageSrc = URL.createObjectURL(uint8ArrayToBlob(this.getFirstInputImage().content))
     return (
       <div className={classes.root}>
@@ -157,10 +144,19 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
           </Grid>
           <Grid item xs={12} sm={6}  >
             <p>Result:
-             <br />
+            <button>Download</button>
+              <br />
+              <button
+                onClick={async e=>{
+                  const inputFile = await readInputImageFromUrl((document.getElementById('outputFile') as HTMLImageElement).src, this.state.inputFiles[0].name)
+                  // debugger
+                  this.setState({...this.state, inputFiles: [inputFile]})
+                  // this.state.inputFiles = [await readInputImageFromUrl((document.getElementById('outputFile') as HTMLImageElement).src)]
+                }}>
+              Make this the source image
+              </button>
+              <br />
               <img id="outputFile" />
-              <button>Download</button>
-              <button>Make this the source image</button>
             </p>
           </Grid>
         </Grid>
@@ -168,8 +164,20 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     )
   }
 
+  protected async dispatchUrl() {
+    const urlData = dispatchUrl()
+    // console.log('dispatchUrl', urlData.template && urlData.template !== this.state.selectedFrameTemplate.id, urlData);
+
+    if (urlData.template && urlData.template !== this.state.selectedFrameTemplate.id) {
+      this.state.selectedFrameTemplate = imageFrames.find(t => t.id === urlData.template) || this.state.selectedFrameTemplate
+      // console.log('selectedFrameTemplate', this.state.selectedFrameTemplate);
+      this.updateCommand(this.state.selectedFrameTemplate)
+      // this.setState({...this.state})
+    }
+  }
+
   async componentWillMount() {
-    this.dispatchUrl()
+    await this.dispatchUrl()
     if (!this.state.inputFiles.length) {
       // debugger  
       // const selectedFrameTemplate = imageFrames.find(t => t.id === this.props.match.params.template)
@@ -191,7 +199,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
   }
 
   componentWillUpdate() {
-    this.dispatchUrl()
+    // await this.dispatchUrl()
     this.execute()
   }
 
@@ -246,9 +254,15 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
       commands,
       inputFiles: [image]
     }
+    // if(execConfig.commands[0][1].startsWith('http')){
+    //   debugger
+    // }
     // console.log('Execute', execConfig.commands[0]);
     const result = await execute(execConfig)
-    loadImg(result[result.length - 1].outputFiles[0], query('#outputFile')[0] as HTMLImageElement)
+    const outputFile = result[result.length - 1].outputFiles[0] // TODO: support multiple output images
+    loadImg(outputFile, query('#outputFile')[0] as HTMLImageElement)
+    // this.lastOutputFile = outputFile
+    return outputFile
   }
 
 
