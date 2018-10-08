@@ -20,11 +20,13 @@
   "license": "MIT",
   "dependencies": {
     "imagemagick-browser": "file:../imagemagick-browser",
+    "react-image-crop": "^6.0.0",
     "react": "^16.5.2"
   },
   "devDependencies": {
     "@types/jest": "^23.1.4",
     "@types/sinon": "^5.0.1",
+    "@types/react-image-crop": "^3.0.1",
     "jest": "^23.3.0",
     "sinon": "^6.1.0",
     "ts-node": "^7.0.0",

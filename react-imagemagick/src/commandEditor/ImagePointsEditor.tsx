@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Draggable, { DraggableData } from 'react-draggable';
 import { ArgumentEditorProps, ArgumentEditorState, PointHandler, Point, SizedImageContext } from 'imagemagick-browser';
+import { ImageRectangleEditor } from './ImageRectangleEditor';
 
 export interface ImagePointsEditorProps extends ArgumentEditorProps<PointHandler[]>, SizedImageContext {
   imageSrc: string
@@ -36,7 +37,8 @@ export class ImagePointsEditor extends React.Component<ImagePointsEditorProps, I
           <img src={this.props.imageSrc} id="ImagePointsEditorImage"></img>
 
           {this.state.value.map(point =>{
-              return <Draggable
+              return <div>
+                <Draggable
                 key={point.id}
                 handle=".handle"
                 defaultPosition={{ 
@@ -51,6 +53,8 @@ export class ImagePointsEditor extends React.Component<ImagePointsEditorProps, I
                   <span className="handle">{point.name||point.id}</span>
                 </span>
               </Draggable>
+              <ImageRectangleEditor imageWidth={this.props.imageWidth} imageHeight={this.props.imageHeight} imageSrc={this.props.imageSrc} onChange={e=>console.log('CROP2222', e)}s/>
+              </div>
           })}
 
         </div>
