@@ -1,5 +1,4 @@
-import { CommandTemplate, Color, SizedImageContext, ArgumentType, PointHandler, VirtualPixelMethods, VirtualPixelMethod, Distort } from "imagemagick-browser";
-import { Command } from "imagemagick-browser";
+import { ArgumentType, Color, Command, CommandTemplate, Distort, PointHandler, SizedImageContext, VirtualPixel, VirtualPixelMethods } from "imagemagick-browser";
 
 type ThisDistorts = Distort.Perspective | Distort.BilinearForward | Distort.BilinearReverse | Distort.Shepards
 const thisDistorts = [Distort.Perspective, Distort.BilinearForward, Distort.BilinearReverse, Distort.Shepards]
@@ -25,7 +24,7 @@ const defaultPoints = [
 
 export interface DistortPerspective1Context extends Partial<SizedImageContext> {
   points: PointHandler[]
-  virtualPixel: VirtualPixelMethod
+  virtualPixel: VirtualPixel
   distort: ThisDistorts
 }
 
@@ -43,7 +42,7 @@ export const DistortPerspective1: CommandTemplate<DistortPerspective1Context> = 
   },
   defaultTemplateContext: {
     points: defaultPoints,
-    virtualPixel: VirtualPixelMethod.tile,
+    virtualPixel: VirtualPixel.Tile,
     distort: Distort.Perspective
   },
   arguments: [

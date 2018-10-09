@@ -44,6 +44,9 @@
  * IM manual : https://imagemagick.org/script/command-line-processing.php
  * API to talk to the tool externally as a js library: import autumn from 'http://autumnleaves.com/lib.js'; const outputImage = await autumn.convert('http://my.img.jpg', 'myImg.png')
  * the wizard should ask first the transformation because it will be responsible of declaring how/which kind of files it requires as input. eg: user chooses pdf2png transformation so the wizard will ask the user to choose a .pdf document
+ * -spread amount -interpolate SOMETHING https://www.imagemagick.org/script/command-line-options.php#spread
+ * -tint 50% -fill red - https://www.imagemagick.org/script/command-line-options.php?#filter
+ * image encryption and decription toop /using text or image passprhase 
 
 ## Useful links and tips
 

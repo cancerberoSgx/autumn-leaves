@@ -21,7 +21,6 @@ export interface ExecuteConfig {
   inputFiles: MagickInputFile[]
   /** commands to execute, serially */
   commands: Command[]
-  // command?: Command
 }
 export interface ExecuteResult {
   outputFiles: MagickOutputFile[]
@@ -37,17 +36,22 @@ export function getMagickApi(): IMagick {
 }
 
 export * from './execute'
+
 export * from './util/image'
 export * from './util/cli'
+export * from './util/misc'
 
 export * from './commandEditor/commandTemplate'
 export * from './options/virtualPixel'
 export * from './options/filter'
-// export * from './options/distort'
+
+export * from './list'
 
 export * from './chain'
 
-// export 
+
+// TODO: Example of organizing in modules: 
+
 // java.lang
 
 // import ObjectT from './lang/Object'
@@ -97,80 +101,3 @@ export * from './chain'
 //   }
 // }
 
-
-
-// // java.util
-
-
-// import LinkedListT from './util/LinkedList'
-// import EventObjectT from './util/EventObject'
-// import IteratorT from './util/Iterator'
-// import EnumerationT from './util/Enumeration'
-// import EventListenerT from './util/EventListener'
-// import MapT from './util/Map'
-
-// export namespace util {
-//   export type Map<K, V> = MapT<K, V>
-//   export type EventObject = EventObjectT
-//   export type LinkedList<T> = LinkedListT<T>
-//   export type Iterator<T> = IteratorT<T>
-//   export type Enumeration<T> = EnumerationT<T>
-//   export type EventListener = EventListenerT
-// }
-
-// export const util = {
-//   LinkedList: LinkedListT,
-//   EventObject: EventObjectT
-// }
-
-
-
-
-
-// // java.io
-
-// import CloseableT from './io/Closeable'
-
-// export namespace io {
-//   export type Closeable = CloseableT
-// }
-
-// export const io = {
-// }
-
-
-
-
-// // java.nio
-
-
-// import PathsT from './nio/file/Paths'
-// import PathT from './nio/file/Path'
-
-// export namespace nio {
-//   export namespace file {
-//     export type Path = PathT
-//     export type Paths = PathsT
-//   }
-// }
-
-// export const nio = {
-//   file: {
-//     Paths: PathsT
-//   }
-// }
-
-
-
-
-// // JavaBase.math
-
-// import BigIntegerT from './math/BigInteger'
-
-// export namespace math {
-//   export type BigInteger = BigIntegerT
-// }
-
-// export const math = {
-//   BigInteger: BigIntegerT
-// }

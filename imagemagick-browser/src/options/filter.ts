@@ -9,14 +9,14 @@ export const filters: string[] = [
   'Mitchell',
   'CubicSpline'
 ]
-export enum Filter {
-  'Point' = 'Point',
-  'Hermite' = 'Hermite',
-  'Cubic' = 'Cubic',
-  'Box' = 'Box',
-  'Gaussian' = 'Gaussian',
-  'Triangle' = 'Triangle',
-  'Quadratic' = 'Quadratic',
-  'Mitchell' = 'Mitchell',
-  'CubicSpline' = 'CubicSpline'
-}
+// export enum Filter {
+//   'Point' = 'Point',
+//   'Hermite' = 'Hermite',
+//   'Cubic' = 'Cubic',
+//   'Box' = 'Box',
+//   'Gaussian' = 'Gaussian',
+//   'Triangle' = 'Triangle',
+//   'Quadratic' = 'Quadratic',
+//   'Mitchell' = 'Mitchell',
+//   'CubicSpline' = 'CubicSpline'
+// }

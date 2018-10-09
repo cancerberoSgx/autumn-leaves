@@ -1,5 +1,4 @@
-import { CommandTemplate, Color, SizedImageContext, ArgumentType } from "imagemagick-browser";
-import { Command } from "imagemagick-browser";
+import { ArgumentType, Command, CommandTemplate, SizedImageContext } from "imagemagick-browser";
 
 export interface FrameFeathering1Context extends Partial<SizedImageContext> {
   strength: number

@@ -1,5 +1,4 @@
-import { CommandTemplate, Color, SizedImageContext, ArgumentType } from "imagemagick-browser";
-import { Command } from "imagemagick-browser";
+import { ArgumentType, Color, Command, CommandTemplate, SizedImageContext } from "imagemagick-browser";
 
 export interface Crop1Context extends Partial<SizedImageContext> {
   background: Color

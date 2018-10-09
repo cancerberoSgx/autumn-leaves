@@ -1,9 +1,9 @@
-import { ArgumentType, Command, CommandTemplate, SizedImageContext, VirtualPixelMethod, VirtualPixelMethods, Filter, filters } from "imagemagick-browser";
+import { ArgumentType, Command, CommandTemplate, SizedImageContext, VirtualPixel, VirtualPixelMethods, Filter, filters } from "imagemagick-browser";
 
 export interface VirtualPixel1Context extends Partial<SizedImageContext> {
   width: number
   height: number
-  virtualPixel: VirtualPixelMethod
+  virtualPixel: VirtualPixel
   // filter: Filter
 }
 
@@ -21,7 +21,7 @@ export const virtualPixel1: CommandTemplate<VirtualPixel1Context> = {
   defaultTemplateContext: {
     width: 50,
     height: 20,
-    virtualPixel: VirtualPixelMethod.dither,
+    virtualPixel: VirtualPixel.Dither,
     // filter: Filter.Point
   },
   arguments: [

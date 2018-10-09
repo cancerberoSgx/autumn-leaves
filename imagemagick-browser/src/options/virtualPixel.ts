@@ -1,50 +1,53 @@
-export enum VirtualPixelMethod {
 
-  /**the area surrounding the image is the background color*/
-  'background' = 'background',
+// TODO: remove everything
 
-  /**the area surrounding the image is black*/
-  'black' = 'black',
+// export enum VirtualPixelMethod {
 
-  /**alternate squares with image and background color*/
-  'checker-tile' = 'checker-tile',
+//   /**the area surrounding the image is the background color*/
+//   'background' = 'background',
 
-  /**non-random 32x32 dithered pattern*/
-  'dither' = 'dither',
+//   /**the area surrounding the image is black*/
+//   'black' = 'black',
 
-  /**extend the edge pixel toward infinity*/
-  'edge' = 'edge',
+//   /**alternate squares with image and background color*/
+//   'checker-tile' = 'checker-tile',
 
-  /**the area surrounding the image is gray*/
-  'gray' = 'gray',
+//   /**non-random 32x32 dithered pattern*/
+//   'dither' = 'dither',
 
-  /**horizontally tile the image, background color above/below*/
-  'horizontal-tile' = 'horizontal-tile',
+//   /**extend the edge pixel toward infinity*/
+//   'edge' = 'edge',
 
-  /**horizontally tile the image and replicate the side edge pixels*/
-  'horizontal-tile-edge' = 'horizontal-tile-edge',
+//   /**the area surrounding the image is gray*/
+//   'gray' = 'gray',
 
-  /**mirror tile the image*/
-  'mirror' = 'mirror',
+//   /**horizontally tile the image, background color above/below*/
+//   'horizontal-tile' = 'horizontal-tile',
 
-  /**choose a random pixel from the image*/
-  'random' = 'random',
+//   /**horizontally tile the image and replicate the side edge pixels*/
+//   'horizontal-tile-edge' = 'horizontal-tile-edge',
 
-  /**tile the image (default)*/
-  'tile' = 'tile',
+//   /**mirror tile the image*/
+//   'mirror' = 'mirror',
 
-  /**the area surrounding the image is transparent blackness*/
-  'transparent' = 'transparent',
+//   /**choose a random pixel from the image*/
+//   'random' = 'random',
 
-  /**vertically tile the image, sides are background color*/
-  'vertical-tile' = 'vertical-tile',
+//   /**tile the image (default)*/
+//   'tile' = 'tile',
 
-  /**vertically tile the image and replicate the side edge pixels*/
-  'vertical-tile-edge' = 'vertical-tile-edge',
+//   /**the area surrounding the image is transparent blackness*/
+//   'transparent' = 'transparent',
 
-  /**the area surrounding the image is white*/
-  'white' = 'white',
-}
+//   /**vertically tile the image, sides are background color*/
+//   'vertical-tile' = 'vertical-tile',
+
+//   /**vertically tile the image and replicate the side edge pixels*/
+//   'vertical-tile-edge' = 'vertical-tile-edge',
+
+//   /**the area surrounding the image is white*/
+//   'white' = 'white',
+// }
 
 export const VirtualPixelMethods = [
   'background',

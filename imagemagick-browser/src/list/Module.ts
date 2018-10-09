@@ -40,6 +40,7 @@ export enum Module {
     'info' = 'info',
     'inline' = 'inline',
     'ipl' = 'ipl',
+    'jbig' = 'jbig',
     'jnx' = 'jnx',
     'jp2' = 'jp2',
     'jpeg' = 'jpeg',
