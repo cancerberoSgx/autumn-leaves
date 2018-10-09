@@ -47,7 +47,9 @@
  * -spread amount -interpolate SOMETHING https://www.imagemagick.org/script/command-line-options.php#spread
  * -tint 50% -fill red - https://www.imagemagick.org/script/command-line-options.php?#filter
  * image encryption and decription toop /using text or image passprhase 
+ * tool for morph : https://www.imagemagick.org/script/command-line-options.php#morph
 
+ 
 ## Useful links and tips
 
  * magick logo: gif:- | display gif:-

@@ -13,6 +13,8 @@ import { tornPaper2 } from './templates/tornPaper2';
 import { DistortPerspective1 } from './templates/distortPerspective1';
 import { oilTemplate } from "./templates/oilTemplate";
 import { SpreadTemplate } from "./templates/spreadTemplate";
+import { ditherColorsTemplate } from "./templates/ditherColorsTemplate1";
+import { morphologyTemplate } from "./templates/morphologyTemplate1";
 
 export const imageFrames: CommandTemplate[] = [
   cropTemplate1,
@@ -29,8 +31,9 @@ export const imageFrames: CommandTemplate[] = [
   DistortPerspective1,
   oilTemplate,
   SpreadTemplate,
-
-
+  ditherColorsTemplate,
+  morphologyTemplate,
+  
   // {
   //   id: 'frameFeathering2',
   //   name: 'frame soft rounded corners',
