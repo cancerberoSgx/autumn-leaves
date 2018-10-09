@@ -42,6 +42,8 @@ export interface ImageFrameTransformationState {
   imageSize?: ImageSize,
   jsonError?: string
   inputFiles: MagickInputFile[]
+  /** when user press "make this the source image" button we push current command to this "queue" */
+  commandChain: Command[][]
 }
 
 export class ImageFrameTransformationNaked extends React.Component<ImageFrameTransformationProps, ImageFrameTransformationState> {
@@ -50,9 +52,10 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     selectedFrameTemplate: imageFrames[0],
     commands: clone(imageFrames[0].commands),
     inputFiles: [],
+    commandChain: []
   }
+  
   commandEditor: JSX.Element;
-  // private lastOutputFile: MagickOutputFile;
 
   constructor(props: ImageFrameTransformationProps, state: ImageFrameTransformationState) {
     super(props, state)
@@ -61,6 +64,8 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
   }
 
   render(): React.ReactNode {
+    console.log('RENDER', JSON.stringify(this.state.commandChain));
+    
     const { classes } = this.props
     if (!this.getFirstInputImage()) {
       return <div>Loading Image...</div>
@@ -164,16 +169,21 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
                 title="So I can apply transformations on this one..."
                 onClick={async e => {
                   const inputFile = await readInputImageFromUrl((document.getElementById('outputFile') as HTMLImageElement).src, this.state.inputFiles[0].name)
-                  this.setState({ ...this.state, inputFiles: [inputFile] })
+                  console.log(' this.state.commandChain.concat([this.state.commands]',  this.state.commandChain.concat([this.state.commands]));
+                  
+                  this.setState({ ...this.state, inputFiles: [inputFile], commandChain: this.state.commandChain.concat([this.state.commands]) })
                 }}>
                 Make this the source image
               </Button>
               <br />
               <img id="outputFile" />
+              <p>Command chain: </p>
+              <ul>
+                {this.state.commandChain.map(c=><li>{JSON.stringify(c)}</li>)}
+              </ul>
             </p>
           </Grid>
         </Grid>
-        
       </div>
     )
   }

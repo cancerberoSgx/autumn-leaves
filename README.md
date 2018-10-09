@@ -48,6 +48,7 @@
 ## Useful links and tips
 
  * magick logo: gif:- | display gif:-
+ * https://www.imagemagick.org/script/examples.php
 
 
 

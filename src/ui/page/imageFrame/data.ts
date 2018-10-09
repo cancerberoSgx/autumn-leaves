@@ -11,6 +11,7 @@ import { frameFeathering1 } from './templates/frameFeathering1';
 import { frameShape1 } from './templates/frameShape1';
 import { tornPaper2 } from './templates/tornPaper2';
 import { DistortPerspective1 } from './templates/distortPerspective1';
+import { oilTemplate } from "./templates/oilTemplate";
 
 export const imageFrames: CommandTemplate[] = [
   cropTemplate1,
@@ -25,6 +26,7 @@ export const imageFrames: CommandTemplate[] = [
   frameFeathering1,
   frameShape1,
   DistortPerspective1,
+  oilTemplate,
   {
     id: 'frameFeathering2',
     name: 'frame soft rounded corners',
