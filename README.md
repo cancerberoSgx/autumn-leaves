@@ -48,6 +48,7 @@
  * image encryption and decription toop /using text or image passprhase 
  * tool for morph : https://www.imagemagick.org/script/command-line-options.php#morph
  * tool for create 3d - glass enabled image : https://www.imagemagick.org/script/command-line-options.php#stereo
+ * idea - crazy - 2d objects user can drag. When an object is close to another an effect on the first is made defined by the second - according to the distance. eg: the closer any object is to object A the more red-tinted is. user can move and other can be moved random or in a pattern. user can add new (images) and declare its behavior. the context contains the distance and other properties 
  
 ## Useful links and tips
 

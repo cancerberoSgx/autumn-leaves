@@ -22,6 +22,7 @@ import { waveTemplate } from "./templates/waveTemplate";
 import { tintTemplate } from "./templates/tintTemplate";
 import { replaceColorTemplate } from "./templates/replaceColorTemplate";
 import { shearTemplate } from "./templates/shearTemplate";
+import { sharpenBlurTemplate } from "./templates/sharpenBlurTemplate";
 
 export const imageFrames: CommandTemplate[] = [
   cropTemplate1,
@@ -47,6 +48,7 @@ export const imageFrames: CommandTemplate[] = [
   tintTemplate,
   replaceColorTemplate,
   shearTemplate,
+  sharpenBlurTemplate,
   
   // {
   //   id: 'frameFeathering2',
