@@ -16,6 +16,8 @@ import { SpreadTemplate } from "./templates/spreadTemplate";
 import { ditherColorsTemplate } from "./templates/ditherColorsTemplate1";
 import { morphologyTemplate } from "./templates/morphologyTemplate1";
 import { shadeTemplate } from "./templates/shadeTemplate";
+import { sketchTemplate } from "./templates/sketchTemplate";
+import { swirlTemplate } from "./templates/swirlTemplate";
 
 export const imageFrames: CommandTemplate[] = [
   cropTemplate1,
@@ -35,6 +37,8 @@ export const imageFrames: CommandTemplate[] = [
   ditherColorsTemplate,
   morphologyTemplate,
   shadeTemplate,
+  sketchTemplate,
+  swirlTemplate,
   
   // {
   //   id: 'frameFeathering2',

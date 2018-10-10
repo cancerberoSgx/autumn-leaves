@@ -8,10 +8,9 @@ export const shadeTemplate: CommandTemplate<shadeContext> = {
   id: 'shade',
   name: 'shade',
   commands: [["convert", "$INPUT", "-shade", `1x1` , "$OUTPUT"]],
-  description: `Reduce the number of colors interpolating pixels using different dither algorithms`,
+  description: `TODO`,
   template: context => {
     const command = JSON.parse(`[["convert", "$INPUT",  "-shade", "${context.azimuth}x${context.elevation}" , "$OUTPUT"]]`) as Command[]
-    // console.log({ command });
     return command
   },
   defaultTemplateContext: {

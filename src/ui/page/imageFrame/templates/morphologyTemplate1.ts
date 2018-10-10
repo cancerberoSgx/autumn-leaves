@@ -12,18 +12,13 @@ export interface morphologyContext extends Partial<SizedImageContext> {
   kernel: Kernel
   kernelArguments: number
 }
-const ourKernels = [
-  // because we need to introduce complex kernelArguments to some to work - we leave only simple ones 
-  Kernel.Rectangle, Kernel.Prewitt, Kernel.Prewitt
-]
 export const morphologyTemplate: CommandTemplate<morphologyContext> = {
   id: 'morphology',
   name: 'Morphology',
   commands: [["convert", "$INPUT", "-morphology", `${Morphology.Close}:1`, Kernel.Disk, "$OUTPUT"]],
-  description: `Reduce the number of colors interpolating pixels using different dither algorithms`,
+  description: `TODO`,
   template: context => {
     const command = JSON.parse(`[["convert", "$INPUT", "-morphology", "${context.method + (context.iterations ? `:${context.iterations}` : ``)}", "${context.kernel+ (context.kernelArguments ? `:${context.kernelArguments}` : ``)}", "$OUTPUT"]]`) as Command[]
-    // console.log({ command });
     return command
   },
   defaultTemplateContext: {
