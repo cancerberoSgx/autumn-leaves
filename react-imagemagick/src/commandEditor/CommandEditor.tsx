@@ -59,18 +59,16 @@ export class CommandEditor extends React.Component<CommandEditorProps, CommandEd
         <p>{this.props.commandTemplate.description}</p>
         <p><em>Heads up!</em>The editor controls currently don't work correctly and you might need to modify them (or all of them) in order to start applying the real thing...</p>
         <ul>
-          {(() => {
-            return this.props.commandTemplate.arguments.map(arg => {
-              const context = {
-                ...this.state.templateContext,
-                imageWidth: this.props.imageWidth(),
-                imageHeight: this.props.imageHeight()
-              }
-              return <li>
-                {arg.name}: {buildArgumentEditor(arg, context, e => this.argumentChangeEvent(arg, e), this.props.imageSrc)}
-              </li>
-            })
-          })()}
+          {this.props.commandTemplate.arguments.map(arg => {
+            const context = {
+              ...this.state.templateContext,
+              imageWidth: this.props.imageWidth(),
+              imageHeight: this.props.imageHeight()
+            }
+            return <li>
+              {arg.name}: {buildArgumentEditor(arg, context, e => this.argumentChangeEvent(arg, e), this.props.imageSrc)}
+            </li>
+          })}
         </ul>
       </div>
     )
@@ -123,7 +121,6 @@ function buildArgumentEditor<T>(arg: Argument, templateContext: SizedImageContex
     />
   }
   else if (arg.type === ArgumentType.imagePoints) {
-
     return <ImagePointsEditor
       imageWidth={templateContext.imageWidth}
       imageHeight={templateContext.imageHeight}

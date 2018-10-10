@@ -35,8 +35,6 @@ export interface ExecuteEvent {
   took: number
   id: number
 }
-// export type ExecuteListener = (event: ExecuteEvent) => void
-
 export interface ExecuteListener {
   afterExecute?(event: ExecuteEvent): void
   beforeExecute?(event: ExecuteEvent): void
