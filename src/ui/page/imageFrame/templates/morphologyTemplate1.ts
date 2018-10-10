@@ -10,7 +10,7 @@ export interface morphologyContext extends Partial<SizedImageContext> {
   method: Morphology
   iterations: number,
   kernel: Kernel
-  kernelArguments: string
+  kernelArguments: number
 }
 const ourKernels = [
   // because we need to introduce complex kernelArguments to some to work - we leave only simple ones 
@@ -22,15 +22,15 @@ export const morphologyTemplate: CommandTemplate<morphologyContext> = {
   commands: [["convert", "$INPUT", "-morphology", `${Morphology.Close}:1`, Kernel.Disk, "$OUTPUT"]],
   description: `Reduce the number of colors interpolating pixels using different dither algorithms`,
   template: context => {
-    const command = JSON.parse(`[["convert", "$INPUT", "-morphology", "${context.method + (context.iterations ? `:${context.iterations}` : ``)}", "${context.kernel+ (context.kernelArguments ? `:${context.kernelArguments}` : ``}", "$OUTPUT"]]`) as Command[]
-    console.log({ command });
+    const command = JSON.parse(`[["convert", "$INPUT", "-morphology", "${context.method + (context.iterations ? `:${context.iterations}` : ``)}", "${context.kernel+ (context.kernelArguments ? `:${context.kernelArguments}` : ``)}", "$OUTPUT"]]`) as Command[]
+    // console.log({ command });
     return command
   },
   defaultTemplateContext: {
     iterations: 1,
     method: Morphology.Close, 
     kernel: Kernel.Disk, 
-    kernelArguments: '3'
+    kernelArguments: 2
   },
   arguments: [
     {
@@ -54,7 +54,7 @@ export const morphologyTemplate: CommandTemplate<morphologyContext> = {
       list: list(Kernel).map(m => ({ name: m, id: m }))
     },
     {
-      type: ArgumentType.text,
+      type: ArgumentType.number, //TODO: it's not a number is text or more
       id: 'kernelArguments',
       name: 'kernelArguments',
       description: 'TODO'
