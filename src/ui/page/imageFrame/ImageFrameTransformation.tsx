@@ -54,7 +54,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     inputFiles: [],
     commandChain: []
   }
-  
+
   commandEditor: JSX.Element;
 
   constructor(props: ImageFrameTransformationProps, state: ImageFrameTransformationState) {
@@ -65,7 +65,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
 
   render(): React.ReactNode {
     console.log('RENDER', JSON.stringify(this.state.commandChain));
-    
+
     const { classes } = this.props
     if (!this.getFirstInputImage()) {
       return <div>Loading Image...</div>
@@ -78,7 +78,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     return (
       <div className={classes.root}>
 
-      {/* select image  */}
+        {/* select image  */}
 
         <p>Add a frame to your images. First, load an image:</p>
         <SelectImageEditor
@@ -89,7 +89,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
             this.setImageSize(true)
             this.setState({ ...this.state, inputFiles: e.value })
           }} />
-        <p>Just a <Link to="/imageFrame?template=frameFeathering1">link example</Link> (TODO: remove this). And <Link to="/imageFrame?template=crop1">another place</Link>. </p>
+        {/* <p>Just a <Link to="/imageFrame?template=frameFeathering1">link example</Link> (TODO: remove this). And <Link to="/imageFrame?template=crop1">another place</Link>. </p> */}
 
 
         {/* select template  */}
@@ -117,23 +117,25 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
         </FormControl>
 
 
-{/* command editor  */}
+        {/* command editor  */}
 
         <ul>
           {this.state.commands.map((command: Command, i: number) => {
-            return <li>
-              <CommandEditor
-                templateContext={{ ...this.state.selectedFrameTemplate.defaultTemplateContext, imageWidth: this.state.imageSize.width, imageHeight: this.state.imageSize.height }}
-                commandTemplate={this.state.selectedFrameTemplate}
-                imageSrc={imageSrc}
-                imageWidth={() => lastImageSize.width}
-                imageHeight={() => lastImageSize.height}
-                onChange={e => {
-                  this.setState({ ...this.state, commands: e.value })
-                  this.execute()
-                }}
-              />
-            </li>
+            return (
+              <li>
+                <CommandEditor
+                  templateContext={{ ...this.state.selectedFrameTemplate.defaultTemplateContext, imageWidth: this.state.imageSize.width, imageHeight: this.state.imageSize.height }}
+                  commandTemplate={this.state.selectedFrameTemplate}
+                  imageSrc={imageSrc}
+                  imageWidth={() => lastImageSize.width}
+                  imageHeight={() => lastImageSize.height}
+                  onChange={e => {
+                    this.setState({ ...this.state, commands: e.value })
+                    this.execute()
+                  }}
+                />
+              </li>
+            )
           })}
         </ul>
 
@@ -169,8 +171,8 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
                 title="So I can apply transformations on this one..."
                 onClick={async e => {
                   const inputFile = await readInputImageFromUrl((document.getElementById('outputFile') as HTMLImageElement).src, this.state.inputFiles[0].name)
-                  console.log(' this.state.commandChain.concat([this.state.commands]',  this.state.commandChain.concat([this.state.commands]));
-                  
+                  console.log(' this.state.commandChain.concat([this.state.commands]', this.state.commandChain.concat([this.state.commands]));
+
                   this.setState({ ...this.state, inputFiles: [inputFile], commandChain: this.state.commandChain.concat([this.state.commands]) })
                 }}>
                 Make this the source image
@@ -179,7 +181,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
               <img id="outputFile" />
               <p>Command chain: </p>
               <ul>
-                {this.state.commandChain.map(c=><li>{JSON.stringify(c)}</li>)}
+                {this.state.commandChain.map(c => <li>{JSON.stringify(c)}</li>)}
               </ul>
             </p>
           </Grid>

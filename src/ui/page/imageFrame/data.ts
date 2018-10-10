@@ -21,6 +21,7 @@ import { swirlTemplate } from "./templates/swirlTemplate";
 import { waveTemplate } from "./templates/waveTemplate";
 import { tintTemplate } from "./templates/tintTemplate";
 import { replaceColorTemplate } from "./templates/replaceColorTemplate";
+import { shearTemplate } from "./templates/shearTemplate";
 
 export const imageFrames: CommandTemplate[] = [
   cropTemplate1,
@@ -45,6 +46,7 @@ export const imageFrames: CommandTemplate[] = [
   waveTemplate,
   tintTemplate,
   replaceColorTemplate,
+  shearTemplate,
   
   // {
   //   id: 'frameFeathering2',

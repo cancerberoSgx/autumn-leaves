@@ -10,7 +10,7 @@ export const replaceColorTemplate: CommandTemplate<replaceColorContext> = {
   id: 'replaceColor',
   name: 'replaceColor',
   commands: [["convert", "$INPUT", "-fuzz", "40%", "-fill", "red", "-opaque", "black", "$OUTPUT"]],
-  description: `Shear the columns of an image into a sine replaceColor.`,
+  description: `Replace color 'opaque' with color 'fill' optinally with a 'fuzz' tolerance when matching colors`,
   template: context => JSON.parse(`[["convert", "$INPUT", "-fuzz", "${context.fuzz}%", "-fill", "${context.fill}", "-opaque", "${context.opaque}", "$OUTPUT"]]`) as Command[],
   defaultTemplateContext: {
     opaque: '#000000',

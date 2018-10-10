@@ -49,24 +49,27 @@ export class CommandEditor extends React.Component<CommandEditorProps, CommandEd
   }
 
   render(): React.ReactNode {
-
+ 
     return (
       <div>
+        <h4>{this.props.commandTemplate.name}</h4>
+        <p>{this.props.commandTemplate.description}</p>
+        <ul>
         {(() => {
-          if (this.props.commandTemplate.template && this.props.commandTemplate.arguments) {
+          // if (this.props.commandTemplate.template && this.props.commandTemplate.arguments) {
             return this.props.commandTemplate.arguments.map(arg => {
               const context = {
                 ...this.state.templateContext,
                 imageWidth: this.props.imageWidth(),
                 imageHeight: this.props.imageHeight()
               }
-              return <div>
+              return <li>
                 {arg.name}: {buildArgumentEditor(arg, context, e => this.argumentChangeEvent(arg, e), this.props.imageSrc)}
-              </div>
+              </li>
             })
-          }
+          // }
         })()}
-        {}
+        </ul>
       </div>
     )
   }
