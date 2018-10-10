@@ -7,11 +7,11 @@ export interface swirlContext extends Partial<SizedImageContext> {
 export const swirlTemplate: CommandTemplate<swirlContext> = {
   id: 'swirl',
   name: 'swirl',
-  commands: [["convert", "$INPUT",  "-swirl", "33", "$OUTPUT"]],
+  commands: [["convert", "$INPUT",  "-swirl", "55", "$OUTPUT"]],
   description: `swirl image pixels about the center.  Degrees defines the tightness of the swirl.`,
   template: context => JSON.parse(`[["convert", "$INPUT", "-swirl", "${context.degrees}", "$OUTPUT"]]`) as Command[],
   defaultTemplateContext: {
-    degrees: 33,
+    degrees: 55,
   },
   arguments: [
     { 

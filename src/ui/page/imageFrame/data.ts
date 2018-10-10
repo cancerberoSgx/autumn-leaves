@@ -18,6 +18,7 @@ import { morphologyTemplate } from "./templates/morphologyTemplate1";
 import { shadeTemplate } from "./templates/shadeTemplate";
 import { sketchTemplate } from "./templates/sketchTemplate";
 import { swirlTemplate } from "./templates/swirlTemplate";
+import { waveTemplate } from "./templates/waveTemplate";
 
 export const imageFrames: CommandTemplate[] = [
   cropTemplate1,
@@ -39,7 +40,7 @@ export const imageFrames: CommandTemplate[] = [
   shadeTemplate,
   sketchTemplate,
   swirlTemplate,
-  
+  waveTemplate,
   // {
   //   id: 'frameFeathering2',
   //   name: 'frame soft rounded corners',
