@@ -1,16 +1,15 @@
-import { Argument, ArgumentChangeEvent, ArgumentType, Color, Command, CommandEditorProps as CommandEditorPropsBase, SizedImageContext, TemplateContext } from 'imagemagick-browser';
+import { Argument, ArgumentChangeEvent, ArgumentType, Command, CommandEditorProps as CommandEditorPropsBase, SizedImageContext, TemplateContext } from 'imagemagick-browser';
 import * as React from 'react';
-// import { getLastImageSize } from '../../page/imageFrame/ImageFrameTransformation';
 import { ColorPickerEditor } from './ColorPickerEditor';
+import { ImagePointsEditor } from './ImagePointsEditor';
 import { NumberEditor } from './NumberEditor';
 import { SelectOneEditor } from './SelectOneEditor';
-import { ImagePointsEditor } from './ImagePointsEditor';
 
 export interface CommandEditorProps extends CommandEditorPropsBase {
   templateContext: SizedImageContext
   imageSrc: string
-  imageWidth: ()=>number
-  imageHeight: ()=>number
+  imageWidth: () => number
+  imageHeight: () => number
 }
 
 export interface CommandEditorState {
@@ -18,8 +17,6 @@ export interface CommandEditorState {
   jsonError?: string
   templateContext: TemplateContext
   imageSrc: string
-  // imageWidth: number
-  // imageHeight: number
 }
 /**
  * component able to render given command templates. Will delegate on concrete value editor implementations in componenets/commandEditor
@@ -34,13 +31,9 @@ export class CommandEditor extends React.Component<CommandEditorProps, CommandEd
       commands: [],
       templateContext: {},
       imageSrc: '',
-      // imageWidth: 0,
-      // imageHeight: 0,
     }
     this.setStateDefaults()
-
     this.state.commands = props.commandTemplate.commands
-    // this.setState({ ...this.state })
   }
 
   private setStateDefaults() {
@@ -103,6 +96,7 @@ function buildArgumentEditor<T>(arg: Argument, templateContext: SizedImageContex
   if (arg.type === ArgumentType.color) {
     return <ColorPickerEditor
       value={templateContext[arg.id] + ''}
+      argument={arg}
       onChange={onChange as any}
     />
   }
@@ -110,6 +104,7 @@ function buildArgumentEditor<T>(arg: Argument, templateContext: SizedImageContex
     const value = parseInt(templateContext[arg.id] + '')
     return <NumberEditor
       value={value}
+      argument={arg}
       onChange={onChange as any}
     />
   }
@@ -117,6 +112,7 @@ function buildArgumentEditor<T>(arg: Argument, templateContext: SizedImageContex
     return <SelectOneEditor
       value={templateContext[arg.id] + ''}
       select={arg.list}
+      argument={arg}
       onChange={onChange as any}
     />
   }
@@ -127,6 +123,7 @@ function buildArgumentEditor<T>(arg: Argument, templateContext: SizedImageContex
       imageHeight={templateContext.imageHeight}
       imageSrc={imageSrc}
       value={arg.points}
+      argument={arg}
       onChange={onChange as any}
     />
   }

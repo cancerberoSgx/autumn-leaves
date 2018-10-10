@@ -69,6 +69,24 @@
         </li>
         
 
+        <li>
+                <p>Morphology Erode and dilate several times ending with polaroid and torn paper effect</p>
+                <p>Original image: </p>
+                <img src="./cara2.png">
+                <p>Command chain</p>
+                <pre>
+[["convert","$INPUT","-morphology","Erode:3","Octagon:1","$OUTPUT"]]
+[["convert","$INPUT","-morphology","Dilate:3","Diamond:1","$OUTPUT"]]
+[["convert","$INPUT","-morphology","Dilate:3","Diamond:1","$OUTPUT"]]
+[["convert","$INPUT","-morphology","Erode:3","Diamond:1","$OUTPUT"]]
+[["convert","$INPUT","-bordercolor","#046691","-background","##ff0000","+polaroid","$OUTPUT"]]
+[["convert","$INPUT","(","+clone","-alpha","extract","-virtual-pixel","black","-spread","40","-blur","0x3","-threshold","50%","-spread","40","-blur","0x.7",")","-alpha","off","-compose","Copy_Opacity","-composite","$OUTPUT"]]
+                    </pre>
+                <p>Result image: </p>
+                <img src="distort-erode-polaroid-torn1.png">
+            </li>
+        
+
     </ul>
 </body>
 

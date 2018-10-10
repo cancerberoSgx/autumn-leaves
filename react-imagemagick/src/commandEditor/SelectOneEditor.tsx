@@ -17,7 +17,6 @@ export class SelectOneEditor extends React.Component<SelectOneEditorProps, Selec
   constructor(props: SelectOneEditorProps, state: SelectOneEditorState) {
     super(props, state)
     this.state.value = props.value || ''
-    // this.setState({...this.state })
   }
 
   render(): React.ReactNode {

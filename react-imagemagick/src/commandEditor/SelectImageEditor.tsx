@@ -17,8 +17,6 @@ export class SelectImageEditor extends React.Component<SelectImageEditorProps, S
   constructor(props: SelectImageEditorProps, state: SelectImageEditorState) {
     super(props, state)    
     this.state.value = props.value || []
-    // this.setState({...this.state })
-    // console.log('NumberEditor props', this.state.value);
   }
 
   render() {

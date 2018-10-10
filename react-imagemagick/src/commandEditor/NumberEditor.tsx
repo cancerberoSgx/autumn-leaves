@@ -1,5 +1,5 @@
-import * as React from 'react'
-import { ArgumentEditorProps, ArgumentEditorState, ArgumentType } from 'imagemagick-browser'
+import { ArgumentEditorProps, ArgumentEditorState } from 'imagemagick-browser';
+import * as React from 'react';
 
 export interface NumberEditorProps extends ArgumentEditorProps<number> {
   isInteger?: boolean
@@ -16,16 +16,18 @@ export class NumberEditor extends React.Component<NumberEditorProps, NumberEdito
   }
 
   constructor(props: NumberEditorProps, state: NumberEditorState) {
-    super(props, state)    
+    super(props, state)
     this.state.value = props.value || 0
-    // this.setState({...this.state })
-    // console.log('NumberEditor props', this.state.value);
   }
 
   render(): React.ReactNode {
     return (
       <span className=''>
-        <input type="number" value={this.state.value} onChange={e => this.inputChange(e)} />
+        <input type="number" value={this.state.value}
+          min={this.props.argument && this.props.argument.min || -99999}
+          max={this.props.argument && this.props.argument.max || 99999}
+          step={this.props.argument && this.props.argument.step || 1}
+          onChange={e => this.inputChange(e)} />
       </span>
     )
   }

@@ -50,6 +50,12 @@ export interface Argument {
   /** if type is selectOne then user must provide items for the list here */
   list?: { name: string, id: string }[]
   points?: PointHandler[]
+  /** validation for type=='number' */
+  min?: number
+  /** validation for type=='number' */
+  max?:number
+  /** increment for type=='number' */
+  step?: number
 }
 
 export interface Point {
