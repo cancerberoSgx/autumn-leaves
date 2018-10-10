@@ -3,7 +3,7 @@ import { Command } from '..';
 // import { Command } from 'imagemagick-browser'
 // TODO: maybe it's better to remove this interface for stricter typechecking
 export interface TemplateContext {
-  [key: string]: any
+  // [key: string]: any
 }
 
 export interface SizedImageContext extends TemplateContext {
@@ -12,7 +12,8 @@ export interface SizedImageContext extends TemplateContext {
 }
 
 /**
- * metadata of a command in `arguments` together with implementation of command in `template`
+ * General representation of objects that know how to print a command. Optionally support `arguments` metadata of a command 
+ * together with implementation of the command in `template()`
  */
 export interface CommandTemplate<Context=TemplateContext> {
   id: string;
@@ -22,11 +23,13 @@ export interface CommandTemplate<Context=TemplateContext> {
   /** initial value */
   commands?: Command[];
   description?: string;
-  /** implementation of the template. Tip use js template strings and JSON.parse like: ```JSON.parse(`[["convert" "input.png", "-rotate", ${context.amount} ]]`)``` */
+  /** implementation of the template. Tip use js template strings and JSON.parse like: 
+   * ```JSON.parse(`[["convert" "input.png", "-rotate", ${context.amount} ]]`)``` */
   template?(context: Context): Command[];
   defaultTemplateContext?: Context;
   /** metadata for arguments */
   arguments?: Argument[];
+  tags?: CommandTemplateTag[]
 }
 
 export type Color = string
@@ -53,7 +56,7 @@ export interface Argument {
   /** validation for type=='number' */
   min?: number
   /** validation for type=='number' */
-  max?:number
+  max?: number
   /** increment for type=='number' */
   step?: number
 }
@@ -62,6 +65,7 @@ export interface Point {
   x: number
   y: number
 }
+
 export interface Rectangle {
   x: number
   y: number
@@ -73,6 +77,14 @@ export interface PointHandler extends Point {
   id: string
   name?: string
   color?: Color
+}
+
+// tagging
+
+export enum CommandTemplateTag {
+  'artistic' = 'artistic',
+  'distort' = 'distort',
+  'decoration' = 'decoration',
 }
 
 // UI / react base framework types

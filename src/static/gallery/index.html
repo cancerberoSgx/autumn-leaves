@@ -25,14 +25,13 @@
                 enlarge the image and tile it mirror-like</p>
             <p>Original image: </p>
             <img src="cara2.png">
+            <img src="spread-paint-virtualp-1.png">
             <p>Command chain</p>
             <pre>
 [["convert","$INPUT","-interpolate","Blend","-spread","20","$OUTPUT"]]
 [["convert","$INPUT","-paint","9","$OUTPUT"]]
 [["convert","$INPUT","-set","option:distort:viewport","1158x480-349-10","-virtual-pixel","mirror","-filter","point","-distort","SRT","0","+repage","$OUTPUT"]]
             </pre>
-            <p>Result image: </p>
-            <img src="spread-paint-virtualp-1.png">
         </li>
 
         <li>
@@ -40,6 +39,7 @@
                 simulate stamp-like effect</p>
             <p>Original image: </p>
             <img src="../rotate.png">
+            <img src="stamp-like1.png">
             <p>Command chain</p>
             <pre>
 [["convert","$INPUT","(","+clone","-alpha","extract","-virtual-pixel","black","-spread","35","-blur","0x3","-threshold","50%","-spread","35","-blur","0x.7",")","-alpha","off","-compose","Copy_Opacity","-composite","$OUTPUT"]]
@@ -50,42 +50,54 @@
 [["convert","$INPUT","-bordercolor","#636311","-border","10x10","-background","#636311","","-gravity","SouthEast","-splice","1x1+0+0","(","+clone","-alpha","extract","-virtual-pixel","black","-spread","26","-blur","0x3","-threshold","50%","-spread","38","-blur","0x.7",")","-alpha","off","-compose","Copy_Opacity","-composite","-gravity","SouthEast","$OUTPUT"]]
 [["convert","$INPUT","-bordercolor","#633111","-border","4x4","-background","#633111","","-gravity","SouthEast","-splice","1x1+0+0","(","+clone","-alpha","extract","-virtual-pixel","black","-spread","26","-blur","0x3","-threshold","50%","-spread","38","-blur","0x.7",")","-alpha","off","-compose","Copy_Opacity","-composite","-gravity","SouthEast","$OUTPUT"]]
 [["convert","$INPUT","-set","option:distort:viewport","243x279-10-10","-virtual-pixel","dither","-filter","point","-distort","SRT","0","+repage","$OUTPUT"]]
-                 </pre>
-            <p>Result image: </p>
-            <img src="stamp-like1.png">
+            </pre>
         </li>
 
 
-                <li>
+        <li>
             <p>use -morphology Erode and then close with disk kernel to get a blured-artistic effect</p>
             <p>Original image: </p>
             <img src="../rotate.png">
+            <img src="erode-close1.png">
             <p>Command chain</p>
             <pre>
 [["convert","$INPUT","-morphology","Erode:3","Sobel","$OUTPUT"]]
-[["convert","$INPUT","-morphology","Close:1","Disk","$OUTPUT"]] </pre>
-            <p>Result image: </p>
-            <img src="erode-close1.png">
+[["convert","$INPUT","-morphology","Close:1","Disk","$OUTPUT"]] 
+            </pre>
         </li>
-        
+
 
         <li>
-                <p>Morphology Erode and dilate several times ending with polaroid and torn paper effect</p>
-                <p>Original image: </p>
-                <img src="./cara2.png">
-                <p>Command chain</p>
-                <pre>
+            <p>Morphology Erode and dilate several times ending with polaroid and torn paper effect</p>
+            <p>Original image: </p>
+            <img src="./cara2.png">
+            <img src="distort-erode-polaroid-torn1.png">
+            <p>Command chain</p>
+            <pre>
 [["convert","$INPUT","-morphology","Erode:3","Octagon:1","$OUTPUT"]]
 [["convert","$INPUT","-morphology","Dilate:3","Diamond:1","$OUTPUT"]]
 [["convert","$INPUT","-morphology","Dilate:3","Diamond:1","$OUTPUT"]]
 [["convert","$INPUT","-morphology","Erode:3","Diamond:1","$OUTPUT"]]
 [["convert","$INPUT","-bordercolor","#046691","-background","##ff0000","+polaroid","$OUTPUT"]]
 [["convert","$INPUT","(","+clone","-alpha","extract","-virtual-pixel","black","-spread","40","-blur","0x3","-threshold","50%","-spread","40","-blur","0x.7",")","-alpha","off","-compose","Copy_Opacity","-composite","$OUTPUT"]]
-                    </pre>
-                <p>Result image: </p>
-                <img src="distort-erode-polaroid-torn1.png">
-            </li>
-        
+            </pre>
+        </li>
+
+        <li>
+            <p>stamp like 2 : border, wave, erode, replacecolor and tint</p>
+            <p>Original image: </p>
+            <img src="../rotate.png">
+            <img src="border-wave-erode-replacecolor-1.png">
+            <p>Command chain</p>
+            <pre>
+[["convert","$INPUT","-bordercolor","#b05b5b","-border","11x1","-background","#b05b5b","","-gravity","SouthEast","-splice","1x1+0+0","(","+clone","-alpha","extract","-virtual-pixel","black","-spread","3","-blur","0x3","-threshold","50%","-spread","14","-blur","0x.7",")","-alpha","off","-compose","Copy_Opacity","-composite","-gravity","SouthEast","$OUTPUT"]]
+[["convert","$INPUT","-wave","3x28","$OUTPUT"]]
+[["convert","$INPUT","-morphology","Erode:1","Diamond:1","$OUTPUT"]]
+[["convert","$INPUT","-fuzz","6%","-fill","#b18b8b","-opaque","#abb1ad","$OUTPUT"]]
+[["convert","$INPUT","-fill","#3d2a19","-tint","160","$OUTPUT"]]
+            </pre>
+
+        </li>
 
     </ul>
 </body>

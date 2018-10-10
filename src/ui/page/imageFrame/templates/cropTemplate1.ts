@@ -1,4 +1,4 @@
-import { ArgumentType, Color, Command, CommandTemplate, SizedImageContext } from "imagemagick-browser";
+import { ArgumentType, Color, Command, CommandTemplate, SizedImageContext, CommandTemplateTag } from "imagemagick-browser";
 
 export interface Crop1Context extends Partial<SizedImageContext> {
   background: Color
@@ -15,6 +15,7 @@ export const cropTemplate1: CommandTemplate<Crop1Context> = {
     const result = JSON.parse(`[["convert", "$INPUT", "-quiet", "-crop", "${context.imageWidth + context.horizontalMargin * 2}x${context.imageHeight + context.verticalMargin * 2}-${context.horizontalMargin}-${context.verticalMargin}!", "-background", "${context.background}", "-flatten", "$OUTPUT"]]`) as Command[]
     return result
   },
+  tags: [CommandTemplateTag.decoration],
   defaultTemplateContext: {
     horizontalMargin: 12,
     verticalMargin: 10,

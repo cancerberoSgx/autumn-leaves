@@ -1,4 +1,4 @@
-import { ArgumentType, Color, Command, CommandTemplate, Distort, PointHandler, SizedImageContext, VirtualPixel, VirtualPixelMethods } from "imagemagick-browser";
+import { ArgumentType, Color, Command, CommandTemplate, Distort, PointHandler, SizedImageContext, VirtualPixel, VirtualPixelMethods, CommandTemplateTag } from "imagemagick-browser";
 
 type ThisDistorts = Distort.Perspective | Distort.BilinearForward | Distort.BilinearReverse | Distort.Shepards
 const thisDistorts = [Distort.Perspective, Distort.BilinearForward, Distort.BilinearReverse, Distort.Shepards]
@@ -36,10 +36,9 @@ export const DistortPerspective1: CommandTemplate<DistortPerspective1Context> = 
   template: function (context: DistortPerspective1Context) {
     const s = `[["convert", "$INPUT","-virtual-pixel","${context.virtualPixel}","-distort","${context.distort}","${context.points[0]},${context.points[1]} ${context.points[2]},${context.points[3]} ${context.points[4]},${context.points[5]} ${context.points[6]},${context.points[7]}", "$OUTPUT"]]`
     const result = JSON.parse(s) as Command[]
-    // console.log('sssss', s);
-
     return result
   },
+  tags: [CommandTemplateTag.distort],
   defaultTemplateContext: {
     points: defaultPoints,
     virtualPixel: VirtualPixel.Tile,

@@ -7,17 +7,18 @@ import { clone, query } from '../../../util/misc';
 import { imageFrames } from './data';
 import { dispatchUrl } from './dispatchUrl';
 import { Link, match } from 'react-router-dom';
+import { SelectTemplate } from './SelectTemplate';
 
 
 const defaultImageSrc = 'rotate.png' // TODO : remove from almost everywhere
 
 const styles = (theme: Theme) => createStyles({
   input: {
-    width: '100%',
+    // width: '100%',
   },
   root: {},
   formControl: {
-    width: '100%',
+    // width: '100%',
   },
   select: {},
   error: {
@@ -102,7 +103,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
             <option value={t.id} selected={t.id === this.state.selectedFrameTemplate.id}>{t.name}</option>
           )}
         </select> */}
-        <FormControl className={classes.formControl}>
+        {/* <FormControl className={classes.formControl}>
           <InputLabel htmlFor="template-helper">Command Template</InputLabel>
           <Select
             value={this.state.selectedFrameTemplate.id}
@@ -114,7 +115,13 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
             )}
           </Select>
           <FormHelperText>Select one template to customize:</FormHelperText>
-        </FormControl>
+        </FormControl> */}
+
+        <SelectTemplate
+          onSelect={e => this.selectedTemplateChange(e.selectedTemplateId)}
+          selected={imageFrames[0]}
+          templates={imageFrames}
+        />
 
 
         {/* command editor  */}

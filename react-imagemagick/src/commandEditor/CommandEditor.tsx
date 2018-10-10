@@ -39,7 +39,10 @@ export class CommandEditor extends React.Component<CommandEditorProps, CommandEd
   private setStateDefaults() {
     if (this.props.commandTemplate.arguments) {
       this.props.commandTemplate.arguments.forEach(arg => {
-        this.state.templateContext[arg.id] = this.state.templateContext[arg.id] || this.props.templateContext && this.props.templateContext[arg.id] || this.props.commandTemplate.defaultTemplateContext && this.props.commandTemplate.defaultTemplateContext[arg.id] || undefined
+        // const c: any = this.state.templateContext
+        (this.state.templateContext as any)[arg.id] = (this.state.templateContext as any)[arg.id] ||
+          this.props.templateContext && (this.props.templateContext as any)[arg.id] || this.props.commandTemplate.defaultTemplateContext &&
+          (this.props.commandTemplate.defaultTemplateContext as any)[arg.id] || undefined
       })
     }
   }
@@ -49,14 +52,14 @@ export class CommandEditor extends React.Component<CommandEditorProps, CommandEd
   }
 
   render(): React.ReactNode {
- 
+
     return (
       <div>
         <h4>{this.props.commandTemplate.name}</h4>
         <p>{this.props.commandTemplate.description}</p>
+        <p><em>Heads up!</em>The editor controls currently don't work correctly and you might need to modify them (or all of them) in order to start applying the real thing...</p>
         <ul>
-        {(() => {
-          // if (this.props.commandTemplate.template && this.props.commandTemplate.arguments) {
+          {(() => {
             return this.props.commandTemplate.arguments.map(arg => {
               const context = {
                 ...this.state.templateContext,
@@ -67,21 +70,20 @@ export class CommandEditor extends React.Component<CommandEditorProps, CommandEd
                 {arg.name}: {buildArgumentEditor(arg, context, e => this.argumentChangeEvent(arg, e), this.props.imageSrc)}
               </li>
             })
-          // }
-        })()}
+          })()}
         </ul>
       </div>
     )
   }
 
   protected argumentChangeEvent(arg: Argument, event: ArgumentChangeEvent<any>) {
-    this.state.templateContext[arg.id] = event.value
+    (this.state.templateContext as any)[arg.id] = event.value
     this.setTemplateValue()
   }
 
   protected setTemplateValue() {
-    this.state.templateContext.imageWidth = this.props.imageWidth()
-    this.state.templateContext.imageHeight = this.props.imageHeight()
+    (this.state.templateContext as any).imageWidth = this.props.imageWidth();
+    (this.state.templateContext as any).imageHeight = this.props.imageHeight()
     const value = this.props.commandTemplate.template(this.state.templateContext)
     this.state.commands = value
     this.setState({ ...this.state })
@@ -96,15 +98,16 @@ export class CommandEditor extends React.Component<CommandEditorProps, CommandEd
 
 function buildArgumentEditor<T>(arg: Argument, templateContext: SizedImageContext, onChange: (e: ArgumentChangeEvent<T>) => void, imageSrc: string) {
 
+  const val = (templateContext as any)[arg.id]
   if (arg.type === ArgumentType.color) {
     return <ColorPickerEditor
-      value={templateContext[arg.id] + ''}
+      value={val + ''}
       argument={arg}
       onChange={onChange as any}
     />
   }
   else if (arg.type === ArgumentType.number) {
-    const value = parseInt(templateContext[arg.id] + '')
+    const value = parseInt(val + '')
     return <NumberEditor
       value={value}
       argument={arg}
@@ -113,7 +116,7 @@ function buildArgumentEditor<T>(arg: Argument, templateContext: SizedImageContex
   }
   else if (arg.type === ArgumentType.selectOne) {
     return <SelectOneEditor
-      value={templateContext[arg.id] + ''}
+      value={val + ''}
       select={arg.list}
       argument={arg}
       onChange={onChange as any}
