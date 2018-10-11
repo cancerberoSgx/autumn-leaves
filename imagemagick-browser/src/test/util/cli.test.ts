@@ -1,4 +1,4 @@
-import { convert } from '../../';
+import { convert } from '../..';
 import { arrayToIMCommand } from '../../util/cli';
 
 describe('cli utils', () => {

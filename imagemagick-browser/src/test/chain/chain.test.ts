@@ -1,4 +1,4 @@
-import { convert } from '../../';
+import { convert } from '../..';
 
 describe('chain', () => {
   it('chain method should return a new Chain', () => {
