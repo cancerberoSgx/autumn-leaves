@@ -4,6 +4,7 @@ import { ColorPickerEditor } from './ColorPickerEditor';
 import { ImagePointsEditor } from './ImagePointsEditor';
 import { NumberEditor } from './NumberEditor';
 import { SelectOneEditor } from './SelectOneEditor';
+import { buildArgumentEditor } from './buildArgumentEditor';
 
 export interface CommandEditorProps extends CommandEditorPropsBase {
   templateContext: SizedImageContext
@@ -28,12 +29,12 @@ export class CommandEditor extends React.Component<CommandEditorProps, CommandEd
   constructor(props: CommandEditorProps, state: CommandEditorState) {
     super(props, state)
     this.state = {
-      commands: [],
-      templateContext: {},
+      commands: this.props.commandTemplate.template(props.commandTemplate.defaultTemplateContext),
+      templateContext: props.commandTemplate.defaultTemplateContext,
       imageSrc: '',
     }
-    this.setStateDefaults()
-    this.state.commands = props.commandTemplate.commands
+    // this.setStateDefaults()
+    // this.state.commands = this.
   }
 
   private setStateDefaults() {
@@ -65,6 +66,8 @@ export class CommandEditor extends React.Component<CommandEditorProps, CommandEd
               imageWidth: this.props.imageWidth(),
               imageHeight: this.props.imageHeight()
             }
+            console.log('COMMANDEDITOR', context);
+            
             return <li>
               {arg.name}: {buildArgumentEditor(arg, context, e => this.argumentChangeEvent(arg, e), this.props.imageSrc)}
             </li>
@@ -93,44 +96,3 @@ export class CommandEditor extends React.Component<CommandEditorProps, CommandEd
   }
 }
 
-
-function buildArgumentEditor<T>(arg: Argument, templateContext: SizedImageContext, onChange: (e: ArgumentChangeEvent<T>) => void, imageSrc: string) {
-
-  const val = (templateContext as any)[arg.id]
-  if (arg.type === ArgumentType.color) {
-    return <ColorPickerEditor
-      value={val + ''}
-      argument={arg}
-      onChange={onChange as any}
-    />
-  }
-  else if (arg.type === ArgumentType.number) {
-    const value = parseInt(val + '')
-    return <NumberEditor
-      value={value}
-      argument={arg}
-      onChange={onChange as any}
-    />
-  }
-  else if (arg.type === ArgumentType.selectOne) {
-    return <SelectOneEditor
-      value={val + ''}
-      select={arg.list}
-      argument={arg}
-      onChange={onChange as any}
-    />
-  }
-  else if (arg.type === ArgumentType.imagePoints) {
-    return <ImagePointsEditor
-      imageWidth={templateContext.imageWidth}
-      imageHeight={templateContext.imageHeight}
-      imageSrc={imageSrc}
-      value={arg.points}
-      argument={arg}
-      onChange={onChange as any}
-    />
-  }
-  else {
-    return <div>Sorry, dont know how to represent {arg.type}, yet</div>
-  }
-}

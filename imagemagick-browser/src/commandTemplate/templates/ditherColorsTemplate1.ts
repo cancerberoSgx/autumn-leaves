@@ -7,7 +7,7 @@ export interface ditherColorsContext extends Partial<SizedImageContext> {
 export const ditherColorsTemplate: CommandTemplate<ditherColorsContext> = {
   id: 'ditherColors',
   name: 'Dither Colors',
-  commands: [["convert", "$INPUT",  "-dither", Dither.FloydSteinberg, "$OUTPUT"]],
+  // commands: [["convert", "$INPUT",  "-dither", Dither.FloydSteinberg, "$OUTPUT"]],
   description: `Reduce the number of colors interpolating pixels using different dither algorithms`,
   template: context => JSON.parse(`[["convert", "$INPUT", "-dither", "${context.dither}", "-colors", "${context.colors}", "$OUTPUT"]]`) as Command[],
   defaultTemplateContext: {

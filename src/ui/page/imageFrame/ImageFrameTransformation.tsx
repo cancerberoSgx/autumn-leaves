@@ -47,7 +47,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
 
   state: ImageFrameTransformationState = {
     selectedFrameTemplate: templates[0],
-    commands: clone(templates[0].commands),
+    commands: templates[0].template(templates[0].defaultTemplateContext),
     inputFiles: [],
     commandChain: []
   }
@@ -61,7 +61,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
   }
 
   render(): React.ReactNode {
-    console.log('RENDER', JSON.stringify(this.state.commandChain));
+    // console.log('ImageFrameTransformation RENDER', JSON.stringify(this.state.commandChain));
 
     const { classes } = this.props
     if (!this.getFirstInputImage()) {
@@ -149,8 +149,6 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
                 title="So I can apply transformations on this one..."
                 onClick={async e => {
                   const inputFile = await readInputImageFromUrl((document.getElementById('outputFile') as HTMLImageElement).src, this.state.inputFiles[0].name)
-                  console.log(' this.state.commandChain.concat([this.state.commands]', this.state.commandChain.concat([this.state.commands]));
-
                   this.setState({ ...this.state, inputFiles: [inputFile], commandChain: this.state.commandChain.concat([this.state.commands]) })
                 }}>
                 Make this the source image
@@ -176,11 +174,11 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     }
 
     if (!this.state.inputFiles.length) {
-      let context
-      try {
-        context = JSON.parse(decodeURIComponent(this.props.match.params.context) || 'undefined')
-      } catch (error) {
-      }
+      // let context
+      // try {
+      //   context = JSON.parse(decodeURIComponent(this.props.match.params.context) || 'undefined')
+      // } catch (error) {
+      // }
       const imageSrc = this.props.match.params.imageSrc ? decodeURIComponent(this.props.match.params.imageSrc) : defaultImageSrc
       const image = await readInputImageFromUrl(imageSrc)
       this.setState({
@@ -202,6 +200,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
 
   componentWillUpdate() {
     this.execute()
+    this.updateCommand(undefined, false)
   }
 
   async selectedTemplateChange(templateId: string) {
@@ -210,15 +209,16 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     await this.execute()
   }
 
-  updateCommand(frame: CommandTemplate = this.state.selectedFrameTemplate): any {
+  updateCommand(frame: CommandTemplate = this.state.selectedFrameTemplate, setState: boolean= true, ): any {
     let commands: Command[]
     if (frame.template) {
       commands = frame.template(frame.defaultTemplateContext)
     }
-    else {
-      commands = frame.commands
+    this.state.selectedFrameTemplate = frame
+    this.state.commands = commands
+    if(setState){
+      this.setState({ ...this.state, selectedFrameTemplate: frame, commands })  
     }
-    this.setState({ ...this.state, selectedFrameTemplate: frame, commands })
   }
 
   private getFirstInputImage(): MagickInputFile | undefined {
@@ -242,7 +242,8 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     }
     const inputImageName = image.name
     const outputImageName = getOutputImageNameFor(inputImageName)
-    const commands = this.state.commands.map((command: Command) =>
+    // console.log('execute', this.state.commands)    
+    const commands = this.state.commands.map(command =>
       command.map(s =>
         s === '$INPUT' ? inputImageName : s === '$OUTPUT' ? outputImageName : s
       )

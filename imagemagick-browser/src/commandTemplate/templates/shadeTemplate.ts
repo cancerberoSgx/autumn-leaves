@@ -7,7 +7,7 @@ export interface shadeContext extends Partial<SizedImageContext> {
 export const shadeTemplate: CommandTemplate<shadeContext> = {
   id: 'shade',
   name: 'shade',
-  commands: [["convert", "$INPUT", "-shade", `1x1` , "$OUTPUT"]],
+  // commands: [["convert", "$INPUT", "-shade", `1x1` , "$OUTPUT"]],
   description: `TODO`,
   template: context => {
     const command = JSON.parse(`[["convert", "$INPUT",  "-shade", "${context.azimuth}x${context.elevation}" , "$OUTPUT"]]`) as Command[]

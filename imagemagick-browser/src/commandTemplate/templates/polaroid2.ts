@@ -8,7 +8,7 @@ export interface Polaroid2Context extends Partial<SizedImageContext> {
 export const polaroidTemplate2: CommandTemplate<Polaroid2Context> = {
   id: 'framePolaroid2_',
   name: 'Polaroid 2',
-  commands: [["convert", "$INPUT", "-bordercolor", "snow", "-background", "black", "+polaroid", "$OUTPUT"]],
+  // commands: [["convert", "$INPUT", "-bordercolor", "snow", "-background", "black", "+polaroid", "$OUTPUT"]],
   description: 'TODO',
   template: function (context: Polaroid2Context) {
     const s = `[["convert", "$INPUT", "-bordercolor", "${context.bordercolor}", "-background", "${context.background}", "+polaroid", "$OUTPUT"]]`

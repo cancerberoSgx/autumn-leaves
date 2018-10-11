@@ -8,7 +8,7 @@ export interface tintContext extends Partial<SizedImageContext> {
 export const tintTemplate: CommandTemplate<tintContext> = {
   id: 'tint',
   name: 'tint',
-  commands: [["convert", "$INPUT", "-fill", '#a72b2b', "-tint", "55", "$OUTPUT"]],
+  // commands: [["convert", "$INPUT", "-fill", '#a72b2b', "-tint", "55", "$OUTPUT"]],
   description: `Shear the columns of an image into a sine tint.`,
   template: context => JSON.parse(`[["convert", "$INPUT", "-fill", "${context.color}", "-tint", "${context.value}", "$OUTPUT"]]`) as Command[],
   defaultTemplateContext: {

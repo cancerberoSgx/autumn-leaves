@@ -8,7 +8,7 @@ export interface colorizeContext extends Partial<SizedImageContext> {
 export const colorizeTemplate: CommandTemplate<colorizeContext> = {
   id: 'colorize',
   name: 'colorize',
-  commands: [["convert", "$INPUT","-fill", "#ed9843", "-colorize", "12", "$OUTPUT"]],
+  // commands: [["convert", "$INPUT","-fill", "#ed9843", "-colorize", "12", "$OUTPUT"]],
   description: `
 Colorize the image by an amount specified by value using the color specified by 'color'
 Specify the amount of colorization as a percentage. Separate colorization values can be applied to the red, green, and blue channels of the 

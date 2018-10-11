@@ -31,7 +31,7 @@ export interface DistortPerspective1Context extends Partial<SizedImageContext> {
 export const DistortPerspective1: CommandTemplate<DistortPerspective1Context> = {
   id: 'DistortPerspective1',
   name: 'Distort Perspective 1',
-  commands: [["convert", "$INPUT", "-virtual-pixel", "dither", "-distort", "Perspective", "9,76,7,82 14,-18,21,-47 76,2,76,-25 77,42,81,9", "$OUTPUT"]],
+  // commands: [["convert", "$INPUT", "-virtual-pixel", "dither", "-distort", "Perspective", "9,76,7,82 14,-18,21,-47 76,2,76,-25 77,42,81,9", "$OUTPUT"]],
   description: "TODO",
   template: function (context: DistortPerspective1Context) {
     const s = `[["convert", "$INPUT","-virtual-pixel","${context.virtualPixel}","-distort","${context.distort}","${context.points[0]},${context.points[1]} ${context.points[2]},${context.points[3]} ${context.points[4]},${context.points[5]} ${context.points[6]},${context.points[7]}", "$OUTPUT"]]`

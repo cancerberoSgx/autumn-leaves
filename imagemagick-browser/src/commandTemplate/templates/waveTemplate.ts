@@ -8,7 +8,7 @@ export interface waveContext extends Partial<SizedImageContext> {
 export const waveTemplate: CommandTemplate<waveContext> = {
   id: 'wave',
   name: 'wave',
-  commands: [["convert", "$INPUT", "-wave", "5x33", "$OUTPUT"]],
+  // commands: [["convert", "$INPUT", "-wave", "5x33", "$OUTPUT"]],
   description: `Shear the columns of an image into a sine wave.`,
   template: context => JSON.parse(`[["convert", "$INPUT", "-wave", "${context.amplitude}x${context.wavelength}", "$OUTPUT"]]`) as Command[],
   defaultTemplateContext: {

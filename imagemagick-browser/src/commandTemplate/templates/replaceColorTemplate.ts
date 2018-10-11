@@ -9,7 +9,7 @@ export interface replaceColorContext extends Partial<SizedImageContext> {
 export const replaceColorTemplate: CommandTemplate<replaceColorContext> = {
   id: 'replaceColor',
   name: 'replaceColor',
-  commands: [["convert", "$INPUT", "-fuzz", "40%", "-fill", "red", "-opaque", "black", "$OUTPUT"]],
+  // commands: [["convert", "$INPUT", "-fuzz", "40%", "-fill", "red", "-opaque", "black", "$OUTPUT"]],
   description: `Replace color 'opaque' with color 'fill' optinally with a 'fuzz' tolerance when matching colors`,
   template: context => JSON.parse(`[["convert", "$INPUT", "-fuzz", "${context.fuzz}%", "-fill", "${context.fill}", "-opaque", "${context.opaque}", "$OUTPUT"]]`) as Command[],
   defaultTemplateContext: {

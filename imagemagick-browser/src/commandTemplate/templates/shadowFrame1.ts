@@ -10,7 +10,7 @@ export interface shadowFrame1Context extends Partial<SizedImageContext> {
 export const shadowFrame1: CommandTemplate<shadowFrame1Context> = {
   id: 'shadowFrame1',
   name: 'shadow 1',
-  commands: [["convert", "$INPUT", "-page", "+4+4", "-alpha", "set", "(", "+clone", "-background", "navy", "-shadow", "60x4+4+4", ")", "+swap", "-background", "none", "-mosaic", "$OUTPUT"]],
+  // commands: [["convert", "$INPUT", "-page", "+4+4", "-alpha", "set", "(", "+clone", "-background", "navy", "-shadow", "60x4+4+4", ")", "+swap", "-background", "none", "-mosaic", "$OUTPUT"]],
   description: 'TODO',
   template: function (context: shadowFrame1Context) {
     const s = `[["convert", "$INPUT", "-page", "+4+4", "-alpha", "set", "(", "+clone", "-background", "${context.background}${/* new Number(context.alpha).toString(16) */''}", "-shadow", "${context.intensity}x${context.size}+${context.offsetX}+4", ")", "+swap", "-background", "none", "-mosaic", "$OUTPUT"]]`

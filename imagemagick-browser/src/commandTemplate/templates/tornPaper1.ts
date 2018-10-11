@@ -8,7 +8,7 @@ export interface TornPaper1Context extends Partial<SizedImageContext> {
 export const tornPaper1: CommandTemplate<TornPaper1Context> = {
   id: 'frameTornPaperEdge1',
   name: 'Torn paper 1',
-  commands: [["convert", "$INPUT", "(", "+clone", "-alpha", "extract", "-virtual-pixel", "black", "-spread", "10", "-blur", "0x3", "-threshold", "50%", "-spread", "1", "-blur", "0x.7", ")", "-alpha", "off", "-compose", "Copy_Opacity", "-composite", "$OUTPUT"]],
+  // commands: [["convert", "$INPUT", "(", "+clone", "-alpha", "extract", "-virtual-pixel", "black", "-spread", "10", "-blur", "0x3", "-threshold", "50%", "-spread", "1", "-blur", "0x.7", ")", "-alpha", "off", "-compose", "Copy_Opacity", "-composite", "$OUTPUT"]],
   description: 'TODO',
   template: function (context: TornPaper1Context) {
     const s = `[["convert", "$INPUT", "(", "+clone", "-alpha", "extract", "-virtual-pixel", "black", "-spread", "${context.spread1}", "-blur", "0x3", "-threshold", "50%", "-spread", "${context.spread1}", "-blur", "0x.7", ")", "-alpha", "off", "-compose", "Copy_Opacity", "-composite", "$OUTPUT"]]`

@@ -11,7 +11,7 @@ export interface PlasmaFrame1Context extends Partial<SizedImageContext> {
 export const plasmaFrame1: CommandTemplate<PlasmaFrame1Context> = {
   id: 'plasmaFrame1',
   name: 'Plasma 1',
-  commands: [['convert', '$INPUT', '-matte', '-mattecolor', '#CCC6', '-frame', '10x10+30+40', '(', '-size', '209x245', 'plasma:fractal', '-normalize', '-blur', '0x1', ')', '-compose', 'DstOver', '-composite', '$OUTPUT']],
+  // commands: [['convert', '$INPUT', '-matte', '-mattecolor', '#CCC6', '-frame', '10x10+30+40', '(', '-size', '209x245', 'plasma:fractal', '-normalize', '-blur', '0x1', ')', '-compose', 'DstOver', '-composite', '$OUTPUT']],
   description: 'TODO',
   template: function (context: PlasmaFrame1Context) {
     const s = `

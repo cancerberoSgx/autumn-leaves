@@ -41,7 +41,7 @@ export * from './util/image'
 export * from './util/cli'
 export * from './util/misc'
 
-export * from './commandEditor/commandTemplate'
+export * from './commandTemplate/commandTemplate'
 export * from './options/virtualPixel'
 export * from './options/filter'
 
@@ -49,7 +49,7 @@ export * from './list'
 
 export * from './chain'
 
-export * from './commandEditor/templates'
+export * from './commandTemplate/templates'
 
 // TODO: Example of organizing in modules: 
 

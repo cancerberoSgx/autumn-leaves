@@ -7,7 +7,7 @@ export interface OilPaintContext extends Partial<SizedImageContext> {
 export const oilTemplate: CommandTemplate<OilPaintContext> = {
   id: 'OilPaint',
   name: 'Oil Paint',
-  commands: [["convert", "$INPUT",  "-paint", "5", "$OUTPUT"]],
+  // commands: [["convert", "$INPUT",  "-paint", "5", "$OUTPUT"]],
   description: `simulate an oil painting. Each pixel is replaced by the most frequent color in a circular neighborhood whose width is specified with radius.`,
   template: context => JSON.parse(`[["convert", "$INPUT", "-paint", "${context.radius}", "$OUTPUT"]]`) as Command[],
   defaultTemplateContext: {

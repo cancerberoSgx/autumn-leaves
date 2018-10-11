@@ -1,6 +1,5 @@
 import { Command } from '..';
 
-// import { Command } from 'imagemagick-browser'
 // TODO: maybe it's better to remove this interface for stricter typechecking
 export interface TemplateContext {
   // [key: string]: any
@@ -18,10 +17,10 @@ export interface SizedImageContext extends TemplateContext {
 export interface CommandTemplate<Context=TemplateContext> {
   id: string;
   name: string;
-  /** initial value */
+  // /** initial value */
   command?: Command;
-  /** initial value */
-  commands?: Command[];
+  // /** initial value */
+  // commands?: Command[];
   description?: string;
   /** implementation of the template. Tip use js template strings and JSON.parse like: 
    * ```JSON.parse(`[["convert" "input.png", "-rotate", ${context.amount} ]]`)``` */

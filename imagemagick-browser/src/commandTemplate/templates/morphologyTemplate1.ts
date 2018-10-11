@@ -15,7 +15,7 @@ export interface morphologyContext extends Partial<SizedImageContext> {
 export const morphologyTemplate: CommandTemplate<morphologyContext> = {
   id: 'morphology',
   name: 'Morphology',
-  commands: [["convert", "$INPUT", "-morphology", `${Morphology.Close}:1`, Kernel.Disk, "$OUTPUT"]],
+  // commands: [["convert", "$INPUT", "-morphology", `${Morphology.Close}:1`, Kernel.Disk, "$OUTPUT"]],
   description: `TODO`,
   template: context => {
     const command = JSON.parse(`[["convert", "$INPUT", "-morphology", "${context.method + (context.iterations ? `:${context.iterations}` : ``)}", "${context.kernel+ (context.kernelArguments ? `:${context.kernelArguments}` : ``)}", "$OUTPUT"]]`) as Command[]

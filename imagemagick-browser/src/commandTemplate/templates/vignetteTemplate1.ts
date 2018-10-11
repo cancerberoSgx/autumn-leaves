@@ -9,7 +9,7 @@ export interface Vignette1Context extends Partial<SizedImageContext> {
 export const vignetteTemplate1: CommandTemplate<Vignette1Context> = {
     id: 'frameVignette1',
     name: 'Vignette',
-    commands: [['convert', '$INPUT', '-alpha', 'set', '-background', 'none', '-vignette', '0x4', '$OUTPUT']],
+    // commands: [['convert', '$INPUT', '-alpha', 'set', '-background', 'none', '-vignette', '0x4', '$OUTPUT']],
     description: 'TODO',
     template: function (context: Vignette1Context) {
         const result = JSON.parse(`[["convert", "$INPUT",  "-alpha", "set", "-background", "${context.background}", "-vignette", "${context.radius}x${context.sigma}", "$OUTPUT"]]`) as Command[]
