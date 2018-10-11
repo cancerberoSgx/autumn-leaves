@@ -1,10 +1,10 @@
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, Input, FormHelperText } from '@material-ui/core';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
-import { Command, CommandTemplate, execute, ExecuteConfig, ImageSize, loadImg, MagickInputFile, readInputImageFromUrl, uint8ArrayToBlob, getNameFromUrl, getOutputImageNameFor, getFileNameFromUrl, MagickOutputFile } from 'imagemagick-browser';
+import { Command, CommandTemplate, templates, execute, ExecuteConfig, ImageSize, loadImg, MagickInputFile, readInputImageFromUrl, uint8ArrayToBlob, getNameFromUrl, getOutputImageNameFor, getFileNameFromUrl, MagickOutputFile } from 'imagemagick-browser';
 import * as React from 'react';
 import { CommandEditor, SelectImageEditor } from 'react-imagemagick';
 import { clone, query } from '../../../util/misc';
-import { imageFrames } from './data';
+// import { templates } from './data';
 import { dispatchUrl } from './dispatchUrl';
 import { Link, match } from 'react-router-dom';
 import { SelectTemplate } from './SelectTemplate';
@@ -22,7 +22,7 @@ const styles = (theme: Theme) => createStyles({
   },
   select: {},
   error: {
-    fontWeight: 'bold'
+    // fontWeight: 'bold'
   }
 })
 
@@ -50,8 +50,8 @@ export interface ImageFrameTransformationState {
 export class ImageFrameTransformationNaked extends React.Component<ImageFrameTransformationProps, ImageFrameTransformationState> {
 
   state: ImageFrameTransformationState = {
-    selectedFrameTemplate: imageFrames[0],
-    commands: clone(imageFrames[0].commands),
+    selectedFrameTemplate: templates[0],
+    commands: clone(templates[0].commands),
     inputFiles: [],
     commandChain: []
   }
@@ -99,7 +99,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
         {/* <select className={classes.select}
           onChange={e => this.selectedTemplateChange(e.target.value)}
         >
-          {imageFrames.map((t: CommandTemplate, i: number) =>
+          {templates.map((t: CommandTemplate, i: number) =>
             <option value={t.id} selected={t.id === this.state.selectedFrameTemplate.id}>{t.name}</option>
           )}
         </select> */}
@@ -110,7 +110,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
             onChange={e => this.selectedTemplateChange(e.target.value)}
             input={<Input name="template" id="template-helper" />}
           >
-            {imageFrames.map((t: CommandTemplate, i: number) =>
+            {templates.map((t: CommandTemplate, i: number) =>
               <MenuItem value={t.id} selected={t.id === this.state.selectedFrameTemplate.id}>{t.name}</MenuItem>
             )}
           </Select>
@@ -119,8 +119,8 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
 
         <SelectTemplate
           onSelect={e => this.selectedTemplateChange(e.selectedTemplateId)}
-          selected={imageFrames[0]}
-          templates={imageFrames}
+          selected={templates[0]}
+          templates={templates}
         />
 
 
@@ -201,7 +201,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     const urlData = dispatchUrl()
     // console.log('dispatchUrl', urlData.template && urlData.template !== this.state.selectedFrameTemplate.id, urlData);
     if (urlData.template && urlData.template !== this.state.selectedFrameTemplate.id) {
-      this.state.selectedFrameTemplate = imageFrames.find(t => t.id === urlData.template) || this.state.selectedFrameTemplate
+      this.state.selectedFrameTemplate = templates.find(t => t.id === urlData.template) || this.state.selectedFrameTemplate
       // console.log('selectedFrameTemplate', this.state.selectedFrameTemplate);
       this.updateCommand(this.state.selectedFrameTemplate)
       // this.setState({...this.state})
@@ -209,7 +209,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
 
     if (!this.state.inputFiles.length) {
       // debugger  
-      // const selectedFrameTemplate = imageFrames.find(t => t.id === this.props.match.params.template)
+      // const selectedFrameTemplate = templates.find(t => t.id === this.props.match.params.template)
       let context
       try {
         context = JSON.parse(decodeURIComponent(this.props.match.params.context) || 'undefined')
@@ -241,9 +241,9 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
   }
 
   async selectedTemplateChange(templateId: string) {
-    const template = imageFrames.find(t => t.id === templateId)
+    const template = templates.find(t => t.id === templateId)
     // const _commands = JSON.parse(e.target.value) as Command[]
-    // const frame = imageFrames.find(i => JSON.stringify(_commands) === JSON.stringify(i.commands))
+    // const frame = templates.find(i => JSON.stringify(_commands) === JSON.stringify(i.commands))
     // window.location.hash = ``
     this.updateCommand(template)
     await this.execute()

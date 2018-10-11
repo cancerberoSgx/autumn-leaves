@@ -52,23 +52,11 @@ export * from './chain'
 
 // TODO: Example of organizing in modules: 
 
-// java.lang
-
-// import ObjectT from './lang/Object'
-// import IterableT from './lang/Iterable'
-// import AutoCloseableT from './lang/AutoCloseable'
-// import EnumT from './lang/Enum'
-// import RunnableT from './lang/Runnable'
-// import RuntimeT from './lang/Runtime'
-// import ClassLoaderT from './lang/ClassLoader'
-// import ClassT from './lang/Class'
 // import DoubleT from './lang/Double'
 
-// import ProxyT from './lang/reflect/Proxy'
-// import MethodT from './lang/reflect/Method'
-// import InvocationHandlerT from './lang/reflect/InvocationHandler'
-
-// export namespace lang {
+// import {templates} from './commandEditor/templates'
+export * from './commandEditor/templates'
+// export namespace templates {
 //   export type Double = DoubleT
 //   export type Class<T> = ClassT<T>
 //   export type ClassLoader = ClassLoaderT
@@ -86,18 +74,7 @@ export * from './chain'
 //   }
 // }
 
-// export const lang = {
+// export const templates = {
 //   Double: DoubleT,
-//   Object: ObjectT,
-//   ClassLoader: ClassLoaderT,
-//   Class: ClassT,
-//   Enum: EnumT,
-//   Runtime: RuntimeT,
-
-//   reflect: {
-//     // InvocationHandler: InvocationHandlerT,
-//     Method: MethodT,
-//     Proxy: ProxyT,
-//   }
 // }
 
