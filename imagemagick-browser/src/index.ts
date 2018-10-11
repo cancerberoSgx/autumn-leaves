@@ -49,13 +49,12 @@ export * from './list'
 
 export * from './chain'
 
+export * from './commandEditor/templates'
 
 // TODO: Example of organizing in modules: 
 
 // import DoubleT from './lang/Double'
 
-// import {templates} from './commandEditor/templates'
-export * from './commandEditor/templates'
 // export namespace templates {
 //   export type Double = DoubleT
 //   export type Class<T> = ClassT<T>

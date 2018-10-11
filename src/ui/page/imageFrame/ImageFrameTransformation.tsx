@@ -4,7 +4,6 @@ import { Command, CommandTemplate, templates, execute, ExecuteConfig, ImageSize,
 import * as React from 'react';
 import { CommandEditor, SelectImageEditor } from 'react-imagemagick';
 import { clone, query } from '../../../util/misc';
-// import { templates } from './data';
 import { dispatchUrl } from './dispatchUrl';
 import { Link, match } from 'react-router-dom';
 import { SelectTemplate } from './SelectTemplate';
@@ -14,15 +13,12 @@ const defaultImageSrc = 'rotate.png' // TODO : remove from almost everywhere
 
 const styles = (theme: Theme) => createStyles({
   input: {
-    // width: '100%',
-  },
+  }, 
   root: {},
   formControl: {
-    // width: '100%',
   },
   select: {},
   error: {
-    // fontWeight: 'bold'
   }
 })
 
@@ -71,10 +67,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     if (!this.getFirstInputImage()) {
       return <div>Loading Image...</div>
     }
-    // else {
-    //   const img = document.getElementById('sourceImage') as HTMLImageElement
-    //   console.log(img ? img.src : 'not yet');
-    // }
+
     const imageSrc = URL.createObjectURL(uint8ArrayToBlob(this.getFirstInputImage().content))
     return (
       <div className={classes.root}>
@@ -90,39 +83,18 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
             this.setImageSize(true)
             this.setState({ ...this.state, inputFiles: e.value })
           }} />
+
         {/* <p>Just a <Link to="/imageFrame?template=frameFeathering1">link example</Link> (TODO: remove this). And <Link to="/imageFrame?template=crop1">another place</Link>. </p> */}
 
 
         {/* select template  */}
 
         <p>Then, select one of the templates below and change its parameters using the form. Current template is "{this.state.selectedFrameTemplate.name}"</p>
-        {/* <select className={classes.select}
-          onChange={e => this.selectedTemplateChange(e.target.value)}
-        >
-          {templates.map((t: CommandTemplate, i: number) =>
-            <option value={t.id} selected={t.id === this.state.selectedFrameTemplate.id}>{t.name}</option>
-          )}
-        </select> */}
-        {/* <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="template-helper">Command Template</InputLabel>
-          <Select
-            value={this.state.selectedFrameTemplate.id}
-            onChange={e => this.selectedTemplateChange(e.target.value)}
-            input={<Input name="template" id="template-helper" />}
-          >
-            {templates.map((t: CommandTemplate, i: number) =>
-              <MenuItem value={t.id} selected={t.id === this.state.selectedFrameTemplate.id}>{t.name}</MenuItem>
-            )}
-          </Select>
-          <FormHelperText>Select one template to customize:</FormHelperText>
-        </FormControl> */}
-
         <SelectTemplate
           onSelect={e => this.selectedTemplateChange(e.selectedTemplateId)}
           selected={templates[0]}
           templates={templates}
         />
-
 
         {/* command editor  */}
 
@@ -151,7 +123,6 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
           Execute!
         </Button>
         <br />
-
 
         {/* input and output image */}
 
@@ -199,17 +170,12 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
 
   protected async dispatchUrl() {
     const urlData = dispatchUrl()
-    // console.log('dispatchUrl', urlData.template && urlData.template !== this.state.selectedFrameTemplate.id, urlData);
     if (urlData.template && urlData.template !== this.state.selectedFrameTemplate.id) {
       this.state.selectedFrameTemplate = templates.find(t => t.id === urlData.template) || this.state.selectedFrameTemplate
-      // console.log('selectedFrameTemplate', this.state.selectedFrameTemplate);
       this.updateCommand(this.state.selectedFrameTemplate)
-      // this.setState({...this.state})
     }
 
     if (!this.state.inputFiles.length) {
-      // debugger  
-      // const selectedFrameTemplate = templates.find(t => t.id === this.props.match.params.template)
       let context
       try {
         context = JSON.parse(decodeURIComponent(this.props.match.params.context) || 'undefined')
@@ -228,7 +194,6 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
         //TODO: pass the conetxt and declare it on this.state
       })
     }
-    // console.log('SEBA: ', this.props.match.params);
   }
 
   async componentWillMount() {
@@ -236,15 +201,11 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
   }
 
   componentWillUpdate() {
-    // await this.dispatchUrl()
     this.execute()
   }
 
   async selectedTemplateChange(templateId: string) {
     const template = templates.find(t => t.id === templateId)
-    // const _commands = JSON.parse(e.target.value) as Command[]
-    // const frame = templates.find(i => JSON.stringify(_commands) === JSON.stringify(i.commands))
-    // window.location.hash = ``
     this.updateCommand(template)
     await this.execute()
   }
@@ -261,7 +222,6 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
   }
 
   private getFirstInputImage(): MagickInputFile | undefined {
-    // if (!this.state.inputFiles.length) { debugger }
     return this.state.inputFiles.length ? this.state.inputFiles[0] : undefined
   }
 
@@ -291,18 +251,11 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
       commands,
       inputFiles: [image]
     }
-    // if(execConfig.commands[0][1].startsWith('http')){
-    //   debugger
-    // }
-    // console.log('Execute', execConfig.commands[0]);
     const result = await execute(execConfig)
     const outputFile = result[result.length - 1].outputFiles[0] // TODO: support multiple output images
     loadImg(outputFile, query('#outputFile')[0] as HTMLImageElement)
-    // this.lastOutputFile = outputFile
     return outputFile
   }
-
-
 }
 
 let lastImageSize: ImageSize = { width: 109, height: 125 } //TODO: this better, dont cheat!

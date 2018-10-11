@@ -1,14 +1,6 @@
 import { FormControl, FormHelperText, Input, InputLabel, MenuItem, Select } from '@material-ui/core';
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import { CommandTemplate } from 'imagemagick-browser';
 import * as React from 'react';
-
-// const styles = (theme: Theme) => createStyles({
-//   root: {
-//     // backgroundColor: 'pink'
-//   }, 
-//   formControl: {}
-// });
 
 export interface SelectTemplateProps {
   templates: CommandTemplate[]
@@ -31,7 +23,6 @@ export class SelectTemplate extends React.Component<SelectTemplateProps, SelectT
   }
 
   render(): React.ReactNode {
-    // const { classes, theme } = this.props
     return (
       <div> 
       <FormControl>
@@ -51,5 +42,3 @@ export class SelectTemplate extends React.Component<SelectTemplateProps, SelectT
     )
   }
 }
-
-// export const SelectTemplate = withStyles(styles, { withTheme: true })(SelectTemplateNaked as any);
