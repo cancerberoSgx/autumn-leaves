@@ -6,7 +6,7 @@
   "typings": "dist/index.d.ts",
   "scripts": {
     "build": "npx tsc",
-    "test": "npm run test-node",
+    "test": "npm run test-browser",
     "test-browser": "npx concurrently --kill-others --success first \"cd test-project1 && npm start\" \"sleep 5s && npm run test-node\"",
     "test-node": "export NODE_PATH=$(npm root --quiet -g) && npx ts-node src/test/index.ts",
     "generate-convert-list-enums": "npx ts-node scripts/generateImEnums.ts && npm run build"
