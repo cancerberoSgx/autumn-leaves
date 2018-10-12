@@ -99,6 +99,22 @@
 
         </li>
 
+        <li>
+            <p>wave swirl sharpen several times is artistic painting effect</p>
+            <p>Original image: </p>
+            <img src="./cara2.png">
+            <img src="wave-swirl-sharpen.png">
+            <p>Command chain</p>
+            <pre>
+[["convert","$INPUT","-wave","16x153","$OUTPUT"]]
+[["convert","$INPUT","-swirl","66","$OUTPUT"]]
+[["convert","$INPUT","-swirl","66","$OUTPUT"]]
+[["convert","$INPUT","-sharpen","17x13","$OUTPUT"]]
+[["convert","$INPUT","-sharpen","17x13","$OUTPUT"]]
+[["convert","$INPUT","-sharpen","17x13","$OUTPUT"]]
+            </pre>
+
+        </li>
     </ul>
 </body>
 

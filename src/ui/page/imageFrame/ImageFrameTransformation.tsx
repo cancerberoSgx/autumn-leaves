@@ -99,7 +99,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
 
         <ul>
           {this.state.commands.map((command: Command, i: number) => {
-    console.log('ImageFrameTransformation RENDER', this.state.selectedFrameTemplate.defaultTemplateContext);
+    // console.log('ImageFrameTransformation RENDER', this.state.selectedFrameTemplate.defaultTemplateContext);
             return (
               <li>
                 <CommandEditor
@@ -242,12 +242,12 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     }
     const inputImageName = image.name
     const outputImageName = getOutputImageNameFor(inputImageName)
-    // console.log('execute', this.state.commands)    
     const commands = this.state.commands.map(command =>
       command.map(s =>
         s === '$INPUT' ? inputImageName : s === '$OUTPUT' ? outputImageName : s
       )
     )
+    // console.log('execute', commands)    
     const execConfig: ExecuteConfig = {
       commands,
       inputFiles: [image]

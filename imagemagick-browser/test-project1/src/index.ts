@@ -31,7 +31,8 @@ async function domagick1() {
     inputFiles,
     commands: [['convert', 'knight.png', '-rotate', '33', 'knightOut.png']]
   })
-  writeOutputImageToEl(result[0].outputFiles[0], document.getElementById('knightImageOut') as HTMLImageElement)
+  writeOutputImageToEl(result[0].outputFiles[0], document.getElementById('knightImageOut') as HTMLImageElement);
+  (window as any).transformationsFinishedFromTest1 = true
 }
 
 async function main() {
