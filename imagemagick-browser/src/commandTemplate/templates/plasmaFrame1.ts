@@ -28,7 +28,7 @@ export const plasmaFrame1: CommandTemplate<PlasmaFrame1Context> = {
     return result
   },
   defaultTemplateContext: { // TODO :move defaultValue to arguments[i].defaultVaLue
-    mattecolor: '#ff5500',
+    mattecolor: '#ff0000',
     alpha: 123,
     frameWidth: 10,
     frameHeight: 10,

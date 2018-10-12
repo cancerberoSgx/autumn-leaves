@@ -49,6 +49,7 @@ export class CommandEditor extends React.Component<CommandEditorProps, CommandEd
   }
 
   componentDidUpdate() {
+    // this.state.templateContext = this.props.templateContext
     this.setStateDefaults()
   }
 
@@ -62,11 +63,11 @@ export class CommandEditor extends React.Component<CommandEditorProps, CommandEd
         <ul>
           {this.props.commandTemplate.arguments.map(arg => {
             const context = {
-              ...this.state.templateContext,
+              ...this.props.templateContext,
               imageWidth: this.props.imageWidth(),
               imageHeight: this.props.imageHeight()
             }
-            console.log('COMMANDEDITOR', context);
+            console.log('COMMANDEDITOR', context, this.state.templateContext,  arg, {value: (context as any)[arg.id]});
             
             return <li>
               {arg.name}: {buildArgumentEditor(arg, context, e => this.argumentChangeEvent(arg, e), this.props.imageSrc)}

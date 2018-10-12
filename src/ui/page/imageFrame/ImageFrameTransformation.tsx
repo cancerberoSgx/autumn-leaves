@@ -61,8 +61,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
   }
 
   render(): React.ReactNode {
-    // console.log('ImageFrameTransformation RENDER', JSON.stringify(this.state.commandChain));
-
+ 
     const { classes } = this.props
     if (!this.getFirstInputImage()) {
       return <div>Loading Image...</div>
@@ -100,6 +99,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
 
         <ul>
           {this.state.commands.map((command: Command, i: number) => {
+    console.log('ImageFrameTransformation RENDER', this.state.selectedFrameTemplate.defaultTemplateContext);
             return (
               <li>
                 <CommandEditor
@@ -199,8 +199,8 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
   }
 
   componentWillUpdate() {
-    this.execute()
     this.updateCommand(undefined, false)
+    this.execute()
   }
 
   async selectedTemplateChange(templateId: string) {
@@ -210,10 +210,10 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
   }
 
   updateCommand(frame: CommandTemplate = this.state.selectedFrameTemplate, setState: boolean= true, ): any {
-    let commands: Command[]
-    if (frame.template) {
-      commands = frame.template(frame.defaultTemplateContext)
-    }
+    let commands: Command[]= frame.template(frame.defaultTemplateContext)
+    // if (frame.template) {
+    //   commands = frame.template(frame.defaultTemplateContext)
+    // }
     this.state.selectedFrameTemplate = frame
     this.state.commands = commands
     if(setState){
