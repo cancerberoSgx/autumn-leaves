@@ -51,6 +51,17 @@ export function blobToString(blb: Blob): Promise<string> {
   })
 }
 
+export function blobToBinaryString(blb: Blob): Promise<string> {
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.addEventListener('loadend', (e) => {
+      const text = (e.srcElement as any).result as string;
+      resolve(text)
+    });
+    reader.readAsBinaryString(blb);
+  })
+}
+
 export async function inputFileToUint8Array(el: HTMLInputElement): Promise<{ file: File, content: Uint8Array }[]> {
   return Promise.all(inputFileFiles(el).map(async file => {
     const array = await new Promise<Uint8Array>(resolve => {

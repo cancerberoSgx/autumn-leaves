@@ -3,3 +3,4 @@ dist
 docs-dev
 *.log
 *.tgz
+tmp

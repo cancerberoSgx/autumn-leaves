@@ -1,8 +1,10 @@
 import * as puppeteer from 'puppeteer'
 import * as im from '../'
+import { writeFileSync } from 'fs';
+import { executeInBrowser, Config, executeAndCompare } from './testUtil';
 type IM = typeof im
 
-describe('1', () => {
+describe('some test in the browser', () => {
 
   let browser: puppeteer.Browser
   let page: puppeteer.Page
@@ -40,33 +42,28 @@ describe('1', () => {
 
     const title = await page.title()
     expect(title).toBe('imagemagick-browser integration tests')
-    let result = await page.evaluate(async () => {
-      const im = (window as any).imageMagickBrowser as IM;
 
-      const div = document.createElement('div')
-      div.innerHTML = `
-<p>Source image: <img src="knight.png" id="knightImage2"></p>
-<p>Result image: <img src="knightOut.png" id="knightImageOut2"></p>`
-      document.body.appendChild(div)
-
-      const inputFiles = await im.buildInputFiles(['knight.png'])
-      const result = await im.execute({
-        inputFiles,
-        commands: [['convert', 'knight.png', '-rotate', '63', 'knightOut.png']]
-      })
-      im.writeOutputImageToEl(result[0].outputFiles[0], document.getElementById('knightImageOut2') as HTMLImageElement)
-
-
-      // heads up ! - give some time to browser to load the image in the DOM bfure reading its width
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(document.querySelector<HTMLImageElement>('#knightImageOut2').width + ', ' + document.querySelector<HTMLImageElement>('#knightImage2').width)
-        }, 100);
-      })
+    const result = await executeInBrowser({
+      src: 'knight.png',
+      page,
+      commands: [['convert', 'knight.png', '-rotate', '63', 'knightOut.png']]
     })
-    expect(result).toBe('136, 100')
+
+    expect(result.outputImages[0].width).toBe(136)
     done()
   })
+
+  it('write generated output in fs, execute the real im, and compare locally', async done => {
+    const result = await executeAndCompare({
+      src: 'knight.png',
+      page,
+      commands: [['convert', 'knight.png', '-rotate', '14', 'knightOut.png']]
+    })
+    expect(result.identical).toBeLessThan(0.001)
+    expect(result.outputImages[0].width).toBe(124)
+    done()
+  })
+
 
 })
 
