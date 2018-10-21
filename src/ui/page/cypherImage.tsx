@@ -36,10 +36,12 @@ export class CypherComponentNaked extends React.Component<CypherComponentProps, 
     const { classes, theme } = this.props
     const { selectedTab } = this.state
 
+    console.log('RENDER', selectedTab);
+    
     return (
       <div className={classes.root}>
         <AppBar position="static">
-          <Tabs value={selectedTab} onChange={this.selectedTabChange.bind(this)}>
+          <Tabs value={selectedTab} onChange={(e, value)=>this.setState({...this.state,  selectedTab: value})}>
             <Tab label="Encipher" />
             <Tab label="Decipher" />
           </Tabs>
@@ -48,13 +50,15 @@ export class CypherComponentNaked extends React.Component<CypherComponentProps, 
         <Typography>
           <SwipeableViews
             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-            index={this.state.selectedTab} onChange={this.selectedTabChange.bind(this)}>
-
+            index={selectedTab} 
+            onSwitching={(value, state)=>state==='end' && this.setState({...this.state,  selectedTab: value})}
+            >
+            
             <div>
               <p>Select the image you want to encrypt and then a password. Execute and download the encrypted image you can safely share with other who can then use this program and the password to see it ! </p>
               <input type="file" onChange={this.encipherFileChange.bind(this)}></input>
               <p>Password:
-              <input type="password" id="cypher-password"></input>
+              <input type="password" id="encipherPassword"></input>
               </p>
               <p>Show ? <input type="checkbox" onChange={e => this.setState({ ...this.state, showImage: e.target.checked })}></input>
                 <img id="cipherSourceImage" style={{ display: this.state.showImage ? 'block' : 'none' }}></img>
@@ -99,6 +103,7 @@ export class CypherComponentNaked extends React.Component<CypherComponentProps, 
     const f = await inputFileToUint8Array(event.target)
     const encipherInputFile: MagickInputFile = { name: f[0].file.name, content: f[0].content }
     this.setState({ ...this.state, encipherInputFile })
+    console.log('encipherFileChange', this.state);
     if (this.state.showImage) {
       await loadImg(encipherInputFile, document.getElementById('cipherSourceImage') as HTMLImageElement)
     }
@@ -126,18 +131,6 @@ export class CypherComponentNaked extends React.Component<CypherComponentProps, 
       await loadImg(decipherInputFile, document.getElementById('decipherSourceImage') as HTMLImageElement)
     }
   }
-
-  selectedTabChange(event: React.ChangeEvent, value: number) {
-    this.setState({ selectedTab: value })
-  }
 }
-
-// function div(props: any) {
-//   return (
-//     <Typography component="div" style={{ padding: 8 * 3 }}>
-//       {props.children}
-//     </Typography>
-//   );
-// }
 
 export const CypherComponent = withStyles(styles, { withTheme: true })(CypherComponentNaked as any);
