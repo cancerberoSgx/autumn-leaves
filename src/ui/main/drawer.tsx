@@ -55,15 +55,23 @@ const drawer = (props: WithStyles<typeof styles> & { open: boolean, handleDrawer
         <ListItemIcon>
           <ImageAspectRatio />
         </ListItemIcon>
-        <ListItemText primary="Image Frame Tool" />
+        <ListItemText primary="Command template editor" />
       </ListItem>
 
       <ListItem component={(props: ListItemProps & LinkProps) => <Link to="convertDemo" {...props} />}>
         <ListItemIcon>
           <Transform />
         </ListItemIcon>
-        <ListItemText primary="Convert test page !" />
+        <ListItemText primary="Convert playground" />
       </ListItem>
+
+      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="cypher" {...props} />}>
+        <ListItemIcon>
+          <Transform />
+        </ListItemIcon>
+        <ListItemText primary="Cypher images" />
+      </ListItem>
+
       {/* <ListItem> <ToolbarSeparator></ToolbarSeparator></ListItem> */}
 
       {/* <ListItem component={(props: ListItemProps & LinkProps) => <Link to="compositeCommands" {...props} />}>

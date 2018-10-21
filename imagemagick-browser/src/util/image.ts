@@ -21,8 +21,9 @@ export function getNameFromUrl(url: string): string {
   }
 }
 
-export function loadImg(file: MagickOutputFile, img: HTMLImageElement) {
-  img.src = URL.createObjectURL(file.blob)
+export function loadImg(file: MagickOutputFile|MagickInputFile, img: HTMLImageElement) {
+  const outputFile:MagickOutputFile  = !(file as any).blob ? inputFileToOutputFile(file): file as MagickOutputFile
+  img.src = URL.createObjectURL(outputFile.blob)
 }
 
 export async function buildInputFiles(urls: string[]): Promise<MagickInputFile[]> {

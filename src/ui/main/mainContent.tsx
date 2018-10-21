@@ -7,6 +7,7 @@ import SimpleCLITransformationEditor from '../components/SimpleCLITransformation
 import {ConvertDemo} from '../page/convertDemo/convertDemo';
 import { ImageFrameTransformation } from '../page/imageFrame/ImageFrameTransformation'
 import { Logger } from './logger';
+import { CypherComponent } from '../page/cypherImage';
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -28,6 +29,7 @@ function main(props: WithStyles<typeof styles>) {
         <Route path='/imageFrame/:template/:context' component={ImageFrameTransformation} />
         <Route path='/imageFrame/:template/:context/:imageSrc' component={ImageFrameTransformation} />
         <Route path='/convertDemo' component={ConvertDemo} />  
+        <Route path='/cypher' component={CypherComponent} />  
         {/* <Route path='/compositeCommands' component={CompositeCommands} /> */}
         {/* <Route path='/SimpleCLITransformationEditor' component={SimpleCLITransformationEditor} /> */}
         {/* <Route path='/TestImages' component={TestImages} /> */}

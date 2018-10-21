@@ -2,6 +2,7 @@ import { cd, mkdir, rm, cp, exec } from 'shelljs';
 import * as puppeteer from 'puppeteer'
 import * as im from '../'
 import { writeFileSync } from 'fs';
+import { arrayToIMCommand } from '../util/cli';
 type IM = typeof im
 export interface Config {
   src: string,
@@ -50,14 +51,19 @@ export async function executeInBrowser(config: Config): Promise<Result> {
   return result
 }
 
-export async function executeAndCompare(config: Config){
+/** internal tool to compare image equality by executing a simple command like `[['convert','tmp/knight.png','-rotate','14','tmp/imOut.png']]`. Source images need to exists in test-project1/src/static/ */
+export async function executeAndCompare(config: Config): Promise<Result & {identical: number}>{
   const result = await executeInBrowser(config)
   rm('-rf', 'tmp')
   mkdir('-p', 'tmp')
   writeFileSync('tmp/output.png',result.outputImages[0].content, {encoding: 'base64'})
-  cp('test-project1/src/static/knight.png', 'tmp')
-  exec('convert tmp/knight.png -rotate 14 tmp/imOut.png')
-
+  // cp('test-project1/src/static/knight.png', 'tmp')
+  const c = config.commands[0]
+  const command = ['convert', `test-project1/src/static/${c[1]}`].concat(c.slice(2, c.length-1).concat(['tmp/imOut.png']))
+  // exec('convert tmp/knight.png -rotate 14 tmp/imOut.png')
+  exec(arrayToIMCommand(command))
+  console.log('arrayToIMCommand(command)', arrayToIMCommand(command));
+  
   const p = exec('convert tmp/imOut.png tmp/output.png -trim +repage -resize "256x256^!" -metric RMSE -format %[distortion] -compare info:')
   const identical = parseInt(p.stdout, 10)
   rm('-rf', 'tmp')
