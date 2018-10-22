@@ -127,20 +127,17 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
         <Grid container spacing={24}>
           <Grid item xs={12} sm={6}  >
             <p>Original image:  </p>
-            {/* <p>Size: {JSON.stringify(this.state.imageSize || {})}</p> */}
-            <Button variant="contained"
-              onClick={() => alert('TODO')}> {/*// TODO */}
+            <p><Button variant="contained"
+                onClick={e => saveAs(uint8ArrayToBlob(this.state.inputFiles[0].content), this.state.inputFiles[0].name)}> 
               Download
-            </Button>
-            <br />
-            <img onLoad={() => { this.setImageSize(true) }} src={imageSrc} id="sourceImage"></img>
-
+            </Button></p>
+            <p><img onLoad={() => { this.setImageSize(true) }} src={imageSrc} id="sourceImage"></img></p>
           </Grid>
           <Grid item xs={12} sm={6}  >
             <p>Result:</p>
             <p>
               <Button variant="contained"
-                onClick={e => saveAs(this.state.outputFile.blob, this.state.outputFile.name)}> {/*// TODO */}
+                onClick={e => saveAs(this.state.outputFile.blob, this.state.outputFile.name)}> 
                 Download
             </Button>
             </p>
