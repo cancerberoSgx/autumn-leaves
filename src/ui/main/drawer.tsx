@@ -72,6 +72,14 @@ const drawer = (props: WithStyles<typeof styles> & { open: boolean, handleDrawer
         <ListItemText primary="Cypher images" />
       </ListItem>
 
+      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="imageInformation" {...props} />}>
+        <ListItemIcon>
+          <Transform />
+        </ListItemIcon>
+        <ListItemText primary="Extract image information" />
+      </ListItem>
+
+
       {/* <ListItem> <ToolbarSeparator></ToolbarSeparator></ListItem> */}
 
       {/* <ListItem component={(props: ListItemProps & LinkProps) => <Link to="compositeCommands" {...props} />}>

@@ -7,10 +7,11 @@
   "scripts": {
     "build": "npx tsc",
     "test": "npm run test-browser",
-    "test-browser": "npx concurrently --kill-others --success first \"npm run test-project-start\" \"sleep 5s && npm run test-node\"",
+    "test-browser": "npm run build-project-start && npx concurrently --kill-others --success first \"npm run test-project-start\" \"sleep 5s && npm run test-node\"",
     "test-node": "export NODE_PATH=$(npm root --quiet -g) && npx ts-node src/test/index.ts && echo $?",
     "generate-convert-list-enums": "npx ts-node scripts/generateImEnums.ts && npm run build",
-    "test-project-start": "cd test-project1 && npm start"
+    "test-project-start": "cd test-project1 && npm start",
+    "build-project-start": "cd test-project1 && npm run build && cd .."
   },
   "keywords": [
     "imagemagick",

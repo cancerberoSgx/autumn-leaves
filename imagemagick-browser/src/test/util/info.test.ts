@@ -12,6 +12,7 @@ describe('info', () => {
   beforeEach(async done => {
     browser = await puppeteer.launch({ args: ['--no-sandbox'] })
     page = await browser.newPage()
+    page.on('console', e => console.log(e.type(), e.text()))
     await page.goto(`http://127.0.0.1:8080/`)
     await page.waitFor(() => { return (window as any).imageMagickBrowser })
     done()
@@ -23,14 +24,14 @@ describe('info', () => {
   })
 
   it('evaluating from here', async done => {
-    const result: InfoResult[] = JSON.parse(await page.evaluate(async ()=>{      
+    const output = await page.evaluate(async () => {
       const im = (window as any).imageMagickBrowser as IM;
       const inputFiles = await im.buildInputFiles(['knight.png'])
-      const result = await im.info({inputFiles})
-      return JSON.stringify(result[0])
-    }))
+      return await im.info({ inputFiles })
+    })
+    const result: InfoResult[] = JSON.parse(output)
     expect(result[0].image.geometry.width).toBe(100)
-        done()
+    done()
   })
 
 

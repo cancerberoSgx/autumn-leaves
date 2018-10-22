@@ -16,11 +16,26 @@ export async function info(infoConfig: InfoConfig): Promise<InfoResult[]> {
     commands: [['convert'].concat(infoConfig.inputFiles.map(f => f.name)).concat(['json:outputFile.json'])]
   }
   const result = await execute(config)
-  return Promise.all(result.map(async r => {
-    const rr = await blobToString(r.outputFiles[0].blob)
-    const out =  JSON.parse(rr) as InfoResult
-    return out
+  
+  return Promise.all(
+    result.map(async r => {
+    // try {
+    return await blobToString(r.outputFiles[0].blob) as any
+    // } catch (error) {
+    //   console.log('ERRROR', error);
+    //   throw error
+      
+    // }
   }))
+  // const p = await Promise.all(result.map(async r => {
+  //   const rr = await blobToString(r.outputFiles[0].blob)
+  //   // console.log('SEBA', rr);
+    
+  //   const out =  JSON.parse(rr) as InfoResult
+  //   return out
+  // }))
+  // return p
+  // // return p.map((r: any)=>r) // TODO: hack for fixing [][] to be []
 }
 
 
