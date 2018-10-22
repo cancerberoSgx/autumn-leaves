@@ -4,6 +4,7 @@ import * as im from '../'
 import { writeFileSync } from 'fs';
 import { arrayToIMCommand } from '../util/cli';
 type IM = typeof im
+
 export interface Config {
   src: string,
   page: puppeteer.Page,
@@ -15,11 +16,13 @@ export interface OutputImage {
 export interface Result {
   outputImages: OutputImage[]
 }
+
+/** will call `execute()`, in the context of the browser.  */
 export async function executeInBrowser(config: Config): Promise<Result> {
   let result = await config.page.evaluate(async (config: Config) => {
     const im = (window as any).imageMagickBrowser as IM;
     document.body.innerHTML = `<p>Source image: <img src="${config.src}" id="knightImage3"></p><p>Result image: <img src="knightOut.png" id="knightImageOut3"></p>`
-    const inputFiles = await im.buildInputFiles(['knight.png'])
+    const inputFiles = await im.buildInputFiles([config.src])
     const execResult = await im.execute({
       inputFiles,
       commands: config.commands

@@ -40,6 +40,7 @@ export * from './execute'
 export * from './util/image'
 export * from './util/cli'
 export * from './util/misc'
+export * from './util/info'
 
 export * from './commandTemplate/commandTemplate'
 export * from './options/virtualPixel'

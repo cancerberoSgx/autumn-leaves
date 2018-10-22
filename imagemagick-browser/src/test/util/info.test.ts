@@ -1,10 +1,11 @@
 import * as puppeteer from 'puppeteer'
-import * as im from '../'
+import * as im from '../..'
 import { writeFileSync } from 'fs';
 import { executeInBrowser, Config, executeAndCompare } from '../testUtil';
+import { info, InfoResult } from '../../util/info';
 type IM = typeof im
 
-describe('some test in the browser', () => {
+describe('info', () => {
 
   let browser: puppeteer.Browser
   let page: puppeteer.Page
@@ -22,21 +23,16 @@ describe('some test in the browser', () => {
   })
 
   it('evaluating from here', async done => {
-
-    const title = await page.title()
-    expect(title).toBe('imagemagick-browser integration tests')
-
-    const result = await executeInBrowser({
-      src: 'knight.png',
-      page,
-      commands: [['convert', 'knight.png', '-rotate', '63', 'knightOut.png']]
-    })
-
-    expect(result.outputImages[0].width).toBe(136)
-    done()
+    const result: InfoResult[] = JSON.parse(await page.evaluate(async ()=>{      
+      const im = (window as any).imageMagickBrowser as IM;
+      const inputFiles = await im.buildInputFiles(['knight.png'])
+      const result = await im.info({inputFiles})
+      return JSON.stringify(result[0])
+    }))
+    expect(result[0].image.geometry.width).toBe(100)
+        done()
   })
 
 
 })
-
 

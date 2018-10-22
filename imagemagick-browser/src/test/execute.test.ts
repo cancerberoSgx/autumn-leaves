@@ -2,6 +2,8 @@ import * as puppeteer from 'puppeteer'
 import * as im from '../'
 import { blobToBase64String } from 'blob-util';
 import { writeFileSync } from 'fs';
+import { execute } from '../execute';
+import { executeInBrowser } from './testUtil';
 type IM = typeof im
 
 describe('execute', () => {
@@ -23,6 +25,28 @@ describe('execute', () => {
     await browser.disconnect()
     done()
   })
+
+  it('execute', async done=>{
+
+    const result = await executeInBrowser({
+      src: 'knight.png',
+      page,
+      commands: [['convert', 'knight.png', 'json:info.json']]
+    })
+
+    const json = JSON.parse(new Buffer(result.outputImages[0].content, 'base64').toString())
+    expect(json[0].image.geometry.width).toBe(100)
+    expect(json[0].image.name).toBe('info.json')
+    
+    done()
+  })
+
+
+
+
+
+
+
 
   // fit('should execute 1 command', async done => {
   //   let result = await page.evaluate(async () => {
@@ -87,37 +111,39 @@ describe('execute', () => {
   //   done()
   // })
 
-  xit('should execute several commands', async done => {
-    let result = await page.evaluate(async () => {
-      const im = (window as any).imageMagickBrowser as IM;
 
-      // const div = document.createElement('div')
-      document.body.innerHTML = '<p>Source image: <img src="knight.png" id="knightImage4"></p><p>Result image: <img src="knightOut.png" id="knightImageOut4"></p>'
-      // document.body.appendChild(div)
+//   xit('should execute several commands', async done => {
+//     let result = await page.evaluate(async () => {
+//       const im = (window as any).imageMagickBrowser as IM;
 
-      const inputFiles = await im.buildInputFiles(['knight.png'])
-      // inputFiles.forEach(f=>f.n)
-      const execResult = await im.execute({
-        inputFiles,
-        commands: [
-          ['convert', 'knight.png', '-rotate', '14', 'knightOut1.png'],
-          ['convert', 'knight.png', '-rotate', '90', 'knightOut2.png']
-        ]
-      })
-      console.log('resultsdsdsd', execResult);
+//       // const div = document.createElement('div')
+//       document.body.innerHTML = '<p>Source image: <img src="knight.png" id="knightImage4"></p><p>Result image: <img src="knightOut.png" id="knightImageOut4"></p>'
+//       // document.body.appendChild(div)
 
-      im.writeOutputImageToEl(execResult[0].outputFiles[0], document.getElementById('knightImageOut4') as HTMLImageElement)
-      return new Promise((resolve) => {
-        // heads up ! - give some time to browser to load the image in the DOM bfure reading its width
-        setTimeout(() => {
-          resolve(document.querySelector<HTMLImageElement>('#knightImageOut4').width + ', ' + document.querySelector<HTMLImageElement>('#knightImage4').width)
-        }, 10);
-      })
-    })
-    expect(result).toBe('124, 100')
+//       const inputFiles = await im.buildInputFiles(['knight.png'])
+//       // inputFiles.forEach(f=>f.n)
+//       const execResult = await im.execute({
+//         inputFiles,
+//         commands: [
+//           ['convert', 'knight.png', '-rotate', '14', 'knightOut1.png'],
+//           ['convert', 'knight.png', '-rotate', '90', 'knightOut2.png']
+//         ]
+//       })
+//       // console.log('resultsdsdsd', execResult);
 
-    done()
-  })
+//       im.writeOutputImageToEl(execResult[0].outputFiles[0], document.getElementById('knightImageOut4') as HTMLImageElement)
+//       return new Promise((resolve) => {
+//         // heads up ! - give some time to browser to load the image in the DOM bfure reading its width
+//         setTimeout(() => {
+//           resolve(document.querySelector<HTMLImageElement>('#knightImageOut4').width + ', ' + document.querySelector<HTMLImageElement>('#knightImage4').width)
+//         }, 10);
+//       })
+//     })
+//     expect(result).toBe('124, 100')
+
+//     done()
+//   })
+
   xit('should allow several commands to share images', async done => {
     done()
   })
