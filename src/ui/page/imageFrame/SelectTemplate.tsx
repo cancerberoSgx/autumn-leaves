@@ -5,7 +5,7 @@ import * as React from 'react';
 export interface SelectTemplateProps {
   templates: CommandTemplate[]
   selected: CommandTemplate
-  onSelect: (event: {selectedTemplateId: string})=>void
+  onSelect: (event: { selectedTemplateId: string }) => void
 }
 
 export interface SelectTemplateState {
@@ -23,13 +23,18 @@ export class SelectTemplate extends React.Component<SelectTemplateProps, SelectT
   }
 
   render(): React.ReactNode {
+    console.log('select-template', this.state.selected);
+
     return (
       <div> 
-      <FormControl>
+        <FormControl>
           <InputLabel htmlFor="template-helper">Command Template</InputLabel>
           <Select
             value={this.state.selected.id}
-            onChange={e => this.props.onSelect({selectedTemplateId: e.target.value})}
+            onChange={e => {
+              this.props.onSelect({ selectedTemplateId: e.target.value });
+              this.setState({ ...this.state, selected: this.props.templates.find(t => t.id === e.target.value) })
+            }}
             input={<Input name="template" id="template-helper" />}
           >
             {this.props.templates.map((t: CommandTemplate, i: number) =>

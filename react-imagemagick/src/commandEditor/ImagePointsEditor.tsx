@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Draggable, { DraggableData } from 'react-draggable';
 import { ArgumentEditorProps, ArgumentEditorState, PointHandler, Point, SizedImageContext } from 'imagemagick-browser';
-// import { ImageRectangleEditor } from './ImageRectangleEditor';
 
 export interface ImagePointsEditorProps extends ArgumentEditorProps<PointHandler[]>, SizedImageContext {
   imageSrc: string
@@ -45,20 +44,17 @@ export class ImagePointsEditor extends React.Component<ImagePointsEditorProps, I
                   x: point.x, 
                   y: point.y  - this.props.imageHeight 
                 }}
-                // onStart={(e1, e2)=>{this.handleStart(e1, e2, point)}}
-                // onDrag={(e1, e2)=>{this.handleDrag(e1, e2, point)}}
                 onStop={(e1, e2)=>{this.handleStop(e1, e2, point)}}
                 >
                 <span style={this.getHandleStyle(point)}>
                   <span className="handle">{point.name||point.id}</span>
                 </span>
               </Draggable>
-              {/* <ImageRectangleEditor imageWidth={this.props.imageWidth} imageHeight={this.props.imageHeight} imageSrc={this.props.imageSrc} onChange={e=>console.log('CROP2222', e)}s/> */}
               </div>
           })}
 
         </div>
-        <textarea defaultValue={JSON.stringify(this.state.value)} onChange={e=>this.inputTextChange(e)}></textarea>
+        {/* <textarea defaultValue={JSON.stringify(this.state.value)} onChange={e=>this.inputTextChange(e)}></textarea> */}
       </div>
     )
   }
@@ -67,12 +63,6 @@ export class ImagePointsEditor extends React.Component<ImagePointsEditorProps, I
     const value = JSON.parse(e.target.value)//TODO: try
     this.setState({...this.state, value})
   }
-
-  // handleStart(e1: MouseEvent, e2: DraggableData, point: PointHandler) {
-  // }
-
-  // handleDrag(e1: MouseEvent, e2: DraggableData, point: PointHandler) {
-  // }
 
   handleStop(e1: MouseEvent, e2: DraggableData, point: PointHandler) {
     const coords = this.getCoordsRelativeToImage(e1)

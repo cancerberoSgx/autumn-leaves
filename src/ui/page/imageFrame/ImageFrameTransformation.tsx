@@ -127,17 +127,20 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
         <Grid container spacing={24}>
           <Grid item xs={12} sm={6}  >
             <p>Original image:  </p>
-            <p><Button variant="contained"
-                onClick={e => saveAs(uint8ArrayToBlob(this.state.inputFiles[0].content), this.state.inputFiles[0].name)}> 
-              Download
-            </Button></p>
             <p><img onLoad={() => { this.setImageSize(true) }} src={imageSrc} id="sourceImage"></img></p>
+            <p>
+              <Button variant="contained"
+                onClick={e => saveAs(uint8ArrayToBlob(this.state.inputFiles[0].content), this.state.inputFiles[0].name)}>
+                Download
+            </Button>
+            </p>
           </Grid>
           <Grid item xs={12} sm={6}  >
             <p>Result:</p>
+            <p><img id="outputFile" /></p>
             <p>
               <Button variant="contained"
-                onClick={e => saveAs(this.state.outputFile.blob, this.state.outputFile.name)}> 
+                onClick={e => saveAs(this.state.outputFile.blob, this.state.outputFile.name)}>
                 Download
             </Button>
             </p>
@@ -151,7 +154,6 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
                 Make this the source image
               </Button>
             </p>
-            <p><img id="outputFile" /></p>
             <p>Command chain: </p>
             <ul>
               {this.state.commandChain.map(c => <li>{JSON.stringify(c)}</li>)}
