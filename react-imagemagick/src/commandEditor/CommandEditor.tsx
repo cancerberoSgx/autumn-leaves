@@ -1,9 +1,5 @@
 import { Argument, ArgumentChangeEvent, ArgumentType, Command, CommandEditorProps as CommandEditorPropsBase, SizedImageContext, TemplateContext } from 'imagemagick-browser';
-import * as React from 'react';
-import { ColorPickerEditor } from './ColorPickerEditor';
-import { ImagePointsEditor } from './ImagePointsEditor';
-import { NumberEditor } from './NumberEditor';
-import { SelectOneEditor } from './SelectOneEditor';
+import * as React from 'react'
 import { buildArgumentEditor } from './buildArgumentEditor';
 
 export interface CommandEditorProps extends CommandEditorPropsBase {
@@ -11,7 +7,7 @@ export interface CommandEditorProps extends CommandEditorPropsBase {
   imageSrc: string
   imageWidth: () => number
   imageHeight: () => number
-}
+} 
 
 export interface CommandEditorState {
   commands: Command[]
@@ -33,14 +29,11 @@ export class CommandEditor extends React.Component<CommandEditorProps, CommandEd
       templateContext: props.commandTemplate.defaultTemplateContext,
       imageSrc: '',
     }
-    // this.setStateDefaults()
-    // this.state.commands = this.
   }
 
   private setStateDefaults() {
     if (this.props.commandTemplate.arguments) {
       this.props.commandTemplate.arguments.forEach(arg => {
-        // const c: any = this.state.templateContext
         (this.state.templateContext as any)[arg.id] = (this.state.templateContext as any)[arg.id] ||
           this.props.templateContext && (this.props.templateContext as any)[arg.id] || this.props.commandTemplate.defaultTemplateContext &&
           (this.props.commandTemplate.defaultTemplateContext as any)[arg.id] || undefined
@@ -49,7 +42,6 @@ export class CommandEditor extends React.Component<CommandEditorProps, CommandEd
   }
 
   componentDidUpdate() {
-    // this.state.templateContext = this.props.templateContext
     this.setStateDefaults()
   }
 
@@ -66,9 +58,7 @@ export class CommandEditor extends React.Component<CommandEditorProps, CommandEd
               ...this.props.templateContext,
               imageWidth: this.props.imageWidth(),
               imageHeight: this.props.imageHeight()
-            }
-            // console.log('COMMANDEDITOR', context, this.state.templateContext,  arg, {value: (context as any)[arg.id]});
-            
+            }            
             return <li>
               {arg.name}: {buildArgumentEditor(arg, context, e => this.argumentChangeEvent(arg, e), this.props.imageSrc)}
             </li>

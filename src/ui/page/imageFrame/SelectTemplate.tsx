@@ -33,7 +33,7 @@ export class SelectTemplate extends React.Component<SelectTemplateProps, SelectT
             input={<Input name="template" id="template-helper" />}
           >
             {this.props.templates.map((t: CommandTemplate, i: number) =>
-              <MenuItem value={t.id} selected={t.id === this.state.selected.id}>{t.name}</MenuItem>
+              <MenuItem value={t.id} title={t.description} selected={t.id === this.state.selected.id}>{t.name}</MenuItem>
             )}
           </Select>
           <FormHelperText>Select one template to customize:</FormHelperText>

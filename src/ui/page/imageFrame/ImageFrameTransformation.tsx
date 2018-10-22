@@ -1,11 +1,12 @@
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, Input, FormHelperText } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
-import { Command, CommandTemplate, templates, execute, ExecuteConfig, ImageSize, loadImg, MagickInputFile, readInputImageFromUrl, uint8ArrayToBlob, getNameFromUrl, getOutputImageNameFor, getFileNameFromUrl, MagickOutputFile } from 'imagemagick-browser';
+import { saveAs } from 'file-saver';
+import { Command, CommandTemplate, execute, ExecuteConfig, getFileNameFromUrl, getOutputImageNameFor, ImageSize, loadImg, MagickInputFile, MagickOutputFile, readInputImageFromUrl, templates, uint8ArrayToBlob } from 'imagemagick-browser';
 import * as React from 'react';
 import { CommandEditor, SelectImageEditor } from 'react-imagemagick';
-import { clone, query } from '../../../util/misc';
+import { match } from 'react-router-dom';
+import { query } from '../../../util/misc';
 import { dispatchUrl } from './dispatchUrl';
-import { Link, match } from 'react-router-dom';
 import { SelectTemplate } from './SelectTemplate';
 
 
@@ -13,7 +14,7 @@ const defaultImageSrc = 'rotate.png' // TODO : remove from almost everywhere
 
 const styles = (theme: Theme) => createStyles({
   input: {
-  }, 
+  },
   root: {},
   formControl: {
   },
@@ -39,6 +40,7 @@ export interface ImageFrameTransformationState {
   imageSize?: ImageSize,
   jsonError?: string
   inputFiles: MagickInputFile[]
+  outputFile?: MagickOutputFile
   /** when user press "make this the source image" button we push current command to this "queue" */
   commandChain: Command[][]
 }
@@ -61,7 +63,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
   }
 
   render(): React.ReactNode {
- 
+
     const { classes } = this.props
     if (!this.getFirstInputImage()) {
       return <div>Loading Image...</div>
@@ -83,9 +85,6 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
             this.setState({ ...this.state, inputFiles: e.value })
           }} />
 
-        {/* <p>Just a <Link to="/imageFrame?template=frameFeathering1">link example</Link> (TODO: remove this). And <Link to="/imageFrame?template=crop1">another place</Link>. </p> */}
-
-
         {/* select template  */}
 
         <p>Then, select one of the templates below and change its parameters using the form. Current template is "{this.state.selectedFrameTemplate.name}"</p>
@@ -99,7 +98,6 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
 
         <ul>
           {this.state.commands.map((command: Command, i: number) => {
-    // console.log('ImageFrameTransformation RENDER', this.state.selectedFrameTemplate.defaultTemplateContext);
             return (
               <li>
                 <CommandEditor
@@ -129,7 +127,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
         <Grid container spacing={24}>
           <Grid item xs={12} sm={6}  >
             <p>Original image:  </p>
-            <p>Size: {JSON.stringify(this.state.imageSize || {})}</p>
+            {/* <p>Size: {JSON.stringify(this.state.imageSize || {})}</p> */}
             <Button variant="contained"
               onClick={() => alert('TODO')}> {/*// TODO */}
               Download
@@ -139,12 +137,14 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
 
           </Grid>
           <Grid item xs={12} sm={6}  >
-            <p>Result:
-            <Button variant="contained"
-                onClick={() => alert('TODO')}> {/*// TODO */}
+            <p>Result:</p>
+            <p>
+              <Button variant="contained"
+                onClick={e => saveAs(this.state.outputFile.blob, this.state.outputFile.name)}> {/*// TODO */}
                 Download
             </Button>
-              <br />
+            </p>
+            <p>
               <Button variant="contained"
                 title="So I can apply transformations on this one..."
                 onClick={async e => {
@@ -153,13 +153,12 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
                 }}>
                 Make this the source image
               </Button>
-              <br />
-              <img id="outputFile" />
-              <p>Command chain: </p>
-              <ul>
-                {this.state.commandChain.map(c => <li>{JSON.stringify(c)}</li>)}
-              </ul>
             </p>
+            <p><img id="outputFile" /></p>
+            <p>Command chain: </p>
+            <ul>
+              {this.state.commandChain.map(c => <li>{JSON.stringify(c)}</li>)}
+            </ul>
           </Grid>
         </Grid>
       </div>
@@ -209,15 +208,12 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     await this.execute()
   }
 
-  updateCommand(frame: CommandTemplate = this.state.selectedFrameTemplate, setState: boolean= true, ): any {
-    let commands: Command[]= frame.template(frame.defaultTemplateContext)
-    // if (frame.template) {
-    //   commands = frame.template(frame.defaultTemplateContext)
-    // }
+  updateCommand(frame: CommandTemplate = this.state.selectedFrameTemplate, setState: boolean = true, ): any {
+    let commands: Command[] = frame.template(frame.defaultTemplateContext)
     this.state.selectedFrameTemplate = frame
     this.state.commands = commands
-    if(setState){
-      this.setState({ ...this.state, selectedFrameTemplate: frame, commands })  
+    if (setState) {
+      this.setState({ ...this.state, selectedFrameTemplate: frame, commands })
     }
   }
 
@@ -247,13 +243,13 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
         s === '$INPUT' ? inputImageName : s === '$OUTPUT' ? outputImageName : s
       )
     )
-    // console.log('execute', commands)    
     const execConfig: ExecuteConfig = {
       commands,
       inputFiles: [image]
     }
     const result = await execute(execConfig)
     const outputFile = result[result.length - 1].outputFiles[0] // TODO: support multiple output images
+    this.state.outputFile = outputFile
     loadImg(outputFile, query('#outputFile')[0] as HTMLImageElement)
     return outputFile
   }

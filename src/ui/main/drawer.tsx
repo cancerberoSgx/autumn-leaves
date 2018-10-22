@@ -44,7 +44,7 @@ const drawer = (props: WithStyles<typeof styles> & { open: boolean, handleDrawer
 
     <List component="nav" dense={true}>
 
-      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="" {...props} onClick={() => { }} />}>
+      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="home" {...props} onClick={() => { }} />}>
         <ListItemIcon>
           <Home />
         </ListItemIcon>
@@ -55,7 +55,7 @@ const drawer = (props: WithStyles<typeof styles> & { open: boolean, handleDrawer
         <ListItemIcon>
           <ImageAspectRatio />
         </ListItemIcon>
-        <ListItemText primary="Command template editor" />
+        <ListItemText primary="Image easy effects" />
       </ListItem>
 
       <ListItem component={(props: ListItemProps & LinkProps) => <Link to="convertDemo" {...props} />}>
@@ -65,7 +65,7 @@ const drawer = (props: WithStyles<typeof styles> & { open: boolean, handleDrawer
         <ListItemText primary="Convert playground" />
       </ListItem>
 
-      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="cypher" {...props} />}>
+      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="encipher" {...props} />}>
         <ListItemIcon>
           <Transform />
         </ListItemIcon>

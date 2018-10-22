@@ -2,14 +2,7 @@ import { AppBar, Button, Tab, Tabs, Typography } from '@material-ui/core';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import { execute, inputFileToUint8Array, loadImg, MagickInputFile, stringToUInt8Array, MagickOutputFile } from 'imagemagick-browser';
 import * as React from 'react';
-// import { Typography } from 'material-ui/styles/typography';
-// import { Tabs } from 'material-ui';
-
-
 import { saveAs } from 'file-saver'
-import * as JSZip from 'jszip'
-
-
 import SwipeableViews from 'react-swipeable-views';
 
 const styles = (theme: Theme) => createStyles({
@@ -17,10 +10,10 @@ const styles = (theme: Theme) => createStyles({
   }
 })
 
-export interface CypherComponentProps extends WithStyles<typeof styles> {
+export interface EncipherComponentProps extends WithStyles<typeof styles> {
 }
 
-export interface CypherComponentState {
+export interface EncipherComponentState {
   selectedTab: number
   showImage: boolean
   encipherInputFile?: MagickInputFile
@@ -29,14 +22,14 @@ export interface CypherComponentState {
   decipherOutputFile?: MagickOutputFile
 }
 
-export class CypherComponentNaked extends React.Component<CypherComponentProps, CypherComponentState> {
+export class EncipherComponentNaked extends React.Component<EncipherComponentProps, EncipherComponentState> {
 
-  state: CypherComponentState = {
+  state: EncipherComponentState = {
     selectedTab: 0,
     showImage: true
   }
 
-  constructor(props: CypherComponentProps, state: CypherComponentState) {
+  constructor(props: EncipherComponentProps, state: EncipherComponentState) {
     super(props, state)
   }
 
@@ -146,4 +139,4 @@ export class CypherComponentNaked extends React.Component<CypherComponentProps, 
   }
 }
 
-export const CypherComponent = withStyles(styles, { withTheme: true })(CypherComponentNaked as any);
+export const EncipherComponent = withStyles(styles, { withTheme: true })(EncipherComponentNaked as any);
