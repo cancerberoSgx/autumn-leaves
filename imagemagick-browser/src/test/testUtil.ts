@@ -62,7 +62,7 @@ export async function executeAndCompare(config: Config): Promise<Result & {ident
   const command = ['convert', `test-project1/src/static/${c[1]}`].concat(c.slice(2, c.length-1).concat(['tmp/imOut.png']))
   // exec('convert tmp/knight.png -rotate 14 tmp/imOut.png')
   exec(arrayToIMCommand(command))
-  console.log('arrayToIMCommand(command)', arrayToIMCommand(command));
+  // console.log('arrayToIMCommand(command)', arrayToIMCommand(command));
   
   const p = exec('convert tmp/imOut.png tmp/output.png -trim +repage -resize "256x256^!" -metric RMSE -format %[distortion] -compare info:')
   const identical = parseInt(p.stdout, 10)

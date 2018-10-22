@@ -1,4 +1,5 @@
 import { ArgumentType, Command, CommandTemplate, Morphology, SizedImageContext, list, Kernel } from "../..";
+import { CommandTemplateTag } from "../commandTemplate";
 
 // Syntax: 
 // -morphology {method}[:{iterations}]   {kernel}[:[k_args}]
@@ -15,7 +16,7 @@ export interface morphologyContext extends Partial<SizedImageContext> {
 export const morphologyTemplate: CommandTemplate<morphologyContext> = {
   id: 'morphology',
   name: 'Morphology',
-  // commands: [["convert", "$INPUT", "-morphology", `${Morphology.Close}:1`, Kernel.Disk, "$OUTPUT"]],
+  tags: [CommandTemplateTag.distort, CommandTemplateTag.morphology],
   description: `TODO`,
   template: context => {
     const command = JSON.parse(`[["convert", "$INPUT", "-morphology", "${context.method + (context.iterations ? `:${context.iterations}` : ``)}", "${context.kernel+ (context.kernelArguments ? `:${context.kernelArguments}` : ``)}", "$OUTPUT"]]`) as Command[]

@@ -1,5 +1,6 @@
 import { CommandTemplate, Color, SizedImageContext, ArgumentType } from "../..";
 import { Command } from "../..";
+import { CommandTemplateTag } from "../commandTemplate";
 
 export interface shadowFrame1Context extends Partial<SizedImageContext> {
   background: Color
@@ -10,8 +11,8 @@ export interface shadowFrame1Context extends Partial<SizedImageContext> {
 export const shadowFrame1: CommandTemplate<shadowFrame1Context> = {
   id: 'shadowFrame1',
   name: 'shadow 1',
-  // commands: [["convert", "$INPUT", "-page", "+4+4", "-alpha", "set", "(", "+clone", "-background", "navy", "-shadow", "60x4+4+4", ")", "+swap", "-background", "none", "-mosaic", "$OUTPUT"]],
   description: 'TODO',
+  tags: [CommandTemplateTag.decoration],
   template: function (context: shadowFrame1Context) {
     const s = `[["convert", "$INPUT", "-page", "+4+4", "-alpha", "set", "(", "+clone", "-background", "${context.background}${/* new Number(context.alpha).toString(16) */''}", "-shadow", "${context.intensity}x${context.size}+${context.offsetX}+4", ")", "+swap", "-background", "none", "-mosaic", "$OUTPUT"]]`
     const result = JSON.parse(s) as Command[]
@@ -30,10 +31,3 @@ export const shadowFrame1: CommandTemplate<shadowFrame1Context> = {
     { type: ArgumentType.number, id: 'offsetX', name: 'offsetX', description: 'TODO' },
   ]
 }
-
-// {
-//   id: 'frameShadow1',
-//   name: 'frame shadow soft',
-//   commands: [["convert", "$INPUT", "-page", "+4+4", "-alpha", "set", "(", "+clone", "-background", "navy", "-shadow", "60x4+4+4", ")", "+swap", "-background", "none", "-mosaic", "$OUTPUT"]],
-//   description: ' '
-// },

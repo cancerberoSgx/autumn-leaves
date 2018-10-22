@@ -1,4 +1,5 @@
 import { ArgumentType, Command, CommandTemplate, SizedImageContext, list, Kernel } from "../..";
+import { CommandTemplateTag } from "../commandTemplate";
 
 export interface shadeContext extends Partial<SizedImageContext> {
   azimuth: number,
@@ -7,7 +8,7 @@ export interface shadeContext extends Partial<SizedImageContext> {
 export const shadeTemplate: CommandTemplate<shadeContext> = {
   id: 'shade',
   name: 'shade',
-  // commands: [["convert", "$INPUT", "-shade", `1x1` , "$OUTPUT"]],
+  tags: [CommandTemplateTag.artistic, CommandTemplateTag.edgeDetection],
   description: `TODO`,
   template: context => {
     const command = JSON.parse(`[["convert", "$INPUT",  "-shade", "${context.azimuth}x${context.elevation}" , "$OUTPUT"]]`) as Command[]

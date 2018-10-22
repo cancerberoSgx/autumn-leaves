@@ -1,4 +1,5 @@
 import { ArgumentType, Command, CommandTemplate, Interpolate, SizedImageContext, list } from "../..";
+import { CommandTemplateTag } from "../commandTemplate";
 
 export interface SpreadContext extends Partial<SizedImageContext> {
   amount: number,
@@ -8,7 +9,7 @@ export interface SpreadContext extends Partial<SizedImageContext> {
 export const SpreadTemplate: CommandTemplate<SpreadContext> = {
   id: 'Spread',
   name: 'Spread Paint',
-  // commands: [["convert", "$INPUT",  "-spread", "5", "$OUTPUT"]],
+  tags: [CommandTemplateTag.artistic],
   description: `displace image pixels by a random amount. 
 The argument amount defines the size of the neighborhood around each pixel from which to choose a candidate pixel to blend. 
 The lookup is controlled by the -interpolate setting.`,

@@ -67,7 +67,7 @@ export class CommandEditor extends React.Component<CommandEditorProps, CommandEd
               imageWidth: this.props.imageWidth(),
               imageHeight: this.props.imageHeight()
             }
-            console.log('COMMANDEDITOR', context, this.state.templateContext,  arg, {value: (context as any)[arg.id]});
+            // console.log('COMMANDEDITOR', context, this.state.templateContext,  arg, {value: (context as any)[arg.id]});
             
             return <li>
               {arg.name}: {buildArgumentEditor(arg, context, e => this.argumentChangeEvent(arg, e), this.props.imageSrc)}

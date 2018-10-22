@@ -1,4 +1,5 @@
 import { ArgumentType, Command, CommandTemplate, Dither, SizedImageContext, list } from "../..";
+import { CommandTemplateTag } from "../commandTemplate";
 
 export interface ditherColorsContext extends Partial<SizedImageContext> {
   colors: number,
@@ -7,13 +8,13 @@ export interface ditherColorsContext extends Partial<SizedImageContext> {
 export const ditherColorsTemplate: CommandTemplate<ditherColorsContext> = {
   id: 'ditherColors',
   name: 'Dither Colors',
-  // commands: [["convert", "$INPUT",  "-dither", Dither.FloydSteinberg, "$OUTPUT"]],
   description: `Reduce the number of colors interpolating pixels using different dither algorithms`,
   template: context => JSON.parse(`[["convert", "$INPUT", "-dither", "${context.dither}", "-colors", "${context.colors}", "$OUTPUT"]]`) as Command[],
   defaultTemplateContext: {
     colors: 16, 
     dither: Dither.FloydSteinberg
   },
+  tags: [CommandTemplateTag.colors],
   arguments: [
     { 
       type: ArgumentType.number, 

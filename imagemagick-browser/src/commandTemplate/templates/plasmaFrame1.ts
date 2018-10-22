@@ -1,5 +1,6 @@
 import { CommandTemplate, Color, SizedImageContext, ArgumentType } from "../..";
 import { Command } from "../..";
+import { CommandTemplateTag } from "../commandTemplate";
 
 export interface PlasmaFrame1Context extends Partial<SizedImageContext> {
   mattecolor: Color
@@ -11,8 +12,8 @@ export interface PlasmaFrame1Context extends Partial<SizedImageContext> {
 export const plasmaFrame1: CommandTemplate<PlasmaFrame1Context> = {
   id: 'plasmaFrame1',
   name: 'Plasma 1',
-  // commands: [['convert', '$INPUT', '-matte', '-mattecolor', '#CCC6', '-frame', '10x10+30+40', '(', '-size', '209x245', 'plasma:fractal', '-normalize', '-blur', '0x1', ')', '-compose', 'DstOver', '-composite', '$OUTPUT']],
   description: 'TODO',
+  tags: [CommandTemplateTag.decoration, CommandTemplateTag.artistic],
   template: function (context: PlasmaFrame1Context) {
     const s = `
       [["convert", "$INPUT", "-matte", 
@@ -42,10 +43,3 @@ export const plasmaFrame1: CommandTemplate<PlasmaFrame1Context> = {
     { type: ArgumentType.number, id: 'count', name: 'count', description: 'TODO' },
   ]
 }
-
-// {
-//   id: 'framePlasma1',
-//   name: 'frame plasma 1',
-//   commands: [['convert', '$INPUT', '-matte', '-mattecolor', '#CCC6', '-frame', '10x10+3+4', '(', '-size', '209x245', 'plasma:fractal', '-normalize', '-blur', '0x1', ')', '-compose', 'DstOver', '-composite', '$OUTPUT']],
-//   description: 'You can even use a semi-transparent \'-mattecolor\' for the frame \'-frame\' and then \'underlay\' a interesting pattern (such as a Fractal Plasma Canvas), to produce a more colorful frame.'
-// },

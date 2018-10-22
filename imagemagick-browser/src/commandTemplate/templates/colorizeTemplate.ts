@@ -1,4 +1,5 @@
 import { ArgumentType, Command, CommandTemplate, Interpolate, SizedImageContext, list, Color } from "../..";
+import { CommandTemplateTag } from "../commandTemplate";
 
 export interface colorizeContext extends Partial<SizedImageContext> {
   value: number
@@ -31,5 +32,6 @@ image with a comma-delimited list of colorization values (e.g., -colorize 0,0,50
       name: 'color',
       description: 'TODO'
     },
-  ]
+  ],
+  tags: [CommandTemplateTag.colors]
 }

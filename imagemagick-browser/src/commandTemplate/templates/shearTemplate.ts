@@ -1,4 +1,5 @@
 import { ArgumentType, Command, CommandTemplate, Interpolate, SizedImageContext, list, Color } from "../..";
+import { CommandTemplateTag } from "../commandTemplate";
 
 export interface shearContext extends Partial<SizedImageContext> {
   xDegrees: number
@@ -9,7 +10,7 @@ export interface shearContext extends Partial<SizedImageContext> {
 export const shearTemplate: CommandTemplate<shearContext> = {
   id: 'shear',
   name: 'shear',
-  // commands: [["convert", "$INPUT", "-shear", "5x33", "$OUTPUT"]],
+  tags: [CommandTemplateTag.distort],
   description: `Shear the image along the x-axis and/or y-axis. https://www.imagemagick.org/script/command-line-options.php#shear`,
   template: context => JSON.parse(`[["convert", "$INPUT", "-background", "${context.background}", "-shear", "${context.xDegrees}x${context.yDegrees}", "$OUTPUT"]]`) as Command[],
   defaultTemplateContext: {

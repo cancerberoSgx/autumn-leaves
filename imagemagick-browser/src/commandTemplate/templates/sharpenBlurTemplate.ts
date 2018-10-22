@@ -1,4 +1,5 @@
 import { ArgumentType, Command, CommandTemplate, Interpolate, SizedImageContext, list, Color } from "../..";
+import { CommandTemplateTag } from "../commandTemplate";
 
 export enum Mode {
   'sharpen'='sharpen',
@@ -15,7 +16,7 @@ export interface sharpenBlurContext extends Partial<SizedImageContext> {
 export const sharpenBlurTemplate: CommandTemplate<sharpenBlurContext> = {
   id: 'sharpenBlur',
   name: 'Sharpen & Blur (optionally adaptive)',
-  // commands: [["convert", "$INPUT", "-sharpen", '10x3', "$OUTPUT"]],
+  tags: [CommandTemplateTag.morphology, CommandTemplateTag.artistic],
   description: `Adaptively blur pixels. 'adaptive' ones decrease the effect near edges. A Gaussian operator of the given radius and standard deviation (sigma) is used. If sigma is not given it defaults to 1.`,
   template: context => JSON.parse(`[["convert", "$INPUT", "-${context.mode}", "${context.radius}x${context.sigma}", "$OUTPUT"]]`) as Command[],
   defaultTemplateContext: {

@@ -84,6 +84,9 @@ export enum CommandTemplateTag {
   'artistic' = 'artistic',
   'distort' = 'distort',
   'decoration' = 'decoration',
+  'colors' = 'colors',
+  'edgeDetection' = 'edgeDetection',
+  'morphology' = 'morphology'
 }
 
 // UI / react base framework types

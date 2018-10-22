@@ -1,5 +1,6 @@
 import { CommandTemplate, Color, SizedImageContext, ArgumentType } from "../..";
 import { Command } from "../..";
+import { CommandTemplateTag } from "../commandTemplate";
 
 export interface Vignette1Context extends Partial<SizedImageContext> {
     background: Color
@@ -9,8 +10,8 @@ export interface Vignette1Context extends Partial<SizedImageContext> {
 export const vignetteTemplate1: CommandTemplate<Vignette1Context> = {
     id: 'frameVignette1',
     name: 'Vignette',
-    // commands: [['convert', '$INPUT', '-alpha', 'set', '-background', 'none', '-vignette', '0x4', '$OUTPUT']],
     description: 'TODO',
+    tags: [CommandTemplateTag.artistic, CommandTemplateTag.decoration],
     template: function (context: Vignette1Context) {
         const result = JSON.parse(`[["convert", "$INPUT",  "-alpha", "set", "-background", "${context.background}", "-vignette", "${context.radius}x${context.sigma}", "$OUTPUT"]]`) as Command[]
         return result
@@ -26,14 +27,3 @@ export const vignetteTemplate1: CommandTemplate<Vignette1Context> = {
         { type: ArgumentType.number, id: 'sigma', name: 'sigma', description: 'TODO' }
     ]
 }
-
-
-
-// {
-//     // name: 'test1',
-//     id: 'frameVignette1',
-//     name: 'frame Vignette',
-//     // commands:[ ['convert', '$INPUT', '-alpha', 'set', '-background', 'none', '-vignette', '0x4', '$OUTPUT'],
-//     description: 'The Vignette Operator provides a simple means to add a blurry edge around an image.',
-//     commands: [['convert', '$INPUT', '-alpha', 'set', '-background', 'none', '-vignette', '0x4', '$OUTPUT']],
-//   },

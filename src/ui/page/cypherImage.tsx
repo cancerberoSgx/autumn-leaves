@@ -1,15 +1,21 @@
 import { AppBar, Button, Tab, Tabs, Typography } from '@material-ui/core';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
-import { execute, inputFileToUint8Array, loadImg, MagickInputFile, stringToUInt8Array } from 'imagemagick-browser';
+import { execute, inputFileToUint8Array, loadImg, MagickInputFile, stringToUInt8Array, MagickOutputFile } from 'imagemagick-browser';
 import * as React from 'react';
 // import { Typography } from 'material-ui/styles/typography';
 // import { Tabs } from 'material-ui';
+
+
+import { saveAs } from 'file-saver'
+import * as JSZip from 'jszip'
+
+
 import SwipeableViews from 'react-swipeable-views';
 
 const styles = (theme: Theme) => createStyles({
   root: {
   }
-});
+})
 
 export interface CypherComponentProps extends WithStyles<typeof styles> {
 }
@@ -17,8 +23,10 @@ export interface CypherComponentProps extends WithStyles<typeof styles> {
 export interface CypherComponentState {
   selectedTab: number
   showImage: boolean
-  encipherInputFile?: MagickInputFile | undefined
-  decipherInputFile?: MagickInputFile | undefined
+  encipherInputFile?: MagickInputFile
+  encipherOutputFile?: MagickOutputFile
+  decipherInputFile?: MagickInputFile
+  decipherOutputFile?: MagickOutputFile
 }
 
 export class CypherComponentNaked extends React.Component<CypherComponentProps, CypherComponentState> {
@@ -37,11 +45,11 @@ export class CypherComponentNaked extends React.Component<CypherComponentProps, 
     const { selectedTab } = this.state
 
     console.log('RENDER', selectedTab);
-    
+
     return (
       <div className={classes.root}>
         <AppBar position="static">
-          <Tabs value={selectedTab} onChange={(e, value)=>this.setState({...this.state,  selectedTab: value})}>
+          <Tabs value={selectedTab} onChange={(e, value) => this.setState({ ...this.state, selectedTab: value })}>
             <Tab label="Encipher" />
             <Tab label="Decipher" />
           </Tabs>
@@ -50,10 +58,10 @@ export class CypherComponentNaked extends React.Component<CypherComponentProps, 
         <Typography>
           <SwipeableViews
             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-            index={selectedTab} 
-            onSwitching={(value, state)=>state==='end' && this.setState({...this.state,  selectedTab: value})}
-            >
-            
+            index={selectedTab}
+            onSwitching={(value, state) => state === 'end' && this.setState({ ...this.state, selectedTab: value })}
+          >
+
             <div>
               <p>Select the image you want to encrypt and then a password. Execute and download the encrypted image you can safely share with other who can then use this program and the password to see it ! </p>
               <input type="file" onChange={this.encipherFileChange.bind(this)}></input>
@@ -63,8 +71,10 @@ export class CypherComponentNaked extends React.Component<CypherComponentProps, 
               <p>Show ? <input type="checkbox" onChange={e => this.setState({ ...this.state, showImage: e.target.checked })}></input>
                 <img id="cipherSourceImage" style={{ display: this.state.showImage ? 'block' : 'none' }}></img>
               </p>
-              <p><Button variant="contained" onClick={this.encipher.bind(this)}>cipher</Button></p>
+              <p><Button variant="contained" onClick={this.encipher.bind(this)}>Cipher</Button></p>
               <p><img id="encipherOutputImage"></img></p>
+              {this.state.encipherOutputFile && <p><Button variant="contained" onClick={e=>saveAs(this.state.encipherOutputFile.blob, 'encrypted.png')}>Download</Button></p>}
+ 
             </div>
 
             <div>
@@ -76,6 +86,7 @@ export class CypherComponentNaked extends React.Component<CypherComponentProps, 
               <img id="cipherSourceImage" style={{ display: this.state.showImage ? 'block' : 'none' }}></img>
               <p><Button variant="contained" onClick={this.decipher.bind(this)}>Decipher</Button></p>
               <p><img id="decipherOutputImage"></img></p>
+              {this.state.decipherOutputFile && <p><Button variant="contained" onClick={e=>saveAs(this.state.decipherOutputFile.blob, 'encrypted.png')}>Download</Button></p>}
             </div>
 
           </SwipeableViews>
@@ -95,15 +106,15 @@ export class CypherComponentNaked extends React.Component<CypherComponentProps, 
       inputFiles: [passwordFile, this.state.encipherInputFile],
       commands: [['convert', this.state.encipherInputFile.name, '-encipher', 'passphrase.txt', 'output.png']]
     })
-    await loadImg(result[0].outputFiles[0], document.getElementById('encipherOutputImage') as HTMLImageElement)
-
+    const outputFile = result[0].outputFiles[0]
+    await loadImg(outputFile, document.getElementById('encipherOutputImage') as HTMLImageElement)
+    this.setState({ ...this.state, encipherOutputFile: outputFile })
   }
 
   async encipherFileChange(event: React.ChangeEvent<HTMLInputElement>, value: number) {
     const f = await inputFileToUint8Array(event.target)
     const encipherInputFile: MagickInputFile = { name: f[0].file.name, content: f[0].content }
     this.setState({ ...this.state, encipherInputFile })
-    console.log('encipherFileChange', this.state);
     if (this.state.showImage) {
       await loadImg(encipherInputFile, document.getElementById('cipherSourceImage') as HTMLImageElement)
     }
@@ -120,7 +131,9 @@ export class CypherComponentNaked extends React.Component<CypherComponentProps, 
       inputFiles: [passwordFile, this.state.decipherInputFile],
       commands: [['convert', this.state.decipherInputFile.name, '-decipher', 'passphrase.txt', 'output.png']]
     })
-    await loadImg(result[0].outputFiles[0], document.getElementById('decipherOutputImage') as HTMLImageElement)
+    const outputFile = result[0].outputFiles[0]
+    await loadImg(outputFile, document.getElementById('decipherOutputImage') as HTMLImageElement)
+    this.setState({ ...this.state, decipherOutputFile: outputFile })
   }
 
   async decipherFileChange(event: React.ChangeEvent<HTMLInputElement>, value: number) {
