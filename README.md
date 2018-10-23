@@ -34,6 +34,7 @@
  * composite commands (WIP)
  * test1 : commands in js - build sh script calling im that generates imgs and then show them in the page for comparing. (WIP - only compare in html UI is missing)
  * image info extracting tool using :info
+ * an html static file that, given url and cmd by url it will perform the transformation and provide/notify output that can be easily used as an api - users can consume using phanthom / puppeteer - now you have serverless image processing tool.
  * 
  * idea: image format conversion tool - png, jpg, gif, tiff, svg, pdf, psd, ps, pnm, .ico, tga, webp, xpm, xbm, xcf
  * idea: convert image.jpg -quality 75 output_file.jpg

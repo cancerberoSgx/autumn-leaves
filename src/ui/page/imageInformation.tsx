@@ -48,8 +48,10 @@ export class ImageInformationComponentNaked extends React.Component<ImageInforma
     }
     const result = await info({inputFiles: this.state.inputFiles})
     // debugger
-    document.querySelector('#infoOutput').innerHTML=JSON.stringify(result, null, 2)
+    document.querySelector('#infoOutput').innerHTML='SEBA\n'+result+'' // TODO: issue: info is returning a string ? 
+     //JSON.stringify(result[0], null, 2)
     // result[0].image.format
+
   }
   
   async imageSelected(event: React.ChangeEvent<HTMLInputElement>){
@@ -63,3 +65,48 @@ export class ImageInformationComponentNaked extends React.Component<ImageInforma
 }
 
 export const ImageInformationComponent = withStyles(styles, { withTheme: true })(ImageInformationComponentNaked as any);
+
+
+// <AppBar position="static">
+// <Tabs value={selectedTab} onChange={(e, value) => this.setState({ ...this.state, selectedTab: value })}>
+//   <Tab label="Encipher" />
+//   <Tab label="Decipher" />
+// </Tabs>
+// </AppBar>
+
+// <Typography>
+// <SwipeableViews
+//   axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+//   index={selectedTab}
+//   onSwitching={(value, state) => state === 'end' && this.setState({ ...this.state, selectedTab: value })}
+// >
+
+//   <div>
+//     <p>Select the image you want to encrypt and then a password. Execute and download the encrypted image you can safely share with other who can then use this program and the password to see it ! </p>
+//     <input type="file" onChange={this.encipherFileChange.bind(this)}></input>
+//     <p>Password:
+//     <input type="password" id="encipherPassword"></input>
+//     </p>
+//     <p>Show ? <input type="checkbox" onChange={e => this.setState({ ...this.state, showImage: e.target.checked })}></input>
+//       <img id="cipherSourceImage" style={{ display: this.state.showImage ? 'block' : 'none' }}></img>
+//     </p>
+//     <p><Button variant="contained" onClick={this.encipher.bind(this)}>Cipher</Button></p>
+//     <p><img id="encipherOutputImage"></img></p>
+//     {this.state.encipherOutputFile && <p><Button variant="contained" onClick={e=>saveAs(this.state.encipherOutputFile.blob, 'encrypted.png')}>Download</Button></p>}
+
+//   </div>
+
+//   <div>
+//     Decipher an encrypted image
+//     <p>
+//       <input type="file" onChange={this.decipherFileChange.bind(this)}></input>
+//     </p>
+//     <input type="password" id="decipherPassword"></input>
+//     <img id="cipherSourceImage" style={{ display: this.state.showImage ? 'block' : 'none' }}></img>
+//     <p><Button variant="contained" onClick={this.decipher.bind(this)}>Decipher</Button></p>
+//     <p><img id="decipherOutputImage"></img></p>
+//     {this.state.decipherOutputFile && <p><Button variant="contained" onClick={e=>saveAs(this.state.decipherOutputFile.blob, 'encrypted.png')}>Download</Button></p>}
+//   </div>
+
+// </SwipeableViews>
+// </Typography>

@@ -196,10 +196,10 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
     await this.dispatchUrl()
   }
 
-  componentWillUpdate() {
-    this.updateCommand(undefined, false)
-    this.execute()
-  }
+  // componentWillUpdate() {
+  //   this.updateCommand(undefined, false)
+  //   this.execute()
+  // }
 
   async selectedTemplateChange(templateId: string) {
     const template = templates.find(t => t.id === templateId)
@@ -246,12 +246,26 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
       commands,
       inputFiles: [image]
     }
+    if(this.equalsLastExecuteConfig(execConfig)){
+      return
+    }
+    this.lastExecuteConfig = execConfig
     const result = await execute(execConfig)
     const outputFile = result[result.length - 1].outputFiles[0] // TODO: support multiple output images
     this.state.outputFile = outputFile
     loadImg(outputFile, query('#outputFile')[0] as HTMLImageElement)
     return outputFile
   }
+
+  private lastExecuteConfig: ExecuteConfig;
+  private equalsLastExecuteConfig(execConfig: ExecuteConfig): boolean {
+    if(this.lastExecuteConfig && JSON.stringify(this.lastExecuteConfig.commands)===JSON.stringify(execConfig.commands)){
+      return true
+    }
+    return false
+  }
+
+  
 }
 
 let lastImageSize: ImageSize = { width: 109, height: 125 } //TODO: this better, dont cheat!
