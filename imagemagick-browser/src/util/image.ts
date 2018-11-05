@@ -126,6 +126,10 @@ export function writeOutputImageToEl(image: MagickOutputFile, el: HTMLImageEleme
   el.src = URL.createObjectURL(image['blob'])
 }
 
+export function writeInputImageToEl(image: MagickInputFile, el: HTMLImageElement) {
+  el.src = URL.createObjectURL(uint8ArrayToBlob(image.content))
+}
+
 
 export function getFileNameFromUrl(urlString: string): string {
   const url = new URL(urlString.startsWith('http') ? urlString : 'http://localhost/' + urlString)

@@ -79,6 +79,13 @@ const drawer = (props: WithStyles<typeof styles> & { open: boolean, handleDrawer
         <ListItemText primary="Extract image information" />
       </ListItem>
 
+      <ListItem component={(props: ListItemProps & LinkProps) => <Link to="convertFormat" {...props} />}>
+        <ListItemIcon>
+          <Transform />
+        </ListItemIcon>
+        <ListItemText primary="Convert Format" />
+      </ListItem>
+
 
       {/* <ListItem> <ToolbarSeparator></ToolbarSeparator></ListItem> */}
 

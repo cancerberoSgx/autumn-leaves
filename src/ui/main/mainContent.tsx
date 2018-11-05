@@ -9,6 +9,7 @@ import { ImageFrameTransformation } from '../page/imageFrame/ImageFrameTransform
 import { Logger } from './logger';
 import { EncipherComponent } from '../page/encipherImage';
 import { ImageInformationComponent } from '../page/imageInformation';
+import { ConvertFormat } from '../page/convertFormat';
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -32,7 +33,9 @@ function main(props: WithStyles<typeof styles>) {
         <Route path='/convertDemo' component={ConvertDemo} />  
         <Route path='/encipher' component={EncipherComponent} />  
         <Route path='/imageInformation' component={ImageInformationComponent} />  
-        <Route path='/home' component={home} />
+        <Route path='/home' component={home} /> 
+        <Route path='/convertFormat' component={ConvertFormat} />
+        
         {/* <Route path='/SimpleCLITransformationEditor' component={SimpleCLITransformationEditor} /> */}
         {/* <Route path='/TestImages' component={TestImages} /> */}
         {/* <Route path='/ImageHandleEditorTest' component={ImageHandleEditorTest} /> */}
