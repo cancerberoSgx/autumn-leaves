@@ -29,6 +29,7 @@ export interface CommandTemplate<Context=TemplateContext> {
   /** metadata for arguments */
   arguments?: Argument[];
   tags?: CommandTemplateTag[]
+  outputFileExtension?: string
 }
 
 export type Color = string

@@ -133,8 +133,7 @@ export function getFileNameFromUrl(urlString: string): string {
   return fileName
 }
 
-export function getOutputImageNameFor(inputImageName: string): string {
-  let extension = inputImageName.substring(inputImageName.indexOf('.'), inputImageName.length)
+export function getOutputImageNameFor(inputImageName: string, extension: string = inputImageName.substring(inputImageName.indexOf('.'), inputImageName.length)): string {
   extension = extension === '.tiff' ? '.png' : extension
   return inputImageName.substring(0, inputImageName.indexOf('.')) + 'Output' + extension
 }

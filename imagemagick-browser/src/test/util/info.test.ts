@@ -23,14 +23,16 @@ describe('info', () => {
     done()
   })
 
-  it('evaluating from here', async done => {
-    const output = await page.evaluate(async () => {
+  fit('evaluating from here', async done => {
+    const result: string  = await page.evaluate(async () => {
       const im = (window as any).imageMagickBrowser as IM;
       const inputFiles = await im.buildInputFiles(['knight.png'])
-      return await im.info({ inputFiles })
+      return await JSON.stringify(im.info({ inputFiles }))
     })
-    const result: InfoResult[] = JSON.parse(output)
-    expect(result[0].image.geometry.width).toBe(100)
+    // const result: InfoResult[] = JSON.parse(output)
+    console.log('RESULT', result);
+    
+    expect(JSON.parse(result).image.geometry.width).toBe(100)
     done()
   })
 

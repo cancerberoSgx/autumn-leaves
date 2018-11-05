@@ -9,7 +9,6 @@ import { query } from '../../../util/misc';
 import { dispatchUrl } from './dispatchUrl';
 import { SelectTemplate } from './SelectTemplate';
 
-
 const defaultImageSrc = 'rotate.png' // TODO : remove from almost everywhere
 
 const styles = (theme: Theme) => createStyles({
@@ -236,7 +235,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
       image = await readInputImageFromUrl(defaultImageSrc)
     }
     const inputImageName = image.name
-    const outputImageName = getOutputImageNameFor(inputImageName)
+    const outputImageName = getOutputImageNameFor(inputImageName, this.state.selectedFrameTemplate.outputFileExtension || undefined)
     const commands = this.state.commands.map(command =>
       command.map(s =>
         s === '$INPUT' ? inputImageName : s === '$OUTPUT' ? outputImageName : s

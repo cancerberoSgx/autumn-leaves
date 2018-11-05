@@ -24,6 +24,7 @@ import { tornPaper2 } from './templates/tornPaper2';
 import { vignetteTemplate1 } from './templates/vignetteTemplate1';
 import { virtualPixel1 } from './templates/virtualPixel1';
 import { waveTemplate } from "./templates/waveTemplate";
+import { RotateGif } from "./templates/rotateGif";
 
 export const templates: CommandTemplate[] = [
   cropTemplate1,
@@ -51,6 +52,6 @@ export const templates: CommandTemplate[] = [
   shearTemplate,
   sharpenBlurTemplate,
   colorizeTemplate,
-  
+  RotateGif
 
 ]

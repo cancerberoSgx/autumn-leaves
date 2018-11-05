@@ -3,39 +3,45 @@ import { execute } from "../execute";
 import { blobToString } from "./image";
 
 export interface InfoConfig {
-  inputFiles: MagickInputFile[]
+  inputFiles: MagickInputFile[],
+  what?: InfoWhat
 }
-export interface InfoResult {
-
+// export type InfoResult =
+export enum InfoWhat {
+  'json'='json',
+  'txt'='txt',
 }
-
 /** execute convert foo.png json: */
-export async function info(infoConfig: InfoConfig): Promise<InfoResult[]> {
+export async function info(infoConfig: InfoConfig): Promise<InfoResult> {
+  infoConfig.what=infoConfig.what||InfoWhat.json
+
+  const outputFile = infoConfig.what===InfoWhat.json ? 'json:outputFile.json' : infoConfig.what===InfoWhat.txt ? 'ouputFile.txt' : undefined
+
   const config: ExecuteConfig = {
     inputFiles: infoConfig.inputFiles,
-    commands: [['convert'].concat(infoConfig.inputFiles.map(f => f.name)).concat(['json:outputFile.json'])]
+    commands: [['convert'].concat(infoConfig.inputFiles.map(f => f.name)).concat([outputFile])]
   }
-  const result = await execute(config)
+  console.log('info 3. ',config.commands.join(','));
   
-  return Promise.all(
-    result.map(async r => {
-    // try {
-    return await blobToString(r.outputFiles[0].blob) as any
-    // } catch (error) {
-    //   console.log('ERRROR', error);
-    //   throw error
-      
-    // }
-  }))
-  // const p = await Promise.all(result.map(async r => {
-  //   const rr = await blobToString(r.outputFiles[0].blob)
-  //   // console.log('SEBA', rr);
-    
-  //   const out =  JSON.parse(rr) as InfoResult
-  //   return out
+  try {
+   
+  console.log('RESULT1');
+  const result = await execute(config)
+  console.log('RESULT2');
+  const content = await blobToString(result[0].outputFiles[0].blob) as any
+  console.log('CONTENT');
+  
+  return JSON.parse(content)
+   
+  } catch (error) {
+    console.log('ERROR', error);
+    // throw error
+  }
+  // return Promise.all(
+  //   result.map(async r => {
+  //   // try {
+  //   return JSON.parse(await blobToString(r.outputFiles[0].blob) as any)
   // }))
-  // return p
-  // // return p.map((r: any)=>r) // TODO: hack for fixing [][] to be []
 }
 
 
