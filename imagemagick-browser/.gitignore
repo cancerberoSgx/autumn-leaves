@@ -4,3 +4,4 @@ docs-dev
 *.log
 *.tgz
 tmp
+tests

@@ -26,8 +26,7 @@ describe('execute', () => {
     done()
   })
 
-  it('execute', async done=>{
-
+  it('convert json: should return image metadata', async done=>{
     const result = await executeInBrowser({
       src: 'knight.png',
       page,

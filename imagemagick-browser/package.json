@@ -5,8 +5,12 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "build": "npx tsc",
-    "test": "npm run test-browser",
+    
+    "build": "rm -rf dist && tsc",
+    "test": "npm run build && gulp jasmine-headless",
+    "test-server": "npx concurrently --success first --kill-others 'npx tsc -w' 'npx gulp jasmine-server' 'npx opn http://localhost:8888 -- google-chrome-stable && sleep 9h'  ",
+    
+    "test2": "npm run test-browser",
     "test-browser": "npm run test-project-build && npx concurrently --kill-others --success first \"npm run test-project-start > /dev/null\" \"sleep 5s && npm run test-node\"",
     "test-node": "export NODE_PATH=$(npm root --quiet -g) && npx ts-node src/test/index.ts && echo $?",
     "generate-convert-list-enums": "npx ts-node scripts/generateImEnums.ts && npm run build",
@@ -25,22 +29,33 @@
   "dependencies": {
     "jasmine": "^3.2.0",
     "p-map": "^1.0.0",
-    "wasm-imagemagick": "^1.1.0"
+    "wasm-imagemagick": "^1.1.1"
   },
   "devDependencies": {
+    "@types/expect-puppeteer": "^3.3.0",
     "@types/glob": "^7.1.1",
-    "@types/jasmine": "^2.8.8",
+    "@types/jest": "^23.3.9",
+    "@types/jest-environment-puppeteer": "^2.2.1",
     "@types/minimist": "^1.2.0",
     "@types/p-map": "^1.0.0",
-    "@types/puppeteer": "^1.6.4",
+    "@types/puppeteer": "^1.10.0",
     "@types/shelljs": "^0.8.0",
     "blob-util": "^2.0.2",
-    "concurrently": "^4.0.1",
     "glob": "^7.1.3",
     "minimist": "^1.2.0",
     "shelljs": "^0.8.2",
     "ts-node": "^7.0.0",
     "ts-simple-ast": "^16.0.2",
-    "typescript": "^3.0.3"
+    "@types/jasmine": "^2.8.11",
+    "@types/node": "^10.12.3",
+    "concurrently": "^4.0.1",
+    "gulp": "^3.9.1",
+    "gulp-jasmine-browser": "^4.0.2",
+    "jasmine": "^3.3.0",
+    "opn": "^5.4.0",
+    "opn-cli": "^3.1.0",
+    "puppeteer": "^1.10.0",
+    "typescript": "^3.1.6",
+    "webpack-stream": "^5.1.1"
   }
 }
