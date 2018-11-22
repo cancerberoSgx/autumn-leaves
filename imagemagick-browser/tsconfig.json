@@ -2,8 +2,9 @@
   "compilerOptions": {
     "outDir": "./dist/",
     "lib": ["es6", "dom"],
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "sourceMap": true,
+    "strict": false,
     "module": "commonjs",
     "declaration": true,
     "target": "es2018",

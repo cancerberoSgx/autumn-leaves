@@ -1,9 +1,10 @@
 import { AppBar, Button, Tab, Tabs, Typography } from '@material-ui/core';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
-import { execute, inputFileToUint8Array, loadImg, MagickInputFile, stringToUInt8Array, MagickOutputFile } from 'imagemagick-browser';
+import {  inputFileToUint8Array, stringToUInt8Array } from 'imagemagick-browser';
 import * as React from 'react';
 import { saveAs } from 'file-saver'
 import SwipeableViews from 'react-swipeable-views';
+import { MagickInputFile, MagickOutputFile, loadImageElement, execute } from 'wasm-imagemagick';
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -100,7 +101,7 @@ export class EncipherComponentNaked extends React.Component<EncipherComponentPro
       commands: [['convert', this.state.encipherInputFile.name, '-encipher', 'passphrase.txt', 'output.png']]
     })
     const outputFile = result[0].outputFiles[0]
-    await loadImg(outputFile, document.getElementById('encipherOutputImage') as HTMLImageElement)
+    await loadImageElement(outputFile, document.getElementById('encipherOutputImage') as HTMLImageElement)
     this.setState({ ...this.state, encipherOutputFile: outputFile })
   }
 
@@ -109,7 +110,7 @@ export class EncipherComponentNaked extends React.Component<EncipherComponentPro
     const encipherInputFile: MagickInputFile = { name: f[0].file.name, content: f[0].content }
     this.setState({ ...this.state, encipherInputFile })
     if (this.state.showImage) {
-      await loadImg(encipherInputFile, document.getElementById('cipherSourceImage') as HTMLImageElement)
+      await loadImageElement(encipherInputFile, document.getElementById('cipherSourceImage') as HTMLImageElement)
     }
   }
 
@@ -125,7 +126,7 @@ export class EncipherComponentNaked extends React.Component<EncipherComponentPro
       commands: [['convert', this.state.decipherInputFile.name, '-decipher', 'passphrase.txt', 'output.png']]
     })
     const outputFile = result[0].outputFiles[0]
-    await loadImg(outputFile, document.getElementById('decipherOutputImage') as HTMLImageElement)
+    await loadImageElement(outputFile, document.getElementById('decipherOutputImage') as HTMLImageElement)
     this.setState({ ...this.state, decipherOutputFile: outputFile })
   }
 
@@ -134,7 +135,7 @@ export class EncipherComponentNaked extends React.Component<EncipherComponentPro
     const decipherInputFile: MagickInputFile = { name: f[0].file.name, content: f[0].content }
     this.setState({ ...this.state, decipherInputFile })
     if (this.state.showImage) {
-      await loadImg(decipherInputFile, document.getElementById('decipherSourceImage') as HTMLImageElement)
+      await loadImageElement(decipherInputFile, document.getElementById('decipherSourceImage') as HTMLImageElement)
     }
   }
 }

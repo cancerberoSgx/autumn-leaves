@@ -1,9 +1,10 @@
-import { ArgumentType, Command, CommandTemplate, Dither, SizedImageContext, list } from "../..";
+import { ArgumentType, Command, CommandTemplate,SizedImageContext, list } from "../..";
 import { CommandTemplateTag } from "../commandTemplate";
+import { IMDither } from "wasm-imagemagick";
 
 export interface ditherColorsContext extends Partial<SizedImageContext> {
   colors: number,
-  dither: Dither
+  dither: IMDither
 }
 export const ditherColorsTemplate: CommandTemplate<ditherColorsContext> = {
   id: 'ditherColors',
@@ -12,7 +13,7 @@ export const ditherColorsTemplate: CommandTemplate<ditherColorsContext> = {
   template: context => JSON.parse(`[["convert", "$INPUT", "-dither", "${context.dither}", "-colors", "${context.colors}", "$OUTPUT"]]`) as Command[],
   defaultTemplateContext: {
     colors: 16, 
-    dither: Dither.FloydSteinberg
+    dither: IMDither.FloydSteinberg
   },
   tags: [CommandTemplateTag.colors],
   arguments: [
@@ -27,7 +28,7 @@ export const ditherColorsTemplate: CommandTemplate<ditherColorsContext> = {
       id: 'dither',
       name: 'dither',
       description: 'TODO',
-      list: list(Dither).map(m => ({ name: m, id: m }))
+      list: list(IMDither).map(m => ({ name: m, id: m }))
     },
   ]
 }

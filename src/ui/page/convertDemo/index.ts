@@ -1,6 +1,5 @@
-// import { readImageUrlToUintArray } from '../../../util/image'
-import { getMagickApi, Command, ExecuteConfig, ExecuteResult, readImageUrlToUintArray, execute } from 'imagemagick-browser'
-// import { execute } from '../../../imagemagick/execute';
+import {  Command, readImageUrlToUintArray } from 'imagemagick-browser'
+import { ExecuteResult, ExecuteConfig, execute } from 'wasm-imagemagick';
 
 export interface ConvertDemoImage {
   sourceUrl: string
@@ -12,23 +11,20 @@ export interface ConvertDemoImage {
 export interface ConvertDemoMagickCallConfig {
   image: ConvertDemoImage
   imArguments: Command
-  // files: 
 }
 export async function DoMagickCall(config: ConvertDemoMagickCallConfig): Promise<ExecuteResult> {
   const content = await readImageUrlToUintArray(config.image.sourceUrl)
   const name = config.image.sourceUrl
   const newFiles = [{ name, content }]
-  const files = (/*config.files || */[])
+  const files = []
     .filter((f: any) => f.name !== name) // remove file if already there
     .concat(newFiles)
   const c: ExecuteConfig = {
     inputFiles: files,
     commands: [config.imArguments]
   }
-  // let processedFiles = await getMagickApi().Call(files, config.imArguments)
   const results = await execute(c)
   return results[0]
-  // return { processedFiles: results[0].outputFiles }
 }
 
 export function buildImArguments(s: string, image: ConvertDemoImage): Command {

@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { execute, MagickInputFile, Command, ExecuteConfig, MagickFile, readImageUrlToUintArray } from 'imagemagick-browser'
+import { Command, } from 'imagemagick-browser'
+import {MagickInputFile} from 'wasm-imagemagick'
 
 export interface InputImage  {
   src?: string

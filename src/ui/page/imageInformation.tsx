@@ -1,7 +1,8 @@
 import { Button, Typography } from '@material-ui/core';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
-import { info, InfoResult, inputFileToUint8Array, MagickInputFile, InfoWhat } from 'imagemagick-browser';
+import { info,  inputFileToUint8Array, InfoWhat } from 'imagemagick-browser';
 import * as React from 'react';
+import { MagickInputFile } from 'wasm-imagemagick';
 
 const styles = (theme: Theme) => createStyles({
   root: {

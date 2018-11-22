@@ -1,4 +1,4 @@
-import { ArgumentType, Command, CommandTemplate, SizedImageContext, list, Kernel } from "../..";
+import { ArgumentType, Command, CommandTemplate, SizedImageContext, list,   } from "../..";
 import { CommandTemplateTag } from "../commandTemplate";
 
 export interface shadeContext extends Partial<SizedImageContext> {

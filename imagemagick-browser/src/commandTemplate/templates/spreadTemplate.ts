@@ -1,9 +1,10 @@
-import { ArgumentType, Command, CommandTemplate, Interpolate, SizedImageContext, list } from "../..";
+import { IMInterpolate } from "wasm-imagemagick";
+import { ArgumentType, Command, CommandTemplate, list, SizedImageContext } from "../..";
 import { CommandTemplateTag } from "../commandTemplate";
 
 export interface SpreadContext extends Partial<SizedImageContext> {
   amount: number,
-  interpolate: Interpolate
+  interpolate: IMInterpolate
 }
 // -spread amount -interpolate SOMETHING https://www.imagemagick.org/script/command-line-options.php#spread
 export const SpreadTemplate: CommandTemplate<SpreadContext> = {
@@ -16,7 +17,7 @@ The lookup is controlled by the -interpolate setting.`,
   template: context => JSON.parse(`[["convert", "$INPUT", "-interpolate", "${context.interpolate}", "-spread", "${context.amount}", "$OUTPUT"]]`) as Command[],
   defaultTemplateContext: {
     amount: 5, 
-    interpolate: Interpolate.Average
+    interpolate: IMInterpolate.Average
   },
   arguments: [
     { 
@@ -30,7 +31,7 @@ The lookup is controlled by the -interpolate setting.`,
       id: 'interpolate',
       name: 'interpolate',
       description: 'TODO',
-      list: list(Interpolate).map(m => ({ name: m, id: m }))
+      list: list(IMInterpolate).map(m => ({ name: m, id: m }))
     },
   ]
 }

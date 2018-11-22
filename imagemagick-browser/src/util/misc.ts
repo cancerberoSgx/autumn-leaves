@@ -19,3 +19,8 @@ export function seq(start: number, step: number, max: number): number[]{
   }
   return result
 }
+
+
+export function toCliArg(arg: string): string {
+  return arg.match(/[\s()]/) ? `'${arg}'` : arg // quote if includes spaces or parenthesis
+}

@@ -1,4 +1,4 @@
-import { ArgumentType, Command, CommandTemplate, Interpolate, SizedImageContext, list, Color } from "../..";
+import { ArgumentType, Command, CommandTemplate,  SizedImageContext, list, Color } from "../..";
 import { CommandTemplateTag } from "../commandTemplate";
 
 export interface shearContext extends Partial<SizedImageContext> {

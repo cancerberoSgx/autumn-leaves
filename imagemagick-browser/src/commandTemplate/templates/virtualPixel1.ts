@@ -1,10 +1,11 @@
-import { ArgumentType, Command, CommandTemplate, SizedImageContext, VirtualPixel, VirtualPixelMethods, Filter, filters } from "../..";
+import { ArgumentType, Command, CommandTemplate, SizedImageContext, VirtualPixelMethods, } from "../..";
 import { CommandTemplateTag } from "../commandTemplate";
+import { IMVirtualPixel } from "wasm-imagemagick";
 
 export interface VirtualPixel1Context extends Partial<SizedImageContext> {
   width: number
   height: number
-  virtualPixel: VirtualPixel
+  virtualPixel: IMVirtualPixel
   // filter: Filter
 }
 
@@ -20,7 +21,7 @@ export const virtualPixel1: CommandTemplate<VirtualPixel1Context> = {
   defaultTemplateContext: {
     width: 50,
     height: 20,
-    virtualPixel: VirtualPixel.Dither,
+    virtualPixel: IMVirtualPixel.Dither,
     // filter: Filter.Point
   },
   arguments: [

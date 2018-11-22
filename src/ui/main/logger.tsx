@@ -1,8 +1,8 @@
 import { CircularProgress, ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Typography, Button } from '@material-ui/core';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { addExecuteListener, ExecuteEvent } from 'imagemagick-browser';
 import * as React from 'react';
+import {ExecuteEvent, addExecuteListener} from 'wasm-imagemagick'
 
 const styles = (theme: Theme) => createStyles({
   root: {

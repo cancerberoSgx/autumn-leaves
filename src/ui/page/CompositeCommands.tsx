@@ -3,7 +3,7 @@
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import * as React from 'react';
 import { Button } from '@material-ui/core';
-import { executeOne, loadImg, buildInputFiles, outputFileToInputFile, Command, ExecuteConfig } from 'imagemagick-browser';
+import { executeOne,   Command, ExecuteConfig, buildInputFile, asInputFile, loadImageElement } from 'wasm-imagemagick'
 
 const styles = (theme: Theme) => createStyles({
   root: {},
@@ -69,38 +69,23 @@ export class CompositeCommandsNaked extends React.Component<CompositeCommandsPro
 
   async doExecute() {
     const config: ExecuteConfig = {
-      inputFiles: await buildInputFiles(['rotate.png']),
+      inputFiles: [await buildInputFile('rotate.png')],
       commands: this.state.commands
     }
     await execute(config)
   }
-  // async test() {
-  //   const result1 = await execute({
-  //     inputFiles: await buildInputFiles(['rotate.png']),
-  //     command: this.state.commands[0]
-  //   })
-  //   const roseRotate = await outputFileToInputFile(result1[0].outputFiles[0])
-  //   const result2 = await execute({
-  //     inputFiles: [roseRotate],
-  //     command: this.state.commands[1]
-  //   })
-  //   loadImg(result2[0].outputFiles[0], document.getElementById('outputFile') as HTMLImageElement)
-
-  // }
 }
 
 async function execute(config: ExecuteConfig) {
   const inputFiles = config.inputFiles.concat([])
-  const result1 = await executeOne({ ...config, commands: [config.commands[0]] })
+  const result1 = await executeOne(config)
   result1.outputFiles.forEach(async f => {
-    const inputFile = await outputFileToInputFile(f)
+    const inputFile = await asInputFile(f)
     inputFiles.push(inputFile) //TODO: check if inputFiles already contain it and replace it
   })
-  // const roseRotate = await outputFileToInputFile(result1.outputFiles[0])
-  // loadImg(roseRotate, document.getElementById('outputFile') as HTMLImageElement)
-  const result2 = await executeOne({ ...config, commands: [config.commands[1]], inputFiles })
+  const result2 = await executeOne({ ...config, commands: [(config.commands as any)[1]], inputFiles })
 
-  loadImg(result2.outputFiles[0], document.getElementById('outputFile') as HTMLImageElement)
+  await loadImageElement(result2.outputFiles[0], document.getElementById('outputFile') as HTMLImageElement)
 }
 
 export const CompositeCommands = withStyles(styles, { withTheme: true })(CompositeCommandsNaked as any);

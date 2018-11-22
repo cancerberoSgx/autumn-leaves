@@ -1,4 +1,4 @@
-import { Argument, ArgumentChangeEvent, ArgumentType, Command, CommandEditorProps as CommandEditorPropsBase, SizedImageContext, TemplateContext } from 'imagemagick-browser';
+import { Argument, ArgumentChangeEvent, CommandEditorProps as CommandEditorPropsBase, SizedImageContext, TemplateContext, Command } from 'imagemagick-browser';
 import * as React from 'react'
 import { buildArgumentEditor } from './buildArgumentEditor';
 

@@ -1,6 +1,5 @@
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import * as React from 'react';
-// import { Dialog } from 'material-ui';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@material-ui/core';
 import { getImCommands } from './imCliConvertScript';
 import { transformations, images } from './data';
@@ -11,7 +10,6 @@ const styles = (theme: Theme) => createStyles({
 });
 
 export interface ConvertDemoCliScriptProps extends WithStyles<typeof styles> {
-  // initialToggleState: boolean
 }
 export interface ConvertDemoCliScriptState {
   open: boolean

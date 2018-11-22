@@ -1,15 +1,13 @@
 {
   "name": "imagemagick-browser",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Abstractions on top of WASM-ImageMagick to easy usage",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    
     "build": "rm -rf dist && tsc",
     "test": "npm run build && gulp jasmine-headless",
     "test-server": "npx concurrently --success first --kill-others 'npx tsc -w' 'npx gulp jasmine-server' 'npx opn http://localhost:8888 -- google-chrome-stable && sleep 9h'  ",
-    
     "test2": "npm run test-browser",
     "test-browser": "npm run test-project-build && npx concurrently --kill-others --success first \"npm run test-project-start > /dev/null\" \"sleep 5s && npm run test-node\"",
     "test-node": "export NODE_PATH=$(npm root --quiet -g) && npx ts-node src/test/index.ts && echo $?",
@@ -29,7 +27,7 @@
   "dependencies": {
     "jasmine": "^3.2.0",
     "p-map": "^1.0.0",
-    "wasm-imagemagick": "^1.1.1"
+    "wasm-imagemagick": "^1.2.1"
   },
   "devDependencies": {
     "@types/expect-puppeteer": "^3.3.0",

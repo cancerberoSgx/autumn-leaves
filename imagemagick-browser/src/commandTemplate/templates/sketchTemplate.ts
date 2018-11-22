@@ -1,4 +1,4 @@
-import { ArgumentType, Command, CommandTemplate, Interpolate, SizedImageContext, list } from "../..";
+import { ArgumentType, Command, CommandTemplate, SizedImageContext, list } from "../..";
 import { CommandTemplateTag } from "../commandTemplate";
 
 export interface sketchContext extends Partial<SizedImageContext> {

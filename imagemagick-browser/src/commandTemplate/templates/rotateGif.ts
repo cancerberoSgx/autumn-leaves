@@ -1,4 +1,4 @@
-import { ArgumentType, Color, Command, CommandTemplate, Distort, PointHandler, SizedImageContext, VirtualPixel, VirtualPixelMethods, CommandTemplateTag } from "../..";
+import { ArgumentType, Color, Command, CommandTemplate,  PointHandler, SizedImageContext,  VirtualPixelMethods, CommandTemplateTag } from "../..";
 import { seq } from "../../util/misc";
 
 export interface RotateGifContext extends Partial<SizedImageContext> {

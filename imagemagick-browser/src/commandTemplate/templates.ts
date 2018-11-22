@@ -26,7 +26,7 @@ import { virtualPixel1 } from './templates/virtualPixel1';
 import { waveTemplate } from "./templates/waveTemplate";
 import { RotateGif } from "./templates/rotateGif";
 
-export const templates: CommandTemplate[] = [
+export const sampleCommandTemplates: CommandTemplate[] = [
   cropTemplate1,
   vignetteTemplate1,
   polaroidTemplate2,

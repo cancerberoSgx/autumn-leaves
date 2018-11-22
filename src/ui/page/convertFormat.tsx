@@ -1,8 +1,9 @@
 import { Button, Typography } from '@material-ui/core';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import { saveAs } from 'file-saver';
-import { executeOne, InfoWhat, inputFileToUint8Array, MagickInputFile, writeInputImageToEl } from 'imagemagick-browser';
+import {  InfoWhat, inputFileToUint8Array,} from 'imagemagick-browser';
 import * as React from 'react';
+import { MagickInputFile, loadImageElement, executeOne } from 'wasm-imagemagick';
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -75,9 +76,9 @@ export class ConvertFormatNaked extends React.Component<ConvertFormatProps, Conv
     this.setState({ ...this.state, inputFiles: [inputFile] })
   }
 
-  componentDidUpdate() {
+  async componentDidUpdate() {
     if (this.state.inputFiles && this.state.inputFiles.length) {
-      writeInputImageToEl(this.state.inputFiles[0], document.querySelector('#sourceImage'))
+      await loadImageElement(this.state.inputFiles[0], document.querySelector('#sourceImage'))
     }
   }
 

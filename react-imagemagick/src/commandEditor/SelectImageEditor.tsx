@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { inputFileToUint8Array, MagickFile, ArgumentEditorProps, MagickInputFile, ArgumentEditorState } from 'imagemagick-browser';
+import { ArgumentEditorProps, ArgumentEditorState } from 'imagemagick-browser';
+import {MagickInputFile, getInputFilesFromHtmlInputElement} from 'wasm-imagemagick'
 
 export interface SelectImageEditorProps extends ArgumentEditorProps<MagickInputFile[]> {
 
@@ -28,8 +29,9 @@ export class SelectImageEditor extends React.Component<SelectImageEditorProps, S
   }
 
   async onChange(e: React.ChangeEvent) {
-    const files = await inputFileToUint8Array(e.currentTarget as HTMLInputElement)
-    const inputFiles: MagickInputFile[] = files.map(f=>({name: f.file.name, content: f.content}))
-    this.props.onChange({value: inputFiles, argument: this.props.argument})
+    // fromin
+    const files = await getInputFilesFromHtmlInputElement(e.currentTarget as HTMLInputElement)
+    // const inputFiles: MagickInputFile[] = files.map(f=>({name: f.file.name, content: f.content}))
+    this.props.onChange({value: files, argument: this.props.argument})
   }
 }

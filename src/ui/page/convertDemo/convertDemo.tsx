@@ -7,8 +7,8 @@ import {
 import { ConvertDemoCliScript } from './ConvertDemoCliScript';
 import { images as defaultImages, transformations, suggestionsDontWork } from './data'
 import { buildImArguments, DoMagickCall } from './index';
-import { CommandTemplate, MagickInputFile, readImageUrlToUintArray, execute, blobToString } from 'imagemagick-browser'
-import { arrayToIMCommand, writeOutputImageToEl } from 'imagemagick-browser';
+import { CommandTemplate,  readImageUrlToUintArray, } from 'imagemagick-browser'
+import { loadImageElement, arrayToCli, MagickInputFile, blobToString, execute } from 'wasm-imagemagick';
 
 const styles = (theme: Theme) => createStyles({
   paper: {
@@ -142,7 +142,7 @@ export class ConvertDemoNaked extends React.Component<ConvertDemoProps, ConvertD
             }}
           >
             {transformations.map(t =>
-              <MenuItem value={t.command} selected={this.state.selectedTransformation.id === t.id}>{t.name}</MenuItem>
+              <MenuItem value={t.command.map(s=>s+'')} selected={this.state.selectedTransformation.id === t.id}>{t.name}</MenuItem>
             )}
           </Select>
         </FormControl>
@@ -177,12 +177,12 @@ export class ConvertDemoNaked extends React.Component<ConvertDemoProps, ConvertD
       let firstOutputImage = outputFiles[0]
 
       if (outputImage) {
-        writeOutputImageToEl(firstOutputImage, outputImage)
+        await loadImageElement(firstOutputImage, outputImage)
         // outputImage.src = URL.createObjectURL(firstOutputImage['blob'])
         outputImage.setAttribute('data-outfile', image.outFile)
         outputImage.parentElement.parentElement.querySelector('.took').innerHTML = Math.round(performance.now() - t0) + ' ms'
       }
-      document.querySelector('.im-command').innerHTML = arrayToIMCommand(imArguments)
+      document.querySelector('.im-command').innerHTML = arrayToCli(imArguments)
 
       this.spinner(false, outputImage)
     })

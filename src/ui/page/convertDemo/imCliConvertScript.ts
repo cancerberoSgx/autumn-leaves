@@ -1,7 +1,5 @@
 import { ConvertDemoImage } from './index';
-import { CommandTemplate } from 'imagemagick-browser'
-import { toCliArg } from 'imagemagick-browser';
-// import { toCliArg } from './index';
+import { CommandTemplate, toCliArg } from 'imagemagick-browser'
 
 /** return a .sh script that will call imagemagick convert so we can generate te same transformations in the desktop with the real thing and compare */
 export function getImCommands(images: ConvertDemoImage[], transformations: CommandTemplate[]): string {
@@ -25,5 +23,3 @@ ${images.map(image => {
 `
   return cmd
 }
-
-// console.log(getImCommands(images, transformations))

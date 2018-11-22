@@ -1,4 +1,4 @@
-import { ArgumentType, Command, CommandTemplate, Interpolate, SizedImageContext, list, Color } from "../..";
+import { ArgumentType, Color, Command, CommandTemplate, SizedImageContext } from "../..";
 import { CommandTemplateTag } from "../commandTemplate";
 
 export interface colorizeContext extends Partial<SizedImageContext> {

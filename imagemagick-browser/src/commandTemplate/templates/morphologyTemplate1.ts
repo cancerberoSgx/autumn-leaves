@@ -1,5 +1,6 @@
-import { ArgumentType, Command, CommandTemplate, Morphology, SizedImageContext, list, Kernel } from "../..";
+import { ArgumentType, Command, CommandTemplate,  SizedImageContext, list, } from "../..";
 import { CommandTemplateTag } from "../commandTemplate";
+import { IMMorphology, IMKernel } from "wasm-imagemagick";
 
 // Syntax: 
 // -morphology {method}[:{iterations}]   {kernel}[:[k_args}]
@@ -8,9 +9,9 @@ import { CommandTemplateTag } from "../commandTemplate";
 // convert man.gif  -morphology Thinning:-1 Skeleton  man_raw_thinned.gif
 
 export interface morphologyContext extends Partial<SizedImageContext> {
-  method: Morphology
+  method: IMMorphology
   iterations: number,
-  kernel: Kernel
+  kernel: IMKernel
   kernelArguments: number
 }
 export const morphologyTemplate: CommandTemplate<morphologyContext> = {
@@ -24,8 +25,8 @@ export const morphologyTemplate: CommandTemplate<morphologyContext> = {
   },
   defaultTemplateContext: {
     iterations: 1,
-    method: Morphology.Close, 
-    kernel: Kernel.Disk, 
+    method: IMMorphology.Close, 
+    kernel: IMKernel.Disk, 
     kernelArguments: 2
   },
   arguments: [
@@ -40,14 +41,14 @@ export const morphologyTemplate: CommandTemplate<morphologyContext> = {
       id: 'method',
       name: 'method',
       description: 'TODO',
-      list: list(Morphology).map(m => ({ name: m, id: m }))
+      list: list(IMMorphology).map(m => ({ name: m, id: m }))
     },
     {
       type: ArgumentType.selectOne,
       id: 'kernel',
       name: 'kernel',
       description: 'TODO',
-      list: list(Kernel).map(m => ({ name: m, id: m }))
+      list: list(IMKernel).map(m => ({ name: m, id: m }))
     },
     {
       type: ArgumentType.number, //TODO: it's not a number is text or more

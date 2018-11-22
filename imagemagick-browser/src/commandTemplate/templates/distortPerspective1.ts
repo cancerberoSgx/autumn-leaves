@@ -1,7 +1,8 @@
-import { ArgumentType, Color, Command, CommandTemplate, Distort, PointHandler, SizedImageContext, VirtualPixel, VirtualPixelMethods, CommandTemplateTag } from "../..";
+import { ArgumentType, Color, Command, CommandTemplate, PointHandler, SizedImageContext, VirtualPixelMethods, CommandTemplateTag } from "../..";
+import { IMDistort, IMVirtualPixel } from "wasm-imagemagick";
 
-type ThisDistorts = Distort.Perspective | Distort.BilinearForward | Distort.BilinearReverse | Distort.Shepards
-const thisDistorts = [Distort.Perspective, Distort.BilinearForward, Distort.BilinearReverse, Distort.Shepards]
+type ThisDistorts = IMDistort.Perspective | IMDistort.BilinearForward | IMDistort.BilinearReverse | IMDistort.Shepards
+const thisDistorts = [IMDistort.Perspective, IMDistort.BilinearForward, IMDistort.BilinearReverse, IMDistort.Shepards]
 
 class PointHandlerImpl implements PointHandler {
   constructor(public x: number, public y: number, public id: string, public color: Color) { }
@@ -24,7 +25,7 @@ const defaultPoints = [
 
 export interface DistortPerspective1Context extends Partial<SizedImageContext> {
   points: PointHandler[]
-  virtualPixel: VirtualPixel
+  virtualPixel: IMVirtualPixel
   distort: ThisDistorts
 }
 
@@ -40,8 +41,8 @@ export const DistortPerspective1: CommandTemplate<DistortPerspective1Context> = 
   tags: [CommandTemplateTag.distort],
   defaultTemplateContext: {
     points: defaultPoints,
-    virtualPixel: VirtualPixel.Tile,
-    distort: Distort.Perspective
+    virtualPixel: IMVirtualPixel.Tile,
+    distort: IMDistort.Perspective
   },
   arguments: [
     {
