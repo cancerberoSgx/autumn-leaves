@@ -10,5 +10,9 @@
   {
     "name": "autumn-leaves",
     "path": ".."
+  },
+  {
+    "name": "photo-morph",
+    "path": "../photo-morph"
   }
 ]

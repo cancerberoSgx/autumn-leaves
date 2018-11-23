@@ -2,27 +2,33 @@
   "name": "photo-morph",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "folder-drop-manager": "file:../../folder-drop-manager",
-    "p-map": "^2.0.0",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
-    "react-scripts-ts": "3.1.0",
-    "typestyle": "^2.0.1",
-    "wasm-imagemagick": "^1.2.1"
-  },
   "scripts": {
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
+    "all": "npm run copy && npm run build && rm -rf ../docs/photo-morph && cp -r build ../docs/photo-morph",
     "copy": "cp -rf node_modules/wasm-imagemagick/dist/magick.* public"
+  },
+  "dependencies": {
+    "folder-drop-manager": "^0.1.5",
+    "p-filter": "file:../../p-filter",
+    "p-map": "^2.0.0",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "react-grid-layout": "^0.16.6",
+    "react-imagemagick": "file:../react-imagemagick",
+    "react-scripts": "^2.1.1",
+    "typestyle": "^2.0.1",
+    "wasm-imagemagick": "^1.2.1",
+    "webpack-dev-server": "^3.1.10"
   },
   "devDependencies": {
     "@types/jest": "^23.3.9",
     "@types/node": "^10.12.10",
     "@types/react": "^16.7.6",
     "@types/react-dom": "^16.0.9",
+    "react-scripts-ts": "3.1.0",
     "typescript": "^3.1.6"
   }
 }

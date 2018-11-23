@@ -13,11 +13,10 @@ export interface ImageDropperState {
 const styles = {
   dropper: style({
     width: '50%',
-    height: '200px'
+    height: '100px',
+    border: '2px solid pink',
   })
 }
-
-
 export class ImageDropper extends React.Component<ImageDropperProps, ImageDropperState> {
 
   state: ImageDropperState = {
@@ -27,7 +26,7 @@ export class ImageDropper extends React.Component<ImageDropperProps, ImageDroppe
   manager: FolderDropManager
   constructor(props: ImageDropperProps, state: ImageDropperState) {
     super(props, state)
-    this.manager = createFolderDropManager()
+    this.manager = createFolderDropManager({readAs: 'DataURL'})
   }
 
   render(): React.ReactNode {
@@ -43,17 +42,18 @@ export class ImageDropper extends React.Component<ImageDropperProps, ImageDroppe
     }
   }
   folderDDListener(event: FolderDropManagerEvent) {
+    
     if(event.type==='finish'){
       this.setState({...this.state, state: 'finish'})
+      this.props.onChange({...event, ...this.state})
     }
     else if (event.file.isFile) {
-      this.state.files.push({fileName: event.file.fullPath, content: event.file.content as ArrayBuffer})
+      this.state.files.push({fileName: event.file.fullPath, content: event.file.content as string})
       this.setState({...this.state, state: 'loading'})
     }
-    this.props.onChange({...event, ...this.state})
   }
 }
 
 export interface ImageDropperFile {
-  fileName: string, content: ArrayBuffer
+  fileName: string, content:  string
 }
