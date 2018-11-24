@@ -17,6 +17,7 @@ export interface ImageState {
   isSelected: boolean
   info: ExtractInfoResult
   href: string
+  id: string
 }
 
 export  interface MorphState {

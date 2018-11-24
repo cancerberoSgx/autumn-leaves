@@ -17,7 +17,7 @@
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-grid-layout": "^0.16.6",
-    "react-imagemagick": "file:../react-imagemagick",
+    "imagemagick-browser": "file:../imagemagick-browser",
     "react-redux": "^5.1.1",
     "react-scripts": "^2.1.1",
     "redux": "^4.0.1",

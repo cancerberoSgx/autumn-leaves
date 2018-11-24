@@ -1,6 +1,10 @@
 import * as React from "react"
 import { Responsive, WidthProvider } from "react-grid-layout"
+import { connect } from "react-redux"
+import { ImageState, RootState } from "src/store/store"
+import { getFromLS, saveToLS } from "src/util/misc"
 import { style } from "typestyle"
+import Image from "../Image"
 import ImageInput from "../imageInput"
 import Images from "../images"
 import SelectMorph from "../selectMorph"
@@ -12,6 +16,7 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive)
 const originalLayouts = getFromLS("layouts") || layouts
 
 export interface LayoutProps {
+  outputImage: ImageState
 }
 export interface LayoutState {
   layouts: any
@@ -27,29 +32,30 @@ const styles = {
   headerTitle: style({
     fontSize: "1.4em"
   }),
-  imageContainer: style({
-    display: "inline"
-  }),
 }
-export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
+class Layout extends React.PureComponent<LayoutProps, LayoutState> {
   state: LayoutState = {
-    layouts: JSON.parse(JSON.stringify(originalLayouts))
+    layouts: originalLayouts// JSON.parse(JSON.stringify(originalLayouts))
   }
+
   constructor(props) {
     super(props)
   }
+
   resetLayout() {
-    this.setState({ layouts: {} })
+    saveToLS("layouts", layouts)
+    this.setState({ layouts })
   }
+
   onLayoutChange(layout, layouts) {
     saveToLS("layouts", layouts)
+    console.log({layouts})
     this.setState({ layouts })
   }
 
   render() {
     return (
       <div>
-        <button onClick={this.resetLayout.bind(this)}>Reset Layout</button>
         <ResponsiveReactGridLayout
           className="layout"
           cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
@@ -57,25 +63,29 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
           layouts={this.state.layouts}
           onLayoutChange={this.onLayoutChange.bind(this)}
         >
-          <div key="1" className={styles.text} data-grid={{ w: 2, h: 3, x: 0, y: 0, minW: 2, minH: 3 }}>
+          <div key="1" className={styles.text}  >
             <header className={styles.header}>
               <h1 className={styles.headerTitle}>Welcome to Photo Morph</h1>
               <p>Create awesome photo morph animations</p>
             </header>
-          </div>
-          <div key="2" className={styles.text} data-grid={{ w: 2, h: 3, x: 2, y: 0, minW: 2, minH: 3 }}>
-            <p className="App-intro">
-              To get started, upload a couple of photos using the file choose or drag&drop some files from your desktop in the pink square:
-        <ImageInput />
+            <p>Options:
+        <button onClick={this.resetLayout.bind(this)}>Reset Layout</button>
             </p>
           </div>
-          <div key="3" className={styles.text} data-grid={{ w: 2, h: 3, x: 4, y: 0, minW: 2, minH: 3 }}>
-            <p>Here your will be your images, select a couple, or more to make a photo morph animation: </p>
+          <div key="2" className={styles.text} >
+            <p className="App-intro">
+              To get started, upload a couple of photos using the file choose or drag&drop some files from your desktop in the pink square:
+              <ImageInput />
+            </p>
+          </div>
+          <div key="3" className={styles.text}>
             <Images />
           </div>
-          <div key="4" className={styles.text} data-grid={{ w: 2, h: 3, x: 6, y: 0, minW: 2, minH: 3 }}>
-            <p>Select a Morph</p>
-            <SelectMorph></SelectMorph>
+          <div key="4" className={styles.text}>
+            <SelectMorph />
+          </div>
+          <div key="5" className={styles.text} >
+            {this.props.outputImage ? <Image image={this.props.outputImage} /> : ""}
           </div>
         </ResponsiveReactGridLayout>
       </div>
@@ -83,25 +93,9 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
   }
 }
 
-function getFromLS(key) {
-  let ls = {}
-  if (window.localStorage) {
-    try {
-      ls = JSON.parse(window.localStorage.getItem("rgl-8")) || {}
-    } catch (e) {
-      /*Ignore*/
-    }
-  }
-  return ls[key]
-}
 
-function saveToLS(key, value) {
-  if (window.localStorage) {
-    window.localStorage.setItem(
-      "rgl-8",
-      JSON.stringify({
-        [key]: value
-      })
-    )
-  }
-}
+const mapStateToProps = (state: RootState) => ({
+  outputImage: state.outputImage
+})
+
+export default connect(mapStateToProps, {})(Layout)

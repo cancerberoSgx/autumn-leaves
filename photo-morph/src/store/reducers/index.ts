@@ -1,17 +1,11 @@
 import { combineReducers } from "redux"
-import {  imageReducers } from './images';
-import { morphReducers } from './morphs';
-import { RootState } from '../store';
-import { outputImageReducers } from './outputImage';
+import { RootState } from "../store"
+import { imageReducers } from "./images"
+import { morphReducers } from "./morphs"
+import { outputImageReducers } from "./outputImage"
 
-export const reducers = 
-// function(){
-//   const f = 
-  combineReducers<RootState>({
+export const reducers = combineReducers<RootState>({
   images: imageReducers,
-  morphs: morphReducers, 
+  morphs: morphReducers,
   outputImage: outputImageReducers
-}); 
-// debugger; 
-// return f.apply(null, arguments)
-// }
+}) 

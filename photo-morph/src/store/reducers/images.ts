@@ -17,6 +17,5 @@ const selectImagesReducer: Reducer<ImageState[]>= (state = initialState, action)
 }
 
 export const imageReducers: Reducer<ImageState[]>= (state = initialState, action)=>{
-  // debugger
   return addImagesReducer(state, action) || selectImagesReducer(state, action) || [...state]
 }

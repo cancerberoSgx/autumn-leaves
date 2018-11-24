@@ -1,6 +1,7 @@
 import { Argument, ArgumentChangeEvent, CommandEditorProps as CommandEditorPropsBase, SizedImageContext, TemplateContext, Command } from 'imagemagick-browser';
 import * as React from 'react'
 import { buildArgumentEditor } from './buildArgumentEditor';
+import { asCommand } from 'wasm-imagemagick';
 
 export interface CommandEditorProps extends CommandEditorPropsBase {
   templateContext: SizedImageContext
@@ -25,7 +26,7 @@ export class CommandEditor extends React.Component<CommandEditorProps, CommandEd
   constructor(props: CommandEditorProps, state: CommandEditorState) {
     super(props, state)
     this.state = {
-      commands: this.props.commandTemplate.template(props.commandTemplate.defaultTemplateContext),
+      commands: asCommand( this.props.commandTemplate.template(props.commandTemplate.defaultTemplateContext)),
       templateContext: props.commandTemplate.defaultTemplateContext,
       imageSrc: '',
     }
@@ -35,8 +36,9 @@ export class CommandEditor extends React.Component<CommandEditorProps, CommandEd
     if (this.props.commandTemplate.arguments) {
       this.props.commandTemplate.arguments.forEach(arg => {
         (this.state.templateContext as any)[arg.id] = (this.state.templateContext as any)[arg.id] ||
-          this.props.templateContext && (this.props.templateContext as any)[arg.id] || this.props.commandTemplate.defaultTemplateContext &&
-          (this.props.commandTemplate.defaultTemplateContext as any)[arg.id] || undefined
+          this.props.templateContext && (this.props.templateContext as any)[arg.id] || 
+          typeof(arg.defaultValue)!=='undefined' ? arg.defaultValue : (this.props.commandTemplate.defaultTemplateContext &&
+          (this.props.commandTemplate.defaultTemplateContext as any)[arg.id] || undefined)
       })
     }
   }
@@ -77,9 +79,9 @@ export class CommandEditor extends React.Component<CommandEditorProps, CommandEd
     (this.state.templateContext as any).imageWidth = this.props.imageWidth();
     (this.state.templateContext as any).imageHeight = this.props.imageHeight()
     const value = this.props.commandTemplate.template(this.state.templateContext)
-    this.state.commands = value
+    this.state.commands = asCommand(value)
     this.setState({ ...this.state })
-    this.props.onChange({ commandTemplate: this.props.commandTemplate, value })
+    this.props.onChange({ commandTemplate: this.props.commandTemplate, value: asCommand(value) })
   }
 
   componentDidMount() {
