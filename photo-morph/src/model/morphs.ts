@@ -1,12 +1,12 @@
-import { ExecuteCommand } from 'wasm-imagemagick';
+import { ExecuteCommand } from "wasm-imagemagick"
 
-export interface Example {
+export interface Morph {
   name: string
   description: string
   command: ExecuteCommand
-  tags?: ExampleTag[]
+  tags?: MorphTag[]
 }
-export enum ExampleTag {
+export enum MorphTag {
   animation,
   info,
   drawing,
@@ -20,9 +20,9 @@ export enum ExampleTag {
 export const morphs = [
 
   {
-    name: 'morph resize',
+    name: "morph resize",
     description: `https://www.imagemagick.org/Usage/anim_mods/#morph_resize`,
-    tags: [ExampleTag.morph,ExampleTag.animation],
+    tags: [MorphTag.morph,MorphTag.animation],
     command: `
     convert $$IMAGES -morph 10 \\
     -layers TrimBounds -set dispose previous -coalesce \\
@@ -33,9 +33,9 @@ export const morphs = [
          `.trim(),
   },
   {
-    name: 'morph color',
+    name: "morph color",
     description: `https://www.imagemagick.org/Usage/anim_mods/#morph_color`,
-    tags: [ExampleTag.morph,ExampleTag.animation],
+    tags: [MorphTag.morph,MorphTag.animation],
     command: `
     convert $$IMAGES  -morph 5 \\
     -set delay '%[fx:(t>0&&t<n-1)?10:240]' \\
@@ -45,9 +45,9 @@ export const morphs = [
   },
 
   {
-    name: 'morph tile',
+    name: "morph tile",
     description: `https://www.imagemagick.org/Usage/anim_mods/#morph_color`,
-    tags: [ExampleTag.morph,ExampleTag.animation],
+    tags: [MorphTag.morph,MorphTag.animation],
     command: `
  convert $$IMAGES \\
     \( -clone 0 -crop 3x0 \) \\

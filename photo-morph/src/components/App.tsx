@@ -6,11 +6,11 @@ import { ChangeEvent } from "react"
 import { style } from "typestyle"
 import { asInputFile, buildImageSrc, buildInputFile, execute, getFileNameExtension, getInputFilesFromHtmlInputElement, isImage, loadImageElement, MagickInputFile } from "wasm-imagemagick"
 import { ExtractInfoResult } from "wasm-imagemagick/dist/src/util/imageExtractInfoTypes"
+import { morphs } from "../model/morphs"
+import { extractInfoOne } from "../util/toCommitInWASMIM" 
 import "./App.css"
 import { ImageDropper, ImageDropperFile } from "./imageDropper"
 import { ResponsiveLocalStorageLayout } from "./layout/layout"
-import { morphs } from "./morphs"
-import { extractInfoOne } from "./util/toCommitInWASMIM" 
  
 export interface AppProps {
 }
@@ -149,3 +149,4 @@ class App extends React.Component<AppProps, AppState> {
 }
 
 export default App
+
