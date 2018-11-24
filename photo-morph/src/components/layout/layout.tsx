@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Responsive, WidthProvider } from "react-grid-layout"
 import { connect } from "react-redux"
-import { ImageState, RootState } from "src/store/store"
+import { ImageState, RootState, Status } from "src/store/store"
 import { getFromLS, saveToLS } from "src/util/misc"
 import { style } from "typestyle"
 import Image from "../Image"
@@ -17,6 +17,7 @@ const originalLayouts = getFromLS("layouts") || layouts
 
 export interface LayoutProps {
   outputImage: ImageState
+  status: Status
 }
 export interface LayoutState {
   layouts: any
@@ -24,7 +25,8 @@ export interface LayoutState {
 
 const styles = {
   text: style({
-    border: "2px solid green"
+    border: "2px solid green",
+    padding: "6px"
   }),
   header: style({
     textAlign: "center"
@@ -49,7 +51,7 @@ class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 
   onLayoutChange(layout, layouts) {
     saveToLS("layouts", layouts)
-    console.log({layouts})
+    // console.log({layouts})
     this.setState({ layouts })
   }
 
@@ -71,6 +73,9 @@ class Layout extends React.PureComponent<LayoutProps, LayoutState> {
             <p>Options:
         <button onClick={this.resetLayout.bind(this)}>Reset Layout</button>
             </p>
+            <p>
+              Status: {this.props.status}
+            </p>
           </div>
           <div key="2" className={styles.text} >
             <p className="App-intro">
@@ -85,7 +90,7 @@ class Layout extends React.PureComponent<LayoutProps, LayoutState> {
             <SelectMorph />
           </div>
           <div key="5" className={styles.text} >
-            {this.props.outputImage ? <Image image={this.props.outputImage} /> : ""}
+            {this.props.outputImage ? <Image image={this.props.outputImage} dontShowSelectBox={true}/> : ""}
           </div>
         </ResponsiveReactGridLayout>
       </div>
@@ -95,7 +100,8 @@ class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 
 
 const mapStateToProps = (state: RootState) => ({
-  outputImage: state.outputImage
+  outputImage: state.outputImage,
+  status: state.status
 })
 
 export default connect(mapStateToProps, {})(Layout)

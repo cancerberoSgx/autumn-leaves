@@ -1,6 +1,6 @@
 import { Action } from "redux"
 import { ActionTypes } from "."
-import { ImageState } from "../store"
+import { ImageState, Status } from "../store"
 
 export function addImages(files: ImageState[]): AddImagesAction {
   return {
@@ -8,6 +8,12 @@ export function addImages(files: ImageState[]): AddImagesAction {
     files
   }
 }
+
+export interface AddImagesAction extends Action {
+  type: ActionTypes.addImages,
+  files: ImageState[]
+}
+
 export function selectImages(indexes: {[index: number]: boolean}): SelectImagesAction {
   return {
     type: ActionTypes.selectImages,
@@ -15,13 +21,20 @@ export function selectImages(indexes: {[index: number]: boolean}): SelectImagesA
   }
 }
 
-
-export interface AddImagesAction extends Action {
-  type: ActionTypes.addImages,
-  files: ImageState[]
-}
-
 export interface SelectImagesAction extends Action {
   type: ActionTypes.selectImages,
   indexes: {[index: number]: boolean}
+}
+
+
+export function changeStatus(status: Status): ChangeStatusAction {
+  return {
+    type: ActionTypes.changeStatus,
+    status
+  }
+}
+
+export interface ChangeStatusAction extends Action {
+  type: ActionTypes.changeStatus,
+  status: Status
 }

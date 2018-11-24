@@ -1,6 +1,6 @@
 import { Reducer } from "redux"
-import { ActionTypes, AddImagesAction, SelectImagesAction } from "../actions"
-import { ImageState, RootState } from "../store"
+import { ActionTypes, AddImagesAction, ChangeStatusAction, SelectImagesAction } from "../actions"
+import { ImageState, RootState, Status } from "../store"
 
 const initialState: ImageState[] =[]
 const addImagesReducer: Reducer<ImageState[]>= (state = initialState, action)=>{
@@ -18,4 +18,12 @@ const selectImagesReducer: Reducer<ImageState[]>= (state = initialState, action)
 
 export const imageReducers: Reducer<ImageState[]>= (state = initialState, action)=>{
   return addImagesReducer(state, action) || selectImagesReducer(state, action) || [...state]
+}
+
+
+export const changeStatusReducer: Reducer<Status>= (state = "idle", action)=>{
+  if(action.type===ActionTypes.changeStatus){
+    return (action as ChangeStatusAction).status
+  }
+  return state
 }

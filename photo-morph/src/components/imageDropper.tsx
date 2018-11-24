@@ -4,31 +4,34 @@ import {style} from "typestyle"
 
 export interface ImageDropperProps  {
   dontInstall?: boolean
-  onChange: (e: FolderDropManagerEvent&{files: ImageDropperFile[]})=>void
+  onChange: (e: FolderDropManagerEvent&{files?: ImageDropperFile[]})=>void
 }
-export interface ImageDropperState {
-  files: ImageDropperFile[], 
-  state: "inactive"| "loading"| "finish"
+
+export interface ImageDropperFile {
+  fileName: string, content:  string
 }
+
 const styles = {
   dropper: style({
-    width: "50%",
+    width: "100%",
     height: "60px",
     border: "2px solid pink",
   })
 }
-export class ImageDropper extends React.Component<ImageDropperProps, ImageDropperState> {
 
-  state: ImageDropperState = {
-    files: [], 
-    state: "inactive"
-  }
+export class ImageDropper extends React.Component<ImageDropperProps, {}> {
+
+  state: {} = {  }
+
   manager: FolderDropManager
-  constructor(props: ImageDropperProps, state: ImageDropperState) {
+
+  files: ImageDropperFile[] = []
+
+  constructor(props: ImageDropperProps, state: {}) {
     super(props, state)
     this.manager = createFolderDropManager({readAs: "DataURL"})
   }
-
+  
   render(): React.ReactNode {
     return (
       <div className={styles.dropper} id="imageDropArea">
@@ -41,19 +44,15 @@ export class ImageDropper extends React.Component<ImageDropperProps, ImageDroppe
       this.manager.install(document.getElementById("imageDropArea"), this.folderDDListener.bind(this))
     }
   }
-  folderDDListener(event: FolderDropManagerEvent) {
-    
+  
+  folderDDListener(event: FolderDropManagerEvent) {    
     if(event.type==="finish"){
-      this.setState({...this.state, state: "finish"})
-      this.props.onChange({...event, ...this.state})
+      this.props.onChange({...event, files: this.files})
+        this.files = []
     }
     else if (event.file.isFile) {
-      this.state.files.push({fileName: event.file.fullPath, content: event.file.content as string})
-      this.setState({...this.state, state: "loading"})
+      this.props.onChange({...event})
+      this.files.push({fileName: event.file.fullPath, content: event.file.content as string})
     }
   }
-}
-
-export interface ImageDropperFile {
-  fileName: string, content:  string
 }

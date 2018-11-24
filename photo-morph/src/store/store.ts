@@ -3,15 +3,13 @@ import { ExtractInfoResult, MagickInputFile } from "wasm-imagemagick"
 export interface RootState {
   images: ImageState[]
   morphs: MorphState[]
-  outputImage: ImageState|false
+  outputImage: ImageState | false
+  status: Status
 }
 
-// export interface ImagesState {
-//   images: ImageState[]
-// }
+export type Status = "idle" | "loadingInputImages" | "executing"
 
 export interface ImageState {
-  name: string
   file: MagickInputFile
   src: string
   isSelected: boolean
@@ -20,12 +18,8 @@ export interface ImageState {
   id: string
 }
 
-export  interface MorphState {
+export interface MorphState {
   name: string
   isSelected: boolean
   description: string
 }
-
-// export interface MorphsState {
-//   morphs: MorphState
-// }

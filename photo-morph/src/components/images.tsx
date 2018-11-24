@@ -46,5 +46,5 @@ const mapStateToProps = (state: RootState) => {
   return { images: state.images }
 }
 
-export default connect(  mapStateToProps, {  })(ImagesComponent)
+export default connect(  mapStateToProps)(ImagesComponent)
 

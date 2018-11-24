@@ -9,6 +9,7 @@ export interface ImageProps {
   images: ImageState[]
   image: ImageState
   selectImages: (indexes: { [index: number]: boolean }) => SelectImagesAction
+  dontShowSelectBox?: boolean
 }
 
 const styles = {
@@ -30,8 +31,8 @@ export class ImageComponent extends React.Component<ImageProps, {}> {
       <span>
         <img className={styles.image} src={this.props.image.src}></img>
         <br />
-        <input type="checkbox" checked={this.props.image.isSelected} onChange={this.selectImage.bind(this)} data-image-index={this.props.image.id}></input><br />
-        <a href={this.props.image.href} target="_blank" download={this.props.image.name}>{this.props.image.name}</a><br />
+        {this.props.dontShowSelectBox ? "" : <div><input type="checkbox" checked={this.props.image.isSelected} onChange={this.selectImage.bind(this)} data-image-index={this.props.image.id}></input></div>}
+        <a href={this.props.image.href} target="_blank" download={this.props.image.file.name}>{this.props.image.file.name}</a><br />
         <span>Size: {this.props.image.info.image.geometry.width}x{this.props.image.info.image.geometry.height}</span>
       </span>
     )
