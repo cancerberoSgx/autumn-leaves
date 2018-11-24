@@ -1,19 +1,7 @@
-import { MagickInputFile } from "wasm-imagemagick"
-import { Action } from 'redux';
-
 export enum ActionTypes {
-  addImages
+  addImages, selectImages,
+  selectMorph, executeMorph,
+  setOutputImage,
 }
-
-export function addImages(files: string[]): AddImagesAction {
-  return {
-    type: ActionTypes.addImages,
-    files
-  }
-}
-
-export interface AddImagesAction extends Action {
-  type: ActionTypes.addImages,
-  files: string[]
-}
-
+export * from './images'
+export * from './morphs'
