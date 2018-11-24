@@ -38,3 +38,14 @@ export interface ChangeStatusAction extends Action {
   type: ActionTypes.changeStatus,
   status: Status
 }
+
+export function setOutputImage(image: ImageState): SetOutputImageAction {
+  return {
+    type: ActionTypes.setOutputImage,
+    image
+  }
+}
+export interface SetOutputImageAction extends Action {
+  type: ActionTypes.setOutputImage,
+  image: ImageState
+}

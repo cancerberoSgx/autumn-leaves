@@ -5,9 +5,9 @@ import { asCommand } from 'wasm-imagemagick';
 
 export interface CommandEditorProps extends CommandEditorPropsBase {
   templateContext: SizedImageContext
-  imageSrc: string
-  imageWidth: () => number
-  imageHeight: () => number
+  imageSrc?: string
+  imageWidth?: () => number
+  imageHeight?: () => number
 } 
 
 export interface CommandEditorState {

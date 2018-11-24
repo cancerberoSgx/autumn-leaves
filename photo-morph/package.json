@@ -12,17 +12,17 @@
   },
   "dependencies": {
     "folder-drop-manager": "^0.1.5",
+    "imagemagick-browser": "file:../imagemagick-browser",
     "p-filter": "file:../../p-filter",
     "p-map": "^2.0.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-grid-layout": "^0.16.6",
-    "imagemagick-browser": "file:../imagemagick-browser",
     "react-redux": "^5.1.1",
     "react-scripts": "^2.1.1",
     "redux": "^4.0.1",
     "typestyle": "^2.0.1",
-    "wasm-imagemagick": "../../WASM-ImageMagick",
+    "wasm-imagemagick": "file:../../WASM-ImageMagick",
     "webpack-dev-server": "^3.1.10"
   },
   "devDependencies": {

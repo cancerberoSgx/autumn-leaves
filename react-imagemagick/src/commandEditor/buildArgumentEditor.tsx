@@ -4,10 +4,12 @@ import { ColorPickerEditor } from './ColorPickerEditor';
 import { ImagePointsEditor } from './ImagePointsEditor';
 import { NumberEditor } from './NumberEditor';
 import { SelectOneEditor } from './SelectOneEditor';
+import { BooleanEditor } from './BooleanEditor';
 
 export function buildArgumentEditor<T>(arg: Argument, templateContext: SizedImageContext, onChange: (e: ArgumentChangeEvent<T>) => void, imageSrc: string) {
 
   const val = (templateContext as any)[arg.id]
+
   if (arg.type === ArgumentType.color) {
     return <ColorPickerEditor
       value={val + ''}
@@ -18,6 +20,14 @@ export function buildArgumentEditor<T>(arg: Argument, templateContext: SizedImag
   else if (arg.type === ArgumentType.number) {
     const value = parseInt(val + '')
     return <NumberEditor
+      value={value}
+      argument={arg}
+      onChange={onChange as any}
+    />
+  }
+  else if (arg.type === ArgumentType.boolean) {
+    const value = typeof val === 'string' ? val==='true' : false
+    return <BooleanEditor
       value={value}
       argument={arg}
       onChange={onChange as any}

@@ -34,6 +34,11 @@ const styles = {
   headerTitle: style({
     fontSize: "1.4em"
   }),
+  executing: style({
+    color: "red", 
+    fontSize: "1.2em",
+    fontWeight: "bold"
+  }),
 }
 class Layout extends React.PureComponent<LayoutProps, LayoutState> {
   state: LayoutState = {
@@ -63,6 +68,7 @@ class Layout extends React.PureComponent<LayoutProps, LayoutState> {
           cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
           rowHeight={30}
           layouts={this.state.layouts}
+          draggableCancel="input,textarea"
           onLayoutChange={this.onLayoutChange.bind(this)}
         >
           <div key="1" className={styles.text}  >
@@ -74,7 +80,7 @@ class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         <button onClick={this.resetLayout.bind(this)}>Reset Layout</button>
             </p>
             <p>
-              Status: {this.props.status}
+              Status: <span className={this.props.status==="executing" ? styles.executing : ""}>{this.props.status}</span>
             </p>
           </div>
           <div key="2" className={styles.text} >

@@ -1,14 +1,21 @@
 import { store } from "src"
-import { morphs } from "src/model/morphs"
+import { CommonArguments, Morph } from "src/model/morphs"
 import { changeStatus, setOutputImage } from "src/store/actions"
 import { getUniqueId } from "src/util/misc"
-import { asInputFile, asOutputFile, buildImageSrc, execute, extractInfo, getFileNameExtension } from "wasm-imagemagick"
+import { extractInfoOne } from "src/util/toCommitInWASMIM"
+import { asInputFile, buildImageSrc, execute, getFileNameExtension, MagickOutputFile } from "wasm-imagemagick"
 
 export async function executeMorph(): Promise<void> {
-  store.dispatch(changeStatus("executing"))
-  const morph = morphs[store. getState().morphs.map((m, i) => m.isSelected ? i : -1).filter(i => i !== -1)[0]]
   const selectedImages = store. getState().images.filter(img => img.isSelected)
+  if(selectedImages.length<2){
+    return // TODO: error
+  }
+  store.dispatch(changeStatus("executing"))
+  const morph = store. getState().morphs.find(m => m.isSelected)
+  // const morph = morphs[store. getState().morphs.map((m, i) => m.isSelected ? i : -1).filter(i => i !== -1)[0]]
   const inputFiles = selectedImages.map(i => i.file)
+  let file: MagickOutputFile
+  if(morph.definition.command) {
 
   // resize the images so they have same dimensions. TODO: move this to the morph command itself
   const newSize = `${selectedImages[0].info.image.geometry.width}x${selectedImages[0].info.image.geometry.height}`
@@ -17,18 +24,30 @@ export async function executeMorph(): Promise<void> {
   const resizeResult = await execute({ inputFiles, commands: resizeCommands })
   inputFiles[1] = await asInputFile(resizeResult.outputFiles[0])
 
-  const commands = morph.command.replace("$$IMAGES", inputFiles.map(f => f.name).join(" "))
+  const commands = morph.definition.command.replace("$$IMAGES", inputFiles.map(f => f.name).join(" "))
   const result = await execute({ inputFiles, commands })
-  const file = result.outputFiles[0]
-  store.dispatch(changeStatus("idle"))
-  store.dispatch(setOutputImage({
+  file = result.outputFiles[0]
+
+  }
+  else if(morph.definition.template){
+    const outputFiles = await morph.definition.template({arguments:morph.value, inputFiles: selectedImages})
+    file = outputFiles[0]
+  }
+
+  const outputImage = {
     file: await asInputFile(file),
-    href: URL.createObjectURL((await asOutputFile(file)).blob),
-    info: (await extractInfo(file))[0],
+    href: URL.createObjectURL(file.blob),
+    info: await extractInfoOne(file),
     isSelected: false,
     src: await buildImageSrc(file),
     id: getUniqueId()
-  }))
+  }
+  store.dispatch(changeStatus("idle"))
+  store.dispatch(setOutputImage(outputImage))
+}
 
-
+export function getDefaultArguments(m: Morph): CommonArguments{
+  const r = {}
+  m.arguments.forEach(a=>r[a.id]=a.defaultValue)
+  return {frames: 6, loop: 0, ...r, imageWidth: 0, imageHeight: 0}
 }

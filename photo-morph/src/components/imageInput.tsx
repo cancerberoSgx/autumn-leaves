@@ -9,7 +9,7 @@ import { buildInputFile, getInputFilesFromHtmlInputElement } from "wasm-imagemag
 import { ImageDropper, ImageDropperFile } from "./imageDropper"
 
 interface ImageInputProps {
-  addImages: (images: ImageState[]) => AddImagesAction,
+  // addImages: (images: ImageState[]) => AddImagesAction,
   images: ImageState[]
 }
 
@@ -45,6 +45,6 @@ const mapStateToProps = (state: RootState) => ({
   images: state.images,
 })
 
-export default connect(mapStateToProps, { addImages })(ImageInput)
+export default connect(mapStateToProps, {  })(ImageInput)
 
 

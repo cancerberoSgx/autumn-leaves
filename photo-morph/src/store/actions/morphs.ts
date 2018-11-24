@@ -1,6 +1,5 @@
 import { Action } from "redux"
 import { ActionTypes } from "."
-import { ImageState, MorphState } from "../store"
 
 export function selectMorph(index: number): SelectMorphAction {
   return {
@@ -13,13 +12,13 @@ export interface SelectMorphAction extends Action {
   index: number
 }
 
-export function setOutputImage(image: ImageState): SetOutputImageAction {
+export function changeMorphArgument(morphId: string, argumentId: string, argumentValue: any): ChangeMorphArgumentAction {
   return {
-    type: ActionTypes.setOutputImage,
-    image
+    type: ActionTypes.changeMorphArgument,
+    morphId, argumentId, argumentValue
   }
 }
-export interface SetOutputImageAction extends Action {
-  type: ActionTypes.setOutputImage,
-  image: ImageState
+export interface ChangeMorphArgumentAction extends Action {
+  type: ActionTypes.changeMorphArgument,
+  morphId: string, argumentId: string, argumentValue: any
 }

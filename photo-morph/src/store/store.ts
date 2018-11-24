@@ -1,3 +1,4 @@
+import { CommonArguments, Morph } from "src/model/morphs"
 import { ExtractInfoResult, MagickInputFile } from "wasm-imagemagick"
 
 export interface RootState {
@@ -19,7 +20,7 @@ export interface ImageState {
 }
 
 export interface MorphState {
-  name: string
   isSelected: boolean
-  description: string
+  definition: Morph
+  value: CommonArguments
 }

@@ -27,7 +27,7 @@
   "dependencies": {
     "jasmine": "^3.2.0",
     "p-map": "^1.0.0",
-    "wasm-imagemagick": "^1.2.1"
+    "wasm-imagemagick": "file:../../WASM-ImageMagick"
   },
   "devDependencies": {
     "@types/expect-puppeteer": "^3.3.0",

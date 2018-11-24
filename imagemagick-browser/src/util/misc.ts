@@ -12,7 +12,7 @@ export function stringToUInt8Array(s: string): Uint8Array {
   return enc.encode(s)
 }
 
-export function seq(start: number, step: number, max: number): number[]{
+export function seq(start: number=0, step: number=1, max: number=0): number[]{
   const result = []
   for (let i = start; i < max; i+=step) {
     result.push(i)

@@ -37,6 +37,7 @@ export type Color = string
 export enum ArgumentType {
   color = 'color',
   number = 'number',
+  boolean = 'boolean',
   text = 'text',
   selectOne = 'select-single', // select list single item selection
   imagePoints = 'imagePoints',
@@ -59,6 +60,7 @@ export interface Argument {
   max?: number
   /** increment for type=='number' */
   step?: number
+  defaultValue?: any
 }
 
 export interface Point {
