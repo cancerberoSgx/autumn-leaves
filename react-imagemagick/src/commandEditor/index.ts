@@ -1,4 +1,5 @@
 export * from './ColorPickerEditor'
+export * from './BooleanEditor'
 export * from './ImagePointsEditor'
 export * from './NumberEditor'
 export * from './SelectImageEditor'

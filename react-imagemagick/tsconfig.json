@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./dist/",
-    "lib": ["es6", "dom"],
+    "lib": ["es2016", "dom"],
     "noImplicitAny": false,
     "sourceMap": true,
     "module": "commonjs",
@@ -13,7 +13,7 @@
     "skipLibCheck": true
   },
   "include": [
-    "src"
+    "src", "spec"
   ],
   "exclude": [
     "docs", "node_modules", "dist", "docs-dev"
