@@ -16,7 +16,8 @@
     "no-empty-interface": false,
     "semicolon": [true, "never"], 
     "quotemark": [true, "always"],
-    "max-classes-per-file": false
+    "max-classes-per-file": false,
+    "jsx-no-lambda": false
 
   }
 }

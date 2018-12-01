@@ -19,6 +19,7 @@ const setUrlStateReducer: Reducer<UrlState> = (state = initialState, action) => 
 }
 
 import reduceReducers from "reduce-reducers"
+import { uiReducers } from './ui';
 export const urlStateReducers: Reducer<UrlState> = reduceReducers(setUrlStateReducer)
 
 export const reducers = reduceReducers(
@@ -27,7 +28,8 @@ export const reducers = reduceReducers(
     morphs: morphReducers,
     outputImage: outputImageReducers,
     status: changeStatusReducer,
-    urlState: (state, action) => state || {}
+    urlState: (state, action) => state || {},
+    uiState: uiReducers
   })
   , (state: RootState, action) => {
     if (action.type === ActionTypes.updateUrl) { // this happens when user select / change a morph so we must update the url

@@ -1,23 +1,23 @@
-import * as React from "react"
-import { Responsive, WidthProvider } from "react-grid-layout"
-import { connect } from "react-redux"
-import { ImageState, RootState, Status } from "src/store/store"
-import { getFromLS, saveToLS } from "src/util/misc"
-import { style } from "typestyle"
-import Image from "../Image"
-import ImageInput from "../imageInput"
-import ImageOuput from "../ImageOuput"
-import Images from "../images"
-import SelectMorph from "../selectMorph"
-import { layouts } from "./layouts"
-import "./react-grid-layout.css"
-import "./react-resizable.css"
+import * as React from "react";
+import { Responsive, WidthProvider } from "react-grid-layout";
+import { connect } from "react-redux";
+import { RootState, Status } from "src/store/store";
+import { getFromLS, saveToLS } from "src/util/misc";
+import { style } from "typestyle";
+import ForkRibbon from "../forkRibbon";
+import ImageInput from "../imageInput";
+import ImageOuput from "../ImageOuput";
+import Images from "../images";
+import SelectMorph from "../selectMorph";
+import { layouts } from "./layouts";
+import Options from "./Options";
+import "./react-grid-layout.css";
+import "./react-resizable.css";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive)
 const originalLayouts = getFromLS("layouts") || layouts
 
 export interface LayoutProps {
-  outputImage: ImageState
   status: Status
 }
 export interface LayoutState {
@@ -58,10 +58,6 @@ class Layout extends React.PureComponent<LayoutProps, LayoutState> {
     this.setState({ layouts })
   }
 
-  lockLayout() {
-
-  }
-
   onLayoutChange(layout, layouts) {
     saveToLS("layouts", layouts)
     console.log({ layouts })
@@ -87,10 +83,7 @@ class Layout extends React.PureComponent<LayoutProps, LayoutState> {
               <h1 className={styles.headerTitle}>Welcome to Photo Morph</h1>
               <p>Create awesome photo morph animations</p>
             </header>
-            <p>Options:
-        <button onClick={this.resetLayout.bind(this)}>Reset Layout</button>
-        <button onClick={this.lockLayout.bind(this)}>Lock Layout</button>
-            </p>
+            <Options   resetLayout={this.resetLayout.bind(this)} />
             <p>
               Status: <span className={this.props.status === "executing" ? styles.executing : ""}>{this.props.status}</span>
             </p>
@@ -103,18 +96,19 @@ class Layout extends React.PureComponent<LayoutProps, LayoutState> {
             </p>
           </div>
           <div key="3" className={styles.layoutBox}>
-          <h3>Your input images</h3>
+            <h3>Your input images</h3>
             <Images />
           </div>
           <div key="4" className={styles.layoutBox}>
-          <h3>Select a morph transformation</h3>
+            <h3>Select a morph transformation</h3>
             <SelectMorph />
           </div>
           <div key="5" className={styles.layoutBox} >
-          <h3>Output images:</h3>
-            <ImageOuput></ImageOuput>
+            <h3>Output images:</h3>
+            <ImageOuput />
           </div>
         </ResponsiveReactGridLayout>
+        <ForkRibbon />
       </div>
     )
   }
@@ -122,7 +116,6 @@ class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 
 
 const mapStateToProps = (state: RootState) => ({
-  outputImage: state.outputImage,
   status: state.status
 })
 

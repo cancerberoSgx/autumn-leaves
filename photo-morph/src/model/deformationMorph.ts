@@ -146,7 +146,7 @@ new DeformationMorph("implodeDeformation", "Deformation implode", {
 export const tornPaperDeformation = 
 new DeformationMorph("tornPaperDeformation", "Deformation torn paper", {
   transformCommand: (config, value) => ` \( +clone -alpha extract -virtual-pixel black -spread ${value} -blur 0x3 -threshold 60% -spread ${value} -blur 0x1 \) -alpha off -compose Copy_Opacity -composite`,
-  arguments: { frames: 5, transformationFactor: 20, delayLong: 40, delayShort: 20 }
+  arguments: { frames: 9, transformationFactor: 15, delayLong: 40, delayShort: 0 }
 })
 
 export const noiseDeformation = 

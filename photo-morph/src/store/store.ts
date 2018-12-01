@@ -6,9 +6,13 @@ export interface RootState {
   morphs: MorphState[]
   outputImage: ImageState | false
   status: Status,
-  urlState: UrlState
+  urlState: UrlState,
+  uiState: UIState
 }
-
+export interface UIState {
+  layoutLocked: boolean
+  helpModalOpen: boolean
+}
 export type Status = "idle" | "loadingInputImages" | "executing"
 
 export interface ImageState {

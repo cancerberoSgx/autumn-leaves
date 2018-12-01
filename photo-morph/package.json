@@ -19,6 +19,7 @@
     "react-dom": "^16.6.3",
     "react-grid-layout": "^0.16.6",
     "react-redux": "^5.1.1",
+    "react-responsive-modal": "^3.5.1",
     "reduce-reducers": "^0.4.3",
     "redux": "^4.0.1",
     "typestyle": "^2.0.1",

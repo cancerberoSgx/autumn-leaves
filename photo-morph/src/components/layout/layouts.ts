@@ -2,7 +2,7 @@ export const layouts = {
   "lg": [
     {
       "w": 6,
-      "h": 4,
+      "h": 6,
       "x": 0,
       "y": 0,
       "i": "1",
@@ -13,7 +13,7 @@ export const layouts = {
     },
     {
       "w": 6,
-      "h": 4,
+      "h": 6,
       "x": 6,
       "y": 0,
       "i": "2",
@@ -23,10 +23,10 @@ export const layouts = {
       "static": false
     },
     {
-      "w": 7,
-      "h": 14,
+      "w": 6,
+      "h": 18,
       "x": 0,
-      "y": 4,
+      "y": 6,
       "i": "3",
       "minW": 2,
       "minH": 3,
@@ -34,10 +34,10 @@ export const layouts = {
       "static": false
     },
     {
-      "w": 5,
-      "h": 7,
-      "x": 7,
-      "y": 4,
+      "w": 6,
+      "h": 9,
+      "x": 6,
+      "y": 6,
       "i": "4",
       "minW": 2,
       "minH": 3,
@@ -45,10 +45,10 @@ export const layouts = {
       "static": false
     },
     {
-      "w": 5,
-      "h": 7,
-      "x": 7,
-      "y": 11,
+      "w": 6,
+      "h": 9,
+      "x": 6,
+      "y": 15,
       "i": "5",
       "minW": 2,
       "minH": 3,
@@ -70,7 +70,7 @@ export const layouts = {
     },
     {
       "w": 2,
-      "h": 5,
+      "h": 6,
       "x": 0,
       "y": 5,
       "i": "2",
@@ -83,7 +83,7 @@ export const layouts = {
       "w": 2,
       "h": 7,
       "x": 0,
-      "y": 10,
+      "y": 11,
       "i": "3",
       "minW": 2,
       "minH": 3,
@@ -92,9 +92,9 @@ export const layouts = {
     },
     {
       "w": 2,
-      "h": 7,
+      "h": 9,
       "x": 0,
-      "y": 17,
+      "y": 18,
       "i": "4",
       "minW": 2,
       "minH": 3,
@@ -105,7 +105,7 @@ export const layouts = {
       "w": 2,
       "h": 7,
       "x": 0,
-      "y": 24,
+      "y": 27,
       "i": "5",
       "minW": 2,
       "minH": 3,
@@ -127,7 +127,7 @@ export const layouts = {
     },
     {
       "w": 4,
-      "h": 4,
+      "h": 6,
       "x": 0,
       "y": 4,
       "i": "2",
@@ -140,7 +140,7 @@ export const layouts = {
       "w": 4,
       "h": 7,
       "x": 0,
-      "y": 8,
+      "y": 10,
       "i": "3",
       "minW": 2,
       "minH": 3,
@@ -149,9 +149,9 @@ export const layouts = {
     },
     {
       "w": 4,
-      "h": 7,
+      "h": 9,
       "x": 0,
-      "y": 15,
+      "y": 17,
       "i": "4",
       "minW": 2,
       "minH": 3,
@@ -162,7 +162,7 @@ export const layouts = {
       "w": 4,
       "h": 7,
       "x": 0,
-      "y": 22,
+      "y": 26,
       "i": "5",
       "minW": 2,
       "minH": 3,
@@ -173,7 +173,7 @@ export const layouts = {
   "sm": [
     {
       "w": 3,
-      "h": 5,
+      "h": 6,
       "x": 0,
       "y": 0,
       "i": "1",
@@ -184,7 +184,7 @@ export const layouts = {
     },
     {
       "w": 3,
-      "h": 5,
+      "h": 6,
       "x": 3,
       "y": 0,
       "i": "2",
@@ -195,9 +195,9 @@ export const layouts = {
     },
     {
       "w": 6,
-      "h": 7,
+      "h": 8,
       "x": 0,
-      "y": 5,
+      "y": 6,
       "i": "3",
       "minW": 2,
       "minH": 3,
@@ -206,9 +206,9 @@ export const layouts = {
     },
     {
       "w": 3,
-      "h": 7,
-      "x": 0,
-      "y": 12,
+      "h": 10,
+      "x": 3,
+      "y": 14,
       "i": "4",
       "minW": 2,
       "minH": 3,
@@ -217,9 +217,9 @@ export const layouts = {
     },
     {
       "w": 3,
-      "h": 7,
-      "x": 3,
-      "y": 12,
+      "h": 10,
+      "x": 0,
+      "y": 14,
       "i": "5",
       "minW": 2,
       "minH": 3,
@@ -230,7 +230,7 @@ export const layouts = {
   "md": [
     {
       "w": 4,
-      "h": 5,
+      "h": 6,
       "x": 0,
       "y": 0,
       "i": "1",
@@ -241,7 +241,7 @@ export const layouts = {
     },
     {
       "w": 6,
-      "h": 5,
+      "h": 6,
       "x": 4,
       "y": 0,
       "i": "2",
@@ -251,10 +251,10 @@ export const layouts = {
       "static": false
     },
     {
-      "w": 6,
-      "h": 14,
+      "w": 5,
+      "h": 18,
       "x": 0,
-      "y": 5,
+      "y": 6,
       "i": "3",
       "minW": 2,
       "minH": 3,
@@ -262,10 +262,10 @@ export const layouts = {
       "static": false
     },
     {
-      "w": 4,
-      "h": 7,
-      "x": 6,
-      "y": 5,
+      "w": 5,
+      "h": 9,
+      "x": 5,
+      "y": 6,
       "i": "4",
       "minW": 2,
       "minH": 3,
@@ -273,10 +273,10 @@ export const layouts = {
       "static": false
     },
     {
-      "w": 4,
-      "h": 7,
-      "x": 6,
-      "y": 12,
+      "w": 5,
+      "h": 9,
+      "x": 5,
+      "y": 15,
       "i": "5",
       "minW": 2,
       "minH": 3,

@@ -10,8 +10,11 @@ export enum ActionTypes {
   changeStatus,
   updateUrl,
   urlChanged,
-  resetMorphValues
+  resetMorphValues,
+
+  setUIState
 }
+
 export * from "./images"
 export * from "./morphs"
 
