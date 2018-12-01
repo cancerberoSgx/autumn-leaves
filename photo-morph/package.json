@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build && rm -rf ../docs/photo-morph && mv build ../docs/photo-morph",
+    "build": "export PUBLIC_URL=https://cancerberosgx.github.io/autumn-leaves/photo-morph/ && react-scripts-ts build && rm -rf ../docs/photo-morph && mv build ../docs/photo-morph",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
     "all": "npm run copy && npm run build && rm -rf ../docs/photo-morph && cp -r build ../docs/photo-morph",
