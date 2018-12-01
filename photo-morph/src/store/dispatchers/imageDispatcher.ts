@@ -7,14 +7,14 @@ import { asOutputFile, buildImageSrc, buildInputFile, extractInfo, getInputFiles
 import { addImages, changeStatus } from "../actions"
 import { ImageState } from "../store"
 
-export async function addInputImages(e: HTMLInputElement | ImageDropperFile[] | MagickInputFile[] | undefined): Promise<void> {
+export async function addInputImages(e: HTMLInputElement | ImageDropperFile[] | MagickInputFile[] | undefined, urls?: string[]): Promise<void> {
   store.dispatch(changeStatus("loadingInputImages"))
   let files: MagickInputFile[]
   if (e === undefined) {
     return
   }
   else if (Array.isArray(e)) {
-    if (isInputFile(e[0])) {
+    if (e.length && isInputFile(e[0])) {
       files = e as MagickInputFile[]
     }
     else {
@@ -25,17 +25,28 @@ export async function addInputImages(e: HTMLInputElement | ImageDropperFile[] | 
     files = await getInputFilesFromHtmlInputElement(e as HTMLInputElement)
   }
   const validImages = await pFilter(files, img => isImage(img))
-  const images: ImageState[] = await pMap(validImages, async file => {
+  const images: ImageState[] = await pMap(validImages, async (file, i) => {
     const imageState: ImageState = {
       file,
       info: (await extractInfo(file))[0],
       isSelected: store.getState().images.filter(img => img.isSelected).length > 1 ? false : true,
       src: await buildImageSrc(file),
       href: URL.createObjectURL((await asOutputFile(file)).blob),
-      id: getUniqueId()
+      id: getUniqueId(), 
+      fromUrl: urls && urls[i]
     }
     return imageState
   })
   store.dispatch(changeStatus("idle"))
+  // debugger
   store.dispatch(addImages(images))
+}
+
+export async function addMissingImagesFromUrlState(): Promise<void> {
+  const state= store.getState()
+  debugger
+  const fromUrls = state.images.map(i=>i.fromUrl)
+  const notLoaded = state.urlState.selectedImageUrls.filter(url=>fromUrls.indexOf(url)===-1)
+  const files = await pMap(notLoaded, url=>buildInputFile(url))
+  return await addInputImages(files, notLoaded)
 }

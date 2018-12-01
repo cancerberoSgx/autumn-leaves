@@ -1,27 +1,25 @@
-import * as React from "react";
-import { Responsive, WidthProvider } from "react-grid-layout";
-import { connect } from "react-redux";
-import { RootState, Status } from "src/store/store";
-import { getFromLS, saveToLS } from "src/util/misc";
-import { style } from "typestyle";
-import ForkRibbon from "../forkRibbon";
-import ImageInput from "../imageInput";
-import ImageOuput from "../ImageOuput";
-import Images from "../images";
-import SelectMorph from "../selectMorph";
-import { layouts } from "./layouts";
-import Options from "./Options";
-import "./react-grid-layout.css";
-import "./react-resizable.css";
+import * as React from "react"
+import { Responsive, WidthProvider } from "react-grid-layout"
+import { connect } from "react-redux"
+import { setUIState, SetUIStateAction } from "src/store/actions/ui"
+import { RootState, Status, UIState } from "src/store/store"
+import { saveToLS } from "src/util/misc"
+import { style } from "typestyle"
+import ForkRibbon from "../forkRibbon"
+import ImageInput from "../imageInput"
+import ImageOuput from "../ImageOuput"
+import Images from "../images"
+import SelectMorph from "../selectMorph"
+import Options from "./Options"
+import "./react-grid-layout.css"
+import "./react-resizable.css"
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive)
-const originalLayouts = getFromLS("layouts") || layouts
 
 export interface LayoutProps {
   status: Status
-}
-export interface LayoutState {
-  layouts: any
+  ui: UIState
+  setUIState: (ui: Partial<UIState>)=>SetUIStateAction
 }
 
 const styles = {
@@ -29,8 +27,6 @@ const styles = {
     background: "#99bbaa",
     border: "2px solid green",
     borderRadius: "5px"
-  }),
-  layout: style({
   }),
   header: style({
     textAlign: "center"
@@ -44,46 +40,41 @@ const styles = {
     fontWeight: "bold"
   }),
 }
-class Layout extends React.PureComponent<LayoutProps, LayoutState> {
-  state: LayoutState = {
-    layouts: originalLayouts
-  }
+
+class Layout extends React.PureComponent<LayoutProps, {}> {
 
   constructor(props) {
     super(props)
   }
 
-  resetLayout() {
-    saveToLS("layouts", layouts)
-    this.setState({ layouts })
-  }
-
   onLayoutChange(layout, layouts) {
     saveToLS("layouts", layouts)
     console.log({ layouts })
-    this.setState({ layouts })
+    this.props.setUIState({layouts})
   }
 
   render() {
     return (
       <div>
         <ResponsiveReactGridLayout
-          className={styles.layout}
           cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
           rowHeight={30}
-          layouts={this.state.layouts}
+          layouts={this.props.ui.layouts}
+          breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 320}}
           draggableCancel="input,textarea"
           autoSize={true}
           verticalCompact={true}
-          containerPadding={[10, 20]}
+          // containerPadding={[10, 20]}
           onLayoutChange={this.onLayoutChange.bind(this)}
+          isDraggable={!this.props.ui.layoutLocked}
+          isResizable={!this.props.ui.layoutLocked}
         >
           <div key="1" className={styles.layoutBox}  >
             <header className={styles.header}>
               <h1 className={styles.headerTitle}>Welcome to Photo Morph</h1>
               <p>Create awesome photo morph animations</p>
             </header>
-            <Options   resetLayout={this.resetLayout.bind(this)} />
+            <Options />
             <p>
               Status: <span className={this.props.status === "executing" ? styles.executing : ""}>{this.props.status}</span>
             </p>
@@ -114,9 +105,9 @@ class Layout extends React.PureComponent<LayoutProps, LayoutState> {
   }
 }
 
-
 const mapStateToProps = (state: RootState) => ({
-  status: state.status
+  status: state.status,
+  ui: state.uiState
 })
 
-export default connect(mapStateToProps, {})(Layout)
+export default connect(mapStateToProps, {setUIState})(Layout)

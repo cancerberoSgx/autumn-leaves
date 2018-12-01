@@ -7,6 +7,8 @@ import registerServiceWorker from "./registerServiceWorker"
 import { urlChanged } from "./store/actions"
 import { reducers } from "./store/reducers"
 import { RootState } from "./store/store"
+import { addMissingImagesFromUrlState } from './store/dispatchers/imageDispatcher';
+import { executeMorph } from './store/dispatchers/morphDispatcher';
 
 export const store: Store<RootState, AnyAction> = createStore(reducers)
 
@@ -19,8 +21,10 @@ ReactDOM.render(
     <Layout />
   </Provider>,
   document.getElementById("root"), 
-  ()=>{
+  async ()=>{
     store.dispatch(urlChanged())
+    await addMissingImagesFromUrlState()
+    await executeMorph()
   }
 )
 

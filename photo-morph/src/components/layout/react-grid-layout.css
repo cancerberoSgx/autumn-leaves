@@ -1,17 +1,31 @@
 body {
   margin: 0
 }
+
 .react-grid-layout {
   position: relative;
   transition: height 200ms ease;
 }
+
+
 .react-grid-item {
+  padding: 0;
+  margin: 0;
   transition: all 200ms ease;
   transition-property: left, top;
+ 
 }
+
+@media (min-width: 996px) {
+  .react-grid-item>* {
+  padding: 0px 0px 0px 10px
+  }
+}
+
 .react-grid-item.cssTransforms {
   transition-property: transform;
 }
+
 .react-grid-item.resizing {
   z-index: 1;
   will-change: width, height;

@@ -3,9 +3,11 @@ import { connect } from "react-redux"
 import { ImageState, RootState, Status } from "src/store/store"
 import { style } from "typestyle"
 import Image from "./Image"
+import { addMissingImagesFromUrlState } from 'src/store/dispatchers/imageDispatcher';
 
 export interface ImagesProps {
   images: ImageState[]
+  // selectedImageUrls: string[]
   status: Status
 }
 
@@ -47,10 +49,15 @@ export class ImagesComponent extends React.Component<ImagesProps, {}> {
       </div>
     )
   }
+
 }
 
 const mapStateToProps = (state: RootState) => {
-  return { images: state.images, status: state.status }
+  return { 
+    images: state.images, 
+    status: state.status , 
+    // selectedImageUrls: state.urlState.selectedImageUrls
+  }
 }
 
 export default connect(  mapStateToProps)(ImagesComponent)

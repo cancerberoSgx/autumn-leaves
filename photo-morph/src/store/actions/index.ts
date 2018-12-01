@@ -11,8 +11,8 @@ export enum ActionTypes {
   updateUrl,
   urlChanged,
   resetMorphValues,
-
-  setUIState
+  setUIState,
+  addUrlImage,
 }
 
 export * from "./images"
@@ -24,4 +24,11 @@ export function urlChanged(): Action<ActionTypes.urlChanged> {
 }
 export function updateUrl(): Action<ActionTypes.updateUrl> {
   return { type: ActionTypes.updateUrl }
+}
+
+export interface AddUrlImageAction extends Action<ActionTypes.addUrlImage> {
+  url: string
+}
+export function addUrlImage(url: string): AddUrlImageAction {
+  return { type: ActionTypes.addUrlImage, url }
 }

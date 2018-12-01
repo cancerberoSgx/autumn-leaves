@@ -12,7 +12,9 @@ export interface RootState {
 export interface UIState {
   layoutLocked: boolean
   helpModalOpen: boolean
+  layouts: any
 }
+
 export type Status = "idle" | "loadingInputImages" | "executing"
 
 export interface ImageState {
@@ -22,6 +24,7 @@ export interface ImageState {
   info: ExtractInfoResult
   href: string
   id: string
+  fromUrl?: string
 }
 
 export interface MorphState {
@@ -33,4 +36,5 @@ export interface MorphState {
 export interface UrlState {
   selectedMorph?: string
   selectedMorphValue?: CommonArguments
+  selectedImageUrls: string[]
 }

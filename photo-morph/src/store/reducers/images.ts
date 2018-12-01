@@ -3,6 +3,7 @@ import { ActionTypes, AddImagesAction, ChangeStatusAction, SelectImagesAction } 
 import { ImageState, RootState, Status } from "../store"
 
 const initialState: ImageState[] =[]
+
 const addImagesReducer: Reducer<ImageState[]>= (state = initialState, action)=>{
   if(action.type===ActionTypes.addImages){
     return[...state, ...(action as AddImagesAction).files]

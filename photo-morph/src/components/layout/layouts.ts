@@ -59,7 +59,7 @@ export const layouts = {
   "xxs": [
     {
       "w": 2,
-      "h": 5,
+      "h": 4,
       "x": 0,
       "y": 0,
       "i": "1",
@@ -72,7 +72,7 @@ export const layouts = {
       "w": 2,
       "h": 6,
       "x": 0,
-      "y": 5,
+      "y": 4,
       "i": "2",
       "minW": 2,
       "minH": 3,
@@ -83,7 +83,7 @@ export const layouts = {
       "w": 2,
       "h": 7,
       "x": 0,
-      "y": 11,
+      "y": 10,
       "i": "3",
       "minW": 2,
       "minH": 3,
@@ -94,7 +94,7 @@ export const layouts = {
       "w": 2,
       "h": 9,
       "x": 0,
-      "y": 18,
+      "y": 17,
       "i": "4",
       "minW": 2,
       "minH": 3,
@@ -105,7 +105,7 @@ export const layouts = {
       "w": 2,
       "h": 7,
       "x": 0,
-      "y": 27,
+      "y": 26,
       "i": "5",
       "minW": 2,
       "minH": 3,
@@ -229,7 +229,7 @@ export const layouts = {
   ],
   "md": [
     {
-      "w": 4,
+      "w": 5,
       "h": 6,
       "x": 0,
       "y": 0,
@@ -240,9 +240,9 @@ export const layouts = {
       "static": false
     },
     {
-      "w": 6,
+      "w": 5,
       "h": 6,
-      "x": 4,
+      "x": 5,
       "y": 0,
       "i": "2",
       "minW": 2,
