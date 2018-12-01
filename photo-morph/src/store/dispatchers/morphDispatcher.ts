@@ -1,9 +1,10 @@
 import { store } from "src"
-import { CommonArguments, Morph } from "src/model/morphs"
+import { forceSameSize } from "src/model/morphs"
+import { CommonArguments, Morph } from "src/model/morphTypes"
 import { changeStatus, setOutputImage } from "src/store/actions"
 import { getUniqueId } from "src/util/misc"
 import { extractInfoOne } from "src/util/toCommitInWASMIM"
-import { asInputFile, buildImageSrc, execute, getFileNameExtension, MagickOutputFile } from "wasm-imagemagick"
+import { asInputFile, buildImageSrc, execute, MagickOutputFile } from "wasm-imagemagick"
 
 export async function executeMorph(): Promise<void> {
   const selectedImages = store. getState().images.filter(img => img.isSelected)
@@ -12,26 +13,16 @@ export async function executeMorph(): Promise<void> {
   }
   store.dispatch(changeStatus("executing"))
   const morph = store. getState().morphs.find(m => m.isSelected)
-  // const morph = morphs[store. getState().morphs.map((m, i) => m.isSelected ? i : -1).filter(i => i !== -1)[0]]
-  const inputFiles = selectedImages.map(i => i.file)
   let file: MagickOutputFile
   if(morph.definition.command) {
-
-  // resize the images so they have same dimensions. TODO: move this to the morph command itself
-  const newSize = `${selectedImages[0].info.image.geometry.width}x${selectedImages[0].info.image.geometry.height}`
-  const extension = getFileNameExtension(inputFiles[1].name)
-  const resizeCommands = `convert ${inputFiles[1].name} -resize ${newSize}> -size ${newSize} xc:white +swap -gravity center -composite newImage.${extension}`
-  const resizeResult = await execute({ inputFiles, commands: resizeCommands })
-  inputFiles[1] = await asInputFile(resizeResult.outputFiles[0])
-
-  const commands = morph.definition.command.replace("$$IMAGES", inputFiles.map(f => f.name).join(" "))
-  const result = await execute({ inputFiles, commands })
-  file = result.outputFiles[0]
-
+    const inputFiles = await forceSameSize({inputFiles: store.getState().images, backgroundColor: morph.value.backgroundColor ? morph.value.backgroundColor + "" : "white"})
+    const commands = morph.definition.command.replace("$$IMAGES", inputFiles.map(f => f.name).join(" "))
+    const result = await execute({ inputFiles, commands })
+    file = result.outputFiles[result.outputFiles.length-1]
   }
   else if(morph.definition.template){
     const outputFiles = await morph.definition.template({arguments:morph.value, inputFiles: selectedImages})
-    file = outputFiles[0]
+    file = outputFiles[outputFiles.length-1]
   }
 
   const outputImage = {
@@ -48,6 +39,6 @@ export async function executeMorph(): Promise<void> {
 
 export function getDefaultArguments(m: Morph): CommonArguments{
   const r = {}
-  m.arguments.forEach(a=>r[a.id]=a.defaultValue)
+  m.arguments.filter(a=>a).forEach(a=>r[a.id]=a.defaultValue)
   return {frames: 6, loop: 0, ...r, imageWidth: 0, imageHeight: 0}
 }

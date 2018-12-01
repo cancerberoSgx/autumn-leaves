@@ -33,7 +33,7 @@ export class NumberEditor extends React.Component<NumberEditorProps, NumberEdito
   }
 
   inputChange(changeEvent: React.ChangeEvent<HTMLInputElement>) {
-    const value = this.props.isInteger ? parseInt(changeEvent.target.value) : parseFloat(changeEvent.target.value)
+    const value = this.props.isInteger ? parseInt(changeEvent.target.value, 10) : parseFloat(changeEvent.target.value)
     this.setState({ value })
     this.props.onChange({ value, changeEvent, argument: this.props.argument })
   }

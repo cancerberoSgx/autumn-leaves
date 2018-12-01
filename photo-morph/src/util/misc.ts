@@ -4,6 +4,18 @@ export function getUniqueId(){
 }
 
 
+export function jsonParseOr<K>(s: string, defaultValue: K): K {
+  let val : K = defaultValue
+  try {
+    val = JSON.parse(s)
+  } catch (error) {
+    // val = defaultValue
+  }
+  console.log("jsonparseor", val)
+  
+  return val
+}
+
 export function getFromLS(key) {
   let ls = {}
   if (window.localStorage) {

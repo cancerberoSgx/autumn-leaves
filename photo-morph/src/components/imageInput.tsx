@@ -1,21 +1,17 @@
-import { FolderDropManagerEvent } from "folder-drop-manager"
-import pMap from "p-map"
 import * as React from "react"
 import { connect } from "react-redux"
-import { addImages, AddImagesAction } from "src/store/actions"
 import { addInputImages } from "src/store/dispatchers/imageDispatcher"
 import { ImageState, RootState } from "src/store/store"
-import { buildInputFile, getInputFilesFromHtmlInputElement } from "wasm-imagemagick"
-import { ImageDropper, ImageDropperFile } from "./imageDropper"
+import { buildInputFile } from "wasm-imagemagick"
+import { ImageDropper } from "./imageDropper"
 
 interface ImageInputProps {
-  // addImages: (images: ImageState[]) => AddImagesAction,
   images: ImageState[]
 }
 
 class ImageInput extends React.Component<ImageInputProps, {}> {
 
-  state:{}= { }
+  state: {} = {}
 
   constructor(props: ImageInputProps, state: {}) {
     super(props, state)
@@ -23,28 +19,36 @@ class ImageInput extends React.Component<ImageInputProps, {}> {
 
   render(): React.ReactNode {
     return (
-      <div  >
-        <input type="file" onChange={e=>addInputImages(e.target)}></input>
-        <ImageDropper onChange={e=>addInputImages(e.files)}>Drop here you images or folders</ImageDropper>
-      </div>
+      <ul  >
+        <li>
+          <p>
+            <input type="file" onChange={e => addInputImages(e.target)}></input>
+          </p>
+        </li>
+        <li>
+          <ImageDropper onChange={e => addInputImages(e.files)}>Drop here you images or folders</ImageDropper>
+        </li>
+        <li>
+          <p>
+            <input type="url" id="loadUrl" placeholder="http://some/image.jpg"></input>
+            <button onClick={this.loadUrl.bind(this)}>Load</button>
+          </p>
+        </li>
+      </ul>
     )
   }
 
-  // async imageFilesChange(e: React.ChangeEvent<HTMLInputElement>) {
-  //   const files = await getInputFilesFromHtmlInputElement(e.target)
-  //   addInputImages(e.target.files)
-  // }
-
-  // async imageDropperChange(e: FolderDropManagerEvent & { files: ImageDropperFile[] }) {
-  //   addInputImages(e.files)
-  // }
-
+  async loadUrl() {
+    const url = document.querySelector<HTMLInputElement>("#loadUrl").value
+    addInputImages([await buildInputFile(url)]) // TODO: pretty name    
+  }
 }
+
 
 const mapStateToProps = (state: RootState) => ({
   images: state.images,
 })
 
-export default connect(mapStateToProps, {  })(ImageInput)
+export default connect(mapStateToProps, {})(ImageInput)
 
 

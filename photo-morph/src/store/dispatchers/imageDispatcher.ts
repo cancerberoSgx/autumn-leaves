@@ -3,18 +3,23 @@ import pMap from "p-map"
 import { store } from "src"
 import { ImageDropperFile } from "src/components/imageDropper"
 import { getUniqueId } from "src/util/misc"
-import { asOutputFile, buildImageSrc, buildInputFile, extractInfo, getInputFilesFromHtmlInputElement, isImage, MagickInputFile } from "wasm-imagemagick"
+import { asOutputFile, buildImageSrc, buildInputFile, extractInfo, getInputFilesFromHtmlInputElement, isImage, isInputFile, MagickInputFile } from "wasm-imagemagick"
 import { addImages, changeStatus } from "../actions"
 import { ImageState } from "../store"
 
-export async function addInputImages(e: HTMLInputElement | ImageDropperFile[] | undefined): Promise<void> {
+export async function addInputImages(e: HTMLInputElement | ImageDropperFile[] | MagickInputFile[] | undefined): Promise<void> {
   store.dispatch(changeStatus("loadingInputImages"))
   let files: MagickInputFile[]
   if (e === undefined) {
     return
   }
   else if (Array.isArray(e)) {
-    files = await pMap(e as ImageDropperFile[], f => buildInputFile(f.content, f.fileName.substring(f.fileName.lastIndexOf("/"), f.fileName.length)))
+    if (isInputFile(e[0])) {
+      files = e as MagickInputFile[]
+    }
+    else {
+      files = await pMap(e as ImageDropperFile[], f => buildInputFile(f.content, f.fileName.substring(f.fileName.lastIndexOf("/") + 1, f.fileName.length)))
+    }
   }
   else {
     files = await getInputFilesFromHtmlInputElement(e as HTMLInputElement)

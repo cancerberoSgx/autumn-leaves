@@ -18,15 +18,16 @@ export function buildArgumentEditor<T>(arg: Argument, templateContext: SizedImag
     />
   }
   else if (arg.type === ArgumentType.number) {
-    const value = parseInt(val + '')
+    const value = arg.isInteger ? parseInt(val + '', 10) : parseFloat(val + '')
     return <NumberEditor
       value={value}
       argument={arg}
+      isInteger={arg.isInteger || false}
       onChange={onChange as any}
     />
   }
   else if (arg.type === ArgumentType.boolean) {
-    const value = typeof val === 'string' ? val==='true' : false
+    const value = val
     return <BooleanEditor
       value={value}
       argument={arg}

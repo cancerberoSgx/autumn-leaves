@@ -13,8 +13,11 @@ export interface ImageDropperFile {
 
 const styles = {
   dropper: style({
-    width: "100%",
-    height: "60px",
+    width: "90%",
+    // margin: "auto",
+    height: "50px",
+    background: "#9977aa",
+    borderRadius: "5px",
     border: "2px solid pink",
   })
 }
@@ -35,6 +38,7 @@ export class ImageDropper extends React.Component<ImageDropperProps, {}> {
   render(): React.ReactNode {
     return (
       <div className={styles.dropper} id="imageDropArea">
+      Or Drag and Drop some files or folders from your file system
       </div>
     )
   }

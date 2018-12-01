@@ -6,6 +6,7 @@ import { getFromLS, saveToLS } from "src/util/misc"
 import { style } from "typestyle"
 import Image from "../Image"
 import ImageInput from "../imageInput"
+import ImageOuput from "../ImageOuput"
 import Images from "../images"
 import SelectMorph from "../selectMorph"
 import { layouts } from "./layouts"
@@ -24,9 +25,12 @@ export interface LayoutState {
 }
 
 const styles = {
-  text: style({
+  layoutBox: style({
+    background: "#99bbaa",
     border: "2px solid green",
-    padding: "6px"
+    borderRadius: "5px"
+  }),
+  layout: style({
   }),
   header: style({
     textAlign: "center"
@@ -35,14 +39,14 @@ const styles = {
     fontSize: "1.4em"
   }),
   executing: style({
-    color: "red", 
+    color: "red",
     fontSize: "1.2em",
     fontWeight: "bold"
   }),
 }
 class Layout extends React.PureComponent<LayoutProps, LayoutState> {
   state: LayoutState = {
-    layouts: originalLayouts// JSON.parse(JSON.stringify(originalLayouts))
+    layouts: originalLayouts
   }
 
   constructor(props) {
@@ -54,9 +58,13 @@ class Layout extends React.PureComponent<LayoutProps, LayoutState> {
     this.setState({ layouts })
   }
 
+  lockLayout() {
+
+  }
+
   onLayoutChange(layout, layouts) {
     saveToLS("layouts", layouts)
-    // console.log({layouts})
+    console.log({ layouts })
     this.setState({ layouts })
   }
 
@@ -64,39 +72,47 @@ class Layout extends React.PureComponent<LayoutProps, LayoutState> {
     return (
       <div>
         <ResponsiveReactGridLayout
-          className="layout"
+          className={styles.layout}
           cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
           rowHeight={30}
           layouts={this.state.layouts}
           draggableCancel="input,textarea"
+          autoSize={true}
+          verticalCompact={true}
+          containerPadding={[10, 20]}
           onLayoutChange={this.onLayoutChange.bind(this)}
         >
-          <div key="1" className={styles.text}  >
+          <div key="1" className={styles.layoutBox}  >
             <header className={styles.header}>
               <h1 className={styles.headerTitle}>Welcome to Photo Morph</h1>
               <p>Create awesome photo morph animations</p>
             </header>
             <p>Options:
         <button onClick={this.resetLayout.bind(this)}>Reset Layout</button>
+        <button onClick={this.lockLayout.bind(this)}>Lock Layout</button>
             </p>
             <p>
-              Status: <span className={this.props.status==="executing" ? styles.executing : ""}>{this.props.status}</span>
+              Status: <span className={this.props.status === "executing" ? styles.executing : ""}>{this.props.status}</span>
             </p>
           </div>
-          <div key="2" className={styles.text} >
+          <div key="2" className={styles.layoutBox} >
             <p className="App-intro">
-              To get started, upload a couple of photos using the file choose or drag&drop some files from your desktop in the pink square:
+              <h3>Load some images</h3>
+              To get started, upload a couple of images to morph:
               <ImageInput />
             </p>
           </div>
-          <div key="3" className={styles.text}>
+          <div key="3" className={styles.layoutBox}>
+          <h3>Your input images</h3>
             <Images />
           </div>
-          <div key="4" className={styles.text}>
+          <div key="4" className={styles.layoutBox}>
+          <h3>Select a morph transformation</h3>
             <SelectMorph />
           </div>
-          <div key="5" className={styles.text} >
-            {this.props.outputImage ? <Image image={this.props.outputImage} dontShowSelectBox={true}/> : ""}
+          <div key="5" className={styles.layoutBox} >
+          <h3>Output images:</h3>
+            <ImageOuput></ImageOuput>
           </div>
         </ResponsiveReactGridLayout>
       </div>
