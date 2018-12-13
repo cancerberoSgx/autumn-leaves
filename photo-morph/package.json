@@ -5,10 +5,11 @@
   "scripts": {
     "start": "react-scripts-ts start",
     "build": "export PUBLIC_URL=https://cancerberosgx.github.io/autumn-leaves/photo-morph/ && react-scripts-ts build && rm -rf ../docs/photo-morph && mv build ../docs/photo-morph",
+    "build-local": "export PUBLIC_URL=http://127.0.0.1:8080/ && react-scripts-ts build && npx http-server build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
     "all": "npm run copy && npm run build && rm -rf ../docs/photo-morph && cp -r build ../docs/photo-morph",
-    "copy": "cp -rf node_modules/wasm-imagemagick/dist/magick.* public"
+    "copy": "cp -rf node_modules/wasm-imagemagick/dist/magick.* public/"
   },
   "dependencies": {
     "folder-drop-manager": "^0.1.5",

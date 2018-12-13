@@ -1,5 +1,4 @@
 import { Action } from "redux"
-import { CommonArguments } from "src/model/morphTypes"
 import { ActionTypes } from "."
 
 export function selectMorph(index: number): SelectMorphAction {

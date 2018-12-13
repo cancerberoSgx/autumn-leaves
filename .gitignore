@@ -2,3 +2,5 @@ node_modules
 dist
 docs-dev
 *.log
+/magick-editor-abstract-app
+/magick-editor-abstract-app-sample-project

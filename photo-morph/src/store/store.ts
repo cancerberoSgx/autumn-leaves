@@ -1,4 +1,4 @@
-import { CommonArguments, Morph } from "src/model/morphTypes"
+import { CommonArguments, Morph } from "src/model/magickTemplateTypes"
 import { ExtractInfoResult, MagickInputFile } from "wasm-imagemagick"
 
 export interface RootState {

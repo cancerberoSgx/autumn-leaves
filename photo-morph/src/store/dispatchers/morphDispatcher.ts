@@ -1,30 +1,24 @@
 import { store } from "src"
-import { forceSameSize } from "src/model/morphs"
-import { CommonArguments, Morph } from "src/model/morphTypes"
+import { CommonArguments, Morph } from "src/model/magickTemplateTypes"
 import { changeStatus, setOutputImage } from "src/store/actions"
 import { getUniqueId } from "src/util/misc"
 import { extractInfoOne } from "src/util/toCommitInWASMIM"
-import { asInputFile, buildImageSrc, execute, MagickOutputFile } from "wasm-imagemagick"
+import { asInputFile, buildImageSrc } from "wasm-imagemagick"
 
 export async function executeMorph(): Promise<void> {
-  const selectedImages = store. getState().images.filter(img => img.isSelected)
-  if(selectedImages.length<2){
+  const selectedImages = store.getState().images.filter(img => img.isSelected)
+  if (selectedImages.length < 2) {
     return // TODO: error
   }
   store.dispatch(changeStatus("executing"))
-  const morph = store. getState().morphs.find(m => m.isSelected)
-  let file: MagickOutputFile
-  if(morph.definition.command) {
-    const inputFiles = await forceSameSize({inputFiles: store.getState().images, backgroundColor: morph.value.backgroundColor ? morph.value.backgroundColor + "" : "white"})
-    const commands = morph.definition.command.replace("$$IMAGES", inputFiles.map(f => f.name).join(" "))
-    const result = await execute({ inputFiles, commands })
-    file = result.outputFiles[result.outputFiles.length-1]
+  const morph = store.getState().morphs.find(m => m.isSelected)
+  const result = await morph.definition.template({ arguments: morph.value, inputFiles: selectedImages })
+  if (result.exitCode !== 0) {
+    alert("ERROR: " + result.stderr.join("\n"))
+    store.dispatch(changeStatus("idle"))
+    return
   }
-  else if(morph.definition.template){
-    const outputFiles = await morph.definition.template({arguments:morph.value, inputFiles: selectedImages})
-    file = outputFiles[outputFiles.length-1]
-  }
-
+  const file = result.outputFiles[result.outputFiles.length - 1]
   const outputImage = {
     file: await asInputFile(file),
     href: URL.createObjectURL(file.blob),
@@ -37,8 +31,8 @@ export async function executeMorph(): Promise<void> {
   store.dispatch(setOutputImage(outputImage))
 }
 
-export function getDefaultArguments(m: Morph): CommonArguments{
+export function getDefaultArguments(m: Morph): CommonArguments {
   const r = {}
-  m.arguments.filter(a=>a).forEach(a=>r[a.id]=a.defaultValue)
-  return {frames: 6, loop: 0, ...r, imageWidth: 0, imageHeight: 0}
+  m.arguments.filter(a => a).forEach(a => r[a.id] = a.defaultValue)
+  return { frames: 6, loop: 0, ...r, imageWidth: 0, imageHeight: 0 }
 }

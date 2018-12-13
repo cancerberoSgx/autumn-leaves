@@ -13,7 +13,9 @@ export interface ImagesProps {
 
 const styles = {
   root: style({
-    overflow: "scroll",
+    overflowY: "scroll",
+    height: '100%'
+  //   '-webkit-overflow-scrolling': 'touch'
   }),
   loading: style({
     display: "block"
@@ -22,7 +24,11 @@ const styles = {
     display: "none"
   }),
   imageItem: style({
-    display: "inline-block"
+    display: "inline-block", 
+    maxWidth: '40%'
+  }),
+  inner: style({
+    // height: 'calc(100% + 1px)'
   }),
 }
 
@@ -36,10 +42,10 @@ export class ImagesComponent extends React.Component<ImagesProps, {}> {
 
   render(): React.ReactNode {
     return (
-      <div className={`${styles.root}`} >
+      <div className={styles.root} >
       Make sure the images you want to morph are selected:
         <p className={this.props.status==="loadingInputImages" ? styles.loading : styles.notLoading}>Loading images, please wait...</p>
-        <ul>
+        <ul className={styles.inner}>
           {this.props.images.map((image, i) =>
             <li className={styles.imageItem} key={i}>
               <Image image={image} ></Image>

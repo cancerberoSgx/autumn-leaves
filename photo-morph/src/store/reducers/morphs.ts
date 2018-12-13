@@ -1,5 +1,5 @@
 import { Reducer } from "redux"
-import { morphs } from "src/model/morphs"
+import { morphs } from "src/model/morph/morphs"
 import { ActionTypes, ChangeMorphArgumentAction, ResetMorphValueAction, SelectMorphAction } from "../actions"
 import { getDefaultArguments } from "../dispatchers/morphDispatcher"
 import { MorphState } from "../store"

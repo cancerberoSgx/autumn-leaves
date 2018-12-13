@@ -1,5 +1,4 @@
 import { Reducer } from "redux"
-import { morphs } from "src/model/morphs"
 import { ActionTypes, AddImagesAction, SelectImagesAction, SelectMorphAction, SetOutputImageAction } from "../actions"
 import { ImageState, MorphState, RootState } from "../store"
 

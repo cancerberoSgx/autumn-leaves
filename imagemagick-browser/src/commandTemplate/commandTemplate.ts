@@ -61,6 +61,8 @@ export interface Argument {
   /** increment for type=='number' */
   step?: number
   defaultValue?: any
+  /** in case of a type===number then this indicates if the number being edited is a float or an integer */
+  isInteger?: boolean
 }
 
 export interface Point {

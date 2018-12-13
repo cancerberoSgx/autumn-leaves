@@ -21,7 +21,7 @@
   "dependencies": {
     "imagemagick-browser": "file:../imagemagick-browser",
     "react": "^16.5.2",
-    "wasm-imagemagick": "^1.2.1"
+    "wasm-imagemagick": "file:../../WASM-ImageMagick"
   },
   "devDependencies": {
     "@types/jasmine": "^3.3.0",

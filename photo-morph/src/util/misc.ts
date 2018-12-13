@@ -9,10 +9,7 @@ export function jsonParseOr<K>(s: string, defaultValue: K): K {
   try {
     val = JSON.parse(s)
   } catch (error) {
-    // val = defaultValue
   }
-  console.log("jsonparseor", val)
-  
   return val
 }
 
