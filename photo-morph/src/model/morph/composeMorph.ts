@@ -1,13 +1,14 @@
 import { Argument, ArgumentType, seq } from "imagemagick-browser"
 import { execute } from "wasm-imagemagick"
 import { commonArguments, forceSameSize } from "./morphs"
-import { Morph, MorphTag } from "../magickTemplateTypes"
+import { MagickTemplate, MagickTemplateTag } from "../magickTemplates"
+import { getUniqueId } from 'src/util/misc';
 
-export class ComposeMorph implements Morph {
+export class ComposeMorph implements MagickTemplate {
   name = "compose"
   id = "composeMorph"
   description = `http://www.imagemagick.org/Usage/compose/#dissolve`
-  tags = [MorphTag.morph, MorphTag.animation]
+  tags = [MagickTemplateTag.morph, MagickTemplateTag.animation]
   arguments: Argument[] = [
     {
       type: ArgumentType.color,
@@ -48,17 +49,18 @@ export class ComposeMorph implements Morph {
   ].concat(commonArguments)
 
   async template(config) {
-    const inputFiles = await forceSameSize({ ...config, backgroundColor: config.arguments.backgroundColor })
+    const {inputFiles} = await forceSameSize({ ...config, backgroundColor: config.arguments.backgroundColor })
     const list = seq(1, 1, 10).map(i => i * 10)
     const commands = `
-    convert ${inputFiles[0].name} f0.miff
-    convert ${inputFiles[1].name} f1.miff
     ${list.map(i =>
-        `convert f0.miff f1.miff -alpha on \\
-    -compose ${config.arguments.method}  -define compose:args=${i} \\
-    -gravity South  -composite     compose_output_${i}.miff`).join("\n")}
+        `
+convert ${inputFiles[0].name} ${inputFiles[1].name}-alpha on-compose ${config.arguments.method} -define compose:args=${i} -gravity South -composite compose_output_${i}.miff`).join("\n")}
 
-    convert -delay ${config.arguments.delayLong} f0.miff -morph ${config.arguments.morph} -delay ${config.arguments.delayShort} ${list.map(i => `compose_output_${i}.miff`).join(" ")} -delay ${config.arguments.delayLong * 2} f1.miff -delay ${config.arguments.delayShort} ${list.map(i => `compose_output_${i}.miff`).reverse().join(" ")} -loop ${config.arguments.loop} -layers Optimize output.gif
+convert -delay ${config.arguments.delayLong} ${inputFiles[0].name} -morph ${config.arguments.morph} \\
+  -delay ${config.arguments.delayShort} ${list.map(i => `compose_output_${i}.miff`).join(" ")} \\
+  -delay ${config.arguments.delayLong * 2} ${inputFiles[1].name} \\
+  -delay ${config.arguments.delayShort} ${list.map(i => `compose_output_${i}.miff`).reverse().join(" ")} \\
+  -loop ${config.arguments.loop} -layers Optimize out${getUniqueId()}.gif
     `
     return  await execute({ inputFiles, commands })
   }

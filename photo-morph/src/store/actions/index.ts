@@ -13,10 +13,11 @@ export enum ActionTypes {
   resetMorphValues,
   setUIState,
   addUrlImage,
+  selectTemplateType
 }
 
 export * from "./images"
-export * from "./morphs"
+export * from "./templates"
 
 
 export function urlChanged(): Action<ActionTypes.urlChanged> {

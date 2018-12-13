@@ -9,6 +9,18 @@ import { reducers } from "./store/reducers"
 import { RootState } from "./store/store"
 import { addMissingImagesFromUrlState } from './store/dispatchers/imageDispatcher';
 import { executeMorph } from './store/dispatchers/morphDispatcher';
+import { registerAllMagickTemplateMorphs } from './model/morph/morphs';
+import { registerMagickTemplates } from './model/magickTemplates';
+
+
+registerAllMagickTemplateMorphs()
+registerMagickTemplates([
+  // // need this because issue not showing editors
+  // {
+  //   name: "dummy", id: "dummy", description: "", template: async c => null, arguments: [], tags: []
+  // },
+])
+
 
 export const store: Store<RootState, AnyAction> = createStore(reducers)
 

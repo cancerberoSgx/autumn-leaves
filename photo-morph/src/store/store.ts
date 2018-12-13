@@ -1,9 +1,11 @@
-import { CommonArguments, Morph } from "src/model/magickTemplateTypes"
+import { ArgumentValues, MagickTemplate, MorphCommonArgumentValues } from "src/model/magickTemplates"
+import { MagickTemplateType } from "src/model/MagickTemplateTypes"
 import { ExtractInfoResult, MagickInputFile } from "wasm-imagemagick"
 
 export interface RootState {
   images: ImageState[]
-  morphs: MorphState[]
+  templates: TemplateState[]
+  templateTypes: TemplateTypeState[]
   outputImage: ImageState | false
   status: Status,
   urlState: UrlState,
@@ -27,14 +29,20 @@ export interface ImageState {
   fromUrl?: string
 }
 
-export interface MorphState {
+export interface TemplateState {
   isSelected: boolean
-  definition: Morph
-  value: CommonArguments
+  definition: MagickTemplate
+  value: ArgumentValues
+}
+
+export interface TemplateTypeState {
+  isSelected: boolean
+  definition: MagickTemplateType
 }
 
 export interface UrlState {
   selectedMorph?: string
-  selectedMorphValue?: CommonArguments
+  selectedMorphValue?: ArgumentValues
+  selectedTemplateType?: string
   selectedImageUrls: string[]
 }

@@ -2,13 +2,13 @@ import { Argument, ArgumentType } from "imagemagick-browser"
 import { getUniqueId } from "src/util/misc"
 import { execute } from "wasm-imagemagick"
 import { commonArguments } from "./morphs"
-import { Morph, MorphTag } from "../magickTemplateTypes"
+import { MagickTemplate, MagickTemplateTag } from "../magickTemplates"
 
-export class ResizeMorph implements Morph {
+export class ResizeMorph implements MagickTemplate {
   name = "Resize"
   id = "resizeMorph"
   description = `https:// www.imagemagick.org/Usage/anim_mods/#morph_resize`
-  tags = [MorphTag.morph, MorphTag.animation]
+  tags = [MagickTemplateTag.morph, MagickTemplateTag.animation]
   command = ""
   arguments = [
     {

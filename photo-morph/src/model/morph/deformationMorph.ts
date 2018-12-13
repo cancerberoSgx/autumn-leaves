@@ -2,9 +2,9 @@ import { Argument, ArgumentType, list, seq } from "imagemagick-browser"
 import { getUniqueId } from "src/util/misc"
 import { execute, IMNoise, IMVirtualPixel } from "wasm-imagemagick"
 import {commonArguments, forceSameSize} from "./morphs"
-import { CommonArguments, Morph, MorphConfig, MorphTag } from "../magickTemplateTypes"
+import { MorphCommonArgumentValues, MagickTemplate, MorphConfig, MagickTemplateTag } from "../magickTemplates"
 
-type DeformationArguments = CommonArguments & {
+type DeformationArguments = MorphCommonArgumentValues & {
   frames: number,
   transformationFactor: number,
   delayShort: number,
@@ -39,9 +39,9 @@ const argumentsConfigDefaults: ArgumentsConfig = {
   transformCommand: (config, value) => `-swirl ${value}`
 }
 
-export class DeformationMorph implements Morph {
+export class DeformationMorph implements MagickTemplate {
   description = `mutate both images and concatenate the sequences`
-  tags = [MorphTag.morph, MorphTag.animation]
+  tags = [MagickTemplateTag.morph, MagickTemplateTag.animation]
   arguments: Argument[]
   constructor(public id: string, public name: string = id, protected argumentConfig: Partial<ArgumentsConfig>) {
 
@@ -96,7 +96,7 @@ export class DeformationMorph implements Morph {
   }
 
   async template(config: DeformationConfig) {
-    const inputFiles = await forceSameSize(config)
+    const {inputFiles} = await forceSameSize(config)
     const values = seq(1, 1, config.arguments.frames).map(i => this.argumentConfig.framesValues(i, config))
     const fileNames1 = []
     const fileNames2 = []
@@ -111,7 +111,8 @@ export class DeformationMorph implements Morph {
         convert ${inputFiles[1].name} ${this.argumentConfig.transformCommand(config, value)} ${name2}
         `
       }).join("\n")}
-      convert -morph 1 -delay ${config.arguments.delayLong} ${inputFiles[0].name} -delay ${config.arguments.delayShort} ${[].concat(fileNames1).concat(fileNames2.reverse()).join(" ")} -delay ${config.arguments.delayLong * 2} ${inputFiles[1].name} ${config.arguments.backAndForwards ? `-delay ${config.arguments.delayShort} ${fileNames2.reverse().join(" ")} ${fileNames1.reverse().join(" ")} ${inputFiles[0].name}` : ""} -loop ${config.arguments.loop} -layers Optimize out${getUniqueId()}.gif`
+      convert -morph 1 -delay ${config.arguments.delayLong} ${inputFiles[0].name} -delay ${config.arguments.delayShort} ${[].concat(fileNames1).concat(fileNames2.reverse()).join(" ")} -delay ${config.arguments.delayLong * 2} ${inputFiles[1].name} ${config.arguments.backAndForwards ? `-delay ${config.arguments.delayShort} ${fileNames2.reverse().join(" ")} ${fileNames1.reverse().join(" ")} ${inputFiles[0].name}` : ""} \\
+      -loop ${config.arguments.loop} -layers Optimize out${getUniqueId()}.gif`
 
     return await execute({ inputFiles, commands })
   }

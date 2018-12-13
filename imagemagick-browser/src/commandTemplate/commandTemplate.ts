@@ -6,8 +6,8 @@ export interface TemplateContext {
 }
 
 export interface SizedImageContext extends TemplateContext {
-  imageWidth: number,
-  imageHeight: number
+  imageWidth?: number,
+  imageHeight?: number
 }
 
 /**

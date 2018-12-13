@@ -1,5 +1,5 @@
 import { store } from "src"
-import { CommonArguments, Morph } from "src/model/magickTemplateTypes"
+import { MorphCommonArgumentValues, MagickTemplate } from "src/model/magickTemplates"
 import { changeStatus, setOutputImage } from "src/store/actions"
 import { getUniqueId } from "src/util/misc"
 import { extractInfoOne } from "src/util/toCommitInWASMIM"
@@ -11,7 +11,7 @@ export async function executeMorph(): Promise<void> {
     return // TODO: error
   }
   store.dispatch(changeStatus("executing"))
-  const morph = store.getState().morphs.find(m => m.isSelected)
+  const morph = store.getState().templates.find(m => m.isSelected)
   const result = await morph.definition.template({ arguments: morph.value, inputFiles: selectedImages })
   if (result.exitCode !== 0) {
     alert("ERROR: " + result.stderr.join("\n"))
@@ -31,7 +31,7 @@ export async function executeMorph(): Promise<void> {
   store.dispatch(setOutputImage(outputImage))
 }
 
-export function getDefaultArguments(m: Morph): CommonArguments {
+export function getDefaultArguments(m: MagickTemplate): MorphCommonArgumentValues {
   const r = {}
   m.arguments.filter(a => a).forEach(a => r[a.id] = a.defaultValue)
   return { frames: 6, loop: 0, ...r, imageWidth: 0, imageHeight: 0 }

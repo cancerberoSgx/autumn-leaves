@@ -1,10 +1,10 @@
 import * as React from "react"
 import { connect } from "react-redux"
 import { changeMorphArgument, ChangeMorphArgumentAction } from "src/store/actions"
-import { MorphState, RootState } from "src/store/store"
+import { TemplateState, RootState } from "src/store/store"
 
 interface EmptyComponentProps {
-  morph: MorphState | undefined
+  morph: TemplateState | undefined
   changeMorphArgument: (morphId: string, argumentId: string, argumentValue: any) => ChangeMorphArgumentAction
 }
 

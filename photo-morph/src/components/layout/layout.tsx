@@ -9,10 +9,11 @@ import ForkRibbon from "../forkRibbon"
 import ImageInput from "../imageInput"
 import ImageOuput from "../ImageOuput"
 import Images from "../images"
-import SelectMorph from "../selectMorph"
 import Options from "./Options"
 import "./react-grid-layout.css"
 import "./react-resizable.css"
+import SelectTemplate from '../SelectTemplate';
+import SelectTemplateType from '../SelectTemplateType';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive)
 
@@ -82,7 +83,6 @@ class Layout extends React.PureComponent<LayoutProps, {}> {
           <div key="2" className={styles.layoutBox} >
             <p className="App-intro">
               <h3>Load some images</h3>
-              To get started, upload a couple of images to morph:
               <ImageInput />
             </p>
           </div>
@@ -91,8 +91,7 @@ class Layout extends React.PureComponent<LayoutProps, {}> {
             <Images />
           </div>
           <div key="4" className={styles.layoutBox}>
-            <h3>Select a morph transformation</h3>
-            <SelectMorph />
+            <SelectTemplate />
           </div>
           <div key="5" className={styles.layoutBox} >
             <h3>Output images:</h3>

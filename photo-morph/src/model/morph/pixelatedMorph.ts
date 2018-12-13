@@ -2,14 +2,14 @@ import { Argument, ArgumentType, seq } from "imagemagick-browser"
 import { getUniqueId } from "src/util/misc"
 import { execute } from "wasm-imagemagick"
 import { commonArguments, forceSameSize } from "./morphs"
-import { Morph, MorphTag } from "../magickTemplateTypes"
+import { MagickTemplate, MagickTemplateTag } from "../magickTemplates"
 
 
-export class PixelatedMorph implements Morph {
+export class PixelatedMorph implements MagickTemplate {
   name = "pixelated"
   id = "pixelated "
   description = `http://www.imagemagick.org/Usage/transform/#pixelate`
-  tags = [MorphTag.morph, MorphTag.animation]
+  tags = [MagickTemplateTag.morph, MagickTemplateTag.animation]
   arguments: Argument[] = [
     {
       type: ArgumentType.color,
@@ -50,17 +50,22 @@ export class PixelatedMorph implements Morph {
   ].concat(commonArguments)
 
   async template(config) {
-    const inputFiles = await forceSameSize({ ...config, backgroundColor: config.arguments.backgroundColor })
+    const {inputFiles, referenceImage} = await forceSameSize({ ...config, backgroundColor: config.arguments.backgroundColor })
     const values = seq(1, 1, config.arguments.count).map(n => 60 / (n * 2))
 
-    const newSize = `${config.inputFiles[0].info.image.geometry.width}x${config.inputFiles[0].info.image.geometry.height}`
+    const newSize = `${referenceImage.info.image.geometry.width}x${referenceImage.info.image.geometry.height}`
+    // inputFiles[0].name = '${inputFiles[0].name}'
+    // inputFiles[1].name = '${inputFiles[1].name}'
     const commands = `
-    convert ${inputFiles[0].name} f0.miff
-    convert ${inputFiles[1].name} f1.miff
-    ${values.map((n, i) =>
-        `convert f0.miff -${config.arguments.method} ${n}% -scale ${newSize}! f0_${i}.miff
-      convert f1.miff -${config.arguments.method} ${n}% -scale ${newSize}! f1_${i}.miff`).join("\n")}
-    convert -delay ${config.arguments.delayLong} f0.miff -morph 1 -delay ${config.arguments.delayShort} ${values.map((n, i) => `f0_${i}.miff`).join(" ")} ${values.map((n, i) => `f1_${i}.miff`).reverse().join(" ")} -delay ${config.arguments.delayLong * 2} f1.miff  -loop ${config.arguments.loop} -layers Optimize output${getUniqueId()}.gif
+    ${values.map((n, i) =>        `
+convert ${inputFiles[0].name} -${config.arguments.method} ${n}% -scale ${newSize}! f0_${i}.miff
+convert ${inputFiles[1].name} -${config.arguments.method} ${n}% -scale ${newSize}! f1_${i}.miff`)
+      .join("\n")}
+    convert -delay ${config.arguments.delayLong} ${inputFiles[0].name} -morph 1 -delay ${config.arguments.delayShort} \\
+    ${values.map((n, i) => `f0_${i}.miff`).join(" ")} \\
+    ${values.map((n, i) => `f1_${i}.miff`).reverse().join(" ")} \\
+    -delay ${config.arguments.delayLong * 2} ${inputFiles[1].name} \\
+    -loop ${config.arguments.loop} -layers Optimize output${getUniqueId()}.gif
     `
     return await execute({ inputFiles, commands })
   }

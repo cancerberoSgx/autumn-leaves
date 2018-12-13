@@ -2,14 +2,14 @@ import { Argument, ArgumentType } from "imagemagick-browser"
 import { getUniqueId } from "src/util/misc"
 import { execute } from "wasm-imagemagick"
 import { commonArguments, forceSameSize } from "./morphs"
-import { Morph, MorphTag } from "../magickTemplateTypes"
+import { MagickTemplate, MagickTemplateTag } from "../magickTemplates"
 
 
-export class ColorMorph implements Morph {
+export class ColorMorph implements MagickTemplate {
   name = "morph color"
   id = "colorMorph"
   description = `https://www.imagemagick.org/Usage/anim_mods/#morph_color`
-  tags = [MorphTag.morph, MorphTag.animation]
+  tags = [MagickTemplateTag.morph, MagickTemplateTag.animation]
   arguments = [
     {
       type: ArgumentType.color,
@@ -28,7 +28,7 @@ export class ColorMorph implements Morph {
   ].concat(commonArguments)
 
   async template(config) {
-    const inputFiles = await forceSameSize({ ...config, backgroundColor: config.arguments.backgroundColor })
+    const {inputFiles} = await forceSameSize({ ...config, backgroundColor: config.arguments.backgroundColor })
     const commands = `
       convert ${inputFiles[0].name} ${inputFiles[1].name} \\
         -morph ${config.arguments.frames} \\

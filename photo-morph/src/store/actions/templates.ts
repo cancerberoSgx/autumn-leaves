@@ -33,7 +33,21 @@ export function resetMorphValues(morphId: string): ResetMorphValueAction {
     morphId
   }
 }
+
 export interface ResetMorphValueAction extends Action {
   type: ActionTypes.resetMorphValues,
   morphId: string, 
+}
+
+
+export function selectTemplateType(index: number): SelectTemplateTypeAction {
+  return {
+    type: ActionTypes.selectTemplateType,
+    index
+  }
+}
+
+export interface SelectTemplateTypeAction extends Action {
+  type: ActionTypes.selectTemplateType,
+  index: number
 }

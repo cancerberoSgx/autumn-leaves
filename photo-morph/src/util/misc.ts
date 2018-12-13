@@ -1,3 +1,6 @@
+import { MagickFile, loadImageElement } from 'wasm-imagemagick';
+import pMap from 'p-map';
+
 let counter = 0
 export function getUniqueId(){
   return ""+counter++
@@ -34,4 +37,15 @@ export function saveToLS(key, value) {
       })
     )
   }
+}
+
+
+export async function showImages(images: MagickFile[]|MagickFile): Promise<HTMLImageElement[]> {
+  images = Array.isArray(images) ? images : [images]
+  return await pMap(images, async image => {
+    const el = document.createElement('img')
+    el.title = el.alt = image.name
+    document.body.appendChild(el)
+    return loadImageElement(image, el)
+  }, {concurrency: 1})
 }

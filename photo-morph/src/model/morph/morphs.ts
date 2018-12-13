@@ -1,12 +1,12 @@
 import { Argument, ArgumentType, Color } from "imagemagick-browser"
 import pMap from "p-map"
 import { ImageState } from "src/store/store"
-import { getUniqueId } from "src/util/misc"
+import { getUniqueId, showImages } from "src/util/misc"
 import { asInputFile, execute, MagickInputFile } from "wasm-imagemagick"
 import { ColorMorph } from "./colorMorph"
 import { ComposeMorph } from "./composeMorph"
 import { implodeDeformation, noiseDeformation, spreadDeformation, swirlDeformation, tornPaperDeformation } from "./deformationMorph"
-import { Morph } from "../magickTemplateTypes"
+import { MagickTemplate, registerMagickTemplates } from "../magickTemplates"
 import { PixelatedMorph } from "./pixelatedMorph"
 import { ResizeMorph } from "./resizeMorph"
 import { Tile4Morph, TileMorph } from "./tileMorphs"
@@ -21,8 +21,9 @@ export const commonArguments: Argument[] = [
     defaultValue: 0
   },
 ]
+export function registerAllMagickTemplateMorphs() {
 
-export const morphs: Morph[] = [
+const morphs: MagickTemplate[] = [
   swirlDeformation,
   spreadDeformation,
   implodeDeformation ,
@@ -36,14 +37,11 @@ export const morphs: Morph[] = [
   new TileMorph(),
   new Tile4Morph(),
 
-  // need this because issue not showing editors
-  {
-    name: "dummy", id: "dummy", description: "", template: async c => null, arguments: []
-  },
-
 ]
+registerMagickTemplates(morphs)
+}
 
-export async function forceSameSize(config: { inputFiles: ImageState[], backgroundColor?: Color }): Promise<MagickInputFile[]> {
+export async function forceSameSize(config: { inputFiles: ImageState[], backgroundColor?: Color }): Promise<{inputFiles: MagickInputFile[], referenceImage: ImageState}> {
   config.backgroundColor = config.backgroundColor || "white"
   let smallerWidth = config.inputFiles[0].info.image.geometry.width
   let smallerWidthIndex = 0
@@ -53,9 +51,10 @@ export async function forceSameSize(config: { inputFiles: ImageState[], backgrou
       smallerWidthIndex = i
     }
   })
-  const referenceFile = config.inputFiles[smallerWidthIndex]
-  const newSize = `${referenceFile.info.image.geometry.width}x${referenceFile.info.image.geometry.height}`
+  const referenceImage = config.inputFiles[smallerWidthIndex]
+  const newSize = `${referenceImage.info.image.geometry.width}x${referenceImage.info.image.geometry.height}`
   const results = await pMap(config.inputFiles.map(f => f.file), f => execute({ inputFiles: [f], commands: `convert ${f.name} -resize ${newSize}> -size ${newSize} xc:${config.backgroundColor} +swap -gravity center -composite ${getUniqueId()}.miff` }), {concurrency: 1})
   const inputFiles = await pMap(results, r => asInputFile(r.outputFiles[0]), {concurrency: 1})
-  return inputFiles
+  showImages(inputFiles)
+  return {inputFiles, referenceImage}
 }

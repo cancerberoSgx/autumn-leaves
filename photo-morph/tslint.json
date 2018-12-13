@@ -15,9 +15,10 @@
     "member-access": false,
     "no-empty-interface": false,
     "semicolon": [true, "never"], 
-    "quotemark": [true, "always"],
+    "quotemark": [true, "never"],
     "max-classes-per-file": false,
-    "jsx-no-lambda": false
+    "jsx-no-lambda": false,
+    "object-literal-sort-keys": false
 
   }
 }

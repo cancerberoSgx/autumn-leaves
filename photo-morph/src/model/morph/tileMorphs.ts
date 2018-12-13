@@ -1,16 +1,15 @@
-import { Argument, ArgumentType } from "imagemagick-browser"
-import { getUniqueId } from "src/util/misc"
-import { execute } from "wasm-imagemagick"
-import { commonArguments, forceSameSize } from "./morphs"
-import { CommonArguments, Morph, MorphConfig, MorphTag } from "../magickTemplateTypes"
+import { Argument, ArgumentType } from "imagemagick-browser";
+import { getUniqueId } from "src/util/misc";
+import { execute } from "wasm-imagemagick";
+import { MagickTemplate, MagickTemplateTag } from "../magickTemplates";
+import { commonArguments, forceSameSize } from "./morphs";
 
 
-export class TileMorph implements Morph {
-  name = "tile"
+export class TileMorph implements MagickTemplate {
+  name = "Morph tile crop 2 directions"
   id = "tileMorph"
-  description = `https://www.imagemagick.org/Usage/anim_mods/#morph_color`
-  tags = [MorphTag.morph, MorphTag.animation]
-  command = ""
+  description = `Morph between two images by cropping horizontally or vertically from left to right or top to bottom`
+  tags = [MagickTemplateTag.morph, MagickTemplateTag.animation]
   arguments = [
     {
       type: ArgumentType.color,
@@ -37,22 +36,21 @@ export class TileMorph implements Morph {
   ].concat(commonArguments)
 
   async template(config) {
-    const inputFiles = await forceSameSize({ ...config, backgroundColor: config.arguments.backgroundColor + "" })
+    const {inputFiles} = await forceSameSize({ ...config, backgroundColor: config.arguments.backgroundColor + "" })
     const commands = `
     convert  \\
     ${inputFiles[0].name} ${inputFiles[1].name} \\
     \( -clone 0 -crop ${config.arguments.direction !== "vertical" ? config.arguments.cropSpeed : 0}x${config.arguments.direction !== "horizontal" ? config.arguments.cropSpeed : 0} \) \\
     -set delay 10  -loop ${config.arguments.loop} -layers Optimize output${getUniqueId()}.gif`
     return await execute({ inputFiles, commands })
-    // return result.outputFiles
   }
 }
 
-export class Tile4Morph implements Morph {
-  name = "tile 4 directions"
+export class Tile4Morph implements MagickTemplate {
+  name = "Morph tile crop 4 directions"
   id = "Tile4Morph"
-  description = `https:// www.imagemagick.org/Usage/anim_mods/#morph_color`
-  tags = [MorphTag.morph, MorphTag.animation]
+  description = `(Select 4 images) Morph between 4 images going from left->right then top->bottom, then right->left and finally bottom->top`
+  tags = [MagickTemplateTag.morph, MagickTemplateTag.animation]
   command = ""
   arguments = [
     {
@@ -78,7 +76,7 @@ export class Tile4Morph implements Morph {
     } as Argument,
   ].concat(commonArguments)
   async template(config) {
-    const inputFiles = await forceSameSize({ inputFiles: config.inputFiles, backgroundColor: config.arguments.backgroundColor || "white" })
+    const {inputFiles} = await forceSameSize({ inputFiles: config.inputFiles, backgroundColor: config.arguments.backgroundColor || "white" })
     const commands = `
        convert  -delay ${config.arguments.delayLong} ${inputFiles.map(f => f.name).join(" ")} \\
           -write mpr:stack -delete 0--1 \\
@@ -88,7 +86,6 @@ export class Tile4Morph implements Morph {
           mpr:stack[3] \( mpr:stack[0] -set delay ${config.arguments.delayShort} -crop 0x${config.arguments.speed} -reverse \) \\
           -loop ${config.arguments.loop} -layers Optimize output${getUniqueId()}.gif`
     return await execute({ inputFiles, commands })
-    // return result.outputFiles
   }
 }
 
