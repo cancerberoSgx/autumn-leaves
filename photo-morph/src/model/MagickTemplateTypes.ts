@@ -1,6 +1,6 @@
 import { MagickTemplateTag } from "./MagickTemplate";
 
-export type MagickTemplateTypes = MagickTemplateTag.morph | MagickTemplateTag.frame | MagickTemplateTag.textBanner
+export type MagickTemplateTypes = MagickTemplateTag.morph | MagickTemplateTag.frame | MagickTemplateTag.textBanner | MagickTemplateTag.all
 
 export interface MagickTemplateType {
   id: string
@@ -10,6 +10,12 @@ export interface MagickTemplateType {
 }
 
 export const magickTemplateTypes: MagickTemplateType[] = [
+  {
+    id: 'all',
+    name: 'All',
+    description: 'Show all kind of magick',
+    type: MagickTemplateTag.all,
+  },
   {
     id: 'morphs',
     name: 'Morphs',

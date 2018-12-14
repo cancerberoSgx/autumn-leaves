@@ -48,7 +48,7 @@ class OptionsComponent extends React.Component<OptionsComponentProps, {}> {
             <button onClick={e => this.props.setUIState({ helpModalOpen: true })}>Help</button>
             </li>
         </ul>
-  <HelpModal/>
+        <HelpModal/>
 
       </div>
     )

@@ -1,6 +1,6 @@
-import { Reducer } from "redux"
-import { ActionTypes, AddImagesAction, SelectImagesAction, SelectMorphAction, SetOutputImageAction } from "../actions"
-import { ImageState, TemplateState, RootState } from "../store"
+import { Reducer } from "redux";
+import { ActionTypes, SetOutputImageAction } from "../actions";
+import { ImageState } from "../store";
 
 const initialState: ImageState|false =false
 

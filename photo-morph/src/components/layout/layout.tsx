@@ -75,6 +75,10 @@ class Layout extends React.PureComponent<LayoutProps, {}> {
               <h1 className={styles.headerTitle}>Welcome to Photo Morph</h1>
               <p>Create awesome photo morph animations</p>
             </header>
+
+        <h3>Filter by kind of magic</h3>
+        <SelectTemplateType />
+        <h3>Options: </h3>
             <Options />
             <p>
               Status: <span className={this.props.status === "executing" ? styles.executing : ""}>{this.props.status}</span>

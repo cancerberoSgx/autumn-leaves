@@ -25,7 +25,7 @@ class SelectTemplateType extends React.Component<SelectTemplateTypeProps, {}> {
       <div>
         {/* <p>Which kind of magick do you want to perform?</p> */}
         <select onChange={this.templateTypeSelected.bind(this)}>
-          <option selected={0 === selectedOptionIndex}>Select One</option>
+          {/* <option selected={0 === selectedOptionIndex}>Select One</option> */}
           {this.props.templateTypes.map((m, i) =>
             <option key={i} selected={i + 1 === selectedOptionIndex} label={m.definition.name + " (" + m.definition.description + ")"}></option>
           )}

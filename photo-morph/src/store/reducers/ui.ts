@@ -9,6 +9,8 @@ import { UIState } from "../store"
 const initialState: UIState = {
   helpModalOpen: false,
   layoutLocked: true,
+  tooltipModalOpen: false,
+  tooltipText: '',
   layouts: getFromLS("layouts") || layouts
 
 }

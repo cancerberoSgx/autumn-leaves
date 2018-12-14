@@ -7,6 +7,7 @@ import { TemplateState, RootState } from "src/store/store"
 import { executeMorph } from "../store/dispatchers/morphDispatcher"
 import TemplateEditor from "./TemplateEditor"
 import SelectTemplateType from './SelectTemplateType';
+import { MagickTemplateTag } from 'src/model/MagickTemplate';
 
 export interface SelectTemplateProps {
   selectTemplate: (index: number) => SelectMorphAction
@@ -27,27 +28,18 @@ class SelectTemplate extends React.Component<SelectTemplateProps, {}> {
     const selectedMorph = this.props.morphs.find(m => m.isSelected)
     return (
       <div className="gridItemRoot">
-            <h3>Filter by kind of magic</h3>
-            <SelectTemplateType />
-
-        {/* {!selectedMorph ? : ""} */}
-        <h3>Magic</h3>
+        <h3>Select and configure tool</h3>
         <select onChange={this.morphSelected.bind(this)}>
-          <option selected={!selectedMorph}>Select a morph</option>
+          <option selected={!selectedMorph}>Select tool</option>
           {this.props.morphs.map((m, i) =>
             <option key={i} selected={selectedMorph && selectedMorph.definition.id === m.definition.id}>{m.definition.name}</option>
           )}
         </select>
         {selectedMorph ? <div>
-          {/* <h5>{selectedMorph.definition.name}</h5> */}
-         <h5>Description:</h5>
-            <p>
-              {selectedMorph.definition.description}
-            </p>
+          <h5>Description:</h5>
+          <p className="noMargin">{selectedMorph.definition.description}</p>
           <h5>Settings:</h5>
-          {/* <div style={{}}> */}
-            <TemplateEditor />
-          {/* </div> */}
+          <TemplateEditor />
           <button onClick={this.reset.bind(this)}>Reset settings</button>
         </div> : ""}
       </div>
@@ -69,7 +61,7 @@ class SelectTemplate extends React.Component<SelectTemplateProps, {}> {
 const mapStateToProps = (state: RootState) => {
   const selectedType = state.templateTypes.find(t => t.isSelected)
   return {
-    morphs: state.templates.filter(t => selectedType && t.definition.tags.indexOf(selectedType.definition.type) !== -1 || t.definition.id === 'dummy'),
+    morphs: state.templates.filter(t => selectedType && (t.definition.tags.indexOf(selectedType.definition.type) !== -1 || selectedType.definition.type===MagickTemplateTag.all)),
   }
 }
 

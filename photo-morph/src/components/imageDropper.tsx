@@ -13,8 +13,9 @@ export interface ImageDropperFile {
 
 const styles = {
   dropper: style({
-    width: "90%",
-    // margin: "auto",
+    width: "99%",
+    textAlign: "center",
+    paddingTop: "8px",
     height: "50px",
     background: "#9977aa",
     borderRadius: "5px",

@@ -5,13 +5,16 @@ import { connect } from "react-redux"
 import { Action } from "redux"
 import { ActionTypes, updateUrl} from "src/store/actions"
 import { executeMorph } from "src/store/dispatchers/morphDispatcher"
-import { TemplateState, RootState } from "src/store/store"
+import { TemplateState, RootState, UIState } from "src/store/store"
 import { changeMorphArgument, ChangeMorphArgumentAction } from "../store/actions/templates"
+import { SetUIStateAction, setUIState } from 'src/store/actions/ui';
 
 interface TemplateEditorProps {
   morph: TemplateState | undefined
   changeMorphArgument: (morphId: string, argumentId: string, argumentValue: any) => ChangeMorphArgumentAction
   updateUrl: () => Action<ActionTypes.updateUrl>
+
+  setUIState: (ui: Partial<UIState>) => SetUIStateAction
 }
 
 class TemplateEditor extends React.Component<TemplateEditorProps, {}> {
@@ -42,7 +45,7 @@ class TemplateEditor extends React.Component<TemplateEditorProps, {}> {
   }
   
   argumentHelp(arg: Argument) {
-    alert(`Description of argument "${arg.name}": "${arg.description}"`)
+    this.props.setUIState({tooltipText: `"${arg.name}": "${arg.description}"`, tooltipModalOpen: true})
   }
 
 
@@ -58,6 +61,6 @@ const mapStateToProps = (state: RootState) => ({
   morph: state.templates.find(m => m.isSelected)
 })
 
-export default connect(mapStateToProps, { changeMorphArgument, updateUrl })(TemplateEditor)
+export default connect(mapStateToProps, { changeMorphArgument, updateUrl, setUIState })(TemplateEditor)
 
 

@@ -14,6 +14,8 @@ export interface RootState {
 export interface UIState {
   layoutLocked: boolean
   helpModalOpen: boolean
+  tooltipModalOpen: boolean
+  tooltipText: string
   layouts: any
 }
 
