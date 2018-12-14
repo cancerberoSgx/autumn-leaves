@@ -13,7 +13,6 @@ interface TemplateEditorProps {
   morph: TemplateState | undefined
   changeMorphArgument: (morphId: string, argumentId: string, argumentValue: any) => ChangeMorphArgumentAction
   updateUrl: () => Action<ActionTypes.updateUrl>
-
   setUIState: (ui: Partial<UIState>) => SetUIStateAction
 }
 
@@ -29,7 +28,7 @@ class TemplateEditor extends React.Component<TemplateEditorProps, {}> {
     const morph = this.props.morph
     const t = new Date().getTime()
     if (!morph) {
-      return <div>No morph selected</div>
+      return <div></div>
     }
     return (
         <table>

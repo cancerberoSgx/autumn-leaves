@@ -7,7 +7,7 @@ import { saveToLS } from "src/util/misc"
 import { style } from "typestyle"
 import ForkRibbon from "../forkRibbon"
 import ImageInput from "../imageInput"
-import ImageOuput from "../ImageOuput"
+import ImageOutput from "../ImageOutput"
 import Images from "../images"
 import Options from "./Options"
 import "./react-grid-layout.css"
@@ -72,11 +72,11 @@ class Layout extends React.PureComponent<LayoutProps, {}> {
         >
           <div key="1" className={styles.layoutBox}  >
             <header className={styles.header}>
-              <h1 className={styles.headerTitle}>Welcome to Photo Morph</h1>
-              <p>Create awesome photo morph animations</p>
+              <h1 className={styles.headerTitle}>Welcome to the visual ImageMagick toolkit</h1>
+              <p>Create awesome photo morph animations, text banners, or decorate your pictures, easily</p>
             </header>
 
-        <h3>Filter by kind of magic</h3>
+        <h5>First, you might filter by kind of magic:</h5>
         <SelectTemplateType />
         <h3>Options: </h3>
             <Options />
@@ -99,7 +99,7 @@ class Layout extends React.PureComponent<LayoutProps, {}> {
           </div>
           <div key="5" className={styles.layoutBox} >
             <h3>Output images:</h3>
-            <ImageOuput />
+            <ImageOutput />
           </div>
         </ResponsiveReactGridLayout>
         <ForkRibbon />

@@ -1,9 +1,6 @@
-import { ArgumentType } from "imagemagick-browser";
-import { extractInfoOne } from 'src/util/toCommitInWASMIM';
 import { buildInputFile, execute } from "wasm-imagemagick";
-import { MagickTemplate, MagickTemplateArgument, MagickTemplateTag, MorphConfig } from "../MagickTemplate";
+import { MagickTemplate, MagickTemplateTag, MorphConfig } from "../MagickTemplate";
 import { textCommonArguments } from './textBanners';
-
 
 export class TextBannerAquaFont implements MagickTemplate {
   name = "Text Banner Aqua Font"
@@ -12,11 +9,11 @@ export class TextBannerAquaFont implements MagickTemplate {
   tags = [MagickTemplateTag.textBanner]
   arguments = [].concat(textCommonArguments).concat([
 
-  ]).map(a=>a.id==='textColor' ? {...a, defaultValue: '#7472b2'} : a.id==='fontSize' ? {...a, defaultValue  : 172} : a)
+  ]).map(a => a.id === 'textColor' ? { ...a, defaultValue: '#7472b2' } : a.id === 'fontSize' ? { ...a, defaultValue: 172 } : a)
 
   async template(config: MorphConfig) {
     const fontName = (config.arguments.font + '') || 'helvetica.ttf'
-    const inputFiles = config.inputFiles.map(f => f.file).concat(fontName === 'helvetica.ttf' ? [await buildInputFile('helvetica.ttf')] : []) 
+    const inputFiles = config.inputFiles.map(f => f.file).concat(fontName === 'helvetica.ttf' ? [await buildInputFile('helvetica.ttf')] : [])
     const commands = `
 convert -background none -fill ${config.arguments.textColor} \\
   -font ${fontName} -pointsize ${config.arguments.fontSize}  'label:${config.arguments.text}'   -trim +repage \\

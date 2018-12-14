@@ -4,7 +4,7 @@ import { store } from "src"
 import { ImageDropperFile } from "src/components/imageDropper"
 import { getUniqueId } from "src/util/misc"
 import { asOutputFile, buildImageSrc, buildInputFile, extractInfo, getInputFilesFromHtmlInputElement, isImage, isInputFile, MagickInputFile, execute, asInputFile } from "wasm-imagemagick"
-import { addImages, changeStatus } from "../actions"
+import { addImages, changeStatus, selectMorph } from "../actions"
 import { ImageState } from "../store"
 import { extractInfoOne } from 'src/util/toCommitInWASMIM';
 
@@ -41,6 +41,12 @@ export async function addInputImages(e: HTMLInputElement | ImageDropperFile[] | 
   }, {concurrency: 1})
   store.dispatch(changeStatus("idle"))
   store.dispatch(addImages(images))
+
+  // we want to dispatch selectTempate too because some arguments editor might be showing options dependent on the input files (like font selectOne editor for textBanners)
+  const selectedTemplate = store.getState().templates.find(t=>t.isSelected)
+  if(selectedTemplate){
+    store.dispatch(selectMorph(selectedTemplate.definition.id))
+  }
 }
 
 export async function fixImageSizes(images: MagickInputFile[]) : Promise<MagickInputFile[]>{

@@ -7,6 +7,7 @@ import { saveToLS } from 'src/util/misc';
 import { layouts } from './layouts';
 import { style } from 'typestyle';
 import HelpModal from './HelpModal';
+import { translate } from 'src/intl/intl';
 
 interface OptionsComponentProps {
   setUIState: (ui: Partial<UIState>) => SetUIStateAction
@@ -35,7 +36,7 @@ class OptionsComponent extends React.Component<OptionsComponentProps, {}> {
           <li className={styles.option}>
             <label>
         <input type="checkbox" checked={this.props.ui.layoutLocked} onChange={e => this.props.setUIState({ layoutLocked: e.target.checked })} />
-        Lock Layout
+        {translate('lock-layout')}
         </label>
           </li>
           <li className={styles.option}>
@@ -47,6 +48,7 @@ class OptionsComponent extends React.Component<OptionsComponentProps, {}> {
           <li className={styles.option}>
             <button onClick={e => this.props.setUIState({ helpModalOpen: true })}>Help</button>
             </li>
+            {/* <li><select onChange={}>Language</select></li> */}
         </ul>
         <HelpModal/>
 
