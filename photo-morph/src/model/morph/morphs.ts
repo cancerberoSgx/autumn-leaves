@@ -2,7 +2,7 @@ import { Argument, ArgumentType, Color } from "imagemagick-browser"
 import pMap from "p-map"
 import { ImageState } from "src/store/store"
 import { getUniqueId, showImages } from "src/util/misc"
-import { asInputFile, execute, MagickInputFile } from "wasm-imagemagick"
+import { asInputFile, execute, MagickInputFile, ExecuteResult } from "wasm-imagemagick"
 import { ColorMorph } from "./colorMorph"
 import { ComposeMorph } from "./composeMorph"
 import { implodeDeformation, noiseDeformation, spreadDeformation, swirlDeformation, tornPaperDeformation } from "./deformationMorph"
@@ -13,7 +13,7 @@ import { ResizeMorph } from "./resizeMorph"
 import { Tile4Morph, TileMorph } from "./tileMorphs"
 
 
-export const commonArguments: MagickTemplateArgument[] = [
+export const morphCommonArguments: MagickTemplateArgument[] = [
   {
     type: ArgumentType.number,
     id: "loop",
@@ -58,4 +58,19 @@ export async function forceSameSize(config: { inputFiles: ImageState[], backgrou
   const inputFiles = await pMap(results, r => asInputFile(r.outputFiles[0]), {concurrency: 1})
   showImages(inputFiles)
   return {inputFiles, referenceImage}
+}
+
+
+export function buildExecuteResultWithError(s): ExecuteResult  {
+
+  return {
+    results: [],
+    commands: [],
+    command: [],
+    inputFiles: [],
+    outputFiles: [],
+    stdout: [],
+    exitCode: 1, 
+    stderr: [s]
+  }
 }

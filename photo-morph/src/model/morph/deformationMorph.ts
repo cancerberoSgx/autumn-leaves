@@ -1,7 +1,7 @@
 import { Argument, ArgumentType, list, seq } from "imagemagick-browser"
 import { getUniqueId } from "src/util/misc"
 import { execute, IMNoise, IMVirtualPixel } from "wasm-imagemagick"
-import {commonArguments, forceSameSize} from "./morphs"
+import {morphCommonArguments, forceSameSize, buildExecuteResultWithError} from "./morphs"
 import { MorphCommonArgumentValues, MagickTemplate, MorphConfig, MagickTemplateTag, MagickTemplateArgument } from "../MagickTemplate";
 
 type DeformationArguments = MorphCommonArgumentValues & {
@@ -89,12 +89,16 @@ export class DeformationMorph implements MagickTemplate {
         defaultValue: this.argumentConfig.arguments.delayLong
       }as MagickTemplateArgument,
     ]
-    .concat(commonArguments)
+    .concat(morphCommonArguments)
     .concat(argumentConfig.extraArguments||[])
     .filter(a=>a)
   }
 
   async template(config: DeformationConfig) {
+
+    if(config.inputFiles.length<2){
+      return buildExecuteResultWithError('Please select 2 or more images in order to create a morph animation')
+    }
     const {inputFiles} = await forceSameSize(config)
     const values = seq(1, 1, config.arguments.frames).map(i => this.argumentConfig.framesValues(i, config))
     const fileNames1 = []
@@ -118,13 +122,13 @@ export class DeformationMorph implements MagickTemplate {
 }
 
 export const swirlDeformation = 
-new DeformationMorph("swirlDeformation", "Deformation Swirl", { transformCommand: (config, value) => `-swirl ${value}`, arguments: { frames: 10, transformationFactor: 100 } }, 'deform images progressively using the "swirl" operation and simulates an image morph animation')
+new DeformationMorph("swirlDeformation", "Morph Deformation Swirl", { transformCommand: (config, value) => `-swirl ${value}`, arguments: { frames: 10, transformationFactor: 100 } }, 'deform images progressively using the "swirl" operation and simulates an image morph animation')
 
 export const spreadDeformation = 
-new DeformationMorph("spreadDeformation", "Deformation spread", { transformCommand: (config, value) => `-spread ${value}`, arguments: { frames: 6, transformationFactor: 10 } }, 'deform images progressively using the "spread" operation and simulates an image morph animation')
+new DeformationMorph("spreadDeformation", "Morph Deformation Spread", { transformCommand: (config, value) => `-spread ${value}`, arguments: { frames: 6, transformationFactor: 10 } }, 'deform images progressively using the "spread" operation and simulates an image morph animation')
 
 export const implodeDeformation = 
-new DeformationMorph("implodeDeformation", "Deformation implode", {
+new DeformationMorph("implodeDeformation", "Morph Deformation Implode", {
   transformCommand: (config, value) => `-implode ${value}`,
   framesValues: (i, config) => i * config.arguments.transformationFactor,
   arguments: { frames: 12, transformationFactor: 0.1, delayLong: 70, delayShort: 10, virtualPixel: IMVirtualPixel.Random },
@@ -140,13 +144,13 @@ new DeformationMorph("implodeDeformation", "Deformation implode", {
 }, 'deform images progressively using the "implode" operation and simulates an image morph animation')
 
 export const tornPaperDeformation = 
-new DeformationMorph("tornPaperDeformation", "Deformation torn paper", {
+new DeformationMorph("tornPaperDeformation", "Morph Deformation Torn Paper", {
   transformCommand: (config, value) => ` \( +clone -alpha extract -virtual-pixel black -spread ${value} -blur 0x3 -threshold 60% -spread ${value} -blur 0x1 \) -alpha off -compose Copy_Opacity -composite`,
   arguments: { frames: 9, transformationFactor: 15, delayLong: 40, delayShort: 0 }
 }, 'deform images progressively simulating a "torm paper" effect and concatenate the results so it looks like a morph animation')
 
 export const noiseDeformation = 
-new DeformationMorph("noiseDeformation", "Deformation noise", {
+new DeformationMorph("noiseDeformation", "Morph Deformation Noise", {
   transformCommand: (config, value) => `-noise ${value} +noise ${config.arguments.noiseType || "Poisson"}`,
   arguments: { frames: 6, transformationFactor: 14, delayLong: 50, delayShort: 10 },
   extraArguments: [

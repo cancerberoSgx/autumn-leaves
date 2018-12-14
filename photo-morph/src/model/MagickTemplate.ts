@@ -1,6 +1,8 @@
 import { Argument } from "imagemagick-browser";
 import { ImageState } from "src/store/store";
 import { ExecuteResult } from "wasm-imagemagick";
+
+
 export interface MagickTemplate<Config extends MorphConfig = MorphConfig> {
   name: string;
   description: string;

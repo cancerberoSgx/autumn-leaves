@@ -1,7 +1,7 @@
 import { Argument, ArgumentType } from "imagemagick-browser"
 import { getUniqueId } from "src/util/misc"
-import { execute } from "wasm-imagemagick"
-import { commonArguments, forceSameSize } from "./morphs"
+import { execute, ExecuteResult } from "wasm-imagemagick"
+import { morphCommonArguments, forceSameSize, buildExecuteResultWithError } from "./morphs"
 import { MagickTemplate, MagickTemplateTag, MagickTemplateArgument } from "../MagickTemplate";
 
 
@@ -25,9 +25,12 @@ export class ColorMorph implements MagickTemplate {
       description: "determine how many images to interpolate between each image",
       defaultValue: 6
     },
-  ].concat(commonArguments)
+  ].concat(morphCommonArguments)
 
   async template(config) {
+    if(config.inputFiles.length<2){
+      return buildExecuteResultWithError('Please select 2 or more images in order to create a morph animation')
+    }
     const {inputFiles} = await forceSameSize({ ...config, backgroundColor: config.arguments.backgroundColor })
     const commands = `
       convert ${inputFiles[0].name} ${inputFiles[1].name} \\
@@ -37,4 +40,3 @@ export class ColorMorph implements MagickTemplate {
     return await execute({ inputFiles, commands })
   }
 }
-

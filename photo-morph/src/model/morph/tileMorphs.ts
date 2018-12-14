@@ -2,7 +2,7 @@ import { Argument, ArgumentType } from "imagemagick-browser";
 import { getUniqueId } from "src/util/misc";
 import { execute } from "wasm-imagemagick";
 import { MagickTemplate, MagickTemplateTag, MagickTemplateArgument } from "../MagickTemplate";
-import { commonArguments, forceSameSize } from "./morphs";
+import { morphCommonArguments, forceSameSize, buildExecuteResultWithError } from "./morphs";
 
 
 export class TileMorph implements MagickTemplate {
@@ -33,9 +33,12 @@ export class TileMorph implements MagickTemplate {
       description: "crop direction",
       defaultValue: "horizontal"
     } as MagickTemplateArgument,
-  ].concat(commonArguments)
+  ].concat(morphCommonArguments)
 
   async template(config) {
+    if(config.inputFiles.length<2){
+      return buildExecuteResultWithError('Please select 2 or more images in order to create a morph animation')
+    }
     const {inputFiles} = await forceSameSize({ ...config, backgroundColor: config.arguments.backgroundColor + "" })
     const commands = `
     convert  \\
@@ -74,8 +77,11 @@ export class Tile4Morph implements MagickTemplate {
       description: "how much delay to start and end images",
       defaultValue: 50
     } as MagickTemplateArgument,
-  ].concat(commonArguments)
+  ].concat(morphCommonArguments)
   async template(config) {
+    if(config.inputFiles.length<2){
+      return buildExecuteResultWithError('Please select 2 or more images in order to create a morph animation')
+    }
     const {inputFiles} = await forceSameSize({ inputFiles: config.inputFiles, backgroundColor: config.arguments.backgroundColor || "white" })
     const commands = `
        convert  -delay ${config.arguments.delayLong} ${inputFiles.map(f => f.name).join(" ")} \\

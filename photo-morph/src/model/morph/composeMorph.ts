@@ -1,6 +1,6 @@
 import { Argument, ArgumentType, seq } from "imagemagick-browser"
 import { execute } from "wasm-imagemagick"
-import { commonArguments, forceSameSize } from "./morphs"
+import { morphCommonArguments, forceSameSize, buildExecuteResultWithError } from "./morphs"
 import { MagickTemplate, MagickTemplateTag, MagickTemplateArgument } from "../MagickTemplate";
 import { getUniqueId } from 'src/util/misc';
 
@@ -46,9 +46,12 @@ export class ComposeMorph implements MagickTemplate {
       description: "How much delay to start and end images",
       defaultValue: 50
     } as MagickTemplateArgument,
-  ].concat(commonArguments)
+  ].concat(morphCommonArguments)
 
   async template(config) {
+    if(config.inputFiles.length<2){
+      return buildExecuteResultWithError('Please select 2 or more images in order to create a morph animation')
+    }
     const {inputFiles} = await forceSameSize({ ...config, backgroundColor: config.arguments.backgroundColor })
     const list = seq(1, 1, 10).map(i => i * 10)
     const commands = `

@@ -1,7 +1,7 @@
 import { Argument, ArgumentType } from "imagemagick-browser"
 import { getUniqueId } from "src/util/misc"
 import { execute } from "wasm-imagemagick"
-import { commonArguments } from "./morphs"
+import { morphCommonArguments, buildExecuteResultWithError } from "./morphs"
 import { MagickTemplate, MagickTemplateTag, MagickTemplateArgument } from "../MagickTemplate";
 
 export class ResizeMorph implements MagickTemplate {
@@ -18,9 +18,12 @@ export class ResizeMorph implements MagickTemplate {
       description: "Determine how many images to interpolate between each image",
       defaultValue: 6
     } as MagickTemplateArgument
-  ].concat(commonArguments)
+  ].concat(morphCommonArguments)
 
   async template(config) {
+    if(config.inputFiles.length<2){
+      return buildExecuteResultWithError('Please select 2 or more images in order to create a morph animation')
+    }
     const inputFiles = config.inputFiles.map(i => i.file)
     const commands = `
 convert -morph ${config.arguments.frames} \\

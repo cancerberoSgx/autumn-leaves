@@ -5,6 +5,8 @@ import { ImagePointsEditor } from './ImagePointsEditor';
 import { NumberEditor } from './NumberEditor';
 import { SelectOneEditor } from './SelectOneEditor';
 import { BooleanEditor } from './BooleanEditor';
+import { SelectFileEditor } from './SelectFileEditor';
+import { TextEditor } from './TextEditor';
 
 export function buildArgumentEditor<T>(arg: Argument, templateContext: SizedImageContext, onChange: (e: ArgumentChangeEvent<T>) => void, imageSrc: string) {
 
@@ -12,6 +14,13 @@ export function buildArgumentEditor<T>(arg: Argument, templateContext: SizedImag
 
   if (arg.type === ArgumentType.color) {
     return <ColorPickerEditor
+      value={val + ''}
+      argument={arg}
+      onChange={onChange as any}
+    />
+  } 
+else if (arg.type === ArgumentType.text) {
+    return <TextEditor
       value={val + ''}
       argument={arg}
       onChange={onChange as any}
@@ -38,6 +47,13 @@ export function buildArgumentEditor<T>(arg: Argument, templateContext: SizedImag
     return <SelectOneEditor
       value={val + ''}
       select={arg.list}
+      argument={arg}
+      onChange={onChange as any}
+    />
+  }
+  else if (arg.type === ArgumentType.file) {
+    return <SelectFileEditor
+      value={val}
       argument={arg}
       onChange={onChange as any}
     />

@@ -12,7 +12,7 @@ const initialState= magickTemplateTypes.map((m, i) => ({
 
 const selectTemplateTypeReducer: Reducer<TemplateTypeState[]> = (state = initialState, action) => {
   if (action.type === ActionTypes.selectTemplateType) {
-    return state.map((m, i) => ({ ...m, isSelected: (action as SelectTemplateTypeAction).index === i }))
+    return state.map((m, i) => ({ ...m, isSelected: (action as SelectTemplateTypeAction).id === m.definition.id }))
   }
   return state
 }

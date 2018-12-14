@@ -7,11 +7,15 @@ import { asInputFile, buildImageSrc } from "wasm-imagemagick"
 
 export async function executeMorph(): Promise<void> {
   const selectedImages = store.getState().images.filter(img => img.isSelected)
-  if (selectedImages.length < 2) {
-    return // TODO: error
-  }
+  // if (selectedImages.length < 2) {
+  //   return // TODO: error
+  // }
   store.dispatch(changeStatus("executing"))
   const morph = store.getState().templates.find(m => m.isSelected)
+  if(!morph){
+    store.dispatch(changeStatus("idle"))
+    return
+  }
   const result = await morph.definition.template({ arguments: morph.value, inputFiles: selectedImages })
   if (result.exitCode !== 0) {
     alert("ERROR: " + result.stderr.join("\n"))

@@ -46,7 +46,7 @@ export async function addInputImages(e: HTMLInputElement | ImageDropperFile[] | 
 export async function fixImageSizes(images: MagickInputFile[]) : Promise<MagickInputFile[]>{
   const fixedImages = await pMap(images, async image=>{
     const info = await extractInfoOne(image)
-    if(info.image.geometry.height>500 || info.image.geometry.width>500){
+    if(info.image.format.toLowerCase()!=='ttf' && info.image.format.toLowerCase()!=='otf' && (info.image.geometry.height>500 || info.image.geometry.width>500)){
       const out = await execute({inputFiles: [image], commands: `convert ${image.name} -resize ${500}x${500} foo.${info.image.format.toLowerCase()}`})
       return await asInputFile(out.outputFiles[0])
     }

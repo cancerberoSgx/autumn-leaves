@@ -1,8 +1,9 @@
 import { ArgumentEditorProps, ArgumentEditorState } from 'imagemagick-browser';
 import * as React from 'react';
 
+type SelectOneEditorOption = { id: string, name: string }[]
 export interface SelectOneEditorProps extends ArgumentEditorProps<string>  {
-  select: { id: string, name: string }[]
+  select: SelectOneEditorOption | (()=>SelectOneEditorOption)
 }
 
 export interface SelectOneEditorState extends ArgumentEditorState<string> {
@@ -20,12 +21,12 @@ export class SelectOneEditor extends React.Component<SelectOneEditorProps, Selec
   }
 
   render(): React.ReactNode {
-    console.log('SelectOneEditor render', this.props.select);
+    const list = Array.isArray(this.props.select) ? this.props.select : this.props.select(); 
     return (
       <span >
         <select onChange={e => this.inputChange(e)}>
           {
-            this.props.select.map(select =>
+            list.map(select =>
               <option id={select.id} key={select.id}
                 selected={select.id===this.state.value}>
                 {select.name} 

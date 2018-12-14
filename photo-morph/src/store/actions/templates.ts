@@ -40,14 +40,14 @@ export interface ResetMorphValueAction extends Action {
 }
 
 
-export function selectTemplateType(index: number): SelectTemplateTypeAction {
+export function selectTemplateType(id: string): SelectTemplateTypeAction {
   return {
     type: ActionTypes.selectTemplateType,
-    index
+    id
   }
 }
 
 export interface SelectTemplateTypeAction extends Action {
   type: ActionTypes.selectTemplateType,
-  index: number
+  id: string
 }

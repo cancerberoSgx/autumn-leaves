@@ -1,10 +1,12 @@
 import { registerAllMagickTemplateMorphs } from './morph/morphs';
 import { MagickTemplate } from './MagickTemplate';
+import { registerAllTextBanners } from './textBanner/textBanners';
 
 export function getMagickTemplates(): MagickTemplate[] {
   if (!magickTemplates) {
     magickTemplates = []
     registerAllMagickTemplateMorphs()
+    registerAllTextBanners()
   }
   return magickTemplates
 }

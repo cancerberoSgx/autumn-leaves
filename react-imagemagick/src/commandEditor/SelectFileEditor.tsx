@@ -2,20 +2,20 @@ import * as React from 'react'
 import { ArgumentEditorProps, ArgumentEditorState } from 'imagemagick-browser';
 import {MagickInputFile, getInputFilesFromHtmlInputElement} from 'wasm-imagemagick'
 
-export interface SelectImageEditorProps extends ArgumentEditorProps<MagickInputFile[]> {
+export interface SelectFileEditorProps extends ArgumentEditorProps<MagickInputFile[]> {
 
 }
 
-export interface SelectImageEditorState extends ArgumentEditorState<MagickInputFile[]> {
+export interface SelectFileEditorState extends ArgumentEditorState<MagickInputFile[]> {
 }
 
-export class SelectImageEditor extends React.Component<SelectImageEditorProps, SelectImageEditorState> {
+export class SelectFileEditor extends React.Component<SelectFileEditorProps, SelectFileEditorState> {
 
-  state : SelectImageEditorState= {
+  state : SelectFileEditorState= {
     value: [] as MagickInputFile[]
   }
 
-  constructor(props: SelectImageEditorProps, state: SelectImageEditorState) {
+  constructor(props: SelectFileEditorProps, state: SelectFileEditorState) {
     super(props, state)    
     this.state.value = props.value || []
   }

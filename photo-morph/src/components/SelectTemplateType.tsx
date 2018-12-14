@@ -6,7 +6,7 @@ import { ActionTypes, selectTemplateType, SelectTemplateTypeAction, updateUrl } 
 import { RootState, TemplateTypeState } from "src/store/store"
 
 export interface SelectTemplateTypeProps {
-  selectTemplateType: (index: number) => SelectTemplateTypeAction
+  selectTemplateType: (id: string) => SelectTemplateTypeAction
   updateUrl: () => Action<ActionTypes.updateUrl>
   templateTypes: TemplateTypeState[]
 }
@@ -20,14 +20,12 @@ class SelectTemplateType extends React.Component<SelectTemplateTypeProps, {}> {
   }
 
   render(): React.ReactNode {
-    const selectedOptionIndex = this.props.templateTypes.map((m, i) => m.isSelected ? i + 1 : -1).filter(i => i !== -1)[0] || 0
+    const selected = this.props.templateTypes.find(tt=>tt.isSelected)
     return (
       <div>
-        {/* <p>Which kind of magick do you want to perform?</p> */}
         <select onChange={this.templateTypeSelected.bind(this)}>
-          {/* <option selected={0 === selectedOptionIndex}>Select One</option> */}
           {this.props.templateTypes.map((m, i) =>
-            <option key={i} selected={i + 1 === selectedOptionIndex} label={m.definition.name + " (" + m.definition.description + ")"}></option>
+            <option key={i} data-id={m.definition.id} selected={m.definition.id===selected.definition.id} label={m.definition.name + " (" + m.definition.description + ")"}></option>
           )}
         </select>
       </div>
@@ -35,7 +33,8 @@ class SelectTemplateType extends React.Component<SelectTemplateTypeProps, {}> {
   }
 
   async templateTypeSelected(e: ChangeEvent<HTMLSelectElement>) {
-    this.props.selectTemplateType(e.target.selectedIndex - 1)
+    const id = e.target.selectedOptions[0].getAttribute('data-id')
+    this.props.selectTemplateType(id)
     this.props.updateUrl()
   }
 }

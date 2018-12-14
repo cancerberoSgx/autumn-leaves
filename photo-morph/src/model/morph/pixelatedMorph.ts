@@ -1,7 +1,7 @@
 import { Argument, ArgumentType, seq } from "imagemagick-browser"
 import { getUniqueId } from "src/util/misc"
 import { execute } from "wasm-imagemagick"
-import { commonArguments, forceSameSize } from "./morphs"
+import { morphCommonArguments, forceSameSize, buildExecuteResultWithError } from "./morphs"
 import { MagickTemplate, MagickTemplateTag, MagickTemplateArgument } from "../MagickTemplate";
 
 
@@ -47,15 +47,16 @@ export class PixelatedMorph implements MagickTemplate {
       description: "how much delay to start and end images",
       defaultValue: 50
     } as MagickTemplateArgument,
-  ].concat(commonArguments)
+  ].concat(morphCommonArguments)
 
   async template(config) {
+    if(config.inputFiles.length<2){
+      return buildExecuteResultWithError('Please select 2 or more images in order to create a morph animation')
+    }
     const {inputFiles, referenceImage} = await forceSameSize({ ...config, backgroundColor: config.arguments.backgroundColor })
     const values = seq(1, 1, config.arguments.count).map(n => 60 / (n * 2))
 
     const newSize = `${referenceImage.info.image.geometry.width}x${referenceImage.info.image.geometry.height}`
-    // inputFiles[0].name = '${inputFiles[0].name}'
-    // inputFiles[1].name = '${inputFiles[1].name}'
     const commands = `
     ${values.map((n, i) =>        `
 convert ${inputFiles[0].name} -${config.arguments.method} ${n}% -scale ${newSize}! f0_${i}.miff
