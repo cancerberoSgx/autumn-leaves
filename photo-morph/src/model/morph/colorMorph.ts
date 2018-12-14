@@ -1,7 +1,7 @@
 import { Argument, ArgumentType } from "imagemagick-browser"
 import { getUniqueId } from "src/util/misc"
-import { execute, ExecuteResult } from "wasm-imagemagick"
-import { morphCommonArguments, forceSameSize, buildExecuteResultWithError } from "./morphs"
+import { execute, buildExecuteResultWithError } from "wasm-imagemagick"
+import { morphCommonArguments, forceSameSize } from "./morphs"
 import { MagickTemplate, MagickTemplateTag, MagickTemplateArgument } from "../MagickTemplate";
 
 

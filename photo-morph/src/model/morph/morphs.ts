@@ -60,17 +60,3 @@ export async function forceSameSize(config: { inputFiles: ImageState[], backgrou
   return {inputFiles, referenceImage}
 }
 
-
-export function buildExecuteResultWithError(s): ExecuteResult  {
-
-  return {
-    results: [],
-    commands: [],
-    command: [],
-    inputFiles: [],
-    outputFiles: [],
-    stdout: [],
-    exitCode: 1, 
-    stderr: [s]
-  }
-}

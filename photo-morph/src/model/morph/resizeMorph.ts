@@ -1,7 +1,7 @@
 import { Argument, ArgumentType } from "imagemagick-browser"
 import { getUniqueId } from "src/util/misc"
-import { execute } from "wasm-imagemagick"
-import { morphCommonArguments, buildExecuteResultWithError } from "./morphs"
+import { execute , buildExecuteResultWithError} from "wasm-imagemagick"
+import { morphCommonArguments } from "./morphs"
 import { MagickTemplate, MagickTemplateTag, MagickTemplateArgument } from "../MagickTemplate";
 
 export class ResizeMorph implements MagickTemplate {

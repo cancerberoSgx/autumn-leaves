@@ -17,7 +17,7 @@ function getInitialState(): TemplateState[] {
 
 const selectMorphsReducer: Reducer<TemplateState[]> = (state = getInitialState(), action) => {
   if (action.type === ActionTypes.selectMorph) {
-    return state.map((m, i) => ({ ...m, isSelected: (action as SelectMorphAction).index === i }))
+    return state.map((m, i) => ({ ...m, isSelected: (action as SelectMorphAction).id === m.definition.id }))
   }
   return state
 }

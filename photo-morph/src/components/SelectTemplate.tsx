@@ -10,7 +10,7 @@ import SelectTemplateType from './SelectTemplateType';
 import { MagickTemplateTag } from 'src/model/MagickTemplate';
 
 export interface SelectTemplateProps {
-  selectTemplate: (index: number) => SelectMorphAction
+  selectTemplate(id: string): SelectMorphAction
   resetMorphValues: (morphId: string) => ResetMorphValueAction
   updateUrl: () => Action<ActionTypes.updateUrl>
   morphs: TemplateState[]
@@ -32,7 +32,7 @@ class SelectTemplate extends React.Component<SelectTemplateProps, {}> {
         <select onChange={this.morphSelected.bind(this)}>
           <option selected={!selectedMorph}>Select tool</option>
           {this.props.morphs.map((m, i) =>
-            <option key={i} selected={selectedMorph && selectedMorph.definition.id === m.definition.id}>{m.definition.name}</option>
+            <option key={i} data-id={m.definition.id} selected={selectedMorph && selectedMorph.definition.id === m.definition.id}>{m.definition.name}</option>
           )}
         </select>
         {selectedMorph ? <div>
@@ -47,7 +47,7 @@ class SelectTemplate extends React.Component<SelectTemplateProps, {}> {
   }
 
   async morphSelected(e: ChangeEvent<HTMLSelectElement>) {
-    this.props.selectTemplate(e.target.selectedIndex - 1)
+    this.props.selectTemplate(e.currentTarget.selectedOptions[0].getAttribute('data-id'))
     this.props.updateUrl()
     await executeMorph()
   }

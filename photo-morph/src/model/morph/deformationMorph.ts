@@ -1,7 +1,7 @@
 import { Argument, ArgumentType, list, seq } from "imagemagick-browser"
 import { getUniqueId } from "src/util/misc"
-import { execute, IMNoise, IMVirtualPixel } from "wasm-imagemagick"
-import {morphCommonArguments, forceSameSize, buildExecuteResultWithError} from "./morphs"
+import { execute, IMNoise, IMVirtualPixel, buildExecuteResultWithError } from "wasm-imagemagick"
+import {morphCommonArguments, forceSameSize} from "./morphs"
 import { MorphCommonArgumentValues, MagickTemplate, MorphConfig, MagickTemplateTag, MagickTemplateArgument } from "../MagickTemplate";
 
 type DeformationArguments = MorphCommonArgumentValues & {

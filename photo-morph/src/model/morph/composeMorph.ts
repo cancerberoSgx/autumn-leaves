@@ -1,6 +1,6 @@
 import { Argument, ArgumentType, seq } from "imagemagick-browser"
-import { execute } from "wasm-imagemagick"
-import { morphCommonArguments, forceSameSize, buildExecuteResultWithError } from "./morphs"
+import { execute , buildExecuteResultWithError} from "wasm-imagemagick"
+import { morphCommonArguments, forceSameSize,  } from "./morphs"
 import { MagickTemplate, MagickTemplateTag, MagickTemplateArgument } from "../MagickTemplate";
 import { getUniqueId } from 'src/util/misc';
 

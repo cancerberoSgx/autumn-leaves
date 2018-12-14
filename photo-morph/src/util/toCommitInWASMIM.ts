@@ -1,4 +1,4 @@
-import { getFileName, MagickFile, extractInfo } from 'wasm-imagemagick';
+import { getFileName, MagickFile, extractInfo, ExecuteResult } from 'wasm-imagemagick';
 import { ExtractInfoResult } from 'wasm-imagemagick/dist/src/util/imageExtractInfoTypes';
 
 export function getFileNameWithoutExtension(filePathOrUrlOrFile: string | MagickFile) {

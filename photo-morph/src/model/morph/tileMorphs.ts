@@ -1,8 +1,8 @@
 import { Argument, ArgumentType } from "imagemagick-browser";
 import { getUniqueId } from "src/util/misc";
-import { execute } from "wasm-imagemagick";
+import { execute, buildExecuteResultWithError } from "wasm-imagemagick";
 import { MagickTemplate, MagickTemplateTag, MagickTemplateArgument } from "../MagickTemplate";
-import { morphCommonArguments, forceSameSize, buildExecuteResultWithError } from "./morphs";
+import { morphCommonArguments, forceSameSize } from "./morphs";
 
 
 export class TileMorph implements MagickTemplate {

@@ -1,13 +1,14 @@
 import { ArgumentType } from "imagemagick-browser";
-import { registerMagickTemplates } from '../magickTemplates';
-import { TextBannerVibratoFont } from './TextBannerVibrato';
-import { MagickTemplateArgument } from '../MagickTemplate';
 import { store } from 'src';
+import { MagickTemplateArgument } from '../MagickTemplate';
+import { registerMagickTemplates } from '../magickTemplates';
 import { TextBannerCometFont } from './TextBannerCometFont';
-import { TextBannerSmokedFont } from './TextBannerSmokedFont';
+import { TextBannerConicalFont } from './TextBannerConicalFont';
+import { TextBannerGradientArc } from './TextBannerGradientArc';
 import { TextBannerPsychedelicFont } from './TextBannerPsychedelicFont';
 import { TextBannerShearedShadowFont } from './TextBannerShearedShadowFont';
-import { TextBannerConicalFont } from './TextBannerConicalFont';
+import { TextBannerSmokedFont } from './TextBannerSmokedFont';
+import { TextBannerVibratoFont } from './TextBannerVibrato';
 
 export function registerAllTextBanners(){
   const all = [
@@ -16,7 +17,9 @@ export function registerAllTextBanners(){
     new TextBannerSmokedFont(), 
     new TextBannerPsychedelicFont(), 
     new TextBannerShearedShadowFont(),
-    new TextBannerConicalFont()
+    new TextBannerConicalFont(),
+    new TextBannerGradientArc(),
+    
   ]
   registerMagickTemplates(all)
 }
@@ -31,13 +34,6 @@ export const textCommonArguments = [
     description: "Text",
     defaultValue: "Cool Banner"
   },
-  // {
-  //   type: ArgumentType.text,
-  //   id: "font",
-  //   name: "Font",
-  //   description: "Font file to use. By default helvetiva.ttf will be automatically loaded. To use oter fonts, just load .ttf files as if they were images, and set the file name here or leave this empty to use the first .ttf image file detected.",
-  //   defaultValue: 'helvetica.ttf'
-  // },
   {
     type: ArgumentType.selectOne,
     id: "font",

@@ -1,15 +1,15 @@
 import { Action } from "redux"
 import { ActionTypes } from "."
 
-export function selectMorph(index: number): SelectMorphAction {
+export function selectMorph(id: string): SelectMorphAction {
   return {
     type: ActionTypes.selectMorph,
-    index
+    id
   }
 }
 export interface SelectMorphAction extends Action {
   type: ActionTypes.selectMorph,
-  index: number
+  id: string
 }
 
 export function changeMorphArgument(morphId: string, argumentId: string, argumentValue: any): ChangeMorphArgumentAction {
