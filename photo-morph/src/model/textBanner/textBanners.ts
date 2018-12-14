@@ -9,6 +9,9 @@ import { TextBannerPsychedelicFont } from './TextBannerPsychedelicFont';
 import { TextBannerShearedShadowFont } from './TextBannerShearedShadowFont';
 import { TextBannerSmokedFont } from './TextBannerSmokedFont';
 import { TextBannerVibratoFont } from './TextBannerVibrato';
+import { TextBannerNeonFont } from './TextBannerNeonFont';
+import { TextBannerAquaFont } from './TextBannerAquaFont';
+import { TextBannerBeveledFont } from './TextBannerBeveledFont';
 
 export function registerAllTextBanners(){
   const all = [
@@ -19,7 +22,9 @@ export function registerAllTextBanners(){
     new TextBannerShearedShadowFont(),
     new TextBannerConicalFont(),
     new TextBannerGradientArc(),
-    
+    new TextBannerNeonFont(), 
+    new TextBannerAquaFont(),
+    new TextBannerBeveledFont()
   ]
   registerMagickTemplates(all)
 }
