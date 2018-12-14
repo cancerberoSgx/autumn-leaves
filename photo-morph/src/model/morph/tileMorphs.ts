@@ -1,12 +1,12 @@
 import { Argument, ArgumentType } from "imagemagick-browser";
 import { getUniqueId } from "src/util/misc";
 import { execute } from "wasm-imagemagick";
-import { MagickTemplate, MagickTemplateTag } from "../magickTemplates";
+import { MagickTemplate, MagickTemplateTag, MagickTemplateArgument } from "../MagickTemplate";
 import { commonArguments, forceSameSize } from "./morphs";
 
 
 export class TileMorph implements MagickTemplate {
-  name = "Morph tile crop 2 directions"
+  name = "Morph tile simple"
   id = "tileMorph"
   description = `Morph between two images by cropping horizontally or vertically from left to right or top to bottom`
   tags = [MagickTemplateTag.morph, MagickTemplateTag.animation]
@@ -17,14 +17,14 @@ export class TileMorph implements MagickTemplate {
       name: "Background Color",
       description: "background color for the smaller image that is enlarged",
       defaultValue: "#ffffff"
-    } as Argument,
+    } as MagickTemplateArgument,
     {
       type: ArgumentType.number,
       id: "cropSpeed",
       name: "Crop Speed",
       description: "Horizontal crop speed",
       defaultValue: 9
-    } as Argument,
+    } as MagickTemplateArgument,
     {
       type: ArgumentType.selectOne,
       id: "direction",
@@ -32,7 +32,7 @@ export class TileMorph implements MagickTemplate {
       list: [{ id: "vertical", name: "vertical" }, { id: "horizontal", name: "horizontal" }, { id: "both", name: "both" }],
       description: "crop direction",
       defaultValue: "horizontal"
-    } as Argument,
+    } as MagickTemplateArgument,
   ].concat(commonArguments)
 
   async template(config) {
@@ -57,23 +57,23 @@ export class Tile4Morph implements MagickTemplate {
       type: ArgumentType.number,
       id: "speed",
       name: "speed",
-      description: "speed",
+      description: "The size of the cropped rectangle on each frame. The bigger the faster the animation will be. ",
       defaultValue: 4
-    } as Argument,
+    } as MagickTemplateArgument,
     {
       type: ArgumentType.number,
       id: "delayShort",
       name: "delayShort",
       description: "how much delay between deformed frames",
       defaultValue: 10
-    } as Argument, ,
+    } as MagickTemplateArgument, ,
     {
       type: ArgumentType.number,
       id: "delayLong",
       name: "delayLong",
       description: "how much delay to start and end images",
       defaultValue: 50
-    } as Argument,
+    } as MagickTemplateArgument,
   ].concat(commonArguments)
   async template(config) {
     const {inputFiles} = await forceSameSize({ inputFiles: config.inputFiles, backgroundColor: config.arguments.backgroundColor || "white" })

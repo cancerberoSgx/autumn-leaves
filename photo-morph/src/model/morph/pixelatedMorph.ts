@@ -2,7 +2,7 @@ import { Argument, ArgumentType, seq } from "imagemagick-browser"
 import { getUniqueId } from "src/util/misc"
 import { execute } from "wasm-imagemagick"
 import { commonArguments, forceSameSize } from "./morphs"
-import { MagickTemplate, MagickTemplateTag } from "../magickTemplates"
+import { MagickTemplate, MagickTemplateTag, MagickTemplateArgument } from "../MagickTemplate";
 
 
 export class PixelatedMorph implements MagickTemplate {
@@ -10,7 +10,7 @@ export class PixelatedMorph implements MagickTemplate {
   id = "pixelated "
   description = `http://www.imagemagick.org/Usage/transform/#pixelate`
   tags = [MagickTemplateTag.morph, MagickTemplateTag.animation]
-  arguments: Argument[] = [
+  arguments = [
     {
       type: ArgumentType.color,
       id: "backgroundColor",
@@ -32,21 +32,21 @@ export class PixelatedMorph implements MagickTemplate {
       list: [{ id: "sample", name: "sample" }, { id: "scale", name: "scale" }, { id: "resize", name: "resize" }],
       description: "compose method",
       defaultValue: "sample"
-    } as Argument,
+    } as MagickTemplateArgument,
     {
       type: ArgumentType.number,
       id: "delayShort",
       name: "delayShort",
       description: "how much delay between deformed frames",
       defaultValue: 10
-    } as Argument, ,
+    } as MagickTemplateArgument,
     {
       type: ArgumentType.number,
       id: "delayLong",
       name: "delayLong",
       description: "how much delay to start and end images",
       defaultValue: 50
-    } as Argument,
+    } as MagickTemplateArgument,
   ].concat(commonArguments)
 
   async template(config) {

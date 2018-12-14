@@ -2,11 +2,11 @@ import { Argument, ArgumentType } from "imagemagick-browser"
 import { getUniqueId } from "src/util/misc"
 import { execute } from "wasm-imagemagick"
 import { commonArguments, forceSameSize } from "./morphs"
-import { MagickTemplate, MagickTemplateTag } from "../magickTemplates"
+import { MagickTemplate, MagickTemplateTag, MagickTemplateArgument } from "../MagickTemplate";
 
 
 export class ColorMorph implements MagickTemplate {
-  name = "morph color"
+  name = "Morph color"
   id = "colorMorph"
   description = `https://www.imagemagick.org/Usage/anim_mods/#morph_color`
   tags = [MagickTemplateTag.morph, MagickTemplateTag.animation]
@@ -17,7 +17,7 @@ export class ColorMorph implements MagickTemplate {
       name: "Background Color",
       description: "background color for the smaller image that is enlarged",
       defaultValue: "#ffffff"
-    } as Argument,
+    } as MagickTemplateArgument,
     {
       type: ArgumentType.number,
       id: "frames",

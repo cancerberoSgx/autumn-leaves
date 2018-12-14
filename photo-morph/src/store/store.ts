@@ -1,4 +1,4 @@
-import { ArgumentValues, MagickTemplate, MorphCommonArgumentValues } from "src/model/magickTemplates"
+import { ArgumentValues, MagickTemplate, MorphCommonArgumentValues } from "src/model/MagickTemplate";
 import { MagickTemplateType } from "src/model/MagickTemplateTypes"
 import { ExtractInfoResult, MagickInputFile } from "wasm-imagemagick"
 

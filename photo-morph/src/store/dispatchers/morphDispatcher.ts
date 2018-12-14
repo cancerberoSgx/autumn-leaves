@@ -1,5 +1,5 @@
 import { store } from "src"
-import { MorphCommonArgumentValues, MagickTemplate } from "src/model/magickTemplates"
+import { MorphCommonArgumentValues, MagickTemplate } from "src/model/MagickTemplate";
 import { changeStatus, setOutputImage } from "src/store/actions"
 import { getUniqueId } from "src/util/misc"
 import { extractInfoOne } from "src/util/toCommitInWASMIM"

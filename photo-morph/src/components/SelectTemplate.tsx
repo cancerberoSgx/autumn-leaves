@@ -26,9 +26,8 @@ class SelectTemplate extends React.Component<SelectTemplateProps, {}> {
   render(): React.ReactNode {
     const selectedMorph = this.props.morphs.find(m => m.isSelected)
     return (
-      <div>
-
-            <h3>Kind of magic</h3>
+      <div className="gridItemRoot">
+            <h3>Filter by kind of magic</h3>
             <SelectTemplateType />
 
         {/* {!selectedMorph ? : ""} */}
@@ -46,8 +45,9 @@ class SelectTemplate extends React.Component<SelectTemplateProps, {}> {
               {selectedMorph.definition.description}
             </p>
           <h5>Settings:</h5>
+          {/* <div style={{}}> */}
             <TemplateEditor />
-        
+          {/* </div> */}
           <button onClick={this.reset.bind(this)}>Reset settings</button>
         </div> : ""}
       </div>

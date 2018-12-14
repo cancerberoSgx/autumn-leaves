@@ -23,6 +23,10 @@ h5 {
 p {
   margin: 0
 }
+.gridItemRoot {
+  height: 100%;
+  overflow-y: scroll
+}
 
 .react-grid-item {
   padding: 0;

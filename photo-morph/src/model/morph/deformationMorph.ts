@@ -2,7 +2,7 @@ import { Argument, ArgumentType, list, seq } from "imagemagick-browser"
 import { getUniqueId } from "src/util/misc"
 import { execute, IMNoise, IMVirtualPixel } from "wasm-imagemagick"
 import {commonArguments, forceSameSize} from "./morphs"
-import { MorphCommonArgumentValues, MagickTemplate, MorphConfig, MagickTemplateTag } from "../magickTemplates"
+import { MorphCommonArgumentValues, MagickTemplate, MorphConfig, MagickTemplateTag, MagickTemplateArgument } from "../MagickTemplate";
 
 type DeformationArguments = MorphCommonArgumentValues & {
   frames: number,
@@ -18,7 +18,7 @@ type DeformationConfig = MorphConfig & {
 
 interface ArgumentsConfig {
   arguments?: Partial<DeformationArguments>,
-  extraArguments?: Argument[],
+  extraArguments?: MagickTemplateArgument[],
   transformCommand: (config: DeformationConfig, value: number) => string,
   framesValues?: (i: number, config: DeformationConfig) => number
 }
@@ -40,10 +40,9 @@ const argumentsConfigDefaults: ArgumentsConfig = {
 }
 
 export class DeformationMorph implements MagickTemplate {
-  description = `mutate both images and concatenate the sequences`
   tags = [MagickTemplateTag.morph, MagickTemplateTag.animation]
-  arguments: Argument[]
-  constructor(public id: string, public name: string = id, protected argumentConfig: Partial<ArgumentsConfig>) {
+  arguments: MagickTemplateArgument[]
+  constructor(public id: string, public name: string = id, protected argumentConfig: Partial<ArgumentsConfig>, public description: string=`mutate both images and concatenate the sequences`) {
 
     this.argumentConfig = { 
       ...argumentsConfigDefaults, ...argumentConfig, arguments: { 
@@ -57,7 +56,7 @@ export class DeformationMorph implements MagickTemplate {
         type: ArgumentType.number,
         id: "transformationFactor",
         name: "transformation factor",
-        description: "",
+        description: "The intensity of applied transformation",
         defaultValue: this.argumentConfig.arguments.transformationFactor
       },
       {
@@ -71,24 +70,24 @@ export class DeformationMorph implements MagickTemplate {
         type: ArgumentType.number,
         id: "frames",
         name: "frames",
-        description: "determine how many deformed frames to create",
+        description: "Determine how many deformed frames to create",
         defaultValue: this.argumentConfig.arguments.frames
-      } as Argument,
+      }as MagickTemplateArgument,
       {
         type: ArgumentType.number,
         id: "delayShort",
         name: "delayShort",
-        description: "how much delay between deformed frames",
+        description: "How much delay in in-between deformed frames",
         defaultValue: this.argumentConfig.arguments.delayShort
-      } as Argument, ,
+      }as MagickTemplateArgument, ,
 
       {
         type: ArgumentType.number,
         id: "delayLong",
         name: "delayLong",
-        description: "how much delay to start and end images",
+        description: "How much delay to start and end images",
         defaultValue: this.argumentConfig.arguments.delayLong
-      } as Argument,
+      }as MagickTemplateArgument,
     ]
     .concat(commonArguments)
     .concat(argumentConfig.extraArguments||[])
@@ -119,10 +118,10 @@ export class DeformationMorph implements MagickTemplate {
 }
 
 export const swirlDeformation = 
-new DeformationMorph("swirlDeformation", "Deformation Swirl", { transformCommand: (config, value) => `-swirl ${value}`, arguments: { frames: 10, transformationFactor: 100 } })
+new DeformationMorph("swirlDeformation", "Deformation Swirl", { transformCommand: (config, value) => `-swirl ${value}`, arguments: { frames: 10, transformationFactor: 100 } }, 'deform images progressively using the "swirl" operation and simulates an image morph animation')
 
 export const spreadDeformation = 
-new DeformationMorph("spreadDeformation", "Deformation spread", { transformCommand: (config, value) => `-spread ${value}`, arguments: { frames: 6, transformationFactor: 10 } })
+new DeformationMorph("spreadDeformation", "Deformation spread", { transformCommand: (config, value) => `-spread ${value}`, arguments: { frames: 6, transformationFactor: 10 } }, 'deform images progressively using the "spread" operation and simulates an image morph animation')
 
 export const implodeDeformation = 
 new DeformationMorph("implodeDeformation", "Deformation implode", {
@@ -135,16 +134,16 @@ new DeformationMorph("implodeDeformation", "Deformation implode", {
       id: "virtualPixel",
       name: "Virtual Pixel",
       list: list(IMVirtualPixel).map(i => ({ id: i, name: i })),
-      description: "",
-      defaultValue: "Random"
-    } as Argument,]
-})
+      description: "How to paint the background in case the implode operation needs to",
+      defaultValue: "Dither"
+    }as MagickTemplateArgument,]
+}, 'deform images progressively using the "implode" operation and simulates an image morph animation')
 
 export const tornPaperDeformation = 
 new DeformationMorph("tornPaperDeformation", "Deformation torn paper", {
   transformCommand: (config, value) => ` \( +clone -alpha extract -virtual-pixel black -spread ${value} -blur 0x3 -threshold 60% -spread ${value} -blur 0x1 \) -alpha off -compose Copy_Opacity -composite`,
   arguments: { frames: 9, transformationFactor: 15, delayLong: 40, delayShort: 0 }
-})
+}, 'deform images progressively simulating a "torm paper" effect and concatenate the results so it looks like a morph animation')
 
 export const noiseDeformation = 
 new DeformationMorph("noiseDeformation", "Deformation noise", {
@@ -156,7 +155,7 @@ new DeformationMorph("noiseDeformation", "Deformation noise", {
       id: "noiseType",
       name: "Noise type",
       list: list(IMNoise).map(i => ({ id: i, name: i })),
-      description: "noise type",
+      description: "The kind of noise to add",
       defaultValue: IMNoise.Laplacian,
-    } as Argument,]
-})
+    }as MagickTemplateArgument,]
+}, 'Progressively adds noise to both images and concatenate results to simulate a morph animation')

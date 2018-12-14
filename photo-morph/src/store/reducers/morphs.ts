@@ -1,15 +1,12 @@
 import { Reducer } from "redux"
-// import { morphs } from "src/model/morph/morphs"
 import { ActionTypes, ChangeMorphArgumentAction, ResetMorphValueAction, SelectMorphAction } from "../actions"
 import { getDefaultArguments } from "../dispatchers/morphDispatcher"
 import { TemplateState } from "../store"
-
 import reduceReducers from "reduce-reducers"
-import { magickTemplates } from "src/model/magickTemplates"
-import { magickTemplateTypes } from 'src/model/MagickTemplateTypes';
+import { getMagickTemplates } from 'src/model/magickTemplates';
 
 function getInitialState(): TemplateState[] {
-  return magickTemplates.map((m, i) => ({
+  return getMagickTemplates().map((m, i) => ({
     name: m.name,
     isSelected: false,
     description: m.description,

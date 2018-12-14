@@ -1,4 +1,4 @@
-import { MagickTemplateTag } from './magickTemplates'
+import { MagickTemplateTag } from "./MagickTemplate";
 
 export type MagickTemplateTypes = MagickTemplateTag.morph | MagickTemplateTag.frame | MagickTemplateTag.textBanner
 

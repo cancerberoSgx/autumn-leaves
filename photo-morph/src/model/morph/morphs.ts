@@ -6,13 +6,14 @@ import { asInputFile, execute, MagickInputFile } from "wasm-imagemagick"
 import { ColorMorph } from "./colorMorph"
 import { ComposeMorph } from "./composeMorph"
 import { implodeDeformation, noiseDeformation, spreadDeformation, swirlDeformation, tornPaperDeformation } from "./deformationMorph"
-import { MagickTemplate, registerMagickTemplates } from "../magickTemplates"
+import { registerMagickTemplates } from "../magickTemplates"
+import { MagickTemplate, MagickTemplateArgument } from "../MagickTemplate";
 import { PixelatedMorph } from "./pixelatedMorph"
 import { ResizeMorph } from "./resizeMorph"
 import { Tile4Morph, TileMorph } from "./tileMorphs"
 
 
-export const commonArguments: Argument[] = [
+export const commonArguments: MagickTemplateArgument[] = [
   {
     type: ArgumentType.number,
     id: "loop",

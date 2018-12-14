@@ -1,15 +1,15 @@
 import { Argument, ArgumentType, seq } from "imagemagick-browser"
 import { execute } from "wasm-imagemagick"
 import { commonArguments, forceSameSize } from "./morphs"
-import { MagickTemplate, MagickTemplateTag } from "../magickTemplates"
+import { MagickTemplate, MagickTemplateTag, MagickTemplateArgument } from "../MagickTemplate";
 import { getUniqueId } from 'src/util/misc';
 
 export class ComposeMorph implements MagickTemplate {
-  name = "compose"
+  name = "Morph Compose"
   id = "composeMorph"
-  description = `http://www.imagemagick.org/Usage/compose/#dissolve`
+  description = `Progressively blend the two images to simulate a morph animation- http://www.imagemagick.org/Usage/compose/#dissolve`
   tags = [MagickTemplateTag.morph, MagickTemplateTag.animation]
-  arguments: Argument[] = [
+  arguments = [
     {
       type: ArgumentType.color,
       id: "backgroundColor",
@@ -22,39 +22,40 @@ export class ComposeMorph implements MagickTemplate {
       id: "method",
       name: "Method",
       list: [{ id: "dissolve", name: "dissolve" }, { id: "blend", name: "blend" }],
-      description: "compose method",
+      description: "The method used to compose both images",
       defaultValue: "dissolve"
-    } as Argument,
+    } as MagickTemplateArgument,
     {
       type: ArgumentType.number,
       id: "morph",
       name: "morph",
-      description: "determine how many many intermediate morph images to interpolate between each deformed frame",
+      description: "Determine how many many intermediate morph images to interpolate between each deformed frame",
       defaultValue: 4
-    } as Argument,
+    } as MagickTemplateArgument,
     {
       type: ArgumentType.number,
       id: "delayShort",
       name: "delayShort",
-      description: "how much delay between deformed frames",
+      description: "How much delay in in-between deformed frames",
       defaultValue: 10
-    } as Argument, ,
+    } as MagickTemplateArgument, ,
     {
       type: ArgumentType.number,
       id: "delayLong",
       name: "delayLong",
-      description: "how much delay to start and end images",
+      description: "How much delay to start and end images",
       defaultValue: 50
-    } as Argument,
+    } as MagickTemplateArgument,
   ].concat(commonArguments)
 
   async template(config) {
     const {inputFiles} = await forceSameSize({ ...config, backgroundColor: config.arguments.backgroundColor })
     const list = seq(1, 1, 10).map(i => i * 10)
     const commands = `
-    ${list.map(i =>
-        `
-convert ${inputFiles[0].name} ${inputFiles[1].name}-alpha on-compose ${config.arguments.method} -define compose:args=${i} -gravity South -composite compose_output_${i}.miff`).join("\n")}
+    ${list.map(i =>`
+convert ${inputFiles[0].name} ${inputFiles[1].name} -alpha on -compose ${config.arguments.method} -define compose:args=${i} -gravity South -composite compose_output_${i}.miff`
+      ).join("\n")
+    }
 
 convert -delay ${config.arguments.delayLong} ${inputFiles[0].name} -morph ${config.arguments.morph} \\
   -delay ${config.arguments.delayShort} ${list.map(i => `compose_output_${i}.miff`).join(" ")} \\

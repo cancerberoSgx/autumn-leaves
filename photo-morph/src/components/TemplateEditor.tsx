@@ -29,16 +29,15 @@ class TemplateEditor extends React.Component<TemplateEditorProps, {}> {
       return <div>No morph selected</div>
     }
     return (
-      // <div>
         <table>
           {morph.definition.arguments.map((arg, i) =>
             <tr data-text={i+t} key={morph.definition.id + "_" + t+ i + "_" + morph.value[arg.id]}>
-            <td>{arg.name} <button onClick={this.argumentHelp.bind(this, arg)}>?</button></td>
+            <td>{arg.name}</td>
             <td>{buildArgumentEditor(arg, morph.value, this.argumentChanged.bind(this), "")}</td>
+            <td><button style={{margin: 0, padding: '0px 2px 0px 2px', border: 0}} onClick={this.argumentHelp.bind(this, arg)}>?</button></td>
             </tr>
           )}
         </table>
-      // </div>
     )
   }
   

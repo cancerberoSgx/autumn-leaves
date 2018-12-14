@@ -1,46 +1,16 @@
-import { Argument } from "imagemagick-browser";
-import { ImageState } from "src/store/store";
-import { ExecuteResult } from "wasm-imagemagick";
+import { registerAllMagickTemplateMorphs } from './morph/morphs';
+import { MagickTemplate } from './MagickTemplate';
 
-export interface MagickTemplate<Config extends MorphConfig = MorphConfig> {
-  name: string
-  description: string
-  tags: MagickTemplateTag[]
-  id: string
-  arguments?: Argument[]
-  template(config: Config): Promise<ExecuteResult>
+export function getMagickTemplates(): MagickTemplate[] {
+  if (!magickTemplates) {
+    magickTemplates = []
+    registerAllMagickTemplateMorphs()
+  }
+  return magickTemplates
 }
+let magickTemplates: MagickTemplate[]
 
-export interface MorphConfig {
-  inputFiles: ImageState[]
-  arguments: ArgumentValues
-}
-
-export interface MagickTemplateArgument extends Argument {
-  description: string
-}
-export interface MorphCommonArgumentValues extends ArgumentValues { frames: number, loop: number, imageWidth: number, imageHeight: number }
-
-export interface ArgumentValues { [key: string]: (string | number | boolean) }
-
-export enum MagickTemplateTag {
-  animation,
-  info,
-  drawing,
-  gradient,
-  morph,
-  color,
-  append,
-  format,
-  distort,
-  frame,
-  textBanner
-}
-
-export const magickTemplates: MagickTemplate[] = []
-
-
-export function registerMagickTemplates(arr: MagickTemplate[]){
-  arr.forEach(t=>magickTemplates.push(t))
-  // commandTemplates.push
+export function registerMagickTemplates(arr: MagickTemplate[]) {
+  const templates = getMagickTemplates()
+  arr.forEach(t => templates.push(t))
 }
