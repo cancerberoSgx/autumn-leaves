@@ -23,9 +23,9 @@ export class TextBannerCometFont implements MagickTemplate {
     {
       type: ArgumentType.number,
       isInteger: true,
-      id: "shadowIntensity",
-      name: "Shadow Intensity",
-      description: "Shadow intensity",
+      id: "shadowLength",
+      name: "Shadow Length",
+      description: "Shadow Length",
       defaultValue: 25
     },
 
@@ -37,6 +37,22 @@ export class TextBannerCometFont implements MagickTemplate {
       description: "Shadow Angle",
       defaultValue: 65
     },
+    {
+      type: ArgumentType.number,
+      isInteger: true,
+      id: "strokeWidth",
+      name: "Stroke Width",
+      description: "Stroke width (character borders), use larger numbers than zero to make the font look bolder",
+      defaultValue: 1
+    },
+    {
+      type: ArgumentType.color,
+      id: "strokeColor",
+      name: "Stroke Color",
+      description: "Color of the stroke (character borders)",
+      defaultValue: "black"
+    } as MagickTemplateArgument,
+
   ])
 
   async template(config: MorphConfig) {
@@ -50,8 +66,8 @@ export class TextBannerCometFont implements MagickTemplate {
 
     const commands = `
 convert -size ${w}x${h} xc:${config.arguments.backgroundColor} -gravity center -font '${fontName}' -pointsize ${config.arguments.fontSize} \\
-  -fill ${config.arguments.shadowColor} -annotate 0 '${config.arguments.text}' -motion-blur 0x${config.arguments.shadowIntensity}+${config.arguments.shadowAngle} \\
-  -fill ${config.arguments.textColor}  -annotate 0 '${config.arguments.text}' -motion-blur 0x1+${config.arguments.shadowAngle} \\
+  -fill ${config.arguments.shadowColor} -annotate 0 '${config.arguments.text}' -motion-blur 0x${config.arguments.shadowLength}+${config.arguments.shadowAngle} \\
+  -fill ${config.arguments.textColor} -stroke ${config.arguments.strokeColor} -strokewidth ${config.arguments.strokeWidth} -annotate 0 '${config.arguments.text}' -motion-blur 0x1+${config.arguments.shadowAngle} \\
     +repage \`uniqueName\`.jpg
     `
     const result = await execute({ inputFiles, commands })

@@ -7,6 +7,7 @@ import { TextBannerCometFont } from './TextBannerCometFont';
 import { TextBannerSmokedFont } from './TextBannerSmokedFont';
 import { TextBannerPsychedelicFont } from './TextBannerPsychedelicFont';
 import { TextBannerShearedShadowFont } from './TextBannerShearedShadowFont';
+import { TextBannerConicalFont } from './TextBannerConicalFont';
 
 export function registerAllTextBanners(){
   const all = [
@@ -14,7 +15,8 @@ export function registerAllTextBanners(){
     new TextBannerCometFont(),  
     new TextBannerSmokedFont(), 
     new TextBannerPsychedelicFont(), 
-    new TextBannerShearedShadowFont()
+    new TextBannerShearedShadowFont(),
+    new TextBannerConicalFont()
   ]
   registerMagickTemplates(all)
 }

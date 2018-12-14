@@ -37,6 +37,7 @@ export enum MagickTemplateTag {
   append,
   format,
   distort,
+  '3d',
   frame,
   textBanner,
   all
