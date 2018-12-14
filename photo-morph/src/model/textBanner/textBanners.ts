@@ -2,13 +2,19 @@ import { ArgumentType } from "imagemagick-browser";
 import { registerMagickTemplates } from '../magickTemplates';
 import { TextBannerVibratoFont } from './TextBannerVibrato';
 import { MagickTemplateArgument } from '../MagickTemplate';
-import { TextBannerBlurShadowFont } from './TextBannerBlurShadow';
 import { store } from 'src';
+import { TextBannerCometFont } from './TextBannerCometFont';
+import { TextBannerSmokedFont } from './TextBannerSmokedFont';
+import { TextBannerPsychedelicFont } from './TextBannerPsychedelicFont';
+import { TextBannerShearedShadowFont } from './TextBannerShearedShadowFont';
 
 export function registerAllTextBanners(){
   const all = [
     new TextBannerVibratoFont(), 
-    new TextBannerBlurShadowFont()
+    new TextBannerCometFont(),  
+    new TextBannerSmokedFont(), 
+    new TextBannerPsychedelicFont(), 
+    new TextBannerShearedShadowFont()
   ]
   registerMagickTemplates(all)
 }

@@ -5,9 +5,9 @@ import { MagickTemplate, MagickTemplateArgument, MagickTemplateTag, MorphConfig 
 import { textCommonArguments } from './textBanners';
 
 
-export class TextBannerCometFont implements MagickTemplate {
-  name = "Text Banner Comet Font"
-  id = "textBannerBlurCometFont"
+export class TextBannerShearedShadowFont implements MagickTemplate {
+  name = "Text Banner Sheared Shadow Font"
+  id = "textBannerBlurShearedShadowFont"
   description = `TODO`
   tags = [MagickTemplateTag.textBanner]
   arguments = [].concat(textCommonArguments).concat([
@@ -17,26 +17,17 @@ export class TextBannerCometFont implements MagickTemplate {
       id: "shadowColor",
       name: "Shadow Color",
       description: "Shadow color",
-      defaultValue: "#120044"
+      defaultValue: "#5157c7"
     } as MagickTemplateArgument,
 
-    {
-      type: ArgumentType.number,
-      isInteger: true,
-      id: "shadowIntensity",
-      name: "Shadow Intensity",
-      description: "Shadow intensity",
-      defaultValue: 25
-    },
-
-    {
-      type: ArgumentType.number,
-      isInteger: true,
-      id: "shadowAngle",
-      name: "Shadow Angle",
-      description: "Shadow Angle",
-      defaultValue: 65
-    },
+    // {
+    //   type: ArgumentType.number,
+    //   isInteger: true,
+    //   id: "shadowAngle",
+    //   name: "Shadow Angle",
+    //   description: "Shadow Angle",
+    //   defaultValue: 130
+    // },
   ])
 
   async template(config: MorphConfig) {
@@ -45,14 +36,21 @@ export class TextBannerCometFont implements MagickTemplate {
 
     const auxResult = await execute({ inputFiles, commands: `convert -font '${fontName}' -pointsize ${config.arguments.fontSize} 'label:${config.arguments.text}' -gravity center  +repage \`uniqueName\`.miff` })
     const info = await extractInfoOne(auxResult.outputFiles[0])
-    const w = info.image.geometry.width + 100
-    const h = info.image.geometry.height + 50
+    const w = info.image.geometry.width + (config.arguments.fontSize as number)
+    const h = info.image.geometry.height + (config.arguments.fontSize as number)
+
+  //   Sheared Shadow: As the "-annotate" font drawing operator can rotate the vertical dimension separately to the horizontal dimension, you can specify some odd ball rotation 'slewing' or 'shearing' of the font. This is great for making weird shadows, or making your own italic or slanted font.
+
+  //  convert -size 320x115 xc:lightblue  -font Candice -pointsize 72 \
+  //          -fill Navy      -annotate 0x0+12+55   'Anthony' \
+  //          -fill RoyalBlue -annotate 0x130+25+80 'Anthony' \
+  //          font_slewed.jpg
 
     const commands = `
 convert -size ${w}x${h} xc:${config.arguments.backgroundColor} -gravity center -font '${fontName}' -pointsize ${config.arguments.fontSize} \\
-  -fill ${config.arguments.shadowColor} -annotate 0 '${config.arguments.text}' -motion-blur 0x${config.arguments.shadowIntensity}+${config.arguments.shadowAngle} \\
-  -fill ${config.arguments.textColor}  -annotate 0 '${config.arguments.text}' -motion-blur 0x1+${config.arguments.shadowAngle} \\
-    +repage \`uniqueName\`.jpg
+  -fill ${config.arguments.textColor}  -annotate 0x0+0+0 '${config.arguments.text}' \\
+  -fill ${config.arguments.shadowColor}  -annotate 0x${130}+${(config.arguments.fontSize as number)/3}+${(config.arguments.fontSize as number)/1.5} '${config.arguments.text}' \\
+     \`uniqueName\`.jpg
     `
     const result = await execute({ inputFiles, commands })
     return result

@@ -5,9 +5,9 @@ import { MagickTemplate, MagickTemplateArgument, MagickTemplateTag, MorphConfig 
 import { textCommonArguments } from './textBanners';
 
 
-export class TextBannerCometFont implements MagickTemplate {
-  name = "Text Banner Comet Font"
-  id = "textBannerBlurCometFont"
+export class TextBannerSmokedFont implements MagickTemplate {
+  name = "Text Banner Smoked Font"
+  id = "textBannerBlurSmokedFont"
   description = `TODO`
   tags = [MagickTemplateTag.textBanner]
   arguments = [].concat(textCommonArguments).concat([
@@ -26,7 +26,7 @@ export class TextBannerCometFont implements MagickTemplate {
       id: "shadowIntensity",
       name: "Shadow Intensity",
       description: "Shadow intensity",
-      defaultValue: 25
+      defaultValue: 44
     },
 
     {
@@ -35,7 +35,7 @@ export class TextBannerCometFont implements MagickTemplate {
       id: "shadowAngle",
       name: "Shadow Angle",
       description: "Shadow Angle",
-      defaultValue: 65
+      defaultValue: 44
     },
   ])
 
@@ -48,12 +48,23 @@ export class TextBannerCometFont implements MagickTemplate {
     const w = info.image.geometry.width + 100
     const h = info.image.geometry.height + 50
 
+
+// convert -size <%=imageWidth %>x<%= imageHeight %> xc:lightblue  -font font1.ttf  -pointsize <%= fontSize %> \\
+// -fill black  -annotate +<%= imageWidth/10 %>+<%= imageHeight/1.7 %> 'Smoked Font' -motion-blur 0x<%= intensity %>+<%= angle %> \\
+// -background lightblue -wave 3x35 \\
+// -fill navy   -annotate +<%= imageWidth/10 %>+<%= imageHeight/1.7 %> 'Smoked Font'  \\
+// \`uniqueName\`_smoked_font.jpg
+
     const commands = `
 convert -size ${w}x${h} xc:${config.arguments.backgroundColor} -gravity center -font '${fontName}' -pointsize ${config.arguments.fontSize} \\
   -fill ${config.arguments.shadowColor} -annotate 0 '${config.arguments.text}' -motion-blur 0x${config.arguments.shadowIntensity}+${config.arguments.shadowAngle} \\
-  -fill ${config.arguments.textColor}  -annotate 0 '${config.arguments.text}' -motion-blur 0x1+${config.arguments.shadowAngle} \\
-    +repage \`uniqueName\`.jpg
+  -background ${config.arguments.backgroundColor} -wave 3x35 \\
+  -fill ${config.arguments.textColor}  -annotate 0 '${config.arguments.text}' \\
+    \`uniqueName\`.jpg
     `
+
+    console.log(commands);
+    
     const result = await execute({ inputFiles, commands })
     return result
   }
