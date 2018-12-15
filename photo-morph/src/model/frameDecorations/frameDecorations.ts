@@ -1,13 +1,12 @@
 import { registerMagickTemplates } from "../magickTemplates"
 import { MagickTemplate, MagickTemplateArgument } from "../MagickTemplate";
-import { FillColorTool } from './FillColorTool';
+import { FrameDecorPolaroid } from './FrameDecorPolaroid';
 
 
-export function registerAllMagickTemplateColorTools() {
+export function registerAllMagickTemplateFrameDecorations() {
 
 const templates: MagickTemplate[] = [
-  new FillColorTool()
-
+new FrameDecorPolaroid(),
 ]
 registerMagickTemplates(templates)
 }

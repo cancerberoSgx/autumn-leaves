@@ -1,6 +1,6 @@
 import { buildInputFile, execute } from "wasm-imagemagick";
 import { MagickTemplate, MagickTemplateTag, MorphConfig } from "../MagickTemplate";
-import { textCommonArguments } from './textBanners';
+import { textCommonArguments, prepareDefaultFont } from './textBanners';
 
 export class TextBannerAquaFont implements MagickTemplate {
   name = "Text Banner Aqua Font"
@@ -12,8 +12,7 @@ export class TextBannerAquaFont implements MagickTemplate {
   ]).map(a => a.id === 'textColor' ? { ...a, defaultValue: '#7472b2' } : a.id === 'fontSize' ? { ...a, defaultValue: 172 } : a)
 
   async template(config: MorphConfig) {
-    const fontName = (config.arguments.font + '') || 'helvetica.ttf'
-    const inputFiles = config.inputFiles.map(f => f.file).concat(fontName === 'helvetica.ttf' ? [await buildInputFile('helvetica.ttf')] : [])
+    const {fontName, inputFiles} = await prepareDefaultFont(config)
     const commands = `
 convert -background none -fill ${config.arguments.textColor} \\
   -font ${fontName} -pointsize ${config.arguments.fontSize}  'label:${config.arguments.text}'   -trim +repage \\

@@ -2,7 +2,7 @@ import { ArgumentType } from "imagemagick-browser";
 import { extractInfoOne } from 'src/util/toCommitInWASMIM';
 import { buildInputFile, execute } from "wasm-imagemagick";
 import { MagickTemplate, MagickTemplateArgument, MagickTemplateTag, MorphConfig } from "../MagickTemplate";
-import { textCommonArguments } from './textBanners';
+import { textCommonArguments, prepareDefaultFont } from './textBanners';
 
 
 export class TextBannerGradientArc implements MagickTemplate {
@@ -40,9 +40,7 @@ export class TextBannerGradientArc implements MagickTemplate {
   ]).filter(a=>a.id!=='textColor')
 
   async template(config: MorphConfig) {
-    const fontName = (config.arguments.font + '') || 'helvetica.ttf'
-    const inputFiles = config.inputFiles.map(f => f.file).concat(fontName === 'helvetica.ttf' ? [await buildInputFile('helvetica.ttf')] : [])
-
+    const {fontName, inputFiles} = await prepareDefaultFont(config)
     const commands = `
 convert -font '${fontName}' -pointsize ${config.arguments.fontSize} \\
   -background none 'label:${config.arguments.text}' \\

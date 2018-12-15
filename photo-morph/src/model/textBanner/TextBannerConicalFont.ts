@@ -2,7 +2,7 @@ import { ArgumentType, list } from "imagemagick-browser";
 import { extractInfoOne } from 'src/util/toCommitInWASMIM';
 import { buildInputFile, execute, IMKernel } from "wasm-imagemagick";
 import { MagickTemplate, MagickTemplateArgument, MagickTemplateTag, MorphConfig } from "../MagickTemplate";
-import { textCommonArguments } from './textBanners';
+import { textCommonArguments, prepareDefaultFont } from './textBanners';
 
 
 export class TextBannerConicalFont implements MagickTemplate {
@@ -55,19 +55,12 @@ export class TextBannerConicalFont implements MagickTemplate {
   ])
 
   async template(config: MorphConfig) {
-    const fontName = (config.arguments.font + '') || 'helvetica.ttf'
-    const inputFiles = config.inputFiles.map(f => f.file).concat(fontName === 'helvetica.ttf' ? [await buildInputFile('helvetica.ttf')] : [])
-
+    const {fontName, inputFiles} = await prepareDefaultFont(config)
     const auxResult = await execute({ inputFiles, commands: `convert -font '${fontName}' -pointsize ${config.arguments.fontSize} 'label:${config.arguments.text}' -gravity center  +repage \`uniqueName\`.miff` })
     const info = await extractInfoOne(auxResult.outputFiles[0])
     const w = info.image.geometry.width + 100
     const h = info.image.geometry.height + 50
 
-    // convert -size 320x100 xc:black -font Candice -pointsize 72 \
-    // -fill white   -annotate +25+65 'Anthony' \
-    // -gamma 2  +level 0,1000 -white-threshold 999 \
-    // -morphology Distance Euclidean:4,1000 -auto-level \
-    // -shade 135x30 -auto-level +level 10,90% font_conic.jpg
     const backgroundColor = config.arguments.performInBackground ? 'white' : 'black'
     const textColor= config.arguments.performInBackground ? 'black': 'white'
     const commands = `

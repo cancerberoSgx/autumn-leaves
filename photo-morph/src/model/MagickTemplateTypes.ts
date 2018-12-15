@@ -1,6 +1,6 @@
 import { MagickTemplateTag } from "./MagickTemplate";
 
-export type MagickTemplateTypes = MagickTemplateTag.morph | MagickTemplateTag.frame | MagickTemplateTag.textBanner | MagickTemplateTag.all
+export type MagickTemplateTypes = MagickTemplateTag.morph | MagickTemplateTag.frame | MagickTemplateTag.color | MagickTemplateTag.textBanner | MagickTemplateTag.all
 
 export interface MagickTemplateType {
   id: string
@@ -33,5 +33,11 @@ export const magickTemplateTypes: MagickTemplateType[] = [
     name: 'Frame decorations',
     description: 'Decorate images with frames-like effects',
     type: MagickTemplateTag.frame,
+  },
+  {
+    id: 'color-tools',
+    name: 'Color Tools',
+    description: 'Tools for color processing and manipulation such as color filling / replacement, saturation, hue, color channels, palettes, and general color effects',
+    type: MagickTemplateTag.color,
   }
 ]

@@ -2,7 +2,7 @@ import { ArgumentType } from "imagemagick-browser";
 import { extractInfoOne } from 'src/util/toCommitInWASMIM';
 import { buildInputFile, execute } from "wasm-imagemagick";
 import { MagickTemplate, MagickTemplateArgument, MagickTemplateTag, MorphConfig } from "../MagickTemplate";
-import { textCommonArguments } from './textBanners';
+import { textCommonArguments, prepareDefaultFont } from './textBanners';
 
 
 export class TextBannerCometFont implements MagickTemplate {
@@ -56,8 +56,7 @@ export class TextBannerCometFont implements MagickTemplate {
   ])
 
   async template(config: MorphConfig) {
-    const fontName = (config.arguments.font + '') || 'helvetica.ttf'
-    const inputFiles = config.inputFiles.map(f => f.file).concat(fontName === 'helvetica.ttf' ? [await buildInputFile('helvetica.ttf')] : [])
+    const {fontName, inputFiles} = await prepareDefaultFont(config)
 
     const auxResult = await execute({ inputFiles, commands: `convert -font '${fontName}' -pointsize ${config.arguments.fontSize} 'label:${config.arguments.text}' -gravity center  +repage \`uniqueName\`.miff` })
     const info = await extractInfoOne(auxResult.outputFiles[0])

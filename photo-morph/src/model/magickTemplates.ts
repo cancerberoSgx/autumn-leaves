@@ -1,7 +1,8 @@
-import { registerAllMagickTemplateMorphs } from './morph/morphs';
-import { MagickTemplate } from './MagickTemplate';
-import { registerAllTextBanners } from './textBanner/textBanners';
 import { registerAllMagickTemplateColorTools } from './colorTools/colorTools';
+import { registerAllMagickTemplateFrameDecorations } from './frameDecorations/frameDecorations';
+import { MagickTemplate } from './MagickTemplate';
+import { registerAllMagickTemplateMorphs } from './morph/morphs';
+import { registerAllTextBanners } from './textBanner/textBanners';
 
 export function getMagickTemplates(): MagickTemplate[] {
   if (!magickTemplates) {
@@ -9,6 +10,7 @@ export function getMagickTemplates(): MagickTemplate[] {
     registerAllMagickTemplateMorphs()
     registerAllTextBanners()
     registerAllMagickTemplateColorTools()
+    registerAllMagickTemplateFrameDecorations()
   }
   return magickTemplates
 }

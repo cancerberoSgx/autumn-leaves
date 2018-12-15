@@ -2,7 +2,7 @@ import { ArgumentType } from "imagemagick-browser";
 import { extractInfoOne } from 'src/util/toCommitInWASMIM';
 import { buildInputFile, execute } from "wasm-imagemagick";
 import { MagickTemplate, MagickTemplateArgument, MagickTemplateTag, MorphConfig } from "../MagickTemplate";
-import { textCommonArguments } from './textBanners';
+import { textCommonArguments, prepareDefaultFont } from './textBanners';
 
 
 export class TextBannerPsychedelicFont implements MagickTemplate {
@@ -38,10 +38,7 @@ export class TextBannerPsychedelicFont implements MagickTemplate {
   ])
 
   async template(config: MorphConfig) {
-    const fontName = (config.arguments.font + '') || 'helvetica.ttf'
-    const inputFiles = config.inputFiles.map(f => f.file).concat(fontName === 'helvetica.ttf' ? [await buildInputFile('helvetica.ttf')] : [])
-
-
+    const {fontName, inputFiles} = await prepareDefaultFont(config)
     const strokeStep = config.arguments.stepDistance as number
     const stepCount = config.arguments.stepCount as number
     const steps = new Array(stepCount).fill(0).map((n, i) => stepCount - i)
