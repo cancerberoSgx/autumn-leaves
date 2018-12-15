@@ -41,6 +41,24 @@ export function isFont(i: ImageState | MagickFile): boolean {
   }
 }
 
+export async function prepareDefaultFont(config: MorphConfig): Promise<{ inputFiles: MagickInputFile[], fontName: string }> {
+  const fontName = (config.arguments.font + '') || defaultFontFile
+  const inputFiles = config.inputFiles.map(f => f.file).concat(fontName === defaultFontFile ? [await buildInputFile(defaultFontFile)] : [])
+  return { fontName, inputFiles }
+}
+export const defaultFontFile = 'helvetica.ttf'
+
+export function fontArgument(id:string,name:string=id, description:string=id){
+  return {
+    type: ArgumentType.selectOne,
+    id,
+    name,
+    description,
+    list: () => store.getState().images.filter(isFont).map(i => ({ id: i.file.name, name: i.file.name })).concat([{ id: defaultFontFile, name: defaultFontFile }]),
+    defaultValue: defaultFontFile
+  }
+
+}
 export const textCommonArguments = [
   {
     type: ArgumentType.text,
@@ -49,15 +67,7 @@ export const textCommonArguments = [
     description: "Text",
     defaultValue: "Cool Banner"
   },
-  {
-    type: ArgumentType.selectOne,
-    id: "font",
-    name: "Font",
-    description: "Font file to use. By default helvetica.ttf will be automatically loaded. To use other fonts, just load .ttf files as if they were images and they will be available for selection in this list. ",
-    list: () => store.getState().images.filter(isFont).map(i => ({ id: i.file.name, name: i.file.name })).concat([{ id: 'helvetica.ttf', name: 'helvetica.ttf' }]),
-    defaultValue: 'helvetica.ttf'
-  },
-
+  fontArgument('font', 'Font', "Font file to use. By default helvetica.ttf will be automatically loaded. To use other fonts, just load .ttf files as if they were images and they will be available for selection in this list. ",),
   {
     type: ArgumentType.color,
     id: "backgroundColor",
@@ -83,9 +93,3 @@ export const textCommonArguments = [
 
 ] as MagickTemplateArgument[]
 
-
-export async function prepareDefaultFont(config: MorphConfig): Promise<{ inputFiles: MagickInputFile[], fontName: string }> {
-  const fontName = (config.arguments.font + '') || 'helvetica.ttf'
-  const inputFiles = config.inputFiles.map(f => f.file).concat(fontName === 'helvetica.ttf' ? [await buildInputFile('helvetica.ttf')] : [])
-  return { fontName, inputFiles }
-}

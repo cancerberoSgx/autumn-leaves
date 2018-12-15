@@ -79,25 +79,3 @@ export class FillColorTool implements MagickTemplate {
     return await execute({ inputFiles, commands })
   }
 }
-
-
-// {
-//   name: 'Fill color - configurable',
-//   description: `uses -floodbill or -opaque to replace a color - uses templates to be configurable with varibales`,
-//   command: `
-// <%
-// const fuzz=20
-// const fillMode='opaque'//'floodfill' // opaque
-// const floodfillPointX = 5
-// const floodfillPointY = 5
-// const opaqueColor = 'white'
-// const fillColor = 'rgba(34,121,0,0.1)'
-// const floodfillFragment = \` -floodfill +\${floodfillPointX}+\${floodfillPointY} \\\`convert logo: -format '%[pixel:p{\${floodfillPointX},\${floodfillPointY}}]\\n' info:\\\`\`
-// const opaqueFragment = \`-opaque \${opaqueColor}\`
-// %>
-// convert logo: -alpha set -fuzz <%= fuzz%>% -fill <%= fillColor%> \\
-// <%= fillMode==='floodfill' ? floodfillFragment : opaqueFragment %> \`uniqueName\`.png
-
-//   `.trim(),
-// },
-
