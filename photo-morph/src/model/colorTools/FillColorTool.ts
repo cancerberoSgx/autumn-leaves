@@ -59,7 +59,7 @@ export class FillColorTool implements MagickTemplate {
 
   async template(config) {
     if (config.inputFiles.length < 1) {
-      return buildExecuteResultWithError('Please select 2 or more images in order to create a morph animation')
+      return buildExecuteResultWithError('Please select 1 or more images in order to create a morph animation')
     }
     const inputFiles = config.inputFiles.map(f => f.file)
     const commands = `

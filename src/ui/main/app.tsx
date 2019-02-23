@@ -7,6 +7,7 @@ import { AppBar } from './appBar';
 import { BrowserRouter, HashRouter } from 'react-router-dom';
 import theme from './theme';
 import { config } from './config';
+import { addExecuteListener } from 'wasm-imagemagick';
 
 const generateClassName = createGenerateClassName();
 const jss = create(jssPreset());

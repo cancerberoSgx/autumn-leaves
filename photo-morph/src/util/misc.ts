@@ -6,16 +6,17 @@ export function getUniqueId(){
   return ""+counter++
 }
 
+export {parseJSON as jsonParseOr} from 'misc-utils-of-mine-generic'
+// export function jsonParseOr<K>(s: string, defaultValue: K): K {
+//   let val : K = defaultValue
+//   try {
+//     val = JSON.parse(s)
+//   } catch (error) {
+//   }
+//   return val
+// }
 
-export function jsonParseOr<K>(s: string, defaultValue: K): K {
-  let val : K = defaultValue
-  try {
-    val = JSON.parse(s)
-  } catch (error) {
-  }
-  return val
-}
-
+// TODO: use misc localStorageGetJSON
 export function getFromLS(key) {
   let ls = {}
   if (window.localStorage) {
@@ -27,7 +28,7 @@ export function getFromLS(key) {
   }
   return ls[key]
 }
-
+// TODO: use misc localStorageGetJSON
 export function saveToLS(key, value) {
   if (window.localStorage) {
     window.localStorage.setItem(

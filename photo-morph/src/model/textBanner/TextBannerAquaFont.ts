@@ -15,7 +15,7 @@ export class TextBannerAquaFont implements MagickTemplate {
     const {fontName, inputFiles} = await prepareDefaultFont(config)
     const commands = `
 convert -background none -fill ${config.arguments.textColor} \\
-  -font ${fontName} -pointsize ${config.arguments.fontSize}  'label:${config.arguments.text}'   -trim +repage \\
+  -font '${fontName}' -pointsize ${config.arguments.fontSize}  'label:${config.arguments.text}'   -trim +repage \\
   -bordercolor None -border 1x1  \\
   aqua_shape.png
 

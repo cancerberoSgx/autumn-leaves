@@ -1,6 +1,7 @@
 import * as ReactDOM from 'react-dom';
 import App from './ui/main/app'
 import { store } from './state/Store';
+import { addExecuteListener } from 'wasm-imagemagick';
 
 function install() {
   const app = document.createElement('div')
@@ -17,3 +18,9 @@ function render() {
 
 install()
 render()
+
+addExecuteListener({
+  beforeExecute: e=>{
+    console.log(e.command)
+  }
+})

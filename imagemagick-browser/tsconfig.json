@@ -13,7 +13,8 @@
     "skipLibCheck": true
   },
   "include": [
-    "src"
+    "src", "spec",
+    "node_modules/jasmine-expect/jasmine-matchers.d.ts"
   ],
   "exclude": [
     "docs", "node_modules", "dist", "docs-dev"

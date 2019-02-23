@@ -1,25 +1,7 @@
 /** easily list given enum's keys as an array */
-export function list(anEnum: any): string[] {
-  const a = []
-  for (let i in anEnum) {
-    a.push(i)
-  }
-  return a
-}
-
-export function stringToUInt8Array(s: string): Uint8Array {
-  var enc = new TextEncoder(); // always utf-8
-  return enc.encode(s)
-}
-
-export function seq(start: number=0, step: number=1, max: number=0): number[]{
-  const result = []
-  for (let i = start; i < max; i+=step) {
-    result.push(i)
-  }
-  return result
-}
-
+export {enumKeys as list} from 'misc-utils-of-mine-typescript'
+export {stringToUInt8Array} from 'misc-utils-of-mine-dom'
+export {seq} from 'misc-utils-of-mine-generic'
 
 export function toCliArg(arg: string): string {
   return arg.match(/[\s()]/) ? `'${arg}'` : arg // quote if includes spaces or parenthesis

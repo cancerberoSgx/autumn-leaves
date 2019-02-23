@@ -2,7 +2,7 @@ import { Button, Grid } from '@material-ui/core';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import { saveAs } from 'file-saver';
 import * as React from 'react';
-import { CommandEditor, SelectImageEditor } from 'react-imagemagick';
+import { CommandEditor, SelectFileEditor } from 'react-imagemagick';
 import { match } from 'react-router-dom';
 import { query } from '../../../util/misc';
 import { dispatchUrl } from './dispatchUrl';
@@ -77,7 +77,7 @@ export class ImageFrameTransformationNaked extends React.Component<ImageFrameTra
         {/* select image  */}
 
         <p>Add a frame to your images. First, load an image:</p>
-        <SelectImageEditor
+        <SelectFileEditor
           onChange={e => {
             const file = e.value[0] // TODO: user might select more than one file ?
             const outputFile = { name: file.name, blob: new Blob([file.content]) }
